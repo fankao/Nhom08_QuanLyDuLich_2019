@@ -1,16 +1,10 @@
-package data;
+package control;
 
 import java.util.List;
 
 import entities.Tour;
 
-public interface TouDAO {
-
-	public List<Tour> layDSTour();
-
-	public List<Tour> layDSTourChuaDangKy();
-
-	public List<Tour> layDSTourDaDangKy();
+public interface ITourControl {
 
 	public Tour layTourTheoMa(String maTour);
 
@@ -19,5 +13,6 @@ public interface TouDAO {
 	public Tour suaTour(Tour tour);
 
 	public boolean xoaTour(Tour tour);
-
+	
+	public List<Tour> layDsTourTheoYeuCau(int yc);
 }

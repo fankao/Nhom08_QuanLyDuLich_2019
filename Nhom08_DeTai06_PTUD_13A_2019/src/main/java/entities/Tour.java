@@ -10,10 +10,15 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tour")
+@NamedQueries({ @NamedQuery(name = "Tour.timDsTour", query = "SELECT t FROM Tour t "),
+		@NamedQuery(name = "Tour.timDsTourChuaDK", query = "SELECT t FROM Tour t WHERE soNguoiDaDangKy = 0"),
+		@NamedQuery(name = "Tour.timDsTourDaDK", query = "SELECT t FROM Tour t WHERE soNguoiDaDangKy > 0")})
 public class Tour {
 	@Id
 	private String maTour;
