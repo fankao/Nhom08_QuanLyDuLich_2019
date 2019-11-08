@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="Nhom08_DeTai06_PTUD_13A_2019"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<class>entities.Quyen</class>
+		<class>entities.NhanVien</class>
+		<class>entities.DiaDanh</class>
+		<class>entities.KhachHang</class>
+		<class>entities.KhachHangThamGia</class>
+		<class>entities.PhieuDangKy</class>
+		<class>entities.TaiKhoan</class>
+		<class>entities.Tour</class>
+		<class>entities.PhieuChi</class>
+		<class>entities.DiaChi</class>
+		<properties>
+			<property name="hibernate.dialect"
+				value="org.hibernate.dialect.SQLServerDialect" />
+			<property name="javax.persistence.jdbc.driver"
+				value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+			<property name="javax.persistence.jdbc.url"
+				value="jdbc:sqlserver://localhost:1433;databaseName=Nhom08_dbQuanLyDuLich_2019" />
+			<property name="javax.persistence.jdbc.user" value="sa" />
+			<property name="javax.persistence.jdbc.password" value="123" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.hbm2ddl.auto" value="validate" />
+	<!-- <property name="javax.persistence.schema-generation.database.action" 
+		value="drop-and-create" /> -->
+		</properties>
+	</persistence-unit>
+</persistence>
