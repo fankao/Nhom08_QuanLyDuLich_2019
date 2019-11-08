@@ -24,9 +24,14 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import control.impl.NhanVienControl;
 import entities.NhanVien;
+import entities.TaiKhoan;
+
 /**
+ * frmDangNhap.java
  * 
+ * @author Minh Chien =, Ngày tạo: 08/11/2019
  *
  */
 public class frmDangNhap extends JDialog implements ActionListener {
@@ -38,10 +43,11 @@ public class frmDangNhap extends JDialog implements ActionListener {
 	private JLabel lblLogo;
 	private JButton btnDangNhap;
 	private JButton btnThoat;
-	//private static INhanVienBUS nhanVienBUS = new NhanVienBUS();
-	private static NhanVien nv;
+	private NhanVienControl nhanVienControl;
+	private NhanVien nv;
+
 	/**
-	 * Create the dialog.
+	 * Constructor khởi tạo giao diện đăng nhập
 	 */
 	public frmDangNhap() {
 		super((JDialog) null);
@@ -144,95 +150,75 @@ public class frmDangNhap extends JDialog implements ActionListener {
 		lblLogo.setBackground(new Color(0, 191, 255));
 		lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLogo.setIcon(new ImageIcon(frmDangNhap.class.getResource("/images/sail_boat.png")));
-
-		// chỉnh kích thước ảnh
-		/*
-		 * ImageIcon icon = new
-		 * ImageIcon(this.getClass().getResource("/images/logoLogin.png"));
-		 * contentPanel.setLayout(new BorderLayout(0, 0)); lblLogo.setSize(355, 390);
-		 * TienIch.chinhKichThuocAnh(lblLogo, icon);
-		 */
 		contentPanel.add(pnLogo);
-		
+
 		JLabel lblTenCT = new JLabel("Phương Nam Travel");
 		lblTenCT.setForeground(Color.WHITE);
 		lblTenCT.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTenCT.setFont(new Font("Tahoma", Font.BOLD, 35));
-		
+
 		JLabel lblSlogan = new JLabel("Cuộc đời là những chuyến đi...");
 		lblSlogan.setForeground(Color.WHITE);
 		lblSlogan.setFont(new Font("Tahoma", Font.ITALIC, 25));
 		GroupLayout gl_pnLogo = new GroupLayout(pnLogo);
-		gl_pnLogo.setHorizontalGroup(
-			gl_pnLogo.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnLogo.createSequentialGroup()
-					.addGap(15)
-					.addGroup(gl_pnLogo.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblSlogan)
-						.addGroup(gl_pnLogo.createParallelGroup(Alignment.TRAILING, false)
-							.addComponent(lblLogo, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(lblTenCT, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-					.addContainerGap(15, Short.MAX_VALUE))
-		);
-		gl_pnLogo.setVerticalGroup(
-			gl_pnLogo.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnLogo.createSequentialGroup()
-					.addGap(41)
-					.addComponent(lblLogo, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblTenCT)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(lblSlogan)
-					.addContainerGap(106, Short.MAX_VALUE))
-		);
+		gl_pnLogo.setHorizontalGroup(gl_pnLogo.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnLogo.createSequentialGroup().addGap(15)
+						.addGroup(gl_pnLogo.createParallelGroup(Alignment.LEADING).addComponent(lblSlogan)
+								.addGroup(gl_pnLogo.createParallelGroup(Alignment.TRAILING, false)
+										.addComponent(lblLogo, Alignment.LEADING, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+										.addComponent(lblTenCT, Alignment.LEADING, GroupLayout.DEFAULT_SIZE,
+												GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+						.addContainerGap(15, Short.MAX_VALUE)));
+		gl_pnLogo.setVerticalGroup(gl_pnLogo.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnLogo.createSequentialGroup().addGap(41)
+						.addComponent(lblLogo, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED).addComponent(lblTenCT)
+						.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(lblSlogan)
+						.addContainerGap(106, Short.MAX_VALUE)));
 		pnLogo.setLayout(gl_pnLogo);
 		contentPanel.add(pnDangNhap);
 
+		nhanVienControl = new NhanVienControl();
+
 		txtTaiKhoan.setText("NV001");
-		pwdMatKhau.setText("NV001");
+		pwdMatKhau.setText("000000");
 
 		// Gắn sự kiện
 		ganSuKien();
 	}
 
+	/**
+	 * Hàm gắn sự kiện cho các control
+	 */
 	private void ganSuKien() {
 		btnDangNhap.addActionListener(this);
 		btnThoat.addActionListener(this);
 	}
 
+	/**
+	 * Xử lý sự kiện cho button
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o.equals(btnDangNhap)) {
-			if(txtTaiKhoan.getText().trim().length() != 0 && pwdMatKhau.getText().trim().length() !=0) {
-				/*
-				 * TaiKhoan taiKhoan =
-				 * nhanVienBUS.layTTTaiKhoanCuaNhanVien(txtTaiKhoan.getText(),
-				 * pwdMatKhau.getText()); if (taiKhoan != null) { nv =
-				 * nhanVienBUS.layThongTinNhanVien(taiKhoan.getNv().getMaNV()); ChucVu chucVu =
-				 * nhanVienBUS.layChucVuTheoNhanVien(nv); nv.setChucVu(chucVu); dispose(); new
-				 * frmMain().setVisible(true); }else { JOptionPane.showMessageDialog(this,
-				 * "Tài khoản không tồn tại"); }
-				 */
-			}else {
+			if (txtTaiKhoan.getText().trim().length() != 0 && pwdMatKhau.getText().trim().length() != 0) {
+				TaiKhoan taiKhoan = new TaiKhoan(txtTaiKhoan.getText(), pwdMatKhau.getText());
+				nv = nhanVienControl.layNhanVienTheoTaiKhoan(taiKhoan);
+				this.dispose();
+				new frmMain(nv).setVisible(true);
+
+			} else {
 				JOptionPane.showMessageDialog(this, "Chưa nhập tên tài khoản hoặc mật khẩu");
 			}
-			
-			
-		}else if (o.equals(btnThoat)) {
-			int sel = JOptionPane.showConfirmDialog(this, "Thoát chương trình?","Đăng xuất",JOptionPane.YES_NO_OPTION);
-			if(sel == JOptionPane.YES_OPTION) {
+		} else if (o.equals(btnThoat)) {
+			int sel = JOptionPane.showConfirmDialog(this, "Thoát chương trình?", "Đăng xuất",
+					JOptionPane.YES_NO_OPTION);
+			if (sel == JOptionPane.YES_OPTION) {
 				dispose();
 			}
 		}
 
-	}
-
-	public static NhanVien getNv() {
-		return nv;
-	}
-
-	public static void setNv(NhanVien nv) {
-		frmDangNhap.nv = nv;
 	}
 }

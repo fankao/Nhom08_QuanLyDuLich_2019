@@ -67,21 +67,21 @@ public class frmMain extends JFrame implements ActionListener {
 	/**
 	 * Giao diện màn hình chính
 	 */
-	public frmMain() {
+	public frmMain(NhanVien nv) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		/*
 		 * Dimension DimMax = Toolkit.getDefaultToolkit().getScreenSize();
 		 * setMaximumSize(DimMax);
 		 */
+		this.nhanVien = nv;
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
-		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();  
+		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		setSize(env.getMaximumWindowBounds().getSize());
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage(frmMain.class.getResource("/images/iconFrm.png")));
 		setTitle("Chương trình quản lý thông tin du lịch công ty Phương Nam");
 		setBackground(Color.WHITE);
-		
 
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -252,8 +252,6 @@ public class frmMain extends JFrame implements ActionListener {
 						.addGap(26).addComponent(btnThoat).addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		pnlLoiChao.setLayout(gl_pnlLoiChao);
 		pnlLeft.setLayout(gl_pnLeft);
-		
-		
 
 		// thiết lập màu cho button
 		btnQuanLyTour.setBackground(new Color(23, 35, 51));
@@ -266,12 +264,8 @@ public class frmMain extends JFrame implements ActionListener {
 		// gán sự kiện
 		ganSuKien();
 
-		// Khởi tạo nhân viên
-
-		nhanVien = frmDangNhap.getNv();
-
-		lblTenNV.setText(nhanVien.getHoVaTen());
-		lblTenCV.setText(nhanVien.getChucVu().getTenCV());
+		lblTenNV.setText(nv.getHoVaTen());	
+		lblTenCV.setText(nv.getQuyen().getGhiChu());
 
 	}
 
@@ -315,7 +309,7 @@ public class frmMain extends JFrame implements ActionListener {
 			TienIch.doiMauButton(btnDangXuat, new JButton[] { btnQuanLyTour, btnQuanLyPhieuDK, btnThongKe });
 			if (JOptionPane.showConfirmDialog(this, "Bạn muốn đăng xuất khỏi phần mềm?", "Đăng xuất",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				
+
 				((Window) getRootPane().getParent()).dispose();
 				new frmDangNhap().setVisible(true);
 			}

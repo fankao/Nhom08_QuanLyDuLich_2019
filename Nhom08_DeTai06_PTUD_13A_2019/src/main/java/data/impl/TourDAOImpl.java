@@ -5,10 +5,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import data.EntityManagerConnection;
-import data.TouDAO;
+import data.ITouDAO;
 import entities.Tour;
 
-public class TourDAOImpl implements TouDAO {
+public class TourDAOImpl implements ITouDAO {
 	private EntityManager em;
 
 	public TourDAOImpl() {

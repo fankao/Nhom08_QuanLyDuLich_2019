@@ -5,10 +5,15 @@ import java.sql.Date;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "khachhang")
+@NamedQueries({ @NamedQuery(name = "KH.timTheoTenKH", query = "SELECT kh FROM KhachHang kh WHERE kh.hoVaTen=:ten"),
+		@NamedQuery(name = "KH.timTheoSDT", query = "SELECT kh FROM KhachHang kh WHERE kh.soDienThoai=:sdt"),
+		@NamedQuery(name = "KH.timTheoCMND", query = "SELECT kh FROM KhachHang kh WHERE kh.soCMND = :cmnd") })
 public class KhachHang {
 	@Id
 	private String maKH;

@@ -4,7 +4,7 @@ import java.util.List;
 
 import entities.Tour;
 
-public interface TouDAO {
+public interface ITouDAO {
 
 	public List<Tour> layDSTour();
 

@@ -29,10 +29,4 @@ public class NhanVienDAO implements INhanVienDAO {
 		NhanVien nv = query.getSingleResult();
 		return nv;
 	}
-
-	public static void main(String[] args) {
-		NhanVienDAO dao = new NhanVienDAO();
-		System.out.println(dao.layNhanVienTheoTaiKhoan(new TaiKhoan("NV001", "000000")));
-	}
-
 }
