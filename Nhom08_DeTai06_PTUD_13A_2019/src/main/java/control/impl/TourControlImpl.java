@@ -62,6 +62,7 @@ public class TourControlImpl implements ITourControl {
 		// TODO Auto-generated method stub
 		return tourDAO.xoaTour(tour);
 	}
+	
 
 	/**
 	 * Lấy danh sách tour theo yêu cầu
