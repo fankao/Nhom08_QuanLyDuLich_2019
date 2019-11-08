@@ -8,10 +8,10 @@ import data.INhanVienDAO;
 import entities.NhanVien;
 import entities.TaiKhoan;
 
-public class NhanVienDAO implements INhanVienDAO {
+public class NhanVienDAOImpl implements INhanVienDAO {
 	private EntityManager em;
 
-	public NhanVienDAO() {
+	public NhanVienDAOImpl() {
 		em = EntityManagerConnection.getInstance().getEntityManager();
 	}
 

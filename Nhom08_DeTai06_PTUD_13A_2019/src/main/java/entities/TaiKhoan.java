@@ -1,12 +1,15 @@
 package entities;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Table;
 
 @Embeddable
 @Table(name = "taikhoan")
 public class TaiKhoan {
+	@Column(columnDefinition = "NVARCHAR(100)")
 	private String userName;
+	@Column(columnDefinition = "CHAR(20)")
 	private String passWord;
 
 	public TaiKhoan() {

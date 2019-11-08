@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -25,6 +26,7 @@ import javax.persistence.Table;
 		@NamedQuery(name = "PDK.timDSTheoTour", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.tour.maTour=:matour") })
 public class PhieuDangKy {
 	@Id
+	@Column(columnDefinition = "CHAR(20)")
 	private String maPhieuDK;
 
 	private Date ngayTaoPhieu;

@@ -10,13 +10,13 @@ import data.EntityManagerConnection;
 import data.IPhieuDangKyDAO;
 import entities.PhieuDangKy;
 
-public class PhieuDangKyDAO implements IPhieuDangKyDAO {
+public class PhieuDangKyDAOImpl implements IPhieuDangKyDAO {
 	private EntityManager em;
 
 	/**
 	 * Constructor khởi tạo đối tượng PhieuDangKyDAO
 	 */
-	public PhieuDangKyDAO() {
+	public PhieuDangKyDAOImpl() {
 		em = EntityManagerConnection.getInstance().getEntityManager();
 	}
 

@@ -2,7 +2,7 @@ package control.impl;
 
 import control.INhanVienControl;
 import data.INhanVienDAO;
-import data.impl.NhanVienDAO;
+import data.impl.NhanVienDAOImpl;
 import entities.NhanVien;
 import entities.TaiKhoan;
 
@@ -18,7 +18,7 @@ public class NhanVienControl implements INhanVienControl {
 	 * Constructo khởi tạo đối tượng NhanVienControl
 	 */
 	public NhanVienControl() {
-		nhanVienDAO = new NhanVienDAO();
+		nhanVienDAO = new NhanVienDAOImpl();
 	}
 
 	/**

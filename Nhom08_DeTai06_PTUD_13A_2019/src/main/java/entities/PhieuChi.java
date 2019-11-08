@@ -3,6 +3,7 @@ package entities;
 import java.sql.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -14,13 +15,19 @@ import javax.persistence.Table;
 @Table(name = "phieuchi")
 public class PhieuChi {
 	@Id
+	@Column(columnDefinition = "CHAR(20)")
 	private String maPhieuChi;
+	
 	private Date ngayTaoPhieuChi;
+	
+	@Column(columnDefinition = "MONEY")
 	private double soTienChi;
+	
+	@Column(columnDefinition = "NTEXT")
 	private String lyDoChi;
+	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-
-	@JoinColumn(name = "phieudangkyID", nullable = false)
+	@JoinColumn(name = "phieudangkyID", nullable = false,columnDefinition = "CHAR(20)")
 	private PhieuDangKy pdk;
 
 	public PhieuChi() {

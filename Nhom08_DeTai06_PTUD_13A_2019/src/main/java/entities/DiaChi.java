@@ -2,13 +2,17 @@ package entities;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable
 public class DiaChi implements Serializable {
 	private static final long serialVersionUID = 1L;
+	@Column(columnDefinition = "NVARCHAR(100)")
 	private String xa;
+	@Column(columnDefinition = "NVARCHAR(100)")
 	private String huyen;
+	@Column(columnDefinition = "NVARCHAR(100)")
 	private String tinh;
 
 	public DiaChi() {

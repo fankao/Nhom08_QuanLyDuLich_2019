@@ -4,11 +4,9 @@ import java.util.List;
 
 import entities.Tour;
 
-public interface ITouDAO {
+public interface ITourDAO {
 
 	public List<Tour> layDSTour();
-
-	public List<Tour> layDSTourTheoMa(String maTour);
 
 	public List<Tour> layDSTourChuaDangKy();
 

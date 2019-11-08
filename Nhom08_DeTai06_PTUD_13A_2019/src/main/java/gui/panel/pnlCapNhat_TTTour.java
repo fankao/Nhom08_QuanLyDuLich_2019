@@ -67,8 +67,9 @@ import javax.swing.text.JTextComponent;
 
 import com.toedter.calendar.JDateChooser;
 
-import bus.ICapNhatTourBUS;
 import bus.impl.CapNhatTourBUS;
+import control.ITourControl;
+import control.impl.TourControlImpl;
 import entities.DiaDanh;
 import entities.NhanVien;
 import entities.Tour;
@@ -78,6 +79,13 @@ import gui.dialog.dlgXemAnh;
 import utils.HintTextFieldUI;
 import utils.TienIch;
 
+/**
+ * pnlCapNhat_TTTour.java
+ * 
+ * @author Minh Chien, Thanh Tri <br>
+ *         Ngày tạo: 08/11/2019
+ *
+ */
 public class pnlCapNhat_TTTour extends JPanel implements ActionListener, PropertyChangeListener, ChangeListener {
 	private static final long serialVersionUID = 1L;
 	private JTable tblTour;
@@ -105,7 +113,7 @@ public class pnlCapNhat_TTTour extends JPanel implements ActionListener, Propert
 	private List<DiaDanh> diaDanhs;
 	private JTextPane txpMoTa;
 	private static List<Tour> dsTour;
-	private List<DiaDanh> lstDiaDanhChon = new ArrayList<DiaDanh>();
+	private List<DiaDanh> lstDiaDanhChon;
 	private JComboBox<DiaDanh> cmbDiaDanh;
 	private DefaultComboBoxModel<DiaDanh> cmbModel;
 
@@ -117,17 +125,21 @@ public class pnlCapNhat_TTTour extends JPanel implements ActionListener, Propert
 	private JButton btnXemAnh;
 	private JCheckBox chkThemHinhAnh;
 	private JButton btnHuy;
-
-	private ICapNhatTourBUS capNhatTourBUS;
 	private NhanVien nv;
 	private JButton btnThoat;
 	private JTextField txtTimKiem;
 	private JComboBox<String> cmbLoaiTK;
 
+	private ITourControl tourControl;
+
+	private NhanVien nhanVien;
+
 	/**
-	 * Create the panel.
+	 * Constructor khởi tạo giao diện cập nhật tour
 	 */
-	public pnlCapNhat_TTTour() {
+	public pnlCapNhat_TTTour(NhanVien nv) {
+		this.nhanVien = nv;
+
 		setBackground(Color.WHITE);
 		setSize(1596, 785);
 		setLayout(new BorderLayout(0, 0));
@@ -508,10 +520,10 @@ public class pnlCapNhat_TTTour extends JPanel implements ActionListener, Propert
 
 		pnlTblTour.setLayout(new BorderLayout(0, 0));
 
-		capNhatTourBUS = new CapNhatTourBUS();
-
-		// Thông tin tài khoản, nhân viên
-		nv = frmDangNhap.getNv();
+		/*
+		 * Khởi tạo đối tượng control
+		 */
+		tourControl = new TourControlImpl();
 
 		// Hiển thị danh sách địa danh
 		cmbModel = new DefaultComboBoxModel<DiaDanh>();

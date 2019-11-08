@@ -2,6 +2,7 @@ package entities;
 
 import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,15 +12,20 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "khachhang")
-@NamedQueries({ @NamedQuery(name = "KH.timTheoTenKH", query = "SELECT kh FROM KhachHang kh WHERE kh.hoVaTen=:ten"),
+@NamedQueries({ @NamedQuery(name = "KH.timTatCaKH", query = "SELECT kh FROM KhachHang kh"),
+		@NamedQuery(name = "KH.timTheoTenKH", query = "SELECT kh FROM KhachHang kh WHERE kh.hoVaTen=:ten"),
 		@NamedQuery(name = "KH.timTheoSDT", query = "SELECT kh FROM KhachHang kh WHERE kh.soDienThoai=:sdt"),
 		@NamedQuery(name = "KH.timTheoCMND", query = "SELECT kh FROM KhachHang kh WHERE kh.soCMND = :cmnd") })
 public class KhachHang {
 	@Id
+	@Column(columnDefinition = "NVARCHAR(20)")
 	private String maKH;
+	@Column(columnDefinition = "CHAR(20)")
 	private String soCMND;
+	@Column(columnDefinition = "NVARCHAR(255)")
 	private String hoVaTen;
 	private Date ngaySinh;
+	@Column(columnDefinition = "CHAR(10)")
 	private String soDienThoai;
 	@Embedded
 	private DiaChi diaChi;

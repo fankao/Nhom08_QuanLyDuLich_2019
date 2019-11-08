@@ -5,20 +5,29 @@ import java.time.LocalDate;
 import java.time.Period;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tour")
+@NamedQueries({ @NamedQuery(name = "Tour.timDsTour", query = "SELECT t FROM Tour t "),
+		@NamedQuery(name = "Tour.timDsTourChuaDK", query = "SELECT t FROM Tour t WHERE t.soNguoiDaDangKy = 0"),
+		@NamedQuery(name = "Tour.timDsTourDaDK", query = "SELECT t FROM Tour t WHERE t.soNguoiDaDangKy > 0") })
 public class Tour {
 	@Id
+	@Column(columnDefinition = "CHAR(20)")
 	private String maTour;
+	@Column(columnDefinition = "NVARCHAR(255)")
 	private String tenTour;
 	private int soLuongKhach;
+	@Column(columnDefinition = "NTEXT")
 	private String moTa;
 	private byte[] hinhAnh;
 	private double donGiaNguoiLon;

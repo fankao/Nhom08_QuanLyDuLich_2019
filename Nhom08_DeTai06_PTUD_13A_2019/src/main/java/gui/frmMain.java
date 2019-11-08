@@ -264,7 +264,7 @@ public class frmMain extends JFrame implements ActionListener {
 		// gán sự kiện
 		ganSuKien();
 
-		lblTenNV.setText(nv.getHoVaTen());	
+		lblTenNV.setText(nv.getHoVaTen());
 		lblTenCV.setText(nv.getQuyen().getGhiChu());
 
 	}
@@ -290,7 +290,7 @@ public class frmMain extends JFrame implements ActionListener {
 		if (o.equals(btnQuanLyTour)) {
 			TienIch.xoaDuongDan(pnlButtonBar, 1);
 			TienIch.doiMauButton(btnQuanLyTour, new JButton[] { btnDangXuat, btnQuanLyPhieuDK, btnThongKe });
-			TienIch.chuyenPanelKhiNhan(pnlContent, new pnlQuanLyTour());
+			TienIch.chuyenPanelKhiNhan(pnlContent, new pnlQuanLyTour(nhanVien));
 			TienIch.themDuongDan(pnlButtonBar, btnQuanLyTour.getText());
 
 		} else if (o.equals(btnQuanLyPhieuDK)) {

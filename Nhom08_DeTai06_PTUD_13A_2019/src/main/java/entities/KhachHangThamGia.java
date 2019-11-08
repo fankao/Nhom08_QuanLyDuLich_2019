@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.Period;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -12,7 +13,9 @@ import javax.persistence.Table;
 @Table(name = "khachhangthamgia")
 public class KhachHangThamGia {
 	@Id
+	@Column(columnDefinition = "CHAR(20)")
 	private String maKHTG;
+	@Column(columnDefinition = "NVARCHAR(255)")
 	private String hoTenKHTG;
 	private Date ngaySinh;
 
