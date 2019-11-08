@@ -63,6 +63,7 @@ public class TourControlImpl implements ITourControl {
 		return tourDAO.xoaTour(tour);
 	}
 	
+	
 	/**
 	 * Lấy danh sách tour theo yêu cầu
 	 * 
