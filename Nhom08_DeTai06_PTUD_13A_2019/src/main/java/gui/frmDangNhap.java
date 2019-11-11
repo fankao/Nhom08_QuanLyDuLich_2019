@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
@@ -24,8 +25,12 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import control.IPhieuDangKyControl;
+import control.IPhieuThuChiControl;
 import control.impl.NhanVienControl;
+import control.impl.PhieuDangKyControlImpl;
 import entities.NhanVien;
+import entities.PhieuDangKy;
 import entities.TaiKhoan;
 
 /**
@@ -46,6 +51,7 @@ public class frmDangNhap extends JDialog implements ActionListener {
 	private JButton btnThoat;
 	private NhanVienControl nhanVienControl;
 	private NhanVien nv;
+	private IPhieuDangKyControl dangKyControl;
 
 	/**
 	 * Constructor khởi tạo giao diện đăng nhập
@@ -179,6 +185,14 @@ public class frmDangNhap extends JDialog implements ActionListener {
 						.addContainerGap(106, Short.MAX_VALUE)));
 		pnLogo.setLayout(gl_pnLogo);
 		contentPanel.add(pnDangNhap);
+		// Cập nhật phiếu đăng ký chờ huỷ do ngày khởi hành không đủ số lượng khách tham
+		// gia
+		dangKyControl = new PhieuDangKyControlImpl();
+		List<PhieuDangKy> phieuDangKies = dangKyControl.capNhatTrangThaiDangKyTour(1, dangKyControl.layDSPhieuDangKy());
+
+		// Cập nhật phiếu đăng ký đã hoàn thành tour
+		List<PhieuDangKy> dsPhieuDKHoanThanh = dangKyControl.capNhatTrangThaiDangKyTour(2,
+				dangKyControl.layDSPhieuDangKy());
 
 		txtTaiKhoan.setText("NV001");
 		pwdMatKhau.setText("000000");

@@ -134,7 +134,7 @@ public class KhachHangDAOImpl implements IKhachHangDAO {
 	 */
 	@Override
 	public String phatSinhMaKH() {
-		String query = "SELECT t.id FROM KhachHang t";
+		String query = "SELECT t.id FROM KhachHang t ORDER BY t.id";
 		List<Integer> lstId = em.createQuery(query, Integer.class).getResultList();
 		if (lstId.size() != 0) {
 			int max = lstId.get(0);

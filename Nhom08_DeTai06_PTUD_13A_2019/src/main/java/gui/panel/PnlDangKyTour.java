@@ -197,11 +197,13 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlTimKiemKhachHang.add(pnlButton, BorderLayout.SOUTH);
 
 		btnXacNhan = new JButton("Xác nhận");
+		btnXacNhan.setToolTipText("Xác nhận chọn khách hàng");
 		btnXacNhan.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/checked_25px.png")));
 		btnXacNhan.setFont(new Font("Dialog", Font.PLAIN, 18));
 		pnlButton.add(btnXacNhan);
 
 		btnDongTimKiem = new JButton("Đóng");
+		btnDongTimKiem.setToolTipText("Đóng giao diện tìm kiếm");
 		btnDongTimKiem.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/close_window_25px.png")));
 		btnDongTimKiem.setFont(new Font("Dialog", Font.PLAIN, 18));
 		pnlButton.add(btnDongTimKiem);
@@ -227,11 +229,13 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlTimKiemVaThemMoi.add(pnlButtonTimKiemVaThem);
 
 		btnTimKiem = new JButton("Tìm kiếm");
+		btnTimKiem.setToolTipText("Tìm kiếm khách hàng");
 		pnlButtonTimKiemVaThem.add(btnTimKiem);
 		btnTimKiem.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/search_32px.png")));
 		btnTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		btnThemMoiKH = new JButton("Thêm khách hàng");
+		btnThemMoiKH.setToolTipText("Thêm mới khách hàng");
 		pnlButtonTimKiemVaThem.add(btnThemMoiKH);
 		btnThemMoiKH.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/plus_32px.png")));
 		btnThemMoiKH.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -242,6 +246,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlTimKiemVaThemMoi.add(pnlDongThemKH);
 
 		btnDongThemKH = new JButton("");
+		btnDongThemKH.setToolTipText("Đóng giao diện thêm khách hàng");
 		btnDongThemKH.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/cancel_32px.png")));
 		btnDongThemKH.setFont(new Font("Arial", Font.PLAIN, 12));
 		pnlDongThemKH.add(btnDongThemKH);
@@ -254,6 +259,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		lblHoTenKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		txtHoTenKH = new JTextField();
+		txtHoTenKH.setToolTipText("Nhập họ và tên");
 		txtHoTenKH.setFont(new Font("Dialog", Font.PLAIN, 18));
 		txtHoTenKH.setColumns(10);
 
@@ -267,6 +273,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		lblSoCmnd.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		txtSoCMND = new JTextField();
+		txtSoCMND.setToolTipText("Nhập số chứng minh nhân dân");
 		txtSoCMND.setFont(new Font("Dialog", Font.PLAIN, 18));
 		txtSoCMND.setColumns(10);
 
@@ -283,10 +290,12 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		fl_pnlDiaChi.setAlignment(FlowLayout.LEFT);
 
 		btnLuuTTKhachHang = new JButton("Lưu");
+		btnLuuTTKhachHang.setToolTipText("Lưu thông tin khách hàng");
 		btnLuuTTKhachHang.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/save_35px.png")));
 		btnLuuTTKhachHang.setFont(new Font("Arial", Font.PLAIN, 23));
 
 		dtcNgaySinh = new JDateChooser();
+		dtcNgaySinh.setToolTipText("Chọn ngày sinh");
 		dtcNgaySinh.getCalendarButton().setFont(new Font("Dialog", Font.PLAIN, 17));
 		dtcNgaySinh.setFont(new Font("Arial", Font.PLAIN, 18));
 		dtcNgaySinh.setLocale(new Locale("vi", "VN"));
@@ -398,10 +407,12 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlDiaChi.add(cmbXa);
 
 		btnThemDC = new JButton("...");
+		btnThemDC.setToolTipText("Thêm địa chỉ");
 		btnThemDC.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		pnlDiaChi.add(btnThemDC);
 
 		btnLuuDC = new JButton("Lưu");
+		btnLuuDC.setToolTipText("Lưu địa chỉ");
 		btnLuuDC.setVisible(false);
 		btnLuuDC.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		pnlDiaChi.add(btnLuuDC);
@@ -425,6 +436,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlChucNang.add(pnlLuaChon);
 
 		txtTimKiemTheoTen = new JTextField();
+		txtTimKiemTheoTen.setToolTipText("Nhập từ khoá tìm kiếm");
 		txtTimKiemTheoTen.setFont(new Font("Dialog", Font.PLAIN, 18));
 		txtTimKiemTheoTen.setColumns(10);
 
@@ -432,10 +444,12 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		lblTimKiem.setFont(new Font("Dialog", Font.PLAIN, 18));
 
 		cmbDiaDanh = new JComboBox();
+		cmbDiaDanh.setToolTipText("Chọn địa danh có tour cần tìm");
 		cmbDiaDanh.setEditable(true);
 		cmbDiaDanh.setFont(new Font("Dialog", Font.PLAIN, 18));
 
 		btnLocDiaDanh = new JButton("Lọc");
+		btnLocDiaDanh.setToolTipText("Lọc tour theo địa danh");
 		btnLocDiaDanh.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/filter_25px.png")));
 		btnLocDiaDanh.setFont(new Font("Arial", Font.PLAIN, 18));
 
@@ -476,6 +490,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlChucNang.add(pnlLamMoi);
 
 		btnLamMoi = new JButton("Làm mới");
+		btnLamMoi.setToolTipText("Làm mới bảng danh sách tour");
 		btnLamMoi.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/lammoi.png")));
 		btnLamMoi.setFont(new Font("Dialog", Font.PLAIN, 17));
 		GroupLayout gl_pnlLamMoi = new GroupLayout(pnlLamMoi);
@@ -491,6 +506,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlDSTour.setLayout(new BorderLayout(0, 0));
 
 		scrDSTour = new JScrollPane();
+		scrDSTour.setToolTipText("Bảng danh sách tour");
 		pnlDSTour.add(scrDSTour, BorderLayout.CENTER);
 
 		pnlHuyChonTour = new JPanel();
@@ -501,6 +517,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlTour.add(pnlHuyChonTour, BorderLayout.SOUTH);
 
 		btnHuyChonTour = new JButton("Huỷ chọn tour");
+		btnHuyChonTour.setToolTipText("Huỷ chọn tour");
 		btnHuyChonTour.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/close_window_25px.png")));
 		btnHuyChonTour.setHorizontalAlignment(SwingConstants.LEFT);
 		btnHuyChonTour.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -527,6 +544,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlDSNgayKhoiHanh.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrDSNgayDi = new JScrollPane();
+		scrDSNgayDi.setToolTipText("Bảng danh sách ngày khởi hành theo tour");
 		pnlDSNgayKhoiHanh.add(scrDSNgayDi, BorderLayout.CENTER);
 
 		tblDSNgayDi = new JTable() {
@@ -567,6 +585,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlDSKhachHangTG.setLayout(new BorderLayout(0, 0));
 
 		scrDSKhachThamGia = new JScrollPane();
+		scrDSKhachThamGia.setToolTipText("Danh sách khách hàng tham gia");
 		pnlDSKhachHangTG.add(scrDSKhachThamGia, BorderLayout.CENTER);
 
 		tblDSKhachThamGia = new JTable();
@@ -598,6 +617,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlThemTTKHTG.add(dtcNgaySinhKHTG);
 
 		btnThemKHTG = new JButton("Thêm");
+		btnThemKHTG.setToolTipText("Thêm khách hàng tham gia");
 		btnThemKHTG.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/add_25px.png")));
 		btnThemKHTG.setFont(new Font("Dialog", Font.PLAIN, 18));
 		pnlThemTTKHTG.add(btnThemKHTG);
@@ -613,6 +633,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlNorth.setLayout(new BoxLayout(pnlNorth, BoxLayout.X_AXIS));
 
 		chkThamGiaTourDK = new JCheckBox("Tham gia tour đăng ký");
+		chkThamGiaTourDK.setToolTipText("Tích khi khách hàng đăng ký tour muốn tham gia");
 		chkThamGiaTourDK.setVisible(false);
 		pnlNorth.add(chkThamGiaTourDK);
 		chkThamGiaTourDK.setHorizontalAlignment(SwingConstants.CENTER);
@@ -642,6 +663,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlButtonNgayKH.add(pnlHuyChonNgayKH);
 
 		btnHuyChonNgayKH = new JButton("Hủy chọn ngày khởi hành");
+		btnHuyChonNgayKH.setToolTipText("Huỷ chọn ngày khởi hành");
 		btnHuyChonNgayKH.setEnabled(false);
 		btnHuyChonNgayKH.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/close_window_25px.png")));
 		pnlHuyChonNgayKH.add(btnHuyChonNgayKH);
@@ -654,6 +676,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlButtonNgayKH.add(pnlChonNgayKH);
 
 		btnThemKhachHangTG = new JButton("Thêm khách tham gia");
+		btnThemKhachHangTG.setToolTipText("Thêm khách hàng tham gia");
 		btnThemKhachHangTG.setEnabled(false);
 		btnThemKhachHangTG.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/checked_25px.png")));
 		btnThemKhachHangTG.setFont(new Font("Arial", Font.BOLD, 15));
@@ -666,6 +689,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlDieuKhienND.add(pnlDangKyTour);
 
 		btnDangKyTour = new JButton("Đăng ký");
+		btnDangKyTour.setToolTipText("Đăng ký tour");
 		btnDangKyTour.setEnabled(false);
 		btnDangKyTour.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/enter_25px.png")));
 		btnDangKyTour.setFont(new Font("Dialog", Font.PLAIN, 20));
@@ -707,6 +731,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		dtcDenNgay.setMinimumSize(new Dimension(150, 21));
 
 		btnTimKiemTheoNgay = new JButton("Tìm kiếm");
+		btnTimKiemTheoNgay.setToolTipText("Tìm kiếm ngày khởi hành theo ngày");
 		panel.add(btnTimKiemTheoNgay);
 		btnTimKiemTheoNgay.setFont(new Font("Dialog", Font.PLAIN, 18));
 		((JTextField) dtcDenNgay.getDateEditor().getUiComponent()).setEditable(false);
@@ -718,6 +743,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlTimKiemNGKH.add(pnlLamMoiNgKH);
 
 		btnLamMoiNgKH = new JButton("");
+		btnLamMoiNgKH.setToolTipText("Làm mới bảng ngày khởi hành");
 		pnlLamMoiNgKH.add(btnLamMoiNgKH);
 		btnLamMoiNgKH.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/lammoi.png")));
 

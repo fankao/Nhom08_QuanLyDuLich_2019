@@ -159,6 +159,7 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		pnlTimKiemKH.add(pnlLoaiTK);
 
 		cmbTimKiemKH = new JComboBox();
+		cmbTimKiemKH.setToolTipText("Chọn loại tìm kiếm");
 		pnlLoaiTK.add(cmbTimKiemKH);
 		cmbTimKiemKH.setModel(new DefaultComboBoxModel(
 				new String[] { "-- Loại tìm kiếm --", "Theo tên", "Theo số điện thoại", "Theo số CMND(căn cước)" }));
@@ -174,6 +175,7 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		pnlThanhTimKiem.add(lblTuKhoa);
 
 		txtTimKiem = new JTextField();
+		txtTimKiem.setToolTipText("Nhập từ khoá tìm kiếm");
 		txtTimKiem.setEditable(false);
 		pnlThanhTimKiem.add(txtTimKiem);
 		txtTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -192,6 +194,7 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		pnlLamMoiDSKH.add(pnlLamMoiKH);
 
 		btnLamMoiBangDSKH = new JButton("");
+		btnLamMoiBangDSKH.setToolTipText("Làm mới bảng");
 		pnlLamMoiKH.add(btnLamMoiBangDSKH);
 		btnLamMoiBangDSKH.setIcon(new ImageIcon(pnlQuanLyPDK.class.getResource("/images/lammoi.png")));
 		btnLamMoiBangDSKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -201,6 +204,7 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		pnlDsTour.setLayout(new BorderLayout(0, 0));
 
 		srcDsKhachHang = new JScrollPane();
+		srcDsKhachHang.setToolTipText("Bảng danh sách khách hàng");
 		srcDsKhachHang.setBorder(new LineBorder(Color.BLACK, 2));
 		pnlDsTour.add(srcDsKhachHang, BorderLayout.CENTER);
 
@@ -238,6 +242,7 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		pnlTimKiemPDK.add(pnlLamMoiDSPDK);
 
 		btnLamMoiBangDSPDK = new JButton("");
+		btnLamMoiBangDSPDK.setToolTipText("Làm mới bảng");
 		btnLamMoiBangDSPDK.setIcon(new ImageIcon(pnlQuanLyPDK.class.getResource("/images/lammoi.png")));
 		pnlLamMoiDSPDK.add(btnLamMoiBangDSPDK);
 		btnLamMoiBangDSPDK.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -247,6 +252,7 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		pnlDsPDK.setLayout(new BorderLayout(0, 0));
 
 		srcDsPDK = new JScrollPane();
+		srcDsPDK.setToolTipText("Bảng danh sách phiếu đăng ký theo khách hàng");
 		srcDsPDK.setBorder(new LineBorder(Color.BLACK));
 		pnlDsPDK.add(srcDsPDK, BorderLayout.CENTER);
 
@@ -257,6 +263,7 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		pnlPhieuDK.add(pnlBoChonPDK, BorderLayout.SOUTH);
 
 		btnBoChonPDK = new JButton("Bỏ chọn");
+		btnBoChonPDK.setToolTipText("Bỏ chọn hàng");
 		btnBoChonPDK.setIcon(new ImageIcon(pnlQuanLyPDK.class.getResource("/images/close_window_25px.png")));
 		btnBoChonPDK.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		pnlBoChonPDK.add(btnBoChonPDK);
@@ -521,6 +528,7 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		pnlThongTinKHTG.add(lblSoKhachTG);
 
 		srcDsKhachTG = new JScrollPane();
+		srcDsKhachTG.setToolTipText("Bảng danh sách khách hàng tham gia");
 		pnlKhachHangThamGia.add(srcDsKhachTG, BorderLayout.CENTER);
 
 		JPanel pnlHuyPhieuVaXacNhanPhieu = new JPanel();
@@ -533,6 +541,7 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		pnlHuyPhieuVaXacNhanPhieu.add(pnlHuyPhieuDK);
 
 		btnHuyDangKyTour = new JButton("Hủy phiếu đăng ký");
+		btnHuyDangKyTour.setToolTipText("Huỷ phiếu đăng ký");
 		btnHuyDangKyTour.setIcon(new ImageIcon(pnlQuanLyPDK.class.getResource("/images/cancel_subscription_32px.png")));
 		btnHuyDangKyTour.setEnabled(false);
 		pnlHuyPhieuDK.add(btnHuyDangKyTour);
@@ -550,6 +559,7 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		pnlKhachHangDK.add(pnlBoChonKH, BorderLayout.SOUTH);
 
 		btnBoChonKhachHang = new JButton("Bỏ chọn");
+		btnBoChonKhachHang.setToolTipText("Bỏ chọn hàng");
 		btnBoChonKhachHang.setIcon(new ImageIcon(pnlQuanLyPDK.class.getResource("/images/close_window_25px.png")));
 		btnBoChonKhachHang.setFont(new Font("Arial", Font.PLAIN, 17));
 		pnlBoChonKH.add(btnBoChonKhachHang);

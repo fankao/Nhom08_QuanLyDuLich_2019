@@ -83,6 +83,7 @@ public class PhieuDangKyControlImpl implements IPhieuDangKyControl {
 						&& p.getNgayKhoiHanh().capNhatNgayKhoiHanhKhongDuSoLuong(p.getNgayKhoiHanh()) == null
 						&& p.isDaHuyPhieu() == false) {
 					p.setDaHoanThanhTour(true);
+					PhieuDangKy pdk = suaPhieuDangKy(p);
 					dsPhieuLoc.add(p);
 				}
 				break;

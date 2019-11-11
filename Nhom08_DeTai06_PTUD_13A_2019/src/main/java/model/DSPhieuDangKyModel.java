@@ -56,13 +56,14 @@ public class DSPhieuDangKyModel extends AbstractTableModel {
 		case 3:
 			return pdk.getNv().getHoVaTen();
 		case 4:
+			String tieuDe = HangSo.DANGXULY;
 			if (pdk.getNgayKhoiHanh().isDaXoaDoKhongDuSoLuong())
-				return HangSo.CHOHUYPHIEUDK;
+				tieuDe = HangSo.CHOHUYPHIEUDK;
 			if (pdk.isDaHoanThanhTour())
-				return HangSo.DAHOANTHANHTOUR;
+				tieuDe = HangSo.DAHOANTHANHTOUR;
 			if (pdk.isDaHuyPhieu())
-				return HangSo.DAHUYPHIEUDK;
-			return HangSo.DANGXULY;
+				tieuDe = HangSo.DAHUYPHIEUDK;
+			return tieuDe;
 		}
 		return null;
 	}

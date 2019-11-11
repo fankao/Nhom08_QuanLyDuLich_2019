@@ -63,13 +63,16 @@ public class NgayKhoiHanh {
 	public NgayKhoiHanh capNhatNgayKhoiHanhKhongDuSoLuong(NgayKhoiHanh ngayKhoiHanh) {
 		java.sql.Date ngayKH = new java.sql.Date(ngayKhoiHanh.getNgayKhoiHanh().getTime());
 		LocalDate date = ngayKH.toLocalDate();
-		int soNguoiToiThieu = Math.round(ngayKhoiHanh.getSoKhachToiDa() * (2 / 3));
+		int soNguoiToiDa = ngayKhoiHanh.getSoKhachToiDa();
+		int soNguoiToiThieu = (int) (soNguoiToiDa * 0.6);
 		Period period = Period.between(LocalDate.now(), date);
 
 		// Nếu ngày hiện tại cách ngày khởi hành còn 5 ngày và số người đã đăng ký tour
-		// không vượt quá 2/3 số khách tối đa
-		if ((period.getDays() <= 5 || period.getMonths() >= 1) && ngayKhoiHanh.getSoKhachDaDangKy() < soNguoiToiThieu) {
+		// không vượt quá 60% số khách tối đa
+
+		if (LocalDate.now().plusDays(5).isAfter(date) && ngayKhoiHanh.getSoKhachDaDangKy() < soNguoiToiThieu) {
 			// thì tiến hành huỷ ngày khởi hành này
+
 			ngayKhoiHanh.setDaXoaDoKhongDuSoLuong(true);
 			return ngayKhoiHanh;
 		}

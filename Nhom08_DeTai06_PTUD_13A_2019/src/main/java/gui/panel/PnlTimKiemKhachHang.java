@@ -67,6 +67,7 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 	private JLabel lblDiaChidb;
 	private JLabel lblGioiTinhdb;
 	private JButton btnBoChon;
+	private JButton btnLamMoi;
 
 	/**
 	 * Khơi tạo giao diện tìm kiếm thông tin khách hàng
@@ -106,23 +107,33 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 		btnBoChon = new JButton("Huỷ chọn");
 		btnBoChon.setIcon(new ImageIcon(PnlTimKiemKhachHang.class.getResource("/images/cancel_32px.png")));
 		btnBoChon.setFont(new Font("Tahoma", Font.PLAIN, 17));
+
+		btnLamMoi = new JButton("");
+		btnLamMoi.setIcon(new ImageIcon(PnlTimKiemKhachHang.class.getResource("/images/lammoi.png")));
 		GroupLayout gl_pnlTimKiemTTKH = new GroupLayout(pnlTimKiemTTKH);
-		gl_pnlTimKiemTTKH.setHorizontalGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_pnlTimKiemTTKH.createSequentialGroup().addContainerGap().addGroup(gl_pnlTimKiemTTKH
-						.createParallelGroup(Alignment.TRAILING)
-						.addComponent(pnlDSKhachHang, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-						.addGroup(Alignment.LEADING,
-								gl_pnlTimKiemTTKH.createSequentialGroup().addComponent(lblLoaiTK)
-										.addPreferredGap(ComponentPlacement.UNRELATED)
-										.addComponent(cmbLoaiTK, 0, 0, Short.MAX_VALUE))
-						.addComponent(lblNhap, Alignment.LEADING)
-						.addComponent(txtTuKhoa, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-						.addComponent(btnBoChon, Alignment.LEADING)).addContainerGap()));
+		gl_pnlTimKiemTTKH
+				.setHorizontalGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_pnlTimKiemTTKH.createSequentialGroup().addContainerGap()
+								.addGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.LEADING)
+										.addComponent(pnlDSKhachHang, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+										.addGroup(gl_pnlTimKiemTTKH.createSequentialGroup().addComponent(lblLoaiTK)
+												.addPreferredGap(ComponentPlacement.UNRELATED)
+												.addComponent(cmbLoaiTK, 0, 0, Short.MAX_VALUE))
+										.addGroup(
+												gl_pnlTimKiemTTKH.createSequentialGroup().addComponent(lblNhap)
+														.addPreferredGap(ComponentPlacement.RELATED, 219,
+																Short.MAX_VALUE)
+														.addComponent(btnLamMoi))
+										.addComponent(txtTuKhoa, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+										.addComponent(btnBoChon))
+								.addContainerGap()));
 		gl_pnlTimKiemTTKH.setVerticalGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_pnlTimKiemTTKH.createSequentialGroup().addContainerGap()
 						.addGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.BASELINE).addComponent(lblLoaiTK)
 								.addComponent(cmbLoaiTK, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
-						.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(lblNhap)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.BASELINE).addComponent(lblNhap)
+								.addComponent(btnLamMoi))
 						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(txtTuKhoa, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
@@ -270,6 +281,7 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 
 	/**
 	 * Hiện danh sách khách hàng
+	 * 
 	 * @param dsKH: danh sách khách hàng
 	 */
 	private void hienDanhSachKhachHang(List<KhachHang> dsKH) {
@@ -289,6 +301,7 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 	private void ganSuKien() {
 		cmbLoaiTK.addActionListener(this);
 		btnBoChon.addActionListener(this);
+		btnLamMoi.addActionListener(this);
 		lstDSKH.addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -384,6 +397,10 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 			}
 		} else if (o.equals(btnBoChon)) {
 			xoaTrangThongTinKH();
+		} else if (o.equals(btnLamMoi)) {
+			xoaTrangThongTinKH();
+			dsKhachHang = khachHangControl.layDSKhachHang();
+			hienDanhSachKhachHang(dsKhachHang);
 		}
 
 	}
@@ -477,5 +494,4 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 	public void setTxtTuKhoa(JTextField txtTuKhoa) {
 		this.txtTuKhoa = txtTuKhoa;
 	}
-
 }
