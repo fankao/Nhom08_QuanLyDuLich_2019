@@ -26,9 +26,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import control.IPhieuDangKyControl;
-import control.IPhieuThuChiControl;
-import control.impl.NhanVienControl;
+import control.impl.NhanVienControlImpl;
 import control.impl.PhieuDangKyControlImpl;
+//github.com/fankao/Nhom08_QuanLyDuLich_2019.git
 import entities.NhanVien;
 import entities.PhieuDangKy;
 import entities.TaiKhoan;
@@ -49,7 +49,7 @@ public class frmDangNhap extends JDialog implements ActionListener {
 	private JLabel lblLogo;
 	private JButton btnDangNhap;
 	private JButton btnThoat;
-	private NhanVienControl nhanVienControl;
+	private NhanVienControlImpl nhanVienControl;
 	private NhanVien nv;
 	private IPhieuDangKyControl dangKyControl;
 
@@ -218,7 +218,7 @@ public class frmDangNhap extends JDialog implements ActionListener {
 		Object o = e.getSource();
 		if (o.equals(btnDangNhap)) {
 			if (kiemTraDangNhap()) {
-				nhanVienControl = new NhanVienControl();
+				nhanVienControl = new NhanVienControlImpl();
 				TaiKhoan taiKhoan = new TaiKhoan(txtTaiKhoan.getText(), pwdMatKhau.getText());
 				nv = nhanVienControl.layNhanVienTheoTaiKhoan(taiKhoan);
 				if (nv != null) {

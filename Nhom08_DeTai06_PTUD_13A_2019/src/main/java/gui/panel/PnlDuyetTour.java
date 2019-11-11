@@ -120,9 +120,6 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 						new Color(0, 0, 0)));
 		add(pnlDSTourDuyet);
 		pnlDSTourDuyet.setLayout(new BorderLayout(0, 0));
-
-		scrDSTourDuyet = new JScrollPane();
-		pnlDSTourDuyet.add(scrDSTourDuyet, BorderLayout.CENTER);
 		JPanel pnlChucNang = new JPanel();
 		pnlDSTourCanDuyet.add(pnlChucNang, BorderLayout.NORTH);
 		pnlChucNang.setLayout(new GridLayout(1, 0, 2, 0));
@@ -132,6 +129,7 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 
 		tblDSTourDaDuyet = new JTable();
 		tblDSTourChuaDuyet = new JTable();
+		tblDSTourChuaDuyet.setToolTipText("Bảng hiển thị danh sách tour chưa duyệt.");
 		tblDSTourChuaDuyet.setFillsViewportHeight(true);
 		tblDSTourDaDuyet.setFillsViewportHeight(true);
 
@@ -149,6 +147,7 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		FlowLayout flowLayout = (FlowLayout) pnlDuyet.getLayout();
 
 		btnDuyetTour = new JButton("Duyệt tour");
+		btnDuyetTour.setToolTipText("Duyệt tour đã chọn.");
 		btnDuyetTour.setIcon(new ImageIcon(PnlDuyetTour.class.getResource("/images/task_completed_32px.png")));
 		btnDuyetTour.setEnabled(false);
 		btnDuyetTour.setFont(new Font("Tahoma", Font.PLAIN, 22));
@@ -169,6 +168,7 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		pnlTimKiemCD.add(lblTuKhoaCD);
 
 		txtTimKiemCD = new JTextField();
+		txtTimKiemCD.setToolTipText("Nhập tên tour cần tìm.");
 		txtTimKiemCD.setFont(new Font("Arial", Font.PLAIN, 20));
 		pnlTimKiemCD.add(txtTimKiemCD);
 		txtTimKiemCD.setColumns(20);
@@ -179,13 +179,17 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		panel.add(pnlLamMoiCD);
 
 		btnLamMoiCD = new JButton("Làm mới");
+		btnLamMoiCD.setToolTipText("Làm mới thông tin của bảng danh sách tour chưa duyệt");
 		btnLamMoiCD.setIcon(new ImageIcon(PnlDuyetTour.class.getResource("/images/filter_25px.png")));
 		btnLamMoiCD.setFont(new Font("Dialog", Font.PLAIN, 20));
 		pnlLamMoiCD.add(btnLamMoiCD);
 
 		// hiện danh sách tour đã duyệt
 		dsTourDaDuyet = tourControl.layDsTourTheoYeuCau(3);
-		hienDanhSachTour(tblDSTourDaDuyet, dsTourDaDuyet, scrDSTourDuyet);
+		
+				scrDSTourDuyet = new JScrollPane();
+				pnlDSTourDuyet.add(scrDSTourDuyet, BorderLayout.CENTER);
+				hienDanhSachTour(tblDSTourDaDuyet, dsTourDaDuyet, scrDSTourDuyet);
 
 		JPanel pnlHuyDuyet = new JPanel();
 		pnlHuyDuyet.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -193,6 +197,7 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		pnlDSTourDuyet.add(pnlHuyDuyet, BorderLayout.SOUTH);
 
 		btnHuyDuyet = new JButton("Huỷ duyệt");
+		btnHuyDuyet.setToolTipText("Hủy duyệt tour đã chọn.");
 		btnHuyDuyet.setIcon(new ImageIcon(PnlDuyetTour.class.getResource("/images/cancel_32px.png")));
 		btnHuyDuyet.setEnabled(false);
 		btnHuyDuyet.setFont(new Font("Tahoma", Font.PLAIN, 22));
@@ -213,6 +218,7 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		pnlTimKiemD.add(lblTimKiemD);
 
 		txtTimKiemD = new JTextField();
+		txtTimKiemD.setToolTipText("Nhập tên tour cần tìm.");
 		txtTimKiemD.setFont(new Font("Arial", Font.PLAIN, 20));
 		txtTimKiemD.setColumns(20);
 		pnlTimKiemD.add(txtTimKiemD);
@@ -221,8 +227,10 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		FlowLayout fl_pnlLamMoiD = (FlowLayout) pnlLamMoiD.getLayout();
 		fl_pnlLamMoiD.setAlignment(FlowLayout.RIGHT);
 		panel_4.add(pnlLamMoiD);
+		tblDSTourDaDuyet.setToolTipText("Bảng hiển thị danh sách tour đã được duyệt.");
 
 		btnLamMoiD = new JButton("Làm mới");
+		btnLamMoiD.setToolTipText("Làm mới thông tin của bảng danh sách tour đã được duyệt.");
 		btnLamMoiD.setIcon(new ImageIcon(PnlDuyetTour.class.getResource("/images/filter_25px.png")));
 		btnLamMoiD.setFont(new Font("Dialog", Font.PLAIN, 20));
 		pnlLamMoiD.add(btnLamMoiD);

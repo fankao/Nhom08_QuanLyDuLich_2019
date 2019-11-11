@@ -11,13 +11,13 @@ import entities.TaiKhoan;
  * 
  * @author Minh Chiến, Ngày tạo :8/11/2019
  */
-public class NhanVienControl implements INhanVienControl {
+public class NhanVienControlImpl implements INhanVienControl {
 	private INhanVienDAO nhanVienDAO;
 
 	/**
 	 * Constructo khởi tạo đối tượng NhanVienControl
 	 */
-	public NhanVienControl() {
+	public NhanVienControlImpl() {
 		nhanVienDAO = new NhanVienDAOImpl();
 	}
 
