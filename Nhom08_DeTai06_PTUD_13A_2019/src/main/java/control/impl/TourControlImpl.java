@@ -2,12 +2,16 @@ package control.impl;
 
 import java.util.List;
 
-
 import control.ITourControl;
+
+import data.IDiaDanhDAO;
 import data.ITourDAO;
+import data.impl.DiaDanhDAOImpl;
+
 import data.impl.TourDAOImpl;
 import entities.DiaDanh;
 import entities.Tour;
+
 /**
  * TourControlImpl.java
  * 
@@ -17,9 +21,12 @@ import entities.Tour;
 public class TourControlImpl implements ITourControl {
 	private ITourDAO tourDAO;
 
+	private IDiaDanhDAO diaDanhDAO;
+
 	public TourControlImpl() {
 		// TODO Auto-generated constructor stub
 		tourDAO = new TourDAOImpl();
+		diaDanhDAO = new DiaDanhDAOImpl();
 	}
 
 	/**
@@ -69,8 +76,7 @@ public class TourControlImpl implements ITourControl {
 		// TODO Auto-generated method stub
 		return tourDAO.xoaTour(tour);
 	}
-	
-	
+
 	/**
 	 * Lấy danh sách tour theo yêu cầu
 	 * 
@@ -95,8 +101,7 @@ public class TourControlImpl implements ITourControl {
 
 	@Override
 	public List<DiaDanh> layDSDiaDanh() {
-		// TODO Auto-generated method stub
-		return null;
+		return diaDanhDAO.layDSDiaDanh();
 	}
 
 }

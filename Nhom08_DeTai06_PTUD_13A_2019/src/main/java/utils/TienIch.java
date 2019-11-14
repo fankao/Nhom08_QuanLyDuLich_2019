@@ -22,6 +22,9 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableColumn;
@@ -102,10 +105,9 @@ public class TienIch {
 	 */
 	public static void chuyenPanelKhiNhan(JPanel root, JPanel pnDich) {
 		root.removeAll();
-		// root.add(pnDich, BorderLayout.CENTER);
 		root.add(pnDich, BorderLayout.CENTER);
 		root.repaint();
-		pnDich.revalidate();
+		root.validate();
 	}
 
 	public static void chinhKichThuocTable(JTable tbl, int tongKichThuoc, double... tyLe) {
@@ -361,5 +363,24 @@ public class TienIch {
 		for (JTextField txt : txts) {
 			txt.setText("");
 		}
+	}
+
+	/**
+	 * Hàm chỉnh look and feel cho panel
+	 * 
+	 * @param panels: panel cần chỉnh sửa
+	 */
+	public static void chinhLookAndFeelChoPanel(JPanel... panels) {
+		try {
+			UIManager.setLookAndFeel("com.jtattoo.plaf.mint.MintLookAndFeel");
+
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+		for (int i = 0; i < panels.length; i++) {
+			SwingUtilities.updateComponentTreeUI(panels[i]);
+		}
+
 	}
 }

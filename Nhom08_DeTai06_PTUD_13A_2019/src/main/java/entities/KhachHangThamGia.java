@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name = "khachhangthamgia")
 public class KhachHangThamGia {
 	@Id
-	@Column(columnDefinition = "CHAR(20)")
+	@Column(columnDefinition = "VARCHAR(20)")
 	private String maKHTG;
 	@Column(columnDefinition = "NVARCHAR(255)")
 	private String hoTenKHTG;

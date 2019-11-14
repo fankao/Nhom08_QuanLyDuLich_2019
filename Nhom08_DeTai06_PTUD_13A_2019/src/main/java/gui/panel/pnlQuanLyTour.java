@@ -13,45 +13,42 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import entities.NhanVien;
 import gui.frmMain;
 import utils.TienIch;
+
 /**
  * 
  * @author NMC
  *
  */
-public class pnlQuanLyTour extends JPanel implements ActionListener{
+public class pnlQuanLyTour extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JButton btnCapNhatTour;
 	private JButton btnDKTour;
 	private JButton btnHuyDKTour;
+	private NhanVien nhanVien;
 
 	/**
 	 * Create the panel.
 	 */
-	public pnlQuanLyTour() {
+	public pnlQuanLyTour(NhanVien nv) {
+		this.nhanVien = nv;
 		setBackground(Color.WHITE);
 		JPanel pnChucNang = new JPanel();
 		pnChucNang.setBackground(Color.WHITE);
 		pnChucNang.setBorder(new EmptyBorder(0, 60, 0, 60));
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(20)
-					.addComponent(pnChucNang, GroupLayout.PREFERRED_SIZE, 936, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(196)
-					.addComponent(pnChucNang, GroupLayout.PREFERRED_SIZE, 174, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(260, Short.MAX_VALUE))
-		);
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup().addGap(20)
+						.addComponent(pnChucNang, GroupLayout.PREFERRED_SIZE, 936, Short.MAX_VALUE).addContainerGap()));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup().addGap(196)
+						.addComponent(pnChucNang, GroupLayout.PREFERRED_SIZE, 174, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(260, Short.MAX_VALUE)));
 		pnChucNang.setLayout(new GridLayout(0, 3, 30, 20));
-		
+
 		btnCapNhatTour = new JButton("Cập nhật\r\n tour");
 		btnCapNhatTour.setIcon(new ImageIcon(pnlQuanLyTour.class.getResource("/images/capnhat.png")));
 		btnCapNhatTour.setForeground(Color.WHITE);
@@ -64,7 +61,7 @@ public class pnlQuanLyTour extends JPanel implements ActionListener{
 		btnCapNhatTour.setFocusable(false);
 		btnCapNhatTour.setBorder(new EmptyBorder(0, 10, 0, 10));
 		pnChucNang.add(btnCapNhatTour);
-		
+
 		btnDKTour = new JButton("Đăng ký tour");
 		btnDKTour.setIcon(new ImageIcon(pnlQuanLyTour.class.getResource("/images/dangkytour.png")));
 		btnDKTour.setForeground(Color.WHITE);
@@ -73,7 +70,7 @@ public class pnlQuanLyTour extends JPanel implements ActionListener{
 		btnDKTour.setFocusable(false);
 		btnDKTour.setBorder(new EmptyBorder(0, 0, 0, 0));
 		pnChucNang.add(btnDKTour);
-		
+
 		btnHuyDKTour = new JButton("Huỷ đăng ký tour");
 		btnHuyDKTour.setIcon(new ImageIcon(pnlQuanLyTour.class.getResource("/images/huydangky.png")));
 		btnHuyDKTour.setForeground(Color.WHITE);
@@ -87,27 +84,24 @@ public class pnlQuanLyTour extends JPanel implements ActionListener{
 		btnHuyDKTour.setBorder(new EmptyBorder(0, 0, 0, 0));
 		pnChucNang.add(btnHuyDKTour);
 		setLayout(groupLayout);
-		
+
 		btnCapNhatTour.addActionListener(this);
 		btnDKTour.addActionListener(this);
 		btnHuyDKTour.addActionListener(this);
-		
-		
-	
 
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		Object o = e.getSource();
-		if(o.equals(btnCapNhatTour)) {
-			TienIch.chuyenPanelKhiNhan(frmMain.getPnContent(), new pnlCapNhat_TTTour());
+		if (o.equals(btnCapNhatTour)) {
+			TienIch.chuyenPanelKhiNhan(frmMain.getPnContent(), new pnlCapNhat_TTTour(nhanVien));
 			TienIch.themDuongDan(frmMain.getPnButtonBar(), "Cập nhật tour");
-		}else if(o.equals(btnDKTour)) {
+		} else if (o.equals(btnDKTour)) {
 			TienIch.chuyenPanelKhiNhan(frmMain.getPnContent(), new pnlPhieuDangKyTour());
 			TienIch.themDuongDan(frmMain.getPnButtonBar(), "Đăng ký tour du lịch");
-		}else if(o.equals(btnHuyDKTour)){
+		} else if (o.equals(btnHuyDKTour)) {
 			TienIch.chuyenPanelKhiNhan(frmMain.getPnContent(), new pnlHuyDangKyTour());
 			TienIch.themDuongDan(frmMain.getPnButtonBar(), "Hủy phiếu đăng ký");
 		}

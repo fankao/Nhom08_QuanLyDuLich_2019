@@ -206,8 +206,13 @@ public class frmDangNhap extends JDialog implements ActionListener {
 			if (txtTaiKhoan.getText().trim().length() != 0 && pwdMatKhau.getText().trim().length() != 0) {
 				TaiKhoan taiKhoan = new TaiKhoan(txtTaiKhoan.getText(), pwdMatKhau.getText());
 				nv = nhanVienControl.layNhanVienTheoTaiKhoan(taiKhoan);
-				this.dispose();
-				new frmMain(nv).setVisible(true);
+				if (nv != null) {
+					this.dispose();
+					new frmMain(nv).setVisible(true);
+				} else {
+					JOptionPane.showMessageDialog(this, "Tài khoản không tồn tại", "Lỗi đăng nhập",
+							JOptionPane.ERROR_MESSAGE);
+				}
 
 			} else {
 				JOptionPane.showMessageDialog(this, "Chưa nhập tên tài khoản hoặc mật khẩu");

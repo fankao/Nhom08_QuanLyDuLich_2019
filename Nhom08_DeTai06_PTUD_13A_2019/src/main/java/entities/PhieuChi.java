@@ -15,19 +15,19 @@ import javax.persistence.Table;
 @Table(name = "phieuchi")
 public class PhieuChi {
 	@Id
-	@Column(columnDefinition = "CHAR(20)")
+	@Column(columnDefinition = "VARCHAR(20)")
 	private String maPhieuChi;
-	
+
 	private Date ngayTaoPhieuChi;
-	
+
 	@Column(columnDefinition = "MONEY")
 	private double soTienChi;
-	
+
 	@Column(columnDefinition = "NTEXT")
 	private String lyDoChi;
-	
+
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "phieudangkyID", nullable = false,columnDefinition = "CHAR(20)")
+	@JoinColumn(name = "phieudangkyID", nullable = false, columnDefinition = "VARCHAR(20)", updatable = true)
 	private PhieuDangKy pdk;
 
 	public PhieuChi() {
