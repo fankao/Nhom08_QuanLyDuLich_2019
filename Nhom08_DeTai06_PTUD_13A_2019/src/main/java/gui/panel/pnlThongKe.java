@@ -24,15 +24,16 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-import bus.IQuanLyPhieuDKBUS;
-import bus.impl.QuanLyPhieuDKBUS;
+//import bus.IQuanLyPhieuDKBUS;
+//import bus.impl.QuanLyPhieuDKBUS;
 import entities.PhieuDangKy;
+import java.awt.GridLayout;
 
 public class pnlThongKe extends JPanel {
 	private JTabbedPane tabThongTinTK;
 	private JTextField txtTongDoanhThu;
 	private JTextField txtTongPDKDaHuy;
-	private IQuanLyPhieuDKBUS quanLyPhieuDKBUS;
+//	private IQuanLyPhieuDKBUS quanLyPhieuDKBUS;
 	private List<PhieuDangKy> dsPDK;
 	private JPanel pnlThongKeDoanhThuTheoThang;
 
@@ -78,7 +79,7 @@ public class pnlThongKe extends JPanel {
 		btnThoat.setPreferredSize(new Dimension(120, 35));
 		pnlLuuVaThoat.add(btnThoat);
 
-		quanLyPhieuDKBUS = new QuanLyPhieuDKBUS();
+//		quanLyPhieuDKBUS = new QuanLyPhieuDKBUS();
 
 		tabThongTinTK = new JTabbedPane(JTabbedPane.TOP);
 		tabThongTinTK.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -130,13 +131,24 @@ public class pnlThongKe extends JPanel {
 		txtTongPDKDaHuy.setColumns(10);
 		pnlTongPDKDaHuy.add(txtTongPDKDaHuy);
 
-		dsPDK = quanLyPhieuDKBUS.layDSPhieuDK();
+//		dsPDK = quanLyPhieuDKBUS.layDSPhieuDK();
 		JPanel panel_7 = new JPanel();
 		pnlTTThongKePDK.add(panel_7, BorderLayout.CENTER);
-		pnlThongKeDoanhThuTheoThang.setLayout(new BorderLayout(0, 0));
-		ChartPanel chartPanel = new ChartPanel(taoBieuDoDoanhThu());
-		chartPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		pnlThongKeDoanhThuTheoThang.add(chartPanel);
+		pnlThongKeDoanhThuTheoThang.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		JPanel pnlBieuDo = new JPanel();
+		pnlBieuDo.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Bi\u1EC3u \u0111\u1ED3", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnlThongKeDoanhThuTheoThang.add(pnlBieuDo);
+		pnlBieuDo.setLayout(new BorderLayout(0, 0));
+		
+		ChartPanel chartPanel = new ChartPanel((JFreeChart) null);
+		pnlBieuDo.add(chartPanel, BorderLayout.CENTER);
+		chartPanel.setLayout(new BorderLayout(0, 0));
+		
+		JPanel pnlSoLieu = new JPanel();
+		pnlSoLieu.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "S\u1ED1 li\u1EC7u", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnlThongKeDoanhThuTheoThang.add(pnlSoLieu);
+		pnlSoLieu.setLayout(new BorderLayout(0, 0));
 	}
 	/*
 	 * Vẽ biểu đò thống kê doanh thu.
@@ -147,7 +159,7 @@ public class pnlThongKe extends JPanel {
 		double tongTien = 0.0;
 		double tongTienTren1phieu = 0.0;
 		for (PhieuDangKy phieuDK : dsPDK) {
-			tongTienTren1phieu = phieuDK.tinhTongThanhTien();
+//			tongTienTren1phieu = phieuDK.tinhTongThanhTien();
 			if (phieuDK.getNgayTaoPhieu().toLocalDate().getMonth().getValue() == thang) {
 				tongTien += tongTienTren1phieu;
 			}

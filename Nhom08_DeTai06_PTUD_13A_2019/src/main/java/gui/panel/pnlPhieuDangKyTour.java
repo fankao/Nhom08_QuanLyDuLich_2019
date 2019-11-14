@@ -27,6 +27,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -63,7 +64,6 @@ import gui.dialog.dlgLocTour;
 import gui.dialog.dlgPhieuThu;
 import utils.HintTextFieldUI;
 import utils.TienIch;
-import javax.swing.JCheckBox;
 
 /**
  * 

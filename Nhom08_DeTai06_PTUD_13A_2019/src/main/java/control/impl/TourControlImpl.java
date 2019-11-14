@@ -2,13 +2,20 @@ package control.impl;
 
 import java.util.List;
 
+
 import control.ITourControl;
-import data.TouDAO;
+import data.ITourDAO;
 import data.impl.TourDAOImpl;
+import entities.DiaDanh;
 import entities.Tour;
+/**
+ * TourControlImpl.java
+ * 
+ * @author Thanh Trí, Ngày tạo :8/11/2019
+ */
 
 public class TourControlImpl implements ITourControl {
-	private TouDAO tourDAO;
+	private ITourDAO tourDAO;
 
 	public TourControlImpl() {
 		// TODO Auto-generated constructor stub
@@ -83,6 +90,12 @@ public class TourControlImpl implements ITourControl {
 		case 3:
 			return tourDAO.layDSTourChuaDangKy();
 		}
+		return null;
+	}
+
+	@Override
+	public List<DiaDanh> layDSDiaDanh() {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

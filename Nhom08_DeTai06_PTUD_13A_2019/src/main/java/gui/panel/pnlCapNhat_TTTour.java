@@ -67,13 +67,11 @@ import javax.swing.text.JTextComponent;
 
 import com.toedter.calendar.JDateChooser;
 
-import bus.impl.CapNhatTourBUS;
 import control.ITourControl;
 import control.impl.TourControlImpl;
 import entities.DiaDanh;
 import entities.NhanVien;
 import entities.Tour;
-import gui.frmDangNhap;
 import gui.frmMain;
 import gui.dialog.dlgXemAnh;
 import utils.HintTextFieldUI;
