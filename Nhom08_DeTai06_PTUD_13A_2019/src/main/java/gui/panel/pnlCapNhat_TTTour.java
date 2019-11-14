@@ -15,6 +15,7 @@ import java.beans.PropertyChangeListener;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.DecimalFormat;
 import java.text.Format;
@@ -67,13 +68,11 @@ import javax.swing.text.JTextComponent;
 
 import com.toedter.calendar.JDateChooser;
 
-import bus.impl.CapNhatTourBUS;
 import control.ITourControl;
 import control.impl.TourControlImpl;
 import entities.DiaDanh;
 import entities.NhanVien;
 import entities.Tour;
-import gui.frmDangNhap;
 import gui.frmMain;
 import gui.dialog.dlgXemAnh;
 import utils.HintTextFieldUI;
@@ -113,7 +112,6 @@ public class pnlCapNhat_TTTour extends JPanel implements ActionListener, Propert
 	private List<DiaDanh> diaDanhs;
 	private JTextPane txpMoTa;
 	private static List<Tour> dsTour;
-	private List<DiaDanh> lstDiaDanhChon;
 	private JComboBox<DiaDanh> cmbDiaDanh;
 	private DefaultComboBoxModel<DiaDanh> cmbModel;
 
@@ -125,7 +123,6 @@ public class pnlCapNhat_TTTour extends JPanel implements ActionListener, Propert
 	private JButton btnXemAnh;
 	private JCheckBox chkThemHinhAnh;
 	private JButton btnHuy;
-	private NhanVien nv;
 	private JButton btnThoat;
 	private JTextField txtTimKiem;
 	private JComboBox<String> cmbLoaiTK;
@@ -174,26 +171,6 @@ public class pnlCapNhat_TTTour extends JPanel implements ActionListener, Propert
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		pnlTenTieuDe.add(lblNewLabel);
-
-		JPanel pnlTimKiem = new JPanel();
-		pnlTimKiem.setBackground(new Color(0, 191, 255));
-		pnlTieuDe.add(pnlTimKiem);
-		pnlTimKiem.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 20));
-
-		txtTimKiem = new JTextField();
-		txtTimKiem.setBorder(new LineBorder(new Color(171, 173, 179), 2));
-		txtTimKiem.setPreferredSize(new Dimension(6, 35));
-		txtTimKiem.setHorizontalAlignment(SwingConstants.LEFT);
-		txtTimKiem.setEditable(false);
-		txtTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		pnlTimKiem.add(txtTimKiem);
-		txtTimKiem.setColumns(20);
-
-		cmbLoaiTK = new JComboBox<String>();
-		cmbLoaiTK.setModel(
-				new DefaultComboBoxModel<String>(new String[] { "Tìm kiếm", "Mã tour", "Tên tour", "Địa danh" }));
-		cmbLoaiTK.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		pnlTimKiem.add(cmbLoaiTK);
 
 		pnlContent = new JPanel();
 		pnlContent.setBackground(Color.WHITE);
@@ -351,7 +328,7 @@ public class pnlCapNhat_TTTour extends JPanel implements ActionListener, Propert
 		pnlTuNg.add(dtcTuNgay);
 		dtcTuNgay.setPreferredSize(new Dimension(172, 35));
 		dtcTuNgay.setMinimumSize(new Dimension(27, 35));
-		dtcTuNgay.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		dtcTuNgay.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		dtcTuNgay.setDateFormatString("dd/MM/yyyy");
 
 		JPanel pnlDenNgay = new JPanel();
@@ -369,7 +346,7 @@ public class pnlCapNhat_TTTour extends JPanel implements ActionListener, Propert
 		dtcDenNgay.setLocale(new Locale("vi"));
 		pnlDenNgay.add(dtcDenNgay);
 		dtcDenNgay.setDateFormatString("dd/MM/yyyy");
-		dtcDenNgay.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		dtcDenNgay.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		dtcDenNgay.setPreferredSize(new Dimension(172, 35));
 
 		JPanel pnDonGia = new JPanel();
@@ -527,12 +504,14 @@ public class pnlCapNhat_TTTour extends JPanel implements ActionListener, Propert
 
 		// Hiển thị danh sách địa danh
 		cmbModel = new DefaultComboBoxModel<DiaDanh>();
-		diaDanhs = capNhatTourBUS.layDSDiaDanh();
+		diaDanhs = tourControl.layDSDiaDanh();
 		hienThiDanhSachDiaDanh();
 
 		// Tạo bảng thông tin tour
-		dsTour = capNhatTourBUS.layDSTour(nv.getMaNV());
+		dsTour = tourControl.layDsTourTheoYeuCau(1);
 		tblTour = new JTable() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isCellEditable(int arg0, int arg1) {
 				// TODO Auto-generated method stub
@@ -557,8 +536,26 @@ public class pnlCapNhat_TTTour extends JPanel implements ActionListener, Propert
 		pnlTblTour.add(new JScrollPane(tblTour));
 		TienIch.chinhKichThuocTable(tblTour, tblTour.getColumnModel().getTotalColumnWidth(), 0.5, 5, 50, 10, 10, 10, 10,
 				10, 50);
+		JPanel pnlLoc = new JPanel();
+		FlowLayout fl_pnlLoc = (FlowLayout) pnlLoc.getLayout();
+		fl_pnlLoc.setAlignment(FlowLayout.RIGHT);
+		pnlTblTour.add(pnlLoc, BorderLayout.NORTH);
 
-		// sự kiện
+		txtTimKiem = new JTextField();
+		pnlLoc.add(txtTimKiem);
+		txtTimKiem.setBorder(new LineBorder(new Color(171, 173, 179), 2));
+		txtTimKiem.setPreferredSize(new Dimension(6, 35));
+		txtTimKiem.setHorizontalAlignment(SwingConstants.LEFT);
+		txtTimKiem.setEditable(false);
+		txtTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtTimKiem.setColumns(20);
+
+		cmbLoaiTK = new JComboBox<String>();
+		pnlLoc.add(cmbLoaiTK);
+		cmbLoaiTK.setModel(
+				new DefaultComboBoxModel<String>(new String[] { "Tìm kiếm", "Mã tour", "Tên tour", "Địa danh" }));
+		cmbLoaiTK.setFont(new Font("Tahoma", Font.PLAIN, 20));
+
 		ganSuKien();
 
 		DefaultComboBoxModel<DiaDanh> model = new DefaultComboBoxModel<DiaDanh>();
@@ -568,8 +565,14 @@ public class pnlCapNhat_TTTour extends JPanel implements ActionListener, Propert
 		});
 
 		TienIch.hienAnCacControl(false, dtcDenNgay, dtcTuNgay);
+
+		/*
+		 * Thiết lập ngày tháng
+		 */
 		((JTextComponent) dtcDenNgay.getDateEditor().getUiComponent()).setEditable(false);
 		((JTextComponent) dtcTuNgay.getDateEditor().getUiComponent()).setEditable(false);
+		((JTextComponent) dtcDenNgay.getDateEditor().getUiComponent()).setFont(new Font("tahoma", Font.PLAIN, 20));
+		((JTextComponent) dtcTuNgay.getDateEditor().getUiComponent()).setFont(new Font("tahoma", Font.PLAIN, 20));
 
 	}
 
@@ -672,7 +675,7 @@ public class pnlCapNhat_TTTour extends JPanel implements ActionListener, Propert
 		String maTour = (String) tblTour.getValueAt(row, 1);
 		Tour tourCanTim = new Tour();
 		tourCanTim.setMaTour(maTour);
-		dsTour = capNhatTourBUS.layDSTour(nv.getMaNV());
+		dsTour = tourControl.layDsTourTheoYeuCau(1);
 		if (dsTour.contains(tourCanTim)) {
 			tourCanTim = dsTour.get(dsTour.indexOf(tourCanTim));
 			txtMaTour.setText(tourCanTim.getMaTour());
@@ -745,7 +748,7 @@ public class pnlCapNhat_TTTour extends JPanel implements ActionListener, Propert
 				tour.setDonGiaNguoiLon(((Number) txtGiaNgLon.getValue()).doubleValue());
 				tour.setDonGiaTreEm(((Number) txtGTreEm.getValue()).doubleValue());
 
-				tour.setNhanVien(nv);
+				tour.setNhanVien(nhanVien);
 				tour.setDiaDanh((DiaDanh) cmbDiaDanh.getSelectedItem());
 
 				///////////////////////////////////////////////////////
@@ -759,14 +762,13 @@ public class pnlCapNhat_TTTour extends JPanel implements ActionListener, Propert
 						JOptionPane.showMessageDialog(this, "Chưa chọn đường dẫn chứa ảnh");
 						return;
 					}
-					// chọn ảnh cho tour
 					tour.setHinhAnh(chonAnhChoTour(txtDgDan.getText()));
 
-					Tour toutThem = capNhatTourBUS.themTour(tour);
+					Tour toutThem = tourControl.themTour(tour);
 					// Nếu thêm tour thành công
 					if (toutThem != null) {
 						// thì cập nhật lại bảng tour
-						hienBangThongTinTour(capNhatTourBUS.layDSTour(nv.getMaNV()));
+						hienBangThongTinTour(tourControl.layDsTourTheoYeuCau(1));
 
 						// Cập nhật mã tour
 						TienIch.capNhatMaPhatSinh(1, maPS);
@@ -777,17 +779,19 @@ public class pnlCapNhat_TTTour extends JPanel implements ActionListener, Propert
 					}
 					// Nếu tour đã tồn tại thì sửa
 				} else {
-					boolean daSua = false;
-					if (chkThemHinhAnh.isSelected() && !txtDgDan.getText().trim().equals("")) {
+					if (chkThemHinhAnh.isSelected()) {
+						if (txtDgDan.getText().length() == 0) {
+							JOptionPane.showMessageDialog(this, "Chưa chọn đường dẫn chứa ảnh");
+							return;
+						}
 						tour.setHinhAnh(chonAnhChoTour(txtDgDan.getText()));
-						daSua = capNhatTourBUS.suaTour(tour, true);
 					} else {
-						daSua = capNhatTourBUS.suaTour(tour, false);
+						tour.setHinhAnh(tourControl.layTourTheoMa(tour.getMaTour()).getHinhAnh());
 					}
+					Tour tourSua = tourControl.suaTour(tour);
+					if (tourSua != null) {
 
-					if (daSua) {
-
-						hienBangThongTinTour(capNhatTourBUS.layDSTour(nv.getMaNV()));
+						hienBangThongTinTour(tourControl.layDsTourTheoYeuCau(1));
 						// xoá trắng các control
 						xoaTrangControl();
 
@@ -798,22 +802,23 @@ public class pnlCapNhat_TTTour extends JPanel implements ActionListener, Propert
 		}
 		// Ngược lại nếu chọn nút thoát
 		else if (o.equals(btnThoat)) {
-			TienIch.chuyenPanelKhiNhan(frmMain.getPnContent(), new pnlQuanLyTour());
+			TienIch.chuyenPanelKhiNhan(frmMain.getPnContent(), new pnlQuanLyTour(nhanVien));
 			TienIch.xoaDuongDan(frmMain.getPnButtonBar(), 2);
 
 			// ngược lại nếu chọn nút chọn file
 		} else if (o.equals(btnFile)) {
 			// Mở file chọn ảnh
 
-			try {
-				UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-					| UnsupportedLookAndFeelException e1) {
-				e1.printStackTrace();
-			}
+			/*
+			 * try {
+			 * UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel"
+			 * ); } catch (ClassNotFoundException | InstantiationException |
+			 * IllegalAccessException | UnsupportedLookAndFeelException e1) {
+			 * e1.printStackTrace(); }
+			 */
 
 			JFileChooser chooser = new JFileChooser();
-			SwingUtilities.updateComponentTreeUI(chooser);
+			// SwingUtilities.updateComponentTreeUI(chooser);
 			chooser.setFileFilter(new FileFilter() {
 
 				@Override
@@ -872,9 +877,9 @@ public class pnlCapNhat_TTTour extends JPanel implements ActionListener, Propert
 			int sel = JOptionPane.showConfirmDialog(this, "Xoá tour " + txtTenTour.getText() + " ?", "Xoá tour",
 					JOptionPane.YES_NO_OPTION);
 			if (sel == JOptionPane.YES_OPTION) {
-				boolean daXoa = capNhatTourBUS.xoaTour(tourXoa);
+				boolean daXoa = tourControl.xoaTour(tourXoa);
 				if (daXoa) {
-					hienBangThongTinTour(capNhatTourBUS.layDSTour(nv.getMaNV()));
+					hienBangThongTinTour(tourControl.layDsTourTheoYeuCau(1));
 				}
 			}
 
@@ -948,20 +953,16 @@ public class pnlCapNhat_TTTour extends JPanel implements ActionListener, Propert
 	 * @return byte[]
 	 */
 	private byte[] chonAnhChoTour(String path) {
+		File file = new File(path);
+		byte[] picInBytes = new byte[(int) file.length()];
 		try {
-			File file = new File(path);
-			FileInputStream fis = new FileInputStream(file);
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			byte[] buf = new byte[1024];
-			for (int i; (i = fis.read(buf)) != -1;) {
-				bos.write(buf, 0, i);
-			}
-			return bos.toByteArray();
-
-		} catch (Exception e) {
-			e.printStackTrace();
+			FileInputStream fileInputStream = new FileInputStream(file);
+			fileInputStream.read(picInBytes);
+			fileInputStream.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
-		return null;
+		return picInBytes;
 	}
 
 	/**
@@ -1069,6 +1070,8 @@ public class pnlCapNhat_TTTour extends JPanel implements ActionListener, Propert
 	 */////////////////////////////////////////////////////////////
 
 	private class MoneyRenderer extends DefaultTableCellRenderer {
+		private static final long serialVersionUID = 1L;
+
 		public MoneyRenderer() {
 			this.setHorizontalAlignment(SwingConstants.RIGHT);
 		}
@@ -1084,12 +1087,17 @@ public class pnlCapNhat_TTTour extends JPanel implements ActionListener, Propert
 	}
 
 	private class NumberRenderrer extends DefaultTableCellRenderer {
+
+		private static final long serialVersionUID = 1L;
+
 		public NumberRenderrer() {
 			this.setHorizontalAlignment(SwingConstants.CENTER);
 		}
 	}
 
 	private class MyDateRenderer extends DefaultTableCellRenderer {
+
+		private static final long serialVersionUID = 1L;
 
 		public MyDateRenderer() {
 			setHorizontalAlignment(SwingConstants.CENTER);

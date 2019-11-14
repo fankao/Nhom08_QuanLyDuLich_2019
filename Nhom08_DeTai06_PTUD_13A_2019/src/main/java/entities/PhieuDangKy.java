@@ -26,7 +26,7 @@ import javax.persistence.Table;
 		@NamedQuery(name = "PDK.timDSTheoTour", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.tour.maTour=:matour") })
 public class PhieuDangKy {
 	@Id
-	@Column(columnDefinition = "CHAR(20)")
+	@Column(columnDefinition = "VARCHAR(20)")
 	private String maPhieuDK;
 
 	private Date ngayTaoPhieu;

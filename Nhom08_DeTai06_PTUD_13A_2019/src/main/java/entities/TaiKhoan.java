@@ -9,7 +9,7 @@ import javax.persistence.Table;
 public class TaiKhoan {
 	@Column(columnDefinition = "NVARCHAR(100)")
 	private String userName;
-	@Column(columnDefinition = "CHAR(20)")
+	@Column(columnDefinition = "VARCHAR(20)")
 	private String passWord;
 
 	public TaiKhoan() {

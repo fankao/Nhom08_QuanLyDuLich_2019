@@ -1,5 +1,6 @@
 package entities;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.Period;
@@ -10,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -20,17 +22,24 @@ import javax.persistence.Table;
 @NamedQueries({ @NamedQuery(name = "Tour.timDsTour", query = "SELECT t FROM Tour t "),
 		@NamedQuery(name = "Tour.timDsTourChuaDK", query = "SELECT t FROM Tour t WHERE t.soNguoiDaDangKy = 0"),
 		@NamedQuery(name = "Tour.timDsTourDaDK", query = "SELECT t FROM Tour t WHERE t.soNguoiDaDangKy > 0") })
-public class Tour {
+public class Tour implements Serializable {
+	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(columnDefinition = "CHAR(20)")
+	@Column(columnDefinition = "VARCHAR(20)")
 	private String maTour;
 	@Column(columnDefinition = "NVARCHAR(255)")
 	private String tenTour;
 	private int soLuongKhach;
 	@Column(columnDefinition = "NTEXT")
 	private String moTa;
+
+	@Lob
 	private byte[] hinhAnh;
+
+	@Column(columnDefinition = "MONEY")
 	private double donGiaNguoiLon;
+
+	@Column(columnDefinition = "MONEY")
 	private double donGiaTreEm;
 	private Date ngayKhoiHanh;
 	private Date ngayKetThuc;
@@ -40,11 +49,11 @@ public class Tour {
 	private boolean daHuy;
 	private boolean daDuSoLuong;
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "manhanvien", nullable = false)
+	@JoinColumn(name = "manhanvien", nullable = false, updatable = true)
 	private NhanVien nhanVien;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "madiadanh", nullable = false)
+	@JoinColumn(name = "madiadanh", nullable = false, updatable = true)
 	private DiaDanh diaDanh;
 
 	public Tour() {

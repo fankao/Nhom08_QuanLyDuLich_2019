@@ -20,14 +20,15 @@ import javax.persistence.Table;
 		@NamedQuery(name = "nv.timTheoTaiKhoan", query = "SELECT nv FROM NhanVien nv WHERE nv.taiKhoan.userName=:user AND nv.taiKhoan.passWord=:pass") })
 public class NhanVien {
 	@Id
-	@Column(columnDefinition = "CHAR(20)")
+	@Column(columnDefinition = "VARCHAR(20)")
 	private String maNV;
-	@Column(columnDefinition = "CHAR(20)")
+	@Column(columnDefinition = "VARCHAR(12)")
 	private String soCMND;
 	@Column(columnDefinition = "NVARCHAR(255)")
 	private String hoVaTen;
+	
 	private Date ngaySinh;
-	@Column(columnDefinition = "CHAR(10)")
+	@Column(columnDefinition = "VARCHAR(10)")
 	private String soDienThoai;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

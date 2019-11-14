@@ -18,14 +18,14 @@ import javax.persistence.Table;
 		@NamedQuery(name = "KH.timTheoCMND", query = "SELECT kh FROM KhachHang kh WHERE kh.soCMND = :cmnd") })
 public class KhachHang {
 	@Id
-	@Column(columnDefinition = "NVARCHAR(20)")
+	@Column(columnDefinition = "VARCHAR(20)")
 	private String maKH;
-	@Column(columnDefinition = "CHAR(20)")
+	
 	private String soCMND;
 	@Column(columnDefinition = "NVARCHAR(255)")
 	private String hoVaTen;
 	private Date ngaySinh;
-	@Column(columnDefinition = "CHAR(10)")
+	@Column(columnDefinition = "VARCHAR(20)")
 	private String soDienThoai;
 	@Embedded
 	private DiaChi diaChi;
