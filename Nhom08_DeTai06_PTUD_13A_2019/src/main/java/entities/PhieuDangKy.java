@@ -87,6 +87,17 @@ public class PhieuDangKy {
 		}
 		return dotuoi;
 	}
+	public double tinhTongTienPDK(List<KhachHangThamGia> list) {
+		double tt = 0;
+		int[] songuoi = tinhSoNguoiTheoDoTuoi(list);
+		if(songuoi.length == 0)
+			return 0;
+		else {
+			tt = (songuoi[0]*tour.getDonGiaNguoiLon()+songuoi[1]*tour.getDonGiaTreEm())*getThue();
+			
+		}
+		return tt;
+	}
 
 	public String getMaPhieuDK() {
 		return maPhieuDK;

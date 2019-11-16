@@ -324,4 +324,5 @@ public class frmMain extends JFrame implements ActionListener {
 	public static JPanel getPnContent() {
 		return pnlContent;
 	}
+
 }
