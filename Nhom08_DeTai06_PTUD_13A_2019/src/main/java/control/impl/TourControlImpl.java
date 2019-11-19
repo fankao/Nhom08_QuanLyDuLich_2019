@@ -3,15 +3,24 @@ package control.impl;
 import java.util.List;
 
 import control.ITourControl;
+
 import data.IDiaDanhDAO;
 import data.ITourDAO;
 import data.impl.DiaDanhDAOImpl;
+
 import data.impl.TourDAOImpl;
 import entities.DiaDanh;
 import entities.Tour;
 
+/**
+ * TourControlImpl.java
+ * 
+ * @author Thanh Trí, Ngày tạo :8/11/2019
+ */
+
 public class TourControlImpl implements ITourControl {
 	private ITourDAO tourDAO;
+
 	private IDiaDanhDAO diaDanhDAO;
 
 	public TourControlImpl() {
@@ -92,7 +101,6 @@ public class TourControlImpl implements ITourControl {
 
 	@Override
 	public List<DiaDanh> layDSDiaDanh() {
-
 		return diaDanhDAO.layDSDiaDanh();
 	}
 

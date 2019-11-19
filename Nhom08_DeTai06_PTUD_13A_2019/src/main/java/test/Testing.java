@@ -10,6 +10,7 @@ public class Testing {
 			@Override
 			public void run() {
 				new frmDangNhap().setVisible(true);
+
 			}
 		});
 

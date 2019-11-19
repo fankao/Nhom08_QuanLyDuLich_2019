@@ -5,11 +5,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -24,18 +26,20 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-import bus.IQuanLyPhieuDKBUS;
-import bus.impl.QuanLyPhieuDKBUS;
+import control.IPhieuDangKyControl;
+import control.impl.PhieuDangKyControlImpl;
+import entities.KhachHangThamGia;
+
 import entities.PhieuDangKy;
+import javax.swing.border.EtchedBorder;
 
 public class pnlThongKe extends JPanel {
 	private JTabbedPane tabThongTinTK;
 	private JTextField txtTongDoanhThu;
 	private JTextField txtTongPDKDaHuy;
-	private IQuanLyPhieuDKBUS quanLyPhieuDKBUS;
+	private IPhieuDangKyControl phieuDangKyControl;
 	private List<PhieuDangKy> dsPDK;
 	private JPanel pnlThongKeDoanhThuTheoThang;
-
 	/**
 	 * Create the panel.
 	 */
@@ -78,7 +82,7 @@ public class pnlThongKe extends JPanel {
 		btnThoat.setPreferredSize(new Dimension(120, 35));
 		pnlLuuVaThoat.add(btnThoat);
 
-		quanLyPhieuDKBUS = new QuanLyPhieuDKBUS();
+//		quanLyPhieuDKBUS = new QuanLyPhieuDKBUS();
 
 		tabThongTinTK = new JTabbedPane(JTabbedPane.TOP);
 		tabThongTinTK.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -130,24 +134,53 @@ public class pnlThongKe extends JPanel {
 		txtTongPDKDaHuy.setColumns(10);
 		pnlTongPDKDaHuy.add(txtTongPDKDaHuy);
 
-		dsPDK = quanLyPhieuDKBUS.layDSPhieuDK();
-		JPanel panel_7 = new JPanel();
-		pnlTTThongKePDK.add(panel_7, BorderLayout.CENTER);
-		pnlThongKeDoanhThuTheoThang.setLayout(new BorderLayout(0, 0));
-		ChartPanel chartPanel = new ChartPanel(taoBieuDoDoanhThu());
-		chartPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		pnlThongKeDoanhThuTheoThang.add(chartPanel);
+//		dsPDK = quanLyPhieuDKBUS.layDSPhieuDK();
+		JPanel pnlChiTietTKPhieuDangKy = new JPanel();
+		pnlTTThongKePDK.add(pnlChiTietTKPhieuDangKy, BorderLayout.CENTER);
+		pnlChiTietTKPhieuDangKy.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		JPanel pnlDieuDoPDK = new JPanel();
+		pnlDieuDoPDK.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Bi\u1EC3u \u0111\u1ED3", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnlChiTietTKPhieuDangKy.add(pnlDieuDoPDK);
+		
+		JPanel pnlSoLieuPDK = new JPanel();
+		pnlSoLieuPDK.setBorder(new TitledBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)), "S\u1ED1 li\u00EAu", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnlChiTietTKPhieuDangKy.add(pnlSoLieuPDK);
+		pnlThongKeDoanhThuTheoThang.setLayout(new GridLayout(0, 2, 0, 0));
+
+		JPanel pnlBieuDo = new JPanel();
+		pnlBieuDo.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Bi\u1EC3u \u0111\u1ED3",
+				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnlThongKeDoanhThuTheoThang.add(pnlBieuDo);
+		pnlBieuDo.setLayout(new BorderLayout(0, 0));
+		
+		JPanel pnlSoLieu = new JPanel();
+		pnlSoLieu.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "S\u1ED1 li\u1EC7u",
+				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		pnlThongKeDoanhThuTheoThang.add(pnlSoLieu);
+		pnlSoLieu.setLayout(new BorderLayout(0, 0));
+
+		phieuDangKyControl = new PhieuDangKyControlImpl();
+		dsPDK = phieuDangKyControl.layDSPhieuDangKy();
+		ChartPanel CpnlBDoanhThu = new ChartPanel((taoBieuDoDoanhThu()));
+		CpnlBDoanhThu.setLayout(new BorderLayout(0, 0));
+		pnlBieuDo.add(CpnlBDoanhThu, BorderLayout.CENTER);
+		pnlDieuDoPDK.setLayout(new BorderLayout(0, 0));
+		ChartPanel CpnlBDPhieuDangKy = new ChartPanel(taoBieuDoPhieuDangKy());
+		pnlDieuDoPDK.add(CpnlBDPhieuDangKy,BorderLayout.CENTER);
+		
+		
 	}
 	/*
 	 * Vẽ biểu đò thống kê doanh thu.
 	 */
 
 	// Tính tổng doanh thu của một tháng
-	public double layDoanhThuTheoThang(int thang) {
+	private double layDoanhThuTheoThang(int thang) {
 		double tongTien = 0.0;
 		double tongTienTren1phieu = 0.0;
 		for (PhieuDangKy phieuDK : dsPDK) {
-			tongTienTren1phieu = phieuDK.tinhTongThanhTien();
+			tongTienTren1phieu = phieuDK.tinhTongTienPDK((List<KhachHangThamGia>) phieuDK.getKhachHangThamGias());
 			if (phieuDK.getNgayTaoPhieu().toLocalDate().getMonth().getValue() == thang) {
 				tongTien += tongTienTren1phieu;
 			}
@@ -156,7 +189,7 @@ public class pnlThongKe extends JPanel {
 	}
 
 //	Tao dữ liệu doanh thu của các tháng
-	public DefaultCategoryDataset taoDuLieuDoanhThu() {
+	private DefaultCategoryDataset taoDuLieuDoanhThu() {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		for (int i = 1; i <= 12; i++) {
 			dataset.addValue((Number) layDoanhThuTheoThang(i), "Tiền", i);
@@ -167,7 +200,7 @@ public class pnlThongKe extends JPanel {
 	}
 
 	// Tao biểu đò thể hiện doanh thu theo tháng
-	public JFreeChart taoBieuDoDoanhThu() {
+	private JFreeChart taoBieuDoDoanhThu() {
 
 		JFreeChart lineChart = ChartFactory.createLineChart(
 				"\nBIỂU ĐỒ DOANH THU THEO TỪNG THÁNG CỦA NĂM " + LocalDate.now().getYear() + "\n", "\tTháng", "\nTiền",
@@ -176,7 +209,7 @@ public class pnlThongKe extends JPanel {
 	}
 
 	// Lay so tong so phieu dang ky cua cac thang
-	public int laySoPhieuDangKyTheoThang(int thang) {
+	private int laySoPhieuDangKyTheoThang(int thang) {
 		int soPDK = 0;
 		for (PhieuDangKy phieuDangKy : dsPDK) {
 			if (phieuDangKy.getNgayTaoPhieu().toLocalDate().getMonth().getValue() == thang) {
@@ -184,5 +217,31 @@ public class pnlThongKe extends JPanel {
 			}
 		}
 		return soPDK;
+	}
+	
+	//Lay tong so phieu dang ky da huy theo thang
+	private int laySoPhieuDangKyDaHuyTheoThang(int thang) {
+		int soPDK = 0;
+		for (PhieuDangKy phieuDangKy : dsPDK) {
+			if (phieuDangKy.getNgayTaoPhieu().toLocalDate().getMonth().getValue() == thang  && phieuDangKy.isDaHuyPhieu() == true) {
+				soPDK++;
+			}
+		}
+		return soPDK;
+	}
+//	Tao dữ liệu số lương phiếu đăng ký của các tháng
+	private DefaultCategoryDataset taoDuLieuSoPhieuDangKy() {
+		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+		for (int i = 1; i <= 12; i++) {
+			dataset.addValue((Number) laySoPhieuDangKyTheoThang(i), "Số phiếu đăng ký đã tạo", i);
+			dataset.addValue((Number) laySoPhieuDangKyDaHuyTheoThang(i), "Số phiếu đăng ký đã hủy", i);
+		}
+		return dataset;
+	}
+	// Tao biểu đò thể hiện doanh thu theo tháng
+	private JFreeChart taoBieuDoPhieuDangKy() {
+
+		JFreeChart barChar = ChartFactory.createBarChart("Biểu đồ thể hiện số lượng phiếu đăng ký đã tạo và đã hủy theo từng tháng của năm ".toUpperCase()+LocalDate.now().getYear(),"Tình trạng", "Tháng", taoDuLieuSoPhieuDangKy(), PlotOrientation.VERTICAL, true, true, false);
+		return barChar;
 	}
 }

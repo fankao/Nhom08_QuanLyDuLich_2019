@@ -31,14 +31,13 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-
-import com.toedter.calendar.JDateChooser;
 
 import bus.IDangKyTourBUS;
 import bus.IHuyDangKyTourBUS;
@@ -51,12 +50,9 @@ import entities.KhachHang;
 import entities.KhachHangThamGia;
 import entities.PhieuChi;
 import entities.PhieuDangKy;
-import gui.frmDangNhap;
 import gui.frmMain;
-import gui.dialog.DlgPhieuChi;
 import utils.HintTextFieldUI;
 import utils.TienIch;
-import javax.swing.border.CompoundBorder;
 
 /**
  * 

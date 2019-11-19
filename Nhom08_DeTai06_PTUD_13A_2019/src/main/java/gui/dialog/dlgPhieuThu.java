@@ -13,8 +13,6 @@ import java.sql.Date;
 import java.text.Format;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -22,38 +20,33 @@ import java.util.Locale;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
-import entities.KhachHang;
-import entities.KhachHangThamGia;
-import entities.NhanVien;
-import entities.PhieuDangKy;
-import entities.Tour;
-import utils.TienIch;
 import com.toedter.calendar.JDateChooser;
 
 import bus.IDangKyTourBUS;
 import bus.IKhachHangThamGiaBUS;
 import bus.impl.DangKyTourBUS;
 import bus.impl.KhachHangThamGiaBUS;
-
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.ListSelectionModel;
-import javax.swing.ImageIcon;
-import java.awt.Dialog.ModalityType;
+import entities.KhachHangThamGia;
+import entities.PhieuDangKy;
+import utils.TienIch;
 
 /**
  * 
