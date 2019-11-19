@@ -96,7 +96,8 @@ public class pnlQuanLyTour extends JPanel implements ActionListener {
 
 		Object o = e.getSource();
 		if (o.equals(btnCapNhatTour)) {
-			TienIch.chuyenPanelKhiNhan(frmMain.getPnContent(), new pnlCapNhat_TTTour(nhanVien));
+			//TienIch.chuyenPanelKhiNhan(frmMain.getPnContent(), new pnlCapNhat_TTTour(nhanVien));
+			TienIch.chuyenPanelKhiNhan(frmMain.getPnContent(), new PnlTaoTour());
 			TienIch.themDuongDan(frmMain.getPnButtonBar(), "Cập nhật tour");
 		} else if (o.equals(btnDKTour)) {
 			TienIch.chuyenPanelKhiNhan(frmMain.getPnContent(), new pnlPhieuDangKyTour());

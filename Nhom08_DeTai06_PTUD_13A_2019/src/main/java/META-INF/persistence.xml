@@ -16,6 +16,7 @@
 		<class>entities.Tour</class>
 		<class>entities.PhieuChi</class>
 		<class>entities.DiaChi</class>
+		<class>entities.LichTrinh</class>
 		<properties>
 			<property name="hibernate.dialect"
 				value="org.hibernate.dialect.SQLServerDialect" />
