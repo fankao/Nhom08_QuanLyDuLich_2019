@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -17,7 +19,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tour")
-@NamedQueries({ @NamedQuery(name = "Tour.timDsTour", query = "SELECT t FROM Tour t ") })
+@NamedQueries({ @NamedQuery(name = "Tour.timDsTour", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa"),
+		@NamedQuery(name = "Tour.timDsTourDaDuyet", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND t.daDuyet=:daDuyet"),
+		@NamedQuery(name = "Tour.timDsTourTheoNhanVien", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND t.nhanVien.maNV=:manv") })
 public class Tour implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -44,32 +48,25 @@ public class Tour implements Serializable {
 	private DiaDanh diaDanh;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "malichtrinh", updatable = true)
-	private Set<LichTrinh> lichTrinhs;
-	
+	@JoinColumn(name = "matour", updatable = true)
+	private Set<NgayKhoiHanh> ngayKhoiHanh;
+
+	private int[] thoiGian = new int[2];
+
+	@Enumerated(EnumType.STRING)
+	@Column(columnDefinition = "NVARCHAR(100)")
+	private PhuongTien phuongTien;
+
+	@Column(columnDefinition = "NVARCHAR(255)")
+	private String diemKhoiHanh;
+	@Column(columnDefinition = "NVARCHAR(255)")
+	private String diemDen;
+
+	private boolean daDuyet;
 	private boolean daXoa;
 
 	public Tour() {
 		// TODO Auto-generated constructor stub
-	}
-
-	public Tour(String maTour, String tenTour, String moTa, double donGiaNguoiLon, double donGiaTreEm, boolean daXoa,
-			NhanVien nhanVien, DiaDanh diaDanh) {
-		super();
-		this.maTour = maTour;
-		this.tenTour = tenTour;
-		this.moTa = moTa;
-		this.donGiaNguoiLon = donGiaNguoiLon;
-		this.donGiaTreEm = donGiaTreEm;
-		this.daXoa = daXoa;
-		this.nhanVien = nhanVien;
-		this.diaDanh = diaDanh;
-	}
-
-	public Tour(String maTour, Set<LichTrinh> lichTrinhs) {
-		super();
-		this.maTour = maTour;
-		this.lichTrinhs = lichTrinhs;
 	}
 
 	public String getMaTour() {
@@ -112,14 +109,6 @@ public class Tour implements Serializable {
 		this.donGiaTreEm = donGiaTreEm;
 	}
 
-	public boolean isDaXoa() {
-		return daXoa;
-	}
-
-	public void setDaXoa(boolean daXoa) {
-		this.daXoa = daXoa;
-	}
-
 	public NhanVien getNhanVien() {
 		return nhanVien;
 	}
@@ -136,17 +125,64 @@ public class Tour implements Serializable {
 		this.diaDanh = diaDanh;
 	}
 
-	public Set<LichTrinh> getLichTrinhs() {
-		return lichTrinhs;
+	public PhuongTien getPhuongTien() {
+		return phuongTien;
 	}
 
-	public void setLichTrinhs(Set<LichTrinh> lichTrinhs) {
-		this.lichTrinhs = lichTrinhs;
+	public void setPhuongTien(PhuongTien phuongTien) {
+		this.phuongTien = phuongTien;
+	}
+
+	public Set<NgayKhoiHanh> getNgayKhoiHanh() {
+		return ngayKhoiHanh;
+	}
+
+	public void setNgayKhoiHanh(Set<NgayKhoiHanh> ngayKhoiHanh) {
+		this.ngayKhoiHanh = ngayKhoiHanh;
+	}
+
+	public String getDiemKhoiHanh() {
+		return diemKhoiHanh;
+	}
+
+	public void setDiemKhoiHanh(String diemKhoiHanh) {
+		this.diemKhoiHanh = diemKhoiHanh;
+	}
+
+	public String getDiemDen() {
+		return diemDen;
+	}
+
+	public void setDiemDen(String diemDen) {
+		this.diemDen = diemDen;
+	}
+
+	public boolean isDaXoa() {
+		return daXoa;
+	}
+
+	public void setDaXoa(boolean daXoa) {
+		this.daXoa = daXoa;
+	}
+
+	public int[] getThoiGian() {
+		return thoiGian;
+	}
+
+	public void setThoiGian(int[] thoiGian) {
+		this.thoiGian = thoiGian;
+	}
+
+	public boolean isDaDuyet() {
+		return daDuyet;
+	}
+
+	public void setDaDuyet(boolean daDuyet) {
+		this.daDuyet = daDuyet;
 	}
 
 	@Override
 	public String toString() {
 		return "Tour [maTour=" + maTour + ", tenTour=" + tenTour + "]";
 	}
-
 }

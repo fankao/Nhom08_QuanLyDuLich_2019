@@ -74,11 +74,12 @@ public class frmMain extends JFrame implements ActionListener {
 		 * Dimension DimMax = Toolkit.getDefaultToolkit().getScreenSize();
 		 * setMaximumSize(DimMax);
 		 */
-		this.nhanVien = nv;
+
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		setSize(env.getMaximumWindowBounds().getSize());
 
+		this.nhanVien = nv;
 		setIconImage(Toolkit.getDefaultToolkit().getImage(frmMain.class.getResource("/images/iconFrm.png")));
 		setTitle("Chương trình quản lý thông tin du lịch công ty Phương Nam");
 		setBackground(Color.WHITE);

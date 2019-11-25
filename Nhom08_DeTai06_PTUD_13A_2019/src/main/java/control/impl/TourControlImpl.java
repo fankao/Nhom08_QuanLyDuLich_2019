@@ -15,7 +15,7 @@ import entities.Tour;
 /**
  * TourControlImpl.java
  * 
- * @author Thanh Trí, Ngày tạo :8/11/2019
+ * @author Thanh Trí, Ngày tạo :8/11/2019 <br>
  */
 
 public class TourControlImpl implements ITourControl {
@@ -66,18 +66,6 @@ public class TourControlImpl implements ITourControl {
 	}
 
 	/**
-	 * Xóa tour
-	 * 
-	 * @param tour
-	 * @return true hoặc false
-	 */
-	@Override
-	public boolean xoaTour(Tour tour) {
-		// TODO Auto-generated method stub
-		return tourDAO.xoaTour(tour);
-	}
-
-	/**
 	 * Lấy danh sách tour theo yêu cầu
 	 * 
 	 * @param yc <br>
@@ -92,9 +80,9 @@ public class TourControlImpl implements ITourControl {
 		case 1:
 			return tourDAO.layDSTour();
 		case 2:
-			return tourDAO.layDSTourDaDangKy();
+			return null;
 		case 3:
-			return tourDAO.layDSTourChuaDangKy();
+			return null;
 		}
 		return null;
 	}

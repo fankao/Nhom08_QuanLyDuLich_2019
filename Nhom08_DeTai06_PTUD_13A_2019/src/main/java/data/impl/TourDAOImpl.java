@@ -23,27 +23,9 @@ public class TourDAOImpl implements ITourDAO {
 	@Override
 	public List<Tour> layDSTour() {
 		TypedQuery<Tour> query = em.createNamedQuery("Tour.timDsTour", Tour.class);
+		query.setParameter("daXoa", false);
 		List<Tour> dsTour = query.getResultList();
 		return dsTour;
-	}
-
-	/**
-	 * @returd Danh sách tour chưa đăng ký
-	 */
-	@Override
-	public List<Tour> layDSTourChuaDangKy() {
-		TypedQuery<Tour> query = em.createNamedQuery("Tour.timDsTourChuaDK", Tour.class);
-		List<Tour> dsToursChuDK = query.getResultList();
-		return dsToursChuDK;
-	}
-
-	/**
-	 * @return Danh sách tour đã đăng ký
-	 */
-	@Override
-	public List<Tour> layDSTourDaDangKy() {
-		TypedQuery<Tour> query = em.createNamedQuery("Tour.timDsTourDaDK", Tour.class);
-		return null;
 	}
 
 	/**
@@ -93,24 +75,4 @@ public class TourDAOImpl implements ITourDAO {
 		}
 		return null;
 	}
-
-	/**
-	 * @param tour
-	 * @return true hoặc false
-	 */
-	@Override
-	public boolean xoaTour(Tour tour) {
-		EntityTransaction tr = em.getTransaction();
-		try {
-			tr.begin();
-			em.remove(tour);
-			tr.begin();
-			return true;
-		} catch (Exception e) {
-			e.printStackTrace();
-			tr.rollback();
-		}
-		return false;
-	}
-
 }

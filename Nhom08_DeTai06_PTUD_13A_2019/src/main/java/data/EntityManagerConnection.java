@@ -11,7 +11,7 @@ public class EntityManagerConnection {
 		em = Persistence.createEntityManagerFactory("Nhom08_DeTai06_PTUD_13A_2019").createEntityManager();
 	}
 
-	public static EntityManagerConnection getInstance() {
+	public synchronized static EntityManagerConnection getInstance() {
 		if (instance == null) {
 			instance = new EntityManagerConnection();
 		}

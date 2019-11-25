@@ -13,8 +13,6 @@ public interface ITourControl {
 
 	public Tour suaTour(Tour tour);
 
-	public boolean xoaTour(Tour tour);
-
 	public List<Tour> layDsTourTheoYeuCau(int yc);
 
 	public List<DiaDanh> layDSDiaDanh();

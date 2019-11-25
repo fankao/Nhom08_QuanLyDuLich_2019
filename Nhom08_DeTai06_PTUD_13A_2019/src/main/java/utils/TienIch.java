@@ -5,11 +5,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
 import java.sql.Date;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -30,9 +34,13 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.TableColumn;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 import com.toedter.calendar.JDateChooser;
 
 import gui.frmMain;
+import utils.address.Province;
 
 /**
  * TienIch.java
@@ -43,6 +51,7 @@ import gui.frmMain;
  *
  */
 public class TienIch {
+
 	/**
 	 * Hàm đổi màu cho button khi có sự kiện nhấn
 	 * 
@@ -383,4 +392,19 @@ public class TienIch {
 		}
 
 	}
+
+	public static List<Province> layDiaLyHanhChinh() {
+		Gson gson = new Gson();
+		List<Province> province = null;
+		try {
+
+			province = gson.fromJson(new FileReader(new File(TienIch.class.getResource("/local.json").toURI())),
+					new TypeToken<List<Province>>() {
+					}.getType());
+		} catch (JsonSyntaxException | JsonIOException | FileNotFoundException | URISyntaxException e) {
+			e.printStackTrace();
+		}
+		return province;
+	}
+
 }
