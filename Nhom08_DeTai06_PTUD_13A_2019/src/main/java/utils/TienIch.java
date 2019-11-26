@@ -32,6 +32,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableColumn;
+import javax.swing.text.JTextComponent;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
@@ -368,9 +369,14 @@ public class TienIch {
 	 * 
 	 * @param txts
 	 */
-	public static void xoaTrangCacJTextField(JTextField... txts) {
-		for (JTextField txt : txts) {
-			txt.setText("");
+	public static void xoaTrangCacJTextField(Object... txps) {
+		for (Object txt : txps) {
+			if (txt instanceof JTextField) {
+				((JTextField) txt).setText("");
+			}
+			if (txt instanceof JTextPane) {
+				((JTextPane) txt).setText("");
+			}
 		}
 	}
 

@@ -1,6 +1,7 @@
 package control.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import control.ITourControl;
 
@@ -10,6 +11,7 @@ import data.impl.DiaDanhDAOImpl;
 
 import data.impl.TourDAOImpl;
 import entities.DiaDanh;
+import entities.NgayKhoiHanh;
 import entities.Tour;
 
 /**
@@ -90,6 +92,12 @@ public class TourControlImpl implements ITourControl {
 	@Override
 	public List<DiaDanh> layDSDiaDanh() {
 		return diaDanhDAO.layDSDiaDanh();
+	}
+
+	@Override
+	public List<NgayKhoiHanh> layDSNgayKhoiHanhTheoTour(String maTour) {
+
+		return tourDAO.layDSNgayKhoiHanhTheoTour(maTour);
 	}
 
 }

@@ -5,10 +5,13 @@ import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "khachhang")
@@ -18,9 +21,11 @@ import javax.persistence.Table;
 		@NamedQuery(name = "KH.timTheoCMND", query = "SELECT kh FROM KhachHang kh WHERE kh.soCMND = :cmnd") })
 public class KhachHang {
 	@Id
+	@GeneratedValue(generator = "MaKHGenerater")
+	@GenericGenerator(name = "MaKHGenerater", strategy = "idgenerater.MaKHGenerater")
 	@Column(columnDefinition = "VARCHAR(20)")
 	private String maKH;
-	
+
 	private String soCMND;
 	@Column(columnDefinition = "NVARCHAR(255)")
 	private String hoVaTen;

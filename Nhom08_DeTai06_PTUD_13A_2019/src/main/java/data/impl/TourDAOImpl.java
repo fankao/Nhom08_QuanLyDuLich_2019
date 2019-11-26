@@ -1,6 +1,9 @@
 package data.impl;
 
+import java.lang.reflect.Type;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -8,6 +11,7 @@ import javax.persistence.TypedQuery;
 
 import data.EntityManagerConnection;
 import data.ITourDAO;
+import entities.NgayKhoiHanh;
 import entities.Tour;
 
 public class TourDAOImpl implements ITourDAO {
@@ -74,5 +78,14 @@ public class TourDAOImpl implements ITourDAO {
 			tr.rollback();
 		}
 		return null;
+	}
+
+	@Override
+	public List<NgayKhoiHanh> layDSNgayKhoiHanhTheoTour(String maTour) {
+		TypedQuery<NgayKhoiHanh> query = em.createQuery("SELECT t FROM NgayKhoiHanh t WHERE t.tour.maTour=:maTour",
+				NgayKhoiHanh.class);
+		query.setParameter("maTour", maTour);
+		List<NgayKhoiHanh> sets = query.getResultList();
+		return sets.size() != 0 ? sets : null;
 	}
 }

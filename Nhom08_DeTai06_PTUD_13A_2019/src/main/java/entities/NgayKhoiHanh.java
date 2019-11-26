@@ -2,10 +2,17 @@ package entities;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 /********************************************
  * LichTrinh.java
@@ -16,7 +23,7 @@ import javax.persistence.Table;
  ********************************************
  */
 @Entity
-@Table(name = "lichtrinh")
+@Table(name = "ngaykhoihanh")
 public class NgayKhoiHanh {
 	@Id
 	@Column(columnDefinition = "VARCHAR(20)")
@@ -26,6 +33,10 @@ public class NgayKhoiHanh {
 	private boolean daXoa;
 	private boolean daDuSoLuong;
 	private boolean daXoaDoKhongDuSoLuong;
+
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "matour", nullable = false)
+	private Tour tour;
 
 	public NgayKhoiHanh() {
 	}
@@ -101,6 +112,14 @@ public class NgayKhoiHanh {
 
 	public void setDaXoaDoKhongDuSoLuong(boolean daXoaDoKhongDuSoLuong) {
 		this.daXoaDoKhongDuSoLuong = daXoaDoKhongDuSoLuong;
+	}
+
+	public Tour getTour() {
+		return tour;
+	}
+
+	public void setTour(Tour tour) {
+		this.tour = tour;
 	}
 
 	public NgayKhoiHanh(String maLT, Date ngayKhoiHanh, int soNguoiThamGia, boolean daXoa, boolean daDuSoLuong,

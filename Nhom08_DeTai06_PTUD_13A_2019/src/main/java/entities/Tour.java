@@ -1,7 +1,8 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,14 +19,21 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 @Entity
 @Table(name = "tour")
-@NamedQueries({ @NamedQuery(name = "Tour.timDsTour", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa"),
-		@NamedQuery(name = "Tour.timDsTourDaDuyet", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND t.daDuyet=:daDuyet"),
-		@NamedQuery(name = "Tour.timDsTourTheoNhanVien", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND t.nhanVien.maNV=:manv") })
+@NamedQueries({
+		@NamedQuery(name = "Tour.timDsTour", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa ORDER BY SUBSTRING(t.maTour,4,LENGTH(t.maTour)-3)"),
+		@NamedQuery(name = "Tour.timDsTourDaDuyet", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND t.daDuyet=:daDuyet ORDER BY SUBSTRING(t.maTour,4,LENGTH(t.maTour)-3)"),
+		@NamedQuery(name = "Tour.timDsTourTheoNhanVien", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND t.nhanVien.maNV=:manv ORDER BY SUBSTRING(t.maTour,4,LENGTH(t.maTour)-3)"), })
 public class Tour implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
+	@GeneratedValue(generator = "MaTourGenerater")
+	@GenericGenerator(name = "MaTourGenerater", strategy = "idgenerater.MaTourGenerater")
 	@Column(columnDefinition = "VARCHAR(20)")
 	private String maTour;
 	@Column(columnDefinition = "NVARCHAR(255)")
@@ -47,9 +56,8 @@ public class Tour implements Serializable {
 	@JoinColumn(name = "madiadanh", nullable = false, updatable = true)
 	private DiaDanh diaDanh;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "matour", updatable = true)
-	private Set<NgayKhoiHanh> ngayKhoiHanh;
+	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "tour")
+	private List<NgayKhoiHanh> ngayKhoiHanh = new ArrayList<NgayKhoiHanh>();
 
 	private int[] thoiGian = new int[2];
 
@@ -133,11 +141,11 @@ public class Tour implements Serializable {
 		this.phuongTien = phuongTien;
 	}
 
-	public Set<NgayKhoiHanh> getNgayKhoiHanh() {
+	public List<NgayKhoiHanh> getNgayKhoiHanh() {
 		return ngayKhoiHanh;
 	}
 
-	public void setNgayKhoiHanh(Set<NgayKhoiHanh> ngayKhoiHanh) {
+	public void setNgayKhoiHanh(List<NgayKhoiHanh> ngayKhoiHanh) {
 		this.ngayKhoiHanh = ngayKhoiHanh;
 	}
 
@@ -185,4 +193,5 @@ public class Tour implements Serializable {
 	public String toString() {
 		return "Tour [maTour=" + maTour + ", tenTour=" + tenTour + "]";
 	}
+
 }

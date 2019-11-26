@@ -13,10 +13,10 @@ public class TourTableModel extends AbstractTableModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static boolean isEdit = false;
 	private String[] tieuDe = { "STT", "Mã tour", "Tên tour", "Địa danh", "Điểm xuất phát", "Điểm đến", "Thời gian",
-			"Giá người lớn", "Giá trẻ em", "Phương tiện"};
+			"Giá người lớn", "Giá trẻ em", "Phương tiện", "Ngày khởi hành" };
 	private List<Tour> lstTour = new ArrayList<Tour>();
 	private final Class<?>[] columnClass = new Class<?>[] { Integer.class, String.class, String.class, DiaDanh.class,
-			String.class, String.class, String.class, Double.class, Double.class, String.class };
+			String.class, String.class, String.class, Double.class, Double.class, String.class, String.class };
 
 	public TourTableModel(List<Tour> lstTour) {
 		this.lstTour = lstTour;
@@ -79,6 +79,8 @@ public class TourTableModel extends AbstractTableModel implements Serializable {
 
 		case 9:
 			return tour.getPhuongTien();
+		case 10:
+			return tour.getNgayKhoiHanh().size() > 0 ? tour.getNgayKhoiHanh().size() + "" : "Chưa có";
 
 		}
 		return null;

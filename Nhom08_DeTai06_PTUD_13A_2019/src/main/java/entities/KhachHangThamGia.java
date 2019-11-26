@@ -6,13 +6,18 @@ import java.time.Period;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "khachhangthamgia")
 public class KhachHangThamGia {
 	@Id
+	@GeneratedValue(generator = "MaKHTGGenerater")
+	@GenericGenerator(name = "MaKHTGGenerater", strategy = "idgenerater.MaKHTGGenerater")
 	@Column(columnDefinition = "VARCHAR(20)")
 	private String maKHTG;
 	@Column(columnDefinition = "NVARCHAR(255)")

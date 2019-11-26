@@ -11,6 +11,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,13 +20,17 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 @Entity
 @Table(name = "phieudangky")
 @NamedQueries({ @NamedQuery(name = "PDK.timDSPDK", query = "SELECT pdk FROM PhieuDangKy pdk"),
 		@NamedQuery(name = "PDK.timDSPDKTheoKH", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.kh.maKH = :makh"),
-		@NamedQuery(name = "PDK.timDSTheoTour", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.tour.maTour=:matour") })
+		@NamedQuery(name = "PDK.timDSTheoTour", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.ngayKhoiHanh.tour.maTour=:matour") })
 public class PhieuDangKy {
 	@Id
+	@GeneratedValue(generator = "MaPDKGenerater")
+	@GenericGenerator(name = "MaPDKGenerater", strategy = "idgenerater.MaPDKGenerater")
 	@Column(columnDefinition = "VARCHAR(20)")
 	private String maPhieuDK;
 
@@ -40,8 +45,8 @@ public class PhieuDangKy {
 	private KhachHang kh;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "tourID", nullable = false)
-	private Tour tour;
+	@JoinColumn(name = "mangaykhoihanh", nullable = false)
+	private NgayKhoiHanh ngayKhoiHanh;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "khachhangthamgiaID", nullable = false)
@@ -57,14 +62,14 @@ public class PhieuDangKy {
 
 	}
 
-	public PhieuDangKy(String maPhieuDK, Date ngayTaoPhieu, NhanVien nv, KhachHang kh, Tour tour,
+	public PhieuDangKy(String maPhieuDK, Date ngayTaoPhieu, NhanVien nv, KhachHang kh, NgayKhoiHanh ngayKhoiHanh,
 			Set<KhachHangThamGia> khachHangThamGias, boolean daHoanThanhTour, boolean daHuyPhieu) {
 		super();
 		this.maPhieuDK = maPhieuDK;
 		this.ngayTaoPhieu = ngayTaoPhieu;
 		this.nv = nv;
 		this.kh = kh;
-		this.tour = tour;
+		this.ngayKhoiHanh = ngayKhoiHanh;
 		this.khachHangThamGias = khachHangThamGias;
 		this.daHoanThanhTour = daHoanThanhTour;
 		this.daHuyPhieu = daHuyPhieu;
@@ -87,14 +92,16 @@ public class PhieuDangKy {
 		}
 		return dotuoi;
 	}
+
 	public double tinhTongTienPDK(List<KhachHangThamGia> list) {
 		double tt = 0;
 		int[] songuoi = tinhSoNguoiTheoDoTuoi(list);
-		if(songuoi.length == 0)
+		if (songuoi.length == 0)
 			return 0;
 		else {
-			tt = (songuoi[0]*tour.getDonGiaNguoiLon()+songuoi[1]*tour.getDonGiaTreEm())*getThue();
-			
+			tt = (songuoi[0] * ngayKhoiHanh.getTour().getDonGiaNguoiLon()
+					+ songuoi[1] * ngayKhoiHanh.getTour().getDonGiaTreEm()) * getThue();
+
 		}
 		return tt;
 	}
@@ -129,14 +136,6 @@ public class PhieuDangKy {
 
 	public void setKh(KhachHang kh) {
 		this.kh = kh;
-	}
-
-	public Tour getTour() {
-		return tour;
-	}
-
-	public void setTour(Tour tour) {
-		this.tour = tour;
 	}
 
 	public Set<KhachHangThamGia> getKhachHangThamGias() {
