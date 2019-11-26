@@ -13,8 +13,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.sql.Date;
 import java.text.Format;
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Locale;
 
@@ -28,6 +31,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
@@ -404,7 +408,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		pnlNhapNgayDi.add(lblNgayKhoiHanh);
 		lblNgayKhoiHanh.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
-		JDateChooser dtcNgayKhoiHanh = new JDateChooser();
+		dtcNgayKhoiHanh = new JDateChooser();
 		pnlNhapNgayDi.add(dtcNgayKhoiHanh);
 		dtcNgayKhoiHanh.setFocusable(false);
 		dtcNgayKhoiHanh.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -415,7 +419,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		pnlNhapNgayDi.add(lblSoKhachToiDa);
 		lblSoKhachToiDa.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
-		JSpinner spnSoKhachToiDa = new JSpinner();
+		spnSoKhachToiDa = new JSpinner();
 		pnlNhapNgayDi.add(spnSoKhachToiDa);
 		spnSoKhachToiDa.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
@@ -531,6 +535,8 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 	 * Lấy thông tin tour được chọn
 	 */
 	Tour tourSel;
+	private JDateChooser dtcNgayKhoiHanh;
+	private JSpinner spnSoKhachToiDa;
 
 	private void ganSuKien() {
 		btnLuu.addActionListener(this);
@@ -616,6 +622,51 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			}
 			return this;
 		}
+	}
+	/**
+	 * Kiểm tra dữ liệu đầu vào
+	 * @return true hoặc falses
+	 */
+	private boolean kiemTraThongTin() {
+		String tenTour = txtTenTour.getText().trim();
+		String ngayBatDau = ((JTextField) dtcNgayKhoiHanh.getDateEditor().getUiComponent()).getText();
+//		String ngayKetThuc = ((JTextField) dtcDenNgay.getDateEditor().getUiComponent()).getText();
+		if (!(tenTour.length() > 0)) {
+			JOptionPane.showMessageDialog(this, "Tên tour không được để trống !");
+			txtTenTour.requestFocus();
+			return false;
+		}
+		if (ngayBatDau.equals("")) {
+			JOptionPane.showMessageDialog(this, "Ngày khởi hành không được để trống !");
+			dtcNgayKhoiHanh.requestFocusInWindow();
+			return false;
+		}
+		if (!ktNgayKhoiHanh()) {
+			JOptionPane.showMessageDialog(this, "Ngày khởi hành phải sau ngày hiện tại 10 ngày !");
+			dtcNgayKhoiHanh.requestFocusInWindow();
+			return false;
+		}
+		if (!(txtGiaNgLon.getText().trim().length() > 0)) {
+			JOptionPane.showMessageDialog(this, "Giá người lớn không được để trống !");
+			txtGiaNgLon.requestFocus();
+			return false;
+		}
+
+		if (!(txtGiaTrEm.getText().trim().length() > 0)) {
+			JOptionPane.showMessageDialog(this, "Giá trẻ em không được để trống !");
+			txtGiaTrEm.requestFocus();
+			return false;
+		}
+
+		return true;
+	}
+
+
+	// Kiểm tra ngày khởi hành.Ngày khởi hành phải sau ngày hiện tại 10 ngày.
+	public boolean ktNgayKhoiHanh() {
+		LocalDate ngayKhoiHanh = new Date(dtcNgayKhoiHanh.getDate().getTime()).toLocalDate();
+		Period period = Period.between(LocalDate.now(), ngayKhoiHanh);
+		return period.getDays() >= 10 || period.getMonths() >= 1 ? true : false;
 	}
 
 }

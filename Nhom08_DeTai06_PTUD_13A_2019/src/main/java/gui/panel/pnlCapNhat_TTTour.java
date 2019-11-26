@@ -967,8 +967,7 @@ public class pnlCapNhat_TTTour extends JPanel implements ActionListener, Propert
 
 	/**
 	 * Kiểm tra dữ liệu đầu vào
-	 * 
-	 * @return
+	 * @return true hoặc falses
 	 */
 	private boolean kiemTraThongTin() {
 		String tenTour = txtTenTour.getText().trim();
