@@ -11,12 +11,15 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -26,16 +29,18 @@ import org.hibernate.annotations.NotFoundAction;
 @Entity
 @Table(name = "tour")
 @NamedQueries({
-		@NamedQuery(name = "Tour.timDsTour", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND daDuyet=:daDuyet ORDER BY SUBSTRING(t.maTour,4,LENGTH(t.maTour)-3)"),
-		@NamedQuery(name = "Tour.timDsTourDaDuyet", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND t.daDuyet=:daDuyet ORDER BY SUBSTRING(t.maTour,4,LENGTH(t.maTour)-3)"),
-		@NamedQuery(name = "Tour.timDsTourTheoNhanVien", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND t.nhanVien.maNV=:manv ORDER BY SUBSTRING(t.maTour,4,LENGTH(t.maTour)-3)"), })
+		@NamedQuery(name = "Tour.timDsTour", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND t.daDuyet=:daDuyet ORDER BY t.id"),
+		@NamedQuery(name = "Tour.timDsTourDaDuyet", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND t.daDuyet=:daDuyet ORDER BY t.id"),
+		@NamedQuery(name = "Tour.timDsTourTheoNhanVien", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND t.nhanVien.maNV=:manv ORDER BY t.id"), })
 public class Tour implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(generator = "MaTourGenerater")
-	@GenericGenerator(name = "MaTourGenerater", strategy = "idgenerater.MaTourGenerater")
-	@Column(columnDefinition = "VARCHAR(20)")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+
+	@Column(columnDefinition = "VARCHAR(20)", unique = true)
 	private String maTour;
+	
 	@Column(columnDefinition = "NVARCHAR(255)")
 	private String tenTour;
 
@@ -72,9 +77,38 @@ public class Tour implements Serializable {
 
 	private boolean daDuyet;
 	private boolean daXoa;
-
+	
 	public Tour() {
-		// TODO Auto-generated constructor stub
+		super();
+	}
+
+	public Tour(int id, String maTour, String tenTour, String moTa, double donGiaNguoiLon, double donGiaTreEm,
+			NhanVien nhanVien, DiaDanh diaDanh, List<NgayKhoiHanh> ngayKhoiHanh, int[] thoiGian, PhuongTien phuongTien,
+			String diemKhoiHanh, String diemDen, boolean daDuyet, boolean daXoa) {
+		super();
+		this.id = id;
+		this.maTour = maTour;
+		this.tenTour = tenTour;
+		this.moTa = moTa;
+		this.donGiaNguoiLon = donGiaNguoiLon;
+		this.donGiaTreEm = donGiaTreEm;
+		this.nhanVien = nhanVien;
+		this.diaDanh = diaDanh;
+		this.ngayKhoiHanh = ngayKhoiHanh;
+		this.thoiGian = thoiGian;
+		this.phuongTien = phuongTien;
+		this.diemKhoiHanh = diemKhoiHanh;
+		this.diemDen = diemDen;
+		this.daDuyet = daDuyet;
+		this.daXoa = daXoa;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getMaTour() {
@@ -133,20 +167,28 @@ public class Tour implements Serializable {
 		this.diaDanh = diaDanh;
 	}
 
-	public PhuongTien getPhuongTien() {
-		return phuongTien;
-	}
-
-	public void setPhuongTien(PhuongTien phuongTien) {
-		this.phuongTien = phuongTien;
-	}
-
 	public List<NgayKhoiHanh> getNgayKhoiHanh() {
 		return ngayKhoiHanh;
 	}
 
 	public void setNgayKhoiHanh(List<NgayKhoiHanh> ngayKhoiHanh) {
 		this.ngayKhoiHanh = ngayKhoiHanh;
+	}
+
+	public int[] getThoiGian() {
+		return thoiGian;
+	}
+
+	public void setThoiGian(int[] thoiGian) {
+		this.thoiGian = thoiGian;
+	}
+
+	public PhuongTien getPhuongTien() {
+		return phuongTien;
+	}
+
+	public void setPhuongTien(PhuongTien phuongTien) {
+		this.phuongTien = phuongTien;
 	}
 
 	public String getDiemKhoiHanh() {
@@ -165,22 +207,6 @@ public class Tour implements Serializable {
 		this.diemDen = diemDen;
 	}
 
-	public boolean isDaXoa() {
-		return daXoa;
-	}
-
-	public void setDaXoa(boolean daXoa) {
-		this.daXoa = daXoa;
-	}
-
-	public int[] getThoiGian() {
-		return thoiGian;
-	}
-
-	public void setThoiGian(int[] thoiGian) {
-		this.thoiGian = thoiGian;
-	}
-
 	public boolean isDaDuyet() {
 		return daDuyet;
 	}
@@ -189,9 +215,14 @@ public class Tour implements Serializable {
 		this.daDuyet = daDuyet;
 	}
 
-	@Override
-	public String toString() {
-		return "Tour [maTour=" + maTour + ", tenTour=" + tenTour + "]";
+	public boolean isDaXoa() {
+		return daXoa;
 	}
+
+	public void setDaXoa(boolean daXoa) {
+		this.daXoa = daXoa;
+	}
+
+	
 
 }

@@ -11,7 +11,7 @@ public class MaKHGenerater implements IdentifierGenerator {
 
 	@Override
 	public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
-		String query = "SELECT t.maKH FROM KhachHang t ORDER BY SUBSTRING(t.maKH,5,LENGTH(t.maKH)-4)";
+		String query = "SELECT t.maKH FROM KhachHang t";
 		List<String> lstId = session.createQuery(query, String.class).list();
 		if (lstId.size() != 0) {
 			int max = Integer.parseInt(lstId.get(0).substring(4));

@@ -6,12 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "khachhang")
@@ -21,9 +20,9 @@ import org.hibernate.annotations.GenericGenerator;
 		@NamedQuery(name = "KH.timTheoCMND", query = "SELECT kh FROM KhachHang kh WHERE kh.soCMND LIKE :cmnd") })
 public class KhachHang {
 	@Id
-	@GeneratedValue(generator = "MaKHGenerater")
-	@GenericGenerator(name = "MaKHGenerater", strategy = "idgenerater.MaKHGenerater")
-	@Column(columnDefinition = "VARCHAR(20)")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	@Column(columnDefinition = "VARCHAR(20)", unique = true)
 	private String maKH;
 
 	private String soCMND;
@@ -46,6 +45,14 @@ public class KhachHang {
 		this.hoVaTen = hoVaTen;
 		this.ngaySinh = ngaySinh;
 		this.soDienThoai = soDienThoai;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getMaKH() {

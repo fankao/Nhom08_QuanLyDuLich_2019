@@ -113,6 +113,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 	private JButton btnLuuNgayKH;
 	private JDateChooser dtcNgayKhoiHanh;
 	private JSpinner spnSoKhachToiDa;
+	private NgayKhoiHanhTableModel ngkhTableModel;
 
 	private static boolean sua = false, themmoi = false;
 	/*
@@ -552,7 +553,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		 * hiển thị danh sách các tour du lịch
 		 */
 		lstTour = tourControl.layDsTourTheoYeuCau(2, nv.getMaNV());
-		tourTableModel = new TourTableModel(lstTour);
+		tourTableModel = new TourTableModel(lstTour.size() != 0 ? lstTour : null);
 		tblDSTour = new JTable(tourTableModel);
 		tblDSTour.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
 		pnlDSCTTour.add(new JScrollPane(tblDSTour));
@@ -679,13 +680,13 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 	}
 
 	private void hienThongTinTour(Tour tourSel) {
-
 		txpTenTour.setText(tourSel.getTenTour());
 		cmbDiaDanh.setSelectedItem(tourSel.getDiaDanh());
 		cmbDiemXP.setSelectedItem(tourSel.getDiemDen());
 		cmbDiemDen.setSelectedItem(tourSel.getDiemKhoiHanh());
 		txtGiaNgLon.setValue(tourSel.getDonGiaNguoiLon());
 		txtGiaTrEm.setValue(tourSel.getDonGiaTreEm());
+		
 		spnNgay.setValue(tourSel.getThoiGian()[0]);
 		lblNgayDem.setText(tourSel.getThoiGian()[1] + "");
 
@@ -721,7 +722,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				Tour tourThem = tourControl.themTour(tour);
 
 				if (tourThem != null) {
-					lstTour.add(tourThem);
+					lstTour = tourControl.layDsTourTheoYeuCau(2, nhanvien.getMaNV());
 					tourTableModel.fireTableDataChanged();
 					themmoi = false;
 					TienIch.xoaTrangCacJTextField(txtGiaNgLon, txtGiaTrEm, txpTenTour);
@@ -739,8 +740,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				tour.setMaTour(tourChon.getMaTour());
 				Tour touSua = tourControl.suaTour(tour);
 				if (touSua != null) {
-					lstTour.remove(row);
-					lstTour.add(row, touSua);
+					lstTour = tourControl.layDsTourTheoYeuCau(2, nhanvien.getMaNV());
 					tourTableModel.fireTableDataChanged();
 					sua = false;
 				}
@@ -754,7 +754,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			pnlNhap.setVisible(false);
 
 			lstNgayKH = tourControl.layDSNgayKhoiHanhTheoTour(tourChon.getMaTour());
-			NgayKhoiHanhTableModel ngkhTableModel = new NgayKhoiHanhTableModel(lstNgayKH);
+			ngkhTableModel = new NgayKhoiHanhTableModel(lstNgayKH);
 			tblDSNGKH = new JTable(ngkhTableModel);
 			pnlDSNgayKH.add(new JScrollPane(tblDSNGKH));
 			TienIch.chinhKichThuocTable(tblDSNGKH, tblDSNGKH.getColumnModel().getTotalColumnWidth(), 5, 50, 20, 20);
@@ -804,9 +804,12 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			Tour touSua = tourControl.suaTour(tourChon);
 
 			if (touSua != null) {
-				System.out.println(touSua.getNgayKhoiHanh());
-				tblDSNGKH.notifyAll();
-				((NgayKhoiHanhTableModel) tblDSNGKH.getModel()).fireTableDataChanged();
+				lstNgayKH.add(ngayKhoiHanh);
+				lstTour.remove(row);
+				lstTour.add(row, touSua);
+				tourTableModel.fireTableDataChanged();
+				ngkhTableModel.fireTableDataChanged();
+
 			}
 
 		} else if (o.equals(btnBoChon)) {

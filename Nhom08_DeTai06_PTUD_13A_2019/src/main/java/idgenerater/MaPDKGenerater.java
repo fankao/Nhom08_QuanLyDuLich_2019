@@ -12,7 +12,7 @@ public class MaPDKGenerater implements IdentifierGenerator {
 
 	@Override
 	public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
-		String query = "SELECT t.maPhieuDK FROM PhieuDangKy t ORDER BY LENGTH(t.maPhieuDK)";
+		String query = "SELECT t.maPhieuDK FROM PhieuDangKy t";
 		List<String> lstId = session.createQuery(query, String.class).list();
 		if (lstId.size() != 0) {
 

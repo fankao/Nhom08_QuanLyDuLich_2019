@@ -105,4 +105,8 @@ public class TourDAOImpl implements ITourDAO {
 		List<Tour> dsTour = query.getResultList();
 		return dsTour.size() != 0 ? dsTour : new ArrayList<Tour>();
 	}
+	public static void main(String[] args) {
+		
+	}
+
 }
