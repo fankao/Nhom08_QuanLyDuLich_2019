@@ -100,18 +100,7 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 	private JTextField txtTour;
 	private JLabel lblDienThoai;
 	private JTextField txtSDT;
-	private JPanel pnlNhapTT;
-	private JPanel pnlBangKH;
-	private JLabel lblMaKHTG;
-	private JLabel lblNewLabel_1;
-	private JTextField txtHoTenKHTG;
-	private JLabel lblNgaySinh;
-	private JDateChooser dtcNgaySinh;
-	private JScrollPane scrDSKH;
-	private JTable tblKHTG;
-	private JButton btnThemKH;
 	private JButton btnLuu;
-	private JPanel pnlTTKHTG;
 	private IDangKyTourBUS dangKyTourBUS;
 	private IKhachHangThamGiaBUS khachHangThamGiaBUS;
 	private static List<KhachHangThamGia> dsKHThamGia;
@@ -131,7 +120,7 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 		this.phieuDangKy = phieuDangKy;
 		this.khachDKMuonThamGiaTour = kq;
 
-		setBounds(100, 100, 1200, 900);
+		setBounds(100, 100, 1200, 597);
 		getContentPane().setLayout(new BorderLayout());
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -221,11 +210,10 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 			pnlTTPhieuThu.setLayout(new BorderLayout(0, 0));
 			{
 				pnlNhapLieu = new JPanel();
-				pnlNhapLieu.setPreferredSize(new Dimension(10, 250));
 				pnlNhapLieu.setBorder(
 						new TitledBorder(new LineBorder(new Color(192, 192, 192), 3), "Th\u00F4ng tin phi\u1EBFu thu",
 								TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-				pnlTTPhieuThu.add(pnlNhapLieu, BorderLayout.NORTH);
+				pnlTTPhieuThu.add(pnlNhapLieu, BorderLayout.CENTER);
 				pnlNhapLieu.setLayout(new BoxLayout(pnlNhapLieu, BoxLayout.Y_AXIS));
 				{
 					JPanel pnlTTPT = new JPanel();
@@ -339,110 +327,7 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 				}
 			}
 			{
-				pnlTTKHTG = new JPanel();
-				pnlTTKHTG.setBorder(new TitledBorder(null, "Th\u00F4ng tin kh\u00E1ch h\u00E0ng tham gia",
-						TitledBorder.LEADING, TitledBorder.TOP, null, null));
-				pnlTTPhieuThu.add(pnlTTKHTG, BorderLayout.CENTER);
-				pnlTTKHTG.setLayout(new BorderLayout(0, 0));
-				{
-					pnlNhapTT = new JPanel();
-					FlowLayout flowLayout = (FlowLayout) pnlNhapTT.getLayout();
-					flowLayout.setHgap(15);
-					pnlTTKHTG.add(pnlNhapTT, BorderLayout.NORTH);
-					{
-						lblMaKHTG = new JLabel("Mã khách hàng:\r\n");
-						lblMaKHTG.setFont(new Font("Tahoma", Font.PLAIN, 20));
-						pnlNhapTT.add(lblMaKHTG);
-					}
-					{
-						txtMaKHTG = new JTextField();
-						txtMaKHTG.setEditable(false);
-						txtMaKHTG.setFont(new Font("Tahoma", Font.PLAIN, 20));
-						pnlNhapTT.add(txtMaKHTG);
-						txtMaKHTG.setColumns(10);
-					}
-					{
-						lblNewLabel_1 = new JLabel("Họ và tên:");
-						lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-						pnlNhapTT.add(lblNewLabel_1);
-					}
-					{
-						txtHoTenKHTG = new JTextField();
-						txtHoTenKHTG.setFont(new Font("Tahoma", Font.PLAIN, 20));
-						pnlNhapTT.add(txtHoTenKHTG);
-						txtHoTenKHTG.setColumns(15);
-					}
-					{
-						lblNgaySinh = new JLabel("Ngày sinh:");
-						lblNgaySinh.setFont(new Font("Tahoma", Font.PLAIN, 20));
-						pnlNhapTT.add(lblNgaySinh);
-					}
-					{
-						dtcNgaySinh = new JDateChooser();
-						dtcNgaySinh.setFont(new Font("Tahoma", Font.PLAIN, 20));
-						dtcNgaySinh.setPreferredSize(new Dimension(150, 30));
-						dtcNgaySinh.setDateFormatString("dd/MM/yyyy");
-						pnlNhapTT.add(dtcNgaySinh);
-					}
-					{
-						btnThemKH = new JButton("");
-						btnThemKH.setBackground(Color.LIGHT_GRAY);
-						btnThemKH.setBorder(new EmptyBorder(2, 2, 2, 2));
-						btnThemKH.setFocusable(false);
-						btnThemKH.setIcon(new ImageIcon(dlgPhieuThu.class.getResource("/images/plus_32px.png")));
-						btnThemKH.setFont(new Font("Tahoma", Font.PLAIN, 17));
-						btnThemKH.addActionListener(new ActionListener() {
-							public void actionPerformed(ActionEvent arg0) {
-							}
-						});
-						pnlNhapTT.add(btnThemKH);
-					}
-				}
-				{
-					pnlBangKH = new JPanel();
-					pnlTTKHTG.add(pnlBangKH, BorderLayout.CENTER);
-					pnlBangKH.setLayout(new BorderLayout(0, 0));
-					{
-						scrDSKH = new JScrollPane();
-						pnlBangKH.add(scrDSKH, BorderLayout.CENTER);
-						{
-							tblKHTG = new JTable();
-							tblKHTG.setRowHeight(25);
-							tblKHTG.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-							tblKHTG.setFont(new Font("Tahoma", Font.PLAIN, 18));
-							tblKHTG.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
-							tblKHTG.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "STT",
-									"M\u00E3 KHTG", "H\u1ECD v\u00E0 t\u00EAn", "Ng\u00E0y sinh", "Ghi ch\u00FA" }) {
-
-								private static final long serialVersionUID = 1L;
-								Class<?>[] columnTypes = new Class[] { Integer.class, String.class, String.class,
-										Object.class, String.class };
-
-								public Class getColumnClass(int columnIndex) {
-									return columnTypes[columnIndex];
-								}
-
-								boolean[] columnEditables = new boolean[] { true, false, false, false, false };
-
-								public boolean isCellEditable(int row, int column) {
-									return columnEditables[column];
-								}
-							});
-							tblKHTG.getColumnModel().getColumn(0).setPreferredWidth(15);
-							tblKHTG.getColumnModel().getColumn(1).setResizable(false);
-							tblKHTG.getColumnModel().getColumn(2).setResizable(false);
-							tblKHTG.getColumnModel().getColumn(2).setPreferredWidth(120);
-							tblKHTG.getColumnModel().getColumn(3).setResizable(false);
-							tblKHTG.getColumnModel().getColumn(4).setResizable(false);
-							tblKHTG.getColumnModel().getColumn(4).setPreferredWidth(125);
-							scrDSKH.setViewportView(tblKHTG);
-						}
-					}
-				}
-			}
-			{
 				pnlThanhTien = new JPanel();
-				pnlThanhTien.setPreferredSize(new Dimension(10, 200));
 				pnlThanhTien.setBorder(new TitledBorder(new LineBorder(new Color(192, 192, 192), 3),
 						"Th\u00F4ng tin thanh to\u00E1n", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 				pnlTTPhieuThu.add(pnlThanhTien, BorderLayout.SOUTH);
@@ -651,21 +536,17 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 		TienIch.chinhKichThuocTitleTrenBorder(new JPanel[] { pnlNhapLieu, pnlThanhTien, pnlTTKHTG
 
 		}, "Tahoma", Font.BOLD, 18);
-		TienIch.chinhKichThuocTable(tblKHTG, tblKHTG.getColumnModel().getTotalColumnWidth(), 0.1, 10, 20, 10, 30);
 
 		dangKyTourBUS = new DangKyTourBUS();
 		khachHangThamGiaBUS = new KhachHangThamGiaBUS();
 
 		dsKHThamGia = new ArrayList<KhachHangThamGia>();
-		((JTextField) dtcNgaySinh.getDateEditor().getUiComponent()).setEditable(false);
 		maKH = TienIch.phatSinhMa(4);
-		txtMaKHTG.setText("KHTG00" + maKH);
 
 		// hiện thông tin phiếu thu
 		hienThongTinPhieuThu();
 
 		btnDong.addActionListener(this);
-		btnThemKH.addActionListener(this);
 		btnLuu.addActionListener(this);
 
 		/*
@@ -710,8 +591,6 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 		txtDC.setText(phieuDangKy.getKh().getDiaChi().getTenDC());
 
 	}
-
-	private JTextField txtMaKHTG;
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

@@ -75,7 +75,7 @@
 		</band>
 	</title>
 	<detail>
-		<band height="290" splitType="Stretch">
+		<band height="392" splitType="Stretch">
 			<staticText>
 				<reportElement x="1" y="0" width="751" height="140" uuid="5ef11aa6-fcdb-4e70-a5f6-b662bf4b9959"/>
 				<box padding="0">
@@ -135,7 +135,7 @@
 				<text><![CDATA[Thông tin thanh toán]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="170" width="752" height="120" uuid="a77a670c-f96f-4dc0-b61a-5eb2b785e794"/>
+				<reportElement x="0" y="170" width="752" height="200" uuid="a77a670c-f96f-4dc0-b61a-5eb2b785e794"/>
 				<box>
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
@@ -212,26 +212,48 @@
 				<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="310" y="241" width="190" height="30" uuid="cc411555-b202-4740-8e06-c7ff4daef93a"/>
+				<reportElement x="310" y="280" width="190" height="30" uuid="cc411555-b202-4740-8e06-c7ff4daef93a"/>
 				<textElement>
 					<font size="15"/>
 				</textElement>
 				<text><![CDATA[Thuế GTGT(VAT) 5%:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="535" y="240" width="89" height="30" uuid="c30f255e-5193-420a-86b4-dc09f56363c5"/>
+				<reportElement x="530" y="280" width="94" height="30" uuid="c30f255e-5193-420a-86b4-dc09f56363c5"/>
 				<textElement>
 					<font size="15"/>
 				</textElement>
-				<text><![CDATA[Tổng tiền :]]></text>
+				<text><![CDATA[Tiền thuế :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="624" y="241" width="120" height="30" uuid="f51ec044-4798-4632-9e21-1b2101e2c6ff"/>
+				<reportElement x="624" y="281" width="115" height="30" uuid="f51ec044-4798-4632-9e21-1b2101e2c6ff"/>
+				<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="535" y="240" width="89" height="30" uuid="c761943c-e306-4465-a7d3-2cacccfc87ad"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Cộng tiền :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="624" y="241" width="120" height="30" uuid="65e1224f-01b8-4a91-b17f-9100efcd8435"/>
+				<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="310" y="320" width="190" height="30" uuid="37584aab-7729-446f-89c7-16f961f6504c"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Tổng tiền thanh toán :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="530" y="320" width="211" height="30" uuid="64ba5135-d53a-4652-9bd7-fb8a4c1ba1cd"/>
 				<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="23" splitType="Stretch"/>
+		<band height="90" splitType="Stretch"/>
 	</pageFooter>
 </jasperReport>
