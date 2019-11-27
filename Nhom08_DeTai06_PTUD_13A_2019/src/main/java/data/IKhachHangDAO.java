@@ -5,6 +5,7 @@ import java.util.List;
 import entities.KhachHang;
 
 public interface IKhachHangDAO {
+	public KhachHang themKhachHang(KhachHang kh);
 	public List<KhachHang> layDSKhachHang();
 	public List<KhachHang> layDSKhachHangTheoTen(String ten);
 

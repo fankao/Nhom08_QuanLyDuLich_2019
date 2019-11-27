@@ -11,7 +11,6 @@ import entities.Tour;
 
 public class TourTableModel extends AbstractTableModel implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private static boolean isEdit = false;
 	private String[] tieuDe = { "STT", "Mã tour", "Tên tour", "Địa danh", "Điểm xuất phát", "Điểm đến", "Thời gian",
 			"Giá người lớn", "Giá trẻ em", "Phương tiện", "Ngày khởi hành" };
 	private List<Tour> lstTour = new ArrayList<Tour>();

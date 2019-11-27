@@ -93,19 +93,6 @@ public class pnlQuanLyPhieuDangKy extends JPanel implements ActionListener {
 		add(pnlMain, BorderLayout.CENTER);
 		pnlMain.setLayout(new BorderLayout(0, 0));
 
-		JPanel pnlTieuDe = new JPanel();
-		pnlTieuDe.setBackground(new Color(0, 191, 255));
-		FlowLayout fl_pnlTieuDe = (FlowLayout) pnlTieuDe.getLayout();
-		fl_pnlTieuDe.setVgap(20);
-		pnlTieuDe.setPreferredSize(new Dimension(10, 70));
-		pnlMain.add(pnlTieuDe, BorderLayout.NORTH);
-
-		JLabel lblTieuDe = new JLabel("QUẢN LÝ PHIẾU ĐĂNG KÝ");
-		lblTieuDe.setForeground(new Color(248, 248, 255));
-		lblTieuDe.setIcon(new ImageIcon(pnlQuanLyPhieuDangKy.class.getResource("/images/qlpdk.png")));
-		lblTieuDe.setFont(new Font("Tahoma", Font.BOLD, 30));
-		pnlTieuDe.add(lblTieuDe);
-
 		JPanel pnlQLPhieuDK = new JPanel();
 		pnlQLPhieuDK.setBorder(null);
 		pnlMain.add(pnlQLPhieuDK, BorderLayout.CENTER);

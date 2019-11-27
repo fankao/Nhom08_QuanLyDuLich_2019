@@ -377,6 +377,9 @@ public class TienIch {
 			if (txt instanceof JTextPane) {
 				((JTextPane) txt).setText("");
 			}
+			if (txt instanceof JFormattedTextField) {
+				((JFormattedTextField) txt).setValue(0);
+			}
 		}
 	}
 

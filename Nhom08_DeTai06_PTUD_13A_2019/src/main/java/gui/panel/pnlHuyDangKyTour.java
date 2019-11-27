@@ -48,7 +48,7 @@ import dao.IKhachHangThamGiaDAO;
 import dao.impl.KhachHangThamGiaDAO;
 import entities.KhachHang;
 import entities.KhachHangThamGia;
-import entities.PhieuChi;
+import entities.PhieuThuChi;
 import entities.PhieuDangKy;
 import gui.frmMain;
 import utils.HintTextFieldUI;
@@ -676,7 +676,7 @@ public class pnlHuyDangKyTour extends JPanel implements ActionListener {
 					// Tạo phiếu chi trả tiền cho khách
 					String mapc = TienIch.phatSinhMa(5);
 					String maPC = "PC00" + mapc;
-					PhieuChi phieuChi = phieuChiBUS.taoPhieuChi(new PhieuChi(maPC.trim(),
+					PhieuThuChi phieuChi = phieuChiBUS.taoPhieuChi(new PhieuThuChi(maPC.trim(),
 							new Date(System.currentTimeMillis()), pdk.tinhTongThanhTien(), "Khách hàng huỷ tour", pdk));
 					if (phieuChi != null) {
 

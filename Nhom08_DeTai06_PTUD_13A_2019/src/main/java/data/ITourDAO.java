@@ -9,6 +9,8 @@ import entities.Tour;
 public interface ITourDAO {
 
 	public List<Tour> layDSTour();
+	public List<Tour> layDSTourDaDuyet();
+	public List<Tour> layDSTourTheoNhanVien(String maNV);
 
 	public List<NgayKhoiHanh> layDSNgayKhoiHanhTheoTour(String maTour);
 

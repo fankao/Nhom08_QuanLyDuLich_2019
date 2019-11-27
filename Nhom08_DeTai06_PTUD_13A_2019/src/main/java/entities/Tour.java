@@ -26,7 +26,7 @@ import org.hibernate.annotations.NotFoundAction;
 @Entity
 @Table(name = "tour")
 @NamedQueries({
-		@NamedQuery(name = "Tour.timDsTour", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa ORDER BY SUBSTRING(t.maTour,4,LENGTH(t.maTour)-3)"),
+		@NamedQuery(name = "Tour.timDsTour", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND daDuyet=:daDuyet ORDER BY SUBSTRING(t.maTour,4,LENGTH(t.maTour)-3)"),
 		@NamedQuery(name = "Tour.timDsTourDaDuyet", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND t.daDuyet=:daDuyet ORDER BY SUBSTRING(t.maTour,4,LENGTH(t.maTour)-3)"),
 		@NamedQuery(name = "Tour.timDsTourTheoNhanVien", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND t.nhanVien.maNV=:manv ORDER BY SUBSTRING(t.maTour,4,LENGTH(t.maTour)-3)"), })
 public class Tour implements Serializable {

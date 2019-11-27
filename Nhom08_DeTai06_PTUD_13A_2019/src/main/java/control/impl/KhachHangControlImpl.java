@@ -7,15 +7,17 @@ import data.IKhachHangDAO;
 import data.impl.KhachHangDAOImpl;
 import entities.KhachHang;
 
-public class KhachHangControlImpl implements IKhachHangControl{
+public class KhachHangControlImpl implements IKhachHangControl {
 	private IKhachHangDAO khachHangDAO;
-	
+
 	public KhachHangControlImpl() {
 		// TODO Auto-generated constructor stub
 		khachHangDAO = new KhachHangDAOImpl();
 	}
+
 	/**
 	 * Lấy danh sách khách hàng
+	 * 
 	 * @return List
 	 */
 	@Override
@@ -23,17 +25,19 @@ public class KhachHangControlImpl implements IKhachHangControl{
 		// TODO Auto-generated method stub
 		return khachHangDAO.layDSKhachHang();
 	}
+
 	/**
 	 * Lấy danh sách khách hàng theo yêu cầu
+	 * 
 	 * @param yc
 	 * @param tim <br>
-	 * 		yc = 1, tim = tenKhachHang, Lấy danh sách khách hàng theo tên<br>
-	 * 		yc = 2, tim = sdt, Lấy danh sách khách hàng theo SĐT<br>
-	 * 		yc = 3, tim = CMND, Lấy danh sách khách hàng theo số CMDN<br>
+	 *            yc = 1, tim = tenKhachHang, Lấy danh sách khách hàng theo tên<br>
+	 *            yc = 2, tim = sdt, Lấy danh sách khách hàng theo SĐT<br>
+	 *            yc = 3, tim = CMND, Lấy danh sách khách hàng theo số CMDN<br>
 	 * @return List
 	 */
 	@Override
-	public List<KhachHang> layDSKhachHangTheoYeuCau(int yc,String tim) {
+	public List<KhachHang> layDSKhachHangTheoYeuCau(int yc, String tim) {
 		// TODO Auto-generated method stub
 		switch (yc) {
 		case 1:
@@ -46,6 +50,10 @@ public class KhachHangControlImpl implements IKhachHangControl{
 		return null;
 	}
 
+	@Override
+	public KhachHang themKhachHang(KhachHang kh) {
 
+		return khachHangDAO.themKhachHang(kh);
+	}
 
 }

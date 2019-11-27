@@ -5,6 +5,8 @@ import java.sql.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -13,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "phieuchi")
-public class PhieuChi {
+public class PhieuThuChi {
 	@Id
 	@Column(columnDefinition = "VARCHAR(20)")
 	private String maPhieuChi;
@@ -21,25 +23,29 @@ public class PhieuChi {
 	private Date ngayTaoPhieuChi;
 
 	@Column(columnDefinition = "MONEY")
-	private double soTienChi;
+	private double soTien;
 
 	@Column(columnDefinition = "NTEXT")
-	private String lyDoChi;
+	private String lyDo;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "phieudangkyID", nullable = false, columnDefinition = "VARCHAR(20)", updatable = true)
 	private PhieuDangKy pdk;
 
-	public PhieuChi() {
-		// TODO Auto-generated constructor stub
+	@Enumerated(EnumType.STRING)
+	@Column(columnDefinition = "NVARCHAR(100)")
+	private LoaiPhieu loaiPhieu;
+
+	public PhieuThuChi() {
+
 	}
 
-	public PhieuChi(String maPhieuChi, Date ngayTaoPhieuChi, double soTienChi, String lyDoChi, PhieuDangKy pdk) {
+	public PhieuThuChi(String maPhieuChi, Date ngayTaoPhieuChi, double soTien, String lyDo, PhieuDangKy pdk) {
 		super();
 		this.maPhieuChi = maPhieuChi;
 		this.ngayTaoPhieuChi = ngayTaoPhieuChi;
-		this.soTienChi = soTienChi;
-		this.lyDoChi = lyDoChi;
+		this.soTien = soTien;
+		this.lyDo = lyDo;
 		this.pdk = pdk;
 	}
 
@@ -60,19 +66,19 @@ public class PhieuChi {
 	}
 
 	public double getSoTienChi() {
-		return soTienChi;
+		return soTien;
 	}
 
-	public void setSoTienChi(double soTienChi) {
-		this.soTienChi = soTienChi;
+	public void setSoTienChi(double soTien) {
+		this.soTien = soTien;
 	}
 
 	public String getLyDoChi() {
-		return lyDoChi;
+		return lyDo;
 	}
 
-	public void setLyDoChi(String lyDoChi) {
-		this.lyDoChi = lyDoChi;
+	public void setLyDoChi(String lyDo) {
+		this.lyDo = lyDo;
 	}
 
 	public PhieuDangKy getPdk() {
@@ -81,6 +87,14 @@ public class PhieuChi {
 
 	public void setPdk(PhieuDangKy pdk) {
 		this.pdk = pdk;
+	}
+
+	public LoaiPhieu getLoaiPhieu() {
+		return loaiPhieu;
+	}
+
+	public void setLoaiPhieu(LoaiPhieu loaiPhieu) {
+		this.loaiPhieu = loaiPhieu;
 	}
 
 	@Override
@@ -99,7 +113,7 @@ public class PhieuChi {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PhieuChi other = (PhieuChi) obj;
+		PhieuThuChi other = (PhieuThuChi) obj;
 		if (maPhieuChi == null) {
 			if (other.maPhieuChi != null)
 				return false;
@@ -111,7 +125,7 @@ public class PhieuChi {
 	@Override
 	public String toString() {
 		return "PhieuChi [maPhieuChi=" + maPhieuChi.trim() + ", ngayTaoPhieuChi=" + ngayTaoPhieuChi + ", soTienChi="
-				+ soTienChi + ", lyDoChi=" + lyDoChi + "]";
+				+ soTien + ", lyDoChi=" + lyDo + "]";
 	}
 
 }

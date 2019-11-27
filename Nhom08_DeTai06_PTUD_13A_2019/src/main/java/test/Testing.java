@@ -9,6 +9,7 @@ public class Testing {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
+				
 				new frmDangNhap().setVisible(true);
 
 			}

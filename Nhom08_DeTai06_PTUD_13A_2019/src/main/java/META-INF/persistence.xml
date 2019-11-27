@@ -14,7 +14,7 @@
 		<class>entities.PhieuDangKy</class>
 		<class>entities.TaiKhoan</class>
 		<class>entities.Tour</class>
-		<class>entities.PhieuChi</class>
+		<class>entities.PhieuThuChi</class>
 		<class>entities.DiaChi</class>
 		<class>entities.NgayKhoiHanh</class>
 		<properties>

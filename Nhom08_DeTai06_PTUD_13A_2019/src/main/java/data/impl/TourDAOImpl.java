@@ -1,9 +1,7 @@
 package data.impl;
 
-import java.lang.reflect.Type;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -28,8 +26,9 @@ public class TourDAOImpl implements ITourDAO {
 	public List<Tour> layDSTour() {
 		TypedQuery<Tour> query = em.createNamedQuery("Tour.timDsTour", Tour.class);
 		query.setParameter("daXoa", false);
+		query.setParameter("daDuyet", false);
 		List<Tour> dsTour = query.getResultList();
-		return dsTour;
+		return dsTour.size() != 0 ? dsTour : new ArrayList<Tour>();
 	}
 
 	/**
@@ -86,6 +85,24 @@ public class TourDAOImpl implements ITourDAO {
 				NgayKhoiHanh.class);
 		query.setParameter("maTour", maTour);
 		List<NgayKhoiHanh> sets = query.getResultList();
-		return sets.size() != 0 ? sets : null;
+		return sets.size() != 0 ? sets : new ArrayList<NgayKhoiHanh>();
+	}
+
+	@Override
+	public List<Tour> layDSTourDaDuyet() {
+		TypedQuery<Tour> query = em.createNamedQuery("Tour.timDsTourDaDuyet", Tour.class);
+		query.setParameter("daXoa", false);
+		query.setParameter("daDuyet", true);
+		List<Tour> dsTour = query.getResultList();
+		return dsTour.size() != 0 ? dsTour : new ArrayList<Tour>();
+	}
+
+	@Override
+	public List<Tour> layDSTourTheoNhanVien(String maNV) {
+		TypedQuery<Tour> query = em.createNamedQuery("Tour.timDsTourTheoNhanVien", Tour.class);
+		query.setParameter("daXoa", false);
+		query.setParameter("manv", maNV);
+		List<Tour> dsTour = query.getResultList();
+		return dsTour.size() != 0 ? dsTour : new ArrayList<Tour>();
 	}
 }

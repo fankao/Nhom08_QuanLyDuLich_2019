@@ -16,9 +16,9 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name = "khachhang")
 @NamedQueries({ @NamedQuery(name = "KH.timTatCaKH", query = "SELECT kh FROM KhachHang kh"),
-		@NamedQuery(name = "KH.timTheoTenKH", query = "SELECT kh FROM KhachHang kh WHERE kh.hoVaTen=:ten"),
-		@NamedQuery(name = "KH.timTheoSDT", query = "SELECT kh FROM KhachHang kh WHERE kh.soDienThoai=:sdt"),
-		@NamedQuery(name = "KH.timTheoCMND", query = "SELECT kh FROM KhachHang kh WHERE kh.soCMND = :cmnd") })
+		@NamedQuery(name = "KH.timTheoTenKH", query = "SELECT kh FROM KhachHang kh WHERE kh.hoVaTen LIKE :ten"),
+		@NamedQuery(name = "KH.timTheoSDT", query = "SELECT kh FROM KhachHang kh WHERE kh.soDienThoai LIKE :sdt"),
+		@NamedQuery(name = "KH.timTheoCMND", query = "SELECT kh FROM KhachHang kh WHERE kh.soCMND LIKE :cmnd") })
 public class KhachHang {
 	@Id
 	@GeneratedValue(generator = "MaKHGenerater")
@@ -124,6 +124,6 @@ public class KhachHang {
 	@Override
 	public String toString() {
 
-		return this.maKH + " - " + this.hoVaTen;
+		return String.format("%-20s%-20s%s", hoVaTen, soDienThoai, soCMND);
 	}
 }

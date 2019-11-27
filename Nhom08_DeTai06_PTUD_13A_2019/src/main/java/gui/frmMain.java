@@ -268,6 +268,8 @@ public class frmMain extends JFrame implements ActionListener {
 		lblTenNV.setText(nv.getHoVaTen());
 		lblTenCV.setText(nv.getQuyen().getGhiChu());
 
+		TienIch.chinhLookAndFeelChoPanel(pnlContent);
+
 	}
 
 	/**

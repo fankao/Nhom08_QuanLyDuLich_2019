@@ -14,7 +14,8 @@ public interface ITourControl {
 
 	public Tour suaTour(Tour tour);
 
-	public List<Tour> layDsTourTheoYeuCau(int yc);
+	public List<Tour> layDsTourTheoYeuCau(int yc, String... arg);
+
 	public List<NgayKhoiHanh> layDSNgayKhoiHanhTheoTour(String maTour);
 
 	public List<DiaDanh> layDSDiaDanh();

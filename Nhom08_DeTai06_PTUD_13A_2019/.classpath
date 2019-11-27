@@ -18,5 +18,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="libs/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="libs/swingx-core-1.6.2-AutoCompletition.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
