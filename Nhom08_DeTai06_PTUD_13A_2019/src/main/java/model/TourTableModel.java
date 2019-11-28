@@ -15,7 +15,7 @@ public class TourTableModel extends AbstractTableModel implements Serializable {
 			"Giá người lớn", "Giá trẻ em", "Phương tiện", "Ngày khởi hành" };
 	private List<Tour> lstTour = new ArrayList<Tour>();
 	private final Class<?>[] columnClass = new Class<?>[] { Integer.class, String.class, String.class, DiaDanh.class,
-			String.class, String.class, String.class, Double.class, Double.class, String.class, String.class };
+			String.class, String.class, String.class, Double.class, Double.class, String.class, Integer.class };
 
 	public TourTableModel(List<Tour> lstTour) {
 		this.lstTour = lstTour;
@@ -82,7 +82,8 @@ public class TourTableModel extends AbstractTableModel implements Serializable {
 		case 9:
 			return tour.getPhuongTien();
 		case 10:
-			return tour.getNgayKhoiHanh().size() > 0 ? tour.getNgayKhoiHanh().size() + "" : "Chưa có";
+			int soNgayKhoiHanh = tour.getNgayKhoiHanh().size();
+			return soNgayKhoiHanh;
 		default:
 			return "";
 

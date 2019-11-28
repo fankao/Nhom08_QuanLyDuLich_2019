@@ -6,6 +6,8 @@ import java.time.Period;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,11 +21,14 @@ public class KhachHangThamGia {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(columnDefinition = "VARCHAR(20)", unique = true,nullable = false)
+	@Column(columnDefinition = "VARCHAR(20)", unique = true, nullable = false)
 	private String maKHTG;
 	@Column(columnDefinition = "NVARCHAR(255)")
 	private String hoTenKHTG;
 	private Date ngaySinh;
+
+	@Enumerated(EnumType.STRING)
+	private DoTuoi doTuoi;
 
 	public KhachHangThamGia() {
 		// TODO Auto-generated constructor stub
@@ -59,7 +64,7 @@ public class KhachHangThamGia {
 			return false;
 		return true;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -90,6 +95,14 @@ public class KhachHangThamGia {
 
 	public void setNgaySinh(Date ngaySinh) {
 		this.ngaySinh = ngaySinh;
+	}
+
+	public DoTuoi getDoTuoi() {
+		return doTuoi;
+	}
+
+	public void setDoTuoi(DoTuoi doTuoi) {
+		this.doTuoi = doTuoi;
 	}
 
 	public KhachHangThamGia(String maKHTG, String hoTenKHTG, Date ngaySinh) {
