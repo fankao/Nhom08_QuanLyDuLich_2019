@@ -73,7 +73,7 @@ import control.impl.TourControlImpl;
 import entities.DiaDanh;
 import entities.NhanVien;
 import entities.Tour;
-import gui.frmMain;
+import gui.FrmMain;
 import gui.dialog.dlgXemAnh;
 import utils.HintTextFieldUI;
 import utils.TienIch;
@@ -802,8 +802,8 @@ public class pnlCapNhat_TTTour extends JPanel implements ActionListener, Propert
 		}
 		// Ngược lại nếu chọn nút thoát
 		else if (o.equals(btnThoat)) {
-			TienIch.chuyenPanelKhiNhan(frmMain.getPnContent(), new pnlQuanLyTour(nhanVien));
-			TienIch.xoaDuongDan(frmMain.getPnButtonBar(), 2);
+			TienIch.chuyenPanelKhiNhan(FrmMain.getPnContent(), new pnlQuanLyTour(nhanVien));
+			TienIch.xoaDuongDan(FrmMain.getPnButtonBar(), 2);
 
 			// ngược lại nếu chọn nút chọn file
 		} else if (o.equals(btnFile)) {

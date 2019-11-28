@@ -68,8 +68,11 @@ public class TourTableModel extends AbstractTableModel implements Serializable {
 			return tour.getDiemDen();
 
 		case 6:
-			return tour.getThoiGian()[0] + " Ngày," + tour.getThoiGian()[1] + " đêm";
-
+			if (tour.getThoiGian() != null)
+				return tour.getThoiGian()[0] + " Ngày," + tour.getThoiGian()[1] + " đêm";
+			else {
+				return "";
+			}
 		case 7:
 			return tour.getDonGiaNguoiLon();
 
@@ -80,9 +83,10 @@ public class TourTableModel extends AbstractTableModel implements Serializable {
 			return tour.getPhuongTien();
 		case 10:
 			return tour.getNgayKhoiHanh().size() > 0 ? tour.getNgayKhoiHanh().size() + "" : "Chưa có";
+		default:
+			return "";
 
 		}
-		return null;
 
 	}
 }

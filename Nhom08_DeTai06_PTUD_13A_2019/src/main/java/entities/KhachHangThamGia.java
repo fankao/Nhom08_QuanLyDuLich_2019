@@ -7,6 +7,7 @@ import java.time.Period;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,9 +17,9 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "khachhangthamgia")
 public class KhachHangThamGia {
 	@Id
-	@GeneratedValue(generator = "MaKHTGGenerater")
-	@GenericGenerator(name = "MaKHTGGenerater", strategy = "idgenerater.MaKHTGGenerater")
-	@Column(columnDefinition = "VARCHAR(20)")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	@Column(columnDefinition = "VARCHAR(20)", unique = true,nullable = false)
 	private String maKHTG;
 	@Column(columnDefinition = "NVARCHAR(255)")
 	private String hoTenKHTG;
@@ -57,6 +58,14 @@ public class KhachHangThamGia {
 		} else if (!maKHTG.equals(other.maKHTG))
 			return false;
 		return true;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getMaKHTG() {

@@ -59,7 +59,7 @@ import entities.NhanVien;
 import entities.PhieuDangKy;
 import entities.Tour;
 import gui.frmDangNhap;
-import gui.frmMain;
+import gui.FrmMain;
 import gui.dialog.dlgLocTour;
 import gui.dialog.dlgPhieuThu;
 import utils.HintTextFieldUI;
@@ -702,8 +702,8 @@ public class pnlPhieuDangKyTour extends JPanel implements ActionListener, Change
 		// Nếu chọn nút thoát
 		if (o.equals(btnThoat)) {
 
-			TienIch.xoaDuongDan(frmMain.getPnButtonBar(), 2);
-			TienIch.chuyenPanelKhiNhan(frmMain.getPnContent(), new pnlQuanLyTour());
+			TienIch.xoaDuongDan(FrmMain.getPnButtonBar(), 2);
+			TienIch.chuyenPanelKhiNhan(FrmMain.getPnContent(), new pnlQuanLyTour());
 
 		} else if (o.equals(btnLamMoi)) {
 			if (khachHangTim != null) {

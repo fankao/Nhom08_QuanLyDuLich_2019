@@ -12,6 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -29,9 +30,9 @@ import org.hibernate.annotations.GenericGenerator;
 		@NamedQuery(name = "PDK.timDSTheoTour", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.ngayKhoiHanh.tour.maTour=:matour") })
 public class PhieuDangKy {
 	@Id
-	@GeneratedValue(generator = "MaPDKGenerater")
-	@GenericGenerator(name = "MaPDKGenerater", strategy = "idgenerater.MaPDKGenerater")
-	@Column(columnDefinition = "VARCHAR(20)")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	@Column(columnDefinition = "VARCHAR(20)", unique = true,nullable = false)
 	private String maPhieuDK;
 
 	private Date ngayTaoPhieu;
@@ -104,6 +105,22 @@ public class PhieuDangKy {
 
 		}
 		return tt;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public NgayKhoiHanh getNgayKhoiHanh() {
+		return ngayKhoiHanh;
+	}
+
+	public void setNgayKhoiHanh(NgayKhoiHanh ngayKhoiHanh) {
+		this.ngayKhoiHanh = ngayKhoiHanh;
 	}
 
 	public String getMaPhieuDK() {

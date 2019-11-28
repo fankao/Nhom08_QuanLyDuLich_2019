@@ -7,7 +7,7 @@ import entities.NgayKhoiHanh;
 import entities.Tour;
 
 public interface ITourControl {
-
+	
 	public Tour layTourTheoMa(String maTour);
 
 	public Tour themTour(Tour tour);

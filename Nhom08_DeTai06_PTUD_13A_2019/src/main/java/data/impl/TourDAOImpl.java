@@ -37,7 +37,9 @@ public class TourDAOImpl implements ITourDAO {
 	 */
 	@Override
 	public Tour layTourTheoMa(String maTour) {
-		return em.find(Tour.class, maTour);
+		String query = "SELECT t FROM Tour t WHERE maTour=:ma";
+		Tour tour = em.createQuery(query, Tour.class).setParameter("ma", maTour).getSingleResult();
+		return tour;
 	}
 
 	/**
@@ -50,6 +52,7 @@ public class TourDAOImpl implements ITourDAO {
 		EntityTransaction tr = em.getTransaction();
 		try {
 			tr.begin();
+			tour.setMaTour(phatSinhMaTour());
 			em.persist(tour);
 			tr.commit();
 			return tour;
@@ -105,4 +108,25 @@ public class TourDAOImpl implements ITourDAO {
 		List<Tour> dsTour = query.getResultList();
 		return dsTour.size() != 0 ? dsTour : new ArrayList<Tour>();
 	}
+
+	public static void main(String[] args) {
+
+	}
+
+	@Override
+	public String phatSinhMaTour() {
+		String query = "SELECT t.maTour FROM Tour t";
+		List<String> lstId = em.createQuery(query, String.class).getResultList();
+		if (lstId.size() != 0) {
+			int max = Integer.parseInt(lstId.get(0).substring(3));
+			for (String x : lstId) {
+				if (Integer.parseInt(x.substring(3)) > max) {
+					max = Integer.parseInt(x.substring(3));
+				}
+			}
+			return "T00" + (max + 1);
+		}
+		return "T001";
+	}
+
 }

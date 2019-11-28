@@ -50,7 +50,7 @@ import entities.KhachHang;
 import entities.KhachHangThamGia;
 import entities.PhieuThuChi;
 import entities.PhieuDangKy;
-import gui.frmMain;
+import gui.FrmMain;
 import utils.HintTextFieldUI;
 import utils.TienIch;
 
@@ -637,8 +637,8 @@ public class pnlHuyDangKyTour extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o.equals(btnThoat)) {
-			TienIch.xoaDuongDan(frmMain.getPnButtonBar(), 2);
-			TienIch.chuyenPanelKhiNhan(frmMain.getPnContent(), new pnlQuanLyTour());
+			TienIch.xoaDuongDan(FrmMain.getPnButtonBar(), 2);
+			TienIch.chuyenPanelKhiNhan(FrmMain.getPnContent(), new pnlQuanLyTour());
 		} else if (o.equals(btnTimKiemKH)) {
 			if (!txtTimKiemKH.getText().trim().equals("") && (txtTimKiemKH.getText().matches("(\\+84|0)[0-9]{9}"))) {
 				khachHang = huyDangKyTourBUS.layTTKhachHang(2, txtTimKiemKH.getText());

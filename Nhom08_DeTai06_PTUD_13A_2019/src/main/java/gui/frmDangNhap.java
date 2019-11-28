@@ -214,7 +214,7 @@ public class frmDangNhap extends JDialog implements ActionListener {
 				nv = nhanVienControl.layNhanVienTheoTaiKhoan(taiKhoan);
 				if (nv != null) {
 					this.dispose();
-					new frmMain(nv).setVisible(true);
+					new FrmMain(nv).setVisible(true);
 				} else {
 					JOptionPane.showMessageDialog(this, "Tài khoản không tồn tại", "Lỗi đăng nhập",
 							JOptionPane.ERROR_MESSAGE);

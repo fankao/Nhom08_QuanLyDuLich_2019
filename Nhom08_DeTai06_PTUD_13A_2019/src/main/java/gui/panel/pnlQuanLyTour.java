@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import entities.NhanVien;
-import gui.frmMain;
+import gui.FrmMain;
 import utils.TienIch;
 
 /**
@@ -99,15 +99,15 @@ public class pnlQuanLyTour extends JPanel implements ActionListener {
 		Object o = e.getSource();
 		if (o.equals(btnCapNhatTour)) {
 			//TienIch.chuyenPanelKhiNhan(frmMain.getPnContent(), new pnlCapNhat_TTTour(nhanVien));
-			TienIch.chuyenPanelKhiNhan(frmMain.getPnContent(), new PnlTaoTour(nhanVien));
-			TienIch.themDuongDan(frmMain.getPnButtonBar(), "Cập nhật tour");
+			TienIch.chuyenPanelKhiNhan(FrmMain.getPnContent(), new PnlTaoTour(nhanVien));
+			TienIch.themDuongDan(FrmMain.getPnButtonBar(), "Cập nhật tour");
 		} else if (o.equals(btnDKTour)) {
 			//TienIch.chuyenPanelKhiNhan(frmMain.getPnContent(), new pnlPhieuDangKyTour());
-			TienIch.chuyenPanelKhiNhan(frmMain.getPnContent(), new PnlDangKyTour());
-			TienIch.themDuongDan(frmMain.getPnButtonBar(), "Đăng ký tour du lịch");
+			TienIch.chuyenPanelKhiNhan(FrmMain.getPnContent(), new PnlDangKyTour());
+			TienIch.themDuongDan(FrmMain.getPnButtonBar(), "Đăng ký tour du lịch");
 		} else if (o.equals(btnHuyDKTour)) {
-			TienIch.chuyenPanelKhiNhan(frmMain.getPnContent(), new pnlHuyDangKyTour());
-			TienIch.themDuongDan(frmMain.getPnButtonBar(), "Hủy phiếu đăng ký");
+			TienIch.chuyenPanelKhiNhan(FrmMain.getPnContent(), new pnlHuyDangKyTour());
+			TienIch.themDuongDan(FrmMain.getPnButtonBar(), "Hủy phiếu đăng ký");
 		}
 	}
 }

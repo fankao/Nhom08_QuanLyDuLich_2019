@@ -6,6 +6,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,7 +28,9 @@ import org.hibernate.annotations.NotFoundAction;
 @Table(name = "ngaykhoihanh")
 public class NgayKhoiHanh {
 	@Id
-	@Column(columnDefinition = "VARCHAR(20)")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	@Column(columnDefinition = "VARCHAR(20)",unique = true,nullable = false)
 	private String maLT;
 	private Date ngayKhoiHanh;
 	private int soNguoiThamGia;
@@ -64,6 +68,14 @@ public class NgayKhoiHanh {
 		} else if (!maLT.equals(other.maLT))
 			return false;
 		return true;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getMaLT() {
