@@ -26,11 +26,10 @@
 				value="jdbc:sqlserver://localhost:1433;databaseName=Nhom08_dbQuanLyDuLich_2019" />
 			<property name="javax.persistence.jdbc.user" value="sa" />
 			<property name="javax.persistence.jdbc.password" value="123" />
-			<!-- <property name="hibernate.show_sql" value="true" /> -->
+			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
-	<!-- <property
-	name="javax.persistence.schema-generation.database.action"
-	value="drop-and-create" /> -->
+	<!-- <property name="javax.persistence.schema-generation.database.action" 
+		value="drop-and-create" /> -->
 		</properties>
 	</persistence-unit>
 </persistence>

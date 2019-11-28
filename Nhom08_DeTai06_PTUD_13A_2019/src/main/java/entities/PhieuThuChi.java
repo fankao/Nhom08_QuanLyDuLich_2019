@@ -8,16 +8,20 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "phieuchi")
+@Table(name = "phieuthuchi")
 public class PhieuThuChi {
 	@Id
-	@Column(columnDefinition = "VARCHAR(20)")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	@Column(columnDefinition = "VARCHAR(20)", unique = true, nullable = false)
 	private String maPhieuChi;
 
 	private Date ngayTaoPhieuChi;
@@ -29,7 +33,7 @@ public class PhieuThuChi {
 	private String lyDo;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "phieudangkyID", nullable = false, columnDefinition = "VARCHAR(20)", updatable = true)
+	@JoinColumn(name = "phieudangkyID", nullable = false, updatable = true)
 	private PhieuDangKy pdk;
 
 	@Enumerated(EnumType.STRING)
@@ -40,13 +44,12 @@ public class PhieuThuChi {
 
 	}
 
-	public PhieuThuChi(String maPhieuChi, Date ngayTaoPhieuChi, double soTien, String lyDo, PhieuDangKy pdk) {
-		super();
-		this.maPhieuChi = maPhieuChi;
-		this.ngayTaoPhieuChi = ngayTaoPhieuChi;
-		this.soTien = soTien;
-		this.lyDo = lyDo;
-		this.pdk = pdk;
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getMaPhieuChi() {
@@ -65,19 +68,19 @@ public class PhieuThuChi {
 		this.ngayTaoPhieuChi = ngayTaoPhieuChi;
 	}
 
-	public double getSoTienChi() {
+	public double getSoTien() {
 		return soTien;
 	}
 
-	public void setSoTienChi(double soTien) {
+	public void setSoTien(double soTien) {
 		this.soTien = soTien;
 	}
 
-	public String getLyDoChi() {
+	public String getLyDo() {
 		return lyDo;
 	}
 
-	public void setLyDoChi(String lyDo) {
+	public void setLyDo(String lyDo) {
 		this.lyDo = lyDo;
 	}
 

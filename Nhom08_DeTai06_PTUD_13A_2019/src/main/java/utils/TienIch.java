@@ -1,6 +1,7 @@
 package utils;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -40,7 +41,7 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.toedter.calendar.JDateChooser;
 
-import gui.frmMain;
+import gui.FrmMain;
 import utils.address.Province;
 
 /**
@@ -65,7 +66,6 @@ public class TienIch {
 			btn.setBackground(new Color(23, 35, 51));
 			btn.setEnabled(true);
 		}
-		btnDoiMau.setEnabled(false);
 
 	}
 
@@ -77,12 +77,12 @@ public class TienIch {
 	 */
 	public static void themDuongDan(JPanel root, String... subs) {
 		for (int i = 0; i < subs.length; i++) {
-			JButton btn = new JButton("> " + subs[i]);
-			btn.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			btn.setFocusable(false);
-			btn.setBackground(new Color(242, 247, 247));
-			btn.setBorder(new EmptyBorder(0, 0, 0, 0));
-			root.add(btn);
+			JLabel lbl = new JLabel("> " + subs[i]);
+			lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
+			lbl.setFocusable(false);
+			lbl.setBackground(new Color(242, 247, 247));
+			lbl.setBorder(new EmptyBorder(0, 0, 0, 0));
+			root.add(lbl);
 
 		}
 
@@ -92,15 +92,15 @@ public class TienIch {
 		switch (kieuXoa) {
 		case 1:
 			// Chọn xoá hoàn toàn đường dẫn
-			frmMain.getPnButtonBar().removeAll();
-			frmMain.getPnButtonBar().repaint();
-			frmMain.getPnButtonBar().validate();
+			FrmMain.getPnButtonBar().removeAll();
+			FrmMain.getPnButtonBar().repaint();
+			FrmMain.getPnButtonBar().validate();
 			break;
 		case 2:
 			// Chọn xoá đường dẫn cấp 1
-			frmMain.getPnButtonBar().remove(1);
-			frmMain.getPnButtonBar().repaint();
-			frmMain.getPnButtonBar().validate();
+			FrmMain.getPnButtonBar().remove(1);
+			FrmMain.getPnButtonBar().repaint();
+			FrmMain.getPnButtonBar().validate();
 			break;
 		default:
 			break;
@@ -114,10 +114,11 @@ public class TienIch {
 	 * @param pnDich: panel chuyển đến
 	 */
 	public static void chuyenPanelKhiNhan(JPanel root, JPanel pnDich) {
-		root.removeAll();
-		root.add(pnDich, BorderLayout.CENTER);
-		root.repaint();
-		root.validate();
+		CardLayout cardLayout = (CardLayout) root.getLayout();
+		pnDich.repaint();
+		pnDich.validate();
+		cardLayout.show(root, pnDich.getName());
+
 	}
 
 	public static void chinhKichThuocTable(JTable tbl, int tongKichThuoc, double... tyLe) {

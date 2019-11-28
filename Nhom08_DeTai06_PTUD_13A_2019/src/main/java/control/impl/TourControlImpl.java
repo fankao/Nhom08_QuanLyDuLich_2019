@@ -73,7 +73,7 @@ public class TourControlImpl implements ITourControl {
 	 * @param yc <br>
 	 *           yc = 1 Lấy toan bộ danh sách tour <br>
 	 *           yc = 2 Lấy danh sách tour theo do nhân viên tạo <br>
-	 *           yc = 3 Lấy danh sách tour daDuyet <br>
+	 *           yc = 3 Lấy danh sách tour đã được duyệt mở bán <br>
 	 * @return Danh sách tour theo yêu cầu
 	 */
 	@Override

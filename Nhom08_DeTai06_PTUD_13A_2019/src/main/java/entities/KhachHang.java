@@ -22,7 +22,7 @@ public class KhachHang {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(columnDefinition = "VARCHAR(20)", unique = true)
+	@Column(columnDefinition = "VARCHAR(20)", unique = true,nullable = false)
 	private String maKH;
 
 	private String soCMND;

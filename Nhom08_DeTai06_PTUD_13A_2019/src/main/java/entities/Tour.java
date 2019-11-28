@@ -31,16 +31,16 @@ import org.hibernate.annotations.NotFoundAction;
 @NamedQueries({
 		@NamedQuery(name = "Tour.timDsTour", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND t.daDuyet=:daDuyet ORDER BY t.id"),
 		@NamedQuery(name = "Tour.timDsTourDaDuyet", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND t.daDuyet=:daDuyet ORDER BY t.id"),
-		@NamedQuery(name = "Tour.timDsTourTheoNhanVien", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND t.nhanVien.maNV=:manv ORDER BY t.id"), })
+		@NamedQuery(name = "Tour.timDsTourTheoNhanVien", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND daDuyet=False AND t.nhanVien.maNV=:manv ORDER BY t.id"), })
 public class Tour implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(columnDefinition = "VARCHAR(20)", unique = true)
+	@Column(columnDefinition = "VARCHAR(20)", unique = true, nullable = false)
 	private String maTour;
-	
+
 	@Column(columnDefinition = "NVARCHAR(255)")
 	private String tenTour;
 
@@ -77,7 +77,7 @@ public class Tour implements Serializable {
 
 	private boolean daDuyet;
 	private boolean daXoa;
-	
+
 	public Tour() {
 		super();
 	}
@@ -222,7 +222,5 @@ public class Tour implements Serializable {
 	public void setDaXoa(boolean daXoa) {
 		this.daXoa = daXoa;
 	}
-
-	
 
 }

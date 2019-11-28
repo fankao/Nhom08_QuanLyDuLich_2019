@@ -69,8 +69,8 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 		JPanel pnlTimKiemTTKH = new JPanel();
 		pnlTimKiemTT.add(pnlTimKiemTTKH, BorderLayout.CENTER);
 
-		JLabel lblChon = new JLabel("Chọn loại tìm kiếm");
-		lblChon.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		JLabel lblLoaiTK = new JLabel("Tìm kiếm theo:");
+		lblLoaiTK.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		cmbLoaiTK = new JComboBox<String>();
 		cmbLoaiTK.setModel(new DefaultComboBoxModel(
@@ -90,7 +90,7 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 				.addGroup(gl_pnlTimKiemTTKH.createSequentialGroup().addContainerGap()
 						.addGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.LEADING)
 								.addComponent(pnlDSKhachHang, GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
-								.addGroup(gl_pnlTimKiemTTKH.createSequentialGroup().addComponent(lblChon)
+								.addGroup(gl_pnlTimKiemTTKH.createSequentialGroup().addComponent(lblLoaiTK)
 										.addPreferredGap(ComponentPlacement.UNRELATED)
 										.addComponent(cmbLoaiTK, 0, 0, Short.MAX_VALUE))
 								.addComponent(lblNhap)
@@ -98,7 +98,7 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 						.addContainerGap()));
 		gl_pnlTimKiemTTKH.setVerticalGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_pnlTimKiemTTKH.createSequentialGroup().addContainerGap()
-						.addGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.BASELINE).addComponent(lblChon)
+						.addGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.BASELINE).addComponent(lblLoaiTK)
 								.addComponent(cmbLoaiTK, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
 						.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(lblNhap)
 						.addPreferredGap(ComponentPlacement.RELATED)
@@ -106,7 +106,7 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(pnlDSKhachHang, GroupLayout.PREFERRED_SIZE, 307, GroupLayout.PREFERRED_SIZE)
 						.addContainerGap(68, Short.MAX_VALUE)));
-		gl_pnlTimKiemTTKH.linkSize(SwingConstants.VERTICAL, new Component[] { lblChon, cmbLoaiTK });
+		gl_pnlTimKiemTTKH.linkSize(SwingConstants.VERTICAL, new Component[] { lblLoaiTK, cmbLoaiTK });
 		pnlDSKhachHang.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrDSKH = new JScrollPane();
