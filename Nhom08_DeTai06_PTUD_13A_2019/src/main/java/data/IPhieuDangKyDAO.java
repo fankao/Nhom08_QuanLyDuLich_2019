@@ -2,6 +2,7 @@ package data;
 
 import java.util.List;
 
+import entities.KhachHangThamGia;
 import entities.PhieuDangKy;
 
 public interface IPhieuDangKyDAO {
@@ -10,6 +11,11 @@ public interface IPhieuDangKyDAO {
 	public List<PhieuDangKy> layDSPhieuDangKyTheoKH(String maKH);
 
 	public List<PhieuDangKy> layDSPhieuDangKyTheoTour(String maTour);
+
+	public List<KhachHangThamGia> layDSKhachThamGiaTour(String maTour);
+
+	public String phatSinhMaPDK();
+
 
 	public PhieuDangKy themPhieuDangKy(PhieuDangKy pdk);
 

@@ -21,7 +21,7 @@ public class KhachHangThamGia {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(columnDefinition = "VARCHAR(20)", unique = true, nullable = false)
+	@Column(unique = true, nullable = false)
 	private String maKHTG;
 	@Column(columnDefinition = "NVARCHAR(255)")
 	private String hoTenKHTG;
@@ -36,7 +36,7 @@ public class KhachHangThamGia {
 
 	public int tinhTuoiKhachHang() {
 		LocalDate date = this.getNgaySinh().toLocalDate();
-		Period period = Period.between(LocalDate.now(), date);
+		Period period = Period.between(date, LocalDate.now());
 		return period.getYears();
 	}
 

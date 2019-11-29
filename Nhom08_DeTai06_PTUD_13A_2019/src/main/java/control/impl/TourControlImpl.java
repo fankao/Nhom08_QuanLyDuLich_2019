@@ -71,20 +71,23 @@ public class TourControlImpl implements ITourControl {
 	 * Lấy danh sách tour theo yêu cầu
 	 * 
 	 * @param yc <br>
-	 *           yc = 1 Lấy toan bộ danh sách tour <br>
+	 *           yc = 1 Lấy toan bộ danh sách tour chưa duyệt<br>
 	 *           yc = 2 Lấy danh sách tour theo do nhân viên tạo <br>
 	 *           yc = 3 Lấy danh sách tour đã được duyệt mở bán <br>
+	 *           yc = 4 Lấy danh sách tour <br>
 	 * @return Danh sách tour theo yêu cầu
 	 */
 	@Override
 	public List<Tour> layDsTourTheoYeuCau(int yc, String... arg) {
 		switch (yc) {
 		case 1:
-			return tourDAO.layDSTour();
+			return tourDAO.layDSTourChuaDuyet();
 		case 2:
 			return tourDAO.layDSTourTheoNhanVien(arg[0]);
 		case 3:
 			return tourDAO.layDSTourDaDuyet();
+		case 4:
+			return tourDAO.layDSTour();
 		}
 		return null;
 	}

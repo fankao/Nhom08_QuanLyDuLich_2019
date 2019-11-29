@@ -20,11 +20,11 @@ public class TourDAOImpl implements ITourDAO {
 	}
 
 	/**
-	 * Trả về toàn bộ danh sách tour
+	 * Trả về toàn bộ danh sách tour chưa được duyệt
 	 */
 	@Override
-	public List<Tour> layDSTour() {
-		TypedQuery<Tour> query = em.createNamedQuery("Tour.timDsTour", Tour.class);
+	public List<Tour> layDSTourChuaDuyet() {
+		TypedQuery<Tour> query = em.createNamedQuery("Tour.timDsTourChuaDuyet", Tour.class);
 		query.setParameter("daXoa", false);
 		query.setParameter("daDuyet", false);
 		List<Tour> dsTour = query.getResultList();
@@ -64,6 +64,8 @@ public class TourDAOImpl implements ITourDAO {
 	}
 
 	/**
+	 * Sửa thông tin tour
+	 * 
 	 * @param tour
 	 * @return Tour đã sửa
 	 */
@@ -82,6 +84,9 @@ public class TourDAOImpl implements ITourDAO {
 		return null;
 	}
 
+	/**
+	 * trả về danh sách ngày khởi hành của tour
+	 */
 	@Override
 	public List<NgayKhoiHanh> layDSNgayKhoiHanhTheoTour(String maTour) {
 		TypedQuery<NgayKhoiHanh> query = em.createQuery("SELECT t FROM NgayKhoiHanh t WHERE t.tour.maTour=:maTour",
@@ -91,6 +96,9 @@ public class TourDAOImpl implements ITourDAO {
 		return sets.size() != 0 ? sets : new ArrayList<NgayKhoiHanh>();
 	}
 
+	/**
+	 * Lấy danh sách tour đã mở bán
+	 */
 	@Override
 	public List<Tour> layDSTourDaDuyet() {
 		TypedQuery<Tour> query = em.createNamedQuery("Tour.timDsTourDaDuyet", Tour.class);
@@ -100,6 +108,9 @@ public class TourDAOImpl implements ITourDAO {
 		return dsTour.size() != 0 ? dsTour : new ArrayList<Tour>();
 	}
 
+	/**
+	 * Lấy danh sách tour theo nhân viên tạo
+	 */
 	@Override
 	public List<Tour> layDSTourTheoNhanVien(String maNV) {
 		TypedQuery<Tour> query = em.createNamedQuery("Tour.timDsTourTheoNhanVien", Tour.class);
@@ -109,10 +120,9 @@ public class TourDAOImpl implements ITourDAO {
 		return dsTour.size() != 0 ? dsTour : new ArrayList<Tour>();
 	}
 
-	public static void main(String[] args) {
-
-	}
-
+	/**
+	 * Phát sinh mã cho tour
+	 */
 	@Override
 	public String phatSinhMaTour() {
 		String query = "SELECT t.maTour FROM Tour t";
@@ -127,6 +137,16 @@ public class TourDAOImpl implements ITourDAO {
 			return "T00" + (max + 1);
 		}
 		return "T001";
+	}
+
+	/**
+	 * Lấy danh sách tour
+	 */
+	@Override
+	public List<Tour> layDSTour() {
+		TypedQuery<Tour> query = em.createNamedQuery("Tour.timDSTour", Tour.class);
+		List<Tour> dsTour = query.getResultList();
+		return dsTour.size() != 0 ? dsTour : new ArrayList<Tour>();
 	}
 
 }

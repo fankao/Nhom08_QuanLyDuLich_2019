@@ -709,7 +709,7 @@ public class pnlPhieuDangKyTour extends JPanel implements ActionListener, Change
 			if (khachHangTim != null) {
 				tours = dangKyTourBUS.layDSTourChuaDangKyTheoMaKH("", khachHangTim.getMaKH());
 			} else {
-				tours = dangKyTourBUS.layDSTour();
+				tours = dangKyTourBUS.layDSTourChuaDuyet();
 			}
 			hienDanhSachTour(tours);
 		} else if (o.equals(btnTimKH)) {
@@ -733,7 +733,7 @@ public class pnlPhieuDangKyTour extends JPanel implements ActionListener, Change
 					TienIch.hienAnCacControl(true, btnLamMoi, btnHuy, btnChonTour, txtTimKiemTour, btnTimNC);
 					requestFocus(false);
 				} else {
-					tours = dangKyTourBUS.layDSTour();
+					tours = dangKyTourBUS.layDSTourChuaDuyet();
 					hienDanhSachTour(tours);
 					TienIch.hienAnCacControl(true, txtTenKH, txtCM, txtDC, ftxtSdt, dtcNgSinh, btnChonTour, btnHuy,
 							btnLamMoi, txtTimKiemTour, btnTimNC);

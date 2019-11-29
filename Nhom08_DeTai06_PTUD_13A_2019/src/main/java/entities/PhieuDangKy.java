@@ -3,6 +3,7 @@ package entities;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,12 +28,13 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "phieudangky")
 @NamedQueries({ @NamedQuery(name = "PDK.timDSPDK", query = "SELECT pdk FROM PhieuDangKy pdk"),
 		@NamedQuery(name = "PDK.timDSPDKTheoKH", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.kh.maKH = :makh"),
-		@NamedQuery(name = "PDK.timDSTheoTour", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.ngayKhoiHanh.tour.maTour=:matour") })
+		@NamedQuery(name = "PDK.timDSTheoTour", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.ngayKhoiHanh.tour.maTour=:matour"),
+		@NamedQuery(name = "PDK.timDSKhachThamGiaTheoTour", query = "SELECT pdk.khachHangThamGias FROM PhieuDangKy pdk WHERE pdk.ngayKhoiHanh.tour.maTour=:matour") })
 public class PhieuDangKy {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(columnDefinition = "VARCHAR(20)", unique = true,nullable = false)
+	@Column(unique = true, nullable = false)
 	private String maPhieuDK;
 
 	private Date ngayTaoPhieu;
@@ -51,7 +53,7 @@ public class PhieuDangKy {
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "khachhangthamgiaID", nullable = false)
-	private Set<KhachHangThamGia> khachHangThamGias = new HashSet<KhachHangThamGia>();
+	private List<KhachHangThamGia> khachHangThamGias = new ArrayList<KhachHangThamGia>();
 
 	private boolean daHoanThanhTour;
 
@@ -64,14 +66,13 @@ public class PhieuDangKy {
 	}
 
 	public PhieuDangKy(String maPhieuDK, Date ngayTaoPhieu, NhanVien nv, KhachHang kh, NgayKhoiHanh ngayKhoiHanh,
-			Set<KhachHangThamGia> khachHangThamGias, boolean daHoanThanhTour, boolean daHuyPhieu) {
+			boolean daHoanThanhTour, boolean daHuyPhieu) {
 		super();
 		this.maPhieuDK = maPhieuDK;
 		this.ngayTaoPhieu = ngayTaoPhieu;
 		this.nv = nv;
 		this.kh = kh;
 		this.ngayKhoiHanh = ngayKhoiHanh;
-		this.khachHangThamGias = khachHangThamGias;
 		this.daHoanThanhTour = daHoanThanhTour;
 		this.daHuyPhieu = daHuyPhieu;
 	}
@@ -155,11 +156,11 @@ public class PhieuDangKy {
 		this.kh = kh;
 	}
 
-	public Set<KhachHangThamGia> getKhachHangThamGias() {
+	public List<KhachHangThamGia> getKhachHangThamGias() {
 		return khachHangThamGias;
 	}
 
-	public void setKhachHangThamGias(Set<KhachHangThamGia> khachHangThamGias) {
+	public void setKhachHangThamGias(List<KhachHangThamGia> khachHangThamGias) {
 		this.khachHangThamGias = khachHangThamGias;
 	}
 
