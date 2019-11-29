@@ -149,4 +149,21 @@ public class TourDAOImpl implements ITourDAO {
 		return dsTour.size() != 0 ? dsTour : new ArrayList<Tour>();
 	}
 
+	@Override
+	public String phatSinhNgayKhoiHanh(String maTour) {
+		List<Integer> lstId = em
+				.createQuery("SELECT ngaykh.id FROM NgayKhoiHanh ngaykh WHERE ngaykh.tour.maTour =:maTour",
+						Integer.class)
+				.setParameter("maTour", maTour).getResultList();
+		if (lstId.size() != 0) {
+			int max = lstId.get(0);
+			for (Integer x : lstId) {
+				if (x > max) {
+					max = x;
+				}
+			}
+			return maTour + "-NGKH00" + (max + 1);
+		}
+		return maTour + "-NGKH001";
+	}
 }

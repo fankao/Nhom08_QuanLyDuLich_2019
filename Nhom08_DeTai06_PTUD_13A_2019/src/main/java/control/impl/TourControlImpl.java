@@ -103,4 +103,10 @@ public class TourControlImpl implements ITourControl {
 		return tourDAO.layDSNgayKhoiHanhTheoTour(maTour);
 	}
 
+	@Override
+	public String phatSinhNgayKhoiHanh(String maTour) {
+
+		return tourDAO.phatSinhNgayKhoiHanh(maTour);
+	}
+
 }

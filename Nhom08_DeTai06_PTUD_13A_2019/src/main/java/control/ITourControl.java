@@ -19,4 +19,5 @@ public interface ITourControl {
 	public List<NgayKhoiHanh> layDSNgayKhoiHanhTheoTour(String maTour);
 
 	public List<DiaDanh> layDSDiaDanh();
+	public String phatSinhNgayKhoiHanh(String maTour);
 }

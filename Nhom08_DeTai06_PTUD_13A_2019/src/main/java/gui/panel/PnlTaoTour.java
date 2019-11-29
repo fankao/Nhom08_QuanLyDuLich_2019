@@ -64,6 +64,7 @@ import com.toedter.calendar.JDateChooser;
 import control.ITourControl;
 import control.impl.TourControlImpl;
 import entities.DiaDanh;
+import entities.KhachHang;
 import entities.NgayKhoiHanh;
 import entities.NhanVien;
 import entities.PhuongTien;
@@ -412,6 +413,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		pnlLoaiTK.add(cmbTimKiem);
 
 		btnLoc = new JButton("Lọc");
+		btnLoc.setVisible(false);
 		pnlLoaiTK.add(btnLoc);
 
 		pnlButton = new JPanel();
@@ -804,8 +806,8 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				Tour tour = new Tour();
 				tour.setTenTour(txaTenTour.getText());
 				tour.setDiaDanh((DiaDanh) cmbDiaDanh.getSelectedItem());
-				tour.setDiemKhoiHanh(cmbDiemDen.getSelectedItem().toString());
-				tour.setDiemDen(cmbDiemXP.getSelectedItem().toString());
+				tour.setDiemKhoiHanh(cmbDiemXP.getSelectedItem().toString());
+				tour.setDiemDen(cmbDiemDen.getSelectedItem().toString());
 				tour.setNhanVien(nhanvien);
 				tour.setPhuongTien((PhuongTien) cmbPhuongTien.getSelectedItem());
 				tour.setThoiGian(new int[] { soNgay, soDem });
@@ -832,10 +834,17 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				if (btnSua.isSelected() == true) {
 					int row = tblDSTour.getSelectedRow();
 					Tour tourChon = tourControl.layTourTheoMa(tblDSTour.getValueAt(row, 1).toString());
-					tour.setMaTour(tourChon.getMaTour());
-					tour.setId(tourChon.getId());
-					Tour touSua = tourControl.suaTour(tour);
-					if (touSua != null) {
+					tourChon.setTenTour(tour.getTenTour());
+					tourChon.setDiaDanh(tour.getDiaDanh());
+					tourChon.setDiemKhoiHanh(tour.getDiemKhoiHanh());
+					tourChon.setDiemDen(tour.getDiemDen());
+					tourChon.setNhanVien(nhanvien);
+					tourChon.setPhuongTien(tour.getPhuongTien());
+					tourChon.setThoiGian(tour.getThoiGian());
+					tourChon.setDonGiaNguoiLon(tour.getDonGiaNguoiLon());
+					tourChon.setDonGiaTreEm(tour.getDonGiaTreEm());
+					Tour tourSua = tourControl.suaTour(tourChon);
+					if (tourSua != null) {
 						lstTour = tourControl.layDsTourTheoYeuCau(2, nhanvien.getMaNV());
 						hienDanhSachTour(tblDSTour, lstTour, scrDSTour);
 						btnSua.setSelected(false);
@@ -877,6 +886,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		 * Chọn nút thêm ngày khởi hành
 		 */
 		else if (o.equals(btnThemKH)) {
+			btnThem.setSelected(true);
 			pnlNhap.setVisible(true);
 			btnThemKH.setSelected(true);
 		}
@@ -892,28 +902,20 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		 */
 		else if (o.equals(btnLuuNgayKH)) {
 			int row = tblDSTour.getSelectedRow();
-			NgayKhoiHanh ngayKhoiHanh = new NgayKhoiHanh();
+			int rowNgayKH = tblDSNGKH.getSelectedRow();
+			NgayKhoiHanh ngayKhoiHanh = rowNgayKH == -1 ? null : lstNgayKH.get(row);
+			Tour tourChon = tourControl.layTourTheoMa(tblDSTour.getValueAt(row, 1).toString());
+			if (btnThemKH.isSelected() && ngayKhoiHanh == null) {
+				ngayKhoiHanh = new NgayKhoiHanh();
+				ngayKhoiHanh.setMaLT(tourControl.phatSinhNgayKhoiHanh(tourChon.getMaTour()));
+				btnThem.setVisible(false);
+
+			}
 			ngayKhoiHanh.setNgayKhoiHanh(new Date(dtcNgayKhoiHanh.getDate().getTime()));
 			int soNguoi = (int) spnSoKhachToiDa.getValue();
 			ngayKhoiHanh.setSoNguoiThamGia(soNguoi);
 
-			Tour tourChon = tourControl.layTourTheoMa(tblDSTour.getValueAt(row, 1).toString());
-
-			String maNgKH = tourChon.getMaTour() + "-NGKH001";
-			if (lstNgayKH.size() != 0) {
-				int max = Integer.parseInt(lstNgayKH.get(0).getMaLT().split("-")[1].substring(6));
-				for (NgayKhoiHanh x : lstNgayKH) {
-					int suffix = Integer.parseInt(x.getMaLT().split("-")[1].substring(6));
-					if (suffix > max) {
-						max = suffix;
-					}
-
-				}
-				maNgKH = tourChon.getMaTour() + "-NGKH00" + (max + 1);
-			}
-			ngayKhoiHanh.setMaLT(maNgKH);
 			ngayKhoiHanh.setTour(tourChon);
-			tourChon.getNgayKhoiHanh().add(ngayKhoiHanh);
 
 			Tour touSua = tourControl.suaTour(tourChon);
 
@@ -924,6 +926,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				ngkhTableModel.fireTableDataChanged();
 
 			}
+
 		}
 		/*
 		 * 
@@ -933,12 +936,14 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			case 1:
 				txtTimKiem.setEditable(true);
 				cmbTimKiem.setVisible(false);
+				btnLoc.setVisible(false);
 				txtTimKiem.setUI(new HintTextFieldUI("Nhập mã tour cần tìm ...", true));
 
 				break;
 			case 2:
 				txtTimKiem.setEditable(true);
 				cmbTimKiem.setVisible(false);
+				btnLoc.setVisible(false);
 				txtTimKiem.setUI(new HintTextFieldUI("Nhập tên tour cần tìm ...", true));
 
 				break;
@@ -946,6 +951,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				txtTimKiem.setVisible(false);
 				cmbTimKiem.setSelectedItem(null);
 				cmbTimKiem.setVisible(true);
+				btnLoc.setVisible(true);
 				hienThiDSDiaDanh(lstDiaDanh, cmbTimKiem);
 
 				break;
@@ -953,12 +959,14 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				txtTimKiem.setVisible(false);
 				cmbTimKiem.setSelectedItem(null);
 				cmbTimKiem.setVisible(true);
+				btnLoc.setVisible(true);
 				cmbTimKiem.setModel(new DefaultComboBoxModel(PhuongTien.values()));
 				break;
 			case 5:
 				txtTimKiem.setVisible(false);
 				cmbTimKiem.setSelectedItem(null);
 				cmbTimKiem.setVisible(true);
+				btnLoc.setVisible(true);
 				hienDiaDiem(TienIch.layDiaLyHanhChinh(), cmbTimKiem);
 				break;
 
@@ -966,18 +974,20 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				txtTimKiem.setUI(new HintTextFieldUI(""));
 				txtTimKiem.setEditable(false);
 				cmbTimKiem.setVisible(false);
+				btnLoc.setVisible(false);
 				break;
 			}
 		}
 		/*
 		 * 
 		 */
-		else if (o.equals(cmbTimKiem)) {
+		else if (o.equals(btnLoc)) {
 			List<Tour> dsTourCanTim = new ArrayList<Tour>();
 			for (Tour tour : lstTour) {
 				switch (cmbLuaChon.getSelectedIndex()) {
 				case 3:
 					// hiện danh sách tour theo địa danh
+					cmbTimKiem.setSelectedItem(cmbTimKiem.getSelectedItem());
 					DiaDanh key = (DiaDanh) cmbTimKiem.getSelectedItem();
 					if (key != null) {
 						if (tour.getDiaDanh().getTenDiaDanh().equalsIgnoreCase(key.getTenDiaDanh())) {
