@@ -5,14 +5,17 @@ import java.util.List;
 import control.IPhieuDangKyControl;
 import data.IPhieuDangKyDAO;
 import data.impl.PhieuDangKyDAOImpl;
+import entities.KhachHangThamGia;
 import entities.PhieuDangKy;
 
-public class PhieuDangKyControlImpl implements IPhieuDangKyControl{
+public class PhieuDangKyControlImpl implements IPhieuDangKyControl {
 	private IPhieuDangKyDAO phieuDangKyDAO;
+
 	public PhieuDangKyControlImpl() {
 		// TODO Auto-generated constructor stub
 		phieuDangKyDAO = new PhieuDangKyDAOImpl();
 	}
+
 	@Override
 	public List<PhieuDangKy> layDSPhieuDangKy() {
 		// TODO Auto-generated method stub
@@ -47,6 +50,12 @@ public class PhieuDangKyControlImpl implements IPhieuDangKyControl{
 	public PhieuDangKy layTTPhieuDangKyTheoMa(String maPDK) {
 		// TODO Auto-generated method stub
 		return phieuDangKyDAO.layTTPhieuDangKyTheoMa(maPDK);
+	}
+
+	@Override
+	public List<KhachHangThamGia> layDSKhachThamGiaTour(String maTour) {
+		// TODO Auto-generated method stub
+		return phieuDangKyDAO.layDSKhachThamGiaTour(maTour);
 	}
 
 }

@@ -37,7 +37,7 @@ public class KhachHangControlImpl implements IKhachHangControl {
 	 * @return List
 	 */
 	@Override
-	public List<KhachHang> layDSKhachHangTheoYeuCau(int yc, String tim) {
+	public KhachHang layTTKhachHangTheoYeuCau(int yc, String tim) {
 		// TODO Auto-generated method stub
 		switch (yc) {
 		case 1:

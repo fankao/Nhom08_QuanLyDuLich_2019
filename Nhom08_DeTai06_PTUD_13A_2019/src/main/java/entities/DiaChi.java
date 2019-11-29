@@ -52,6 +52,6 @@ public class DiaChi implements Serializable {
 
 	@Override
 	public String toString() {
-		return "DiaChi [xa=" + xa + ", huyen=" + huyen + ", tinh=" + tinh + "]";
+		return this.xa + ", " + this.huyen + ", " + this.tinh;
 	}
 }

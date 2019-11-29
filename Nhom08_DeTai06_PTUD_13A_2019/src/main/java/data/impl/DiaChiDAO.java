@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import data.EntityManagerConnection;
+import data.IDiaChiDAO;
 import entities.DiaChi;
 
 public class DiaChiDAO implements IDiaChiDAO {

@@ -1,5 +1,7 @@
 package data.impl;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -8,6 +10,8 @@ import javax.persistence.TypedQuery;
 
 import data.EntityManagerConnection;
 import data.IPhieuDangKyDAO;
+import entities.KhachHang;
+import entities.KhachHangThamGia;
 import entities.PhieuDangKy;
 
 public class PhieuDangKyDAOImpl implements IPhieuDangKyDAO {
@@ -27,7 +31,7 @@ public class PhieuDangKyDAOImpl implements IPhieuDangKyDAO {
 	public List<PhieuDangKy> layDSPhieuDangKy() {
 		TypedQuery<PhieuDangKy> query = em.createNamedQuery("PDK.timDSPDK", PhieuDangKy.class);
 		List<PhieuDangKy> list = query.getResultList();
-		return list;
+		return list.size() != 0 ? list : new ArrayList<PhieuDangKy>();
 	}
 
 	/**
@@ -41,7 +45,7 @@ public class PhieuDangKyDAOImpl implements IPhieuDangKyDAO {
 		TypedQuery<PhieuDangKy> query = em.createNamedQuery("PDK.timDSPDKTheoKH", PhieuDangKy.class);
 		query.setParameter("makh", maKH);
 		List<PhieuDangKy> list = query.getResultList();
-		return list;
+		return list.size() != 0 ? list : new ArrayList<PhieuDangKy>();
 	}
 
 	/**
@@ -55,6 +59,15 @@ public class PhieuDangKyDAOImpl implements IPhieuDangKyDAO {
 		EntityTransaction tr = em.getTransaction();
 		try {
 			tr.begin();
+			pdk.setMaPhieuDK(phatSinhMaPDK());
+			int i = 1;
+			List<KhachHangThamGia> khtg = new ArrayList<KhachHangThamGia>();
+			for (KhachHangThamGia khachHangThamGia : pdk.getKhachHangThamGias()) {
+				khachHangThamGia.setMaKHTG(pdk.getMaPhieuDK() + "-KHTG00" + i);
+				i++;
+				khtg.add(khachHangThamGia);
+			}
+			pdk.setKhachHangThamGias(khtg);
 			em.persist(pdk);
 			tr.commit();
 			return pdk;
@@ -107,7 +120,33 @@ public class PhieuDangKyDAOImpl implements IPhieuDangKyDAO {
 		TypedQuery<PhieuDangKy> query = em.createNamedQuery("PDK.timDSTheoTour", PhieuDangKy.class);
 		query.setParameter("matour", maTour);
 		List<PhieuDangKy> list = query.getResultList();
-		return list;
+		return list.size() != 0 ? list : new ArrayList<PhieuDangKy>();
+	}
+
+	@Override
+	public List<KhachHangThamGia> layDSKhachThamGiaTour(String maTour) {
+
+		@SuppressWarnings("unchecked")
+		List<KhachHangThamGia> list = em
+				.createQuery(
+						"SELECT pdk.khachHangThamGias FROM PhieuDangKy pdk WHERE pdk.ngayKhoiHanh.tour.maTour=:matour")
+				.setParameter("matour", maTour).getResultList();
+		return list.size() != 0 ? list : new ArrayList<KhachHangThamGia>();
+	}
+
+	@Override
+	public String phatSinhMaPDK() {
+		List<Integer> listID = em.createQuery("SELECT pdk.id FROM PhieuDangKy pdk", Integer.class).getResultList();
+		if (listID.size() != 0) {
+			int max = listID.get(0);
+			for (Integer x : listID) {
+				if (x > max) {
+					max = x;
+				}
+			}
+			return "PDK00" + (max + 1) + "/" + LocalDate.now().getMonthValue() + "" + LocalDate.now().getYear();
+		}
+		return "PDK001/" + LocalDate.now().getMonthValue() + "" + LocalDate.now().getYear();
 	}
 
 }

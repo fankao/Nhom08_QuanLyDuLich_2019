@@ -34,11 +34,12 @@ public class KhachHangDAOImpl implements IKhachHangDAO {
 	 * @return danh sách khách hàng
 	 */
 	@Override
-	public List<KhachHang> layDSKhachHangTheoTen(String ten) {
+	public KhachHang layDSKhachHangTheoTen(String ten) {
 		TypedQuery<KhachHang> query = em.createNamedQuery("KH.timTheoTenKH", KhachHang.class);
-		query.setParameter("ten", "%" + ten + "%");
+		query.setParameter("ten", ten);
 		List<KhachHang> list = query.getResultList();
-		return list.size() != 0 ? list : new ArrayList<KhachHang>();
+
+		return list.size() != 0 ? list.get(0) : null;
 	}
 
 	/**
@@ -48,19 +49,19 @@ public class KhachHangDAOImpl implements IKhachHangDAO {
 	 * @return danh sách khách hàng
 	 */
 	@Override
-	public List<KhachHang> layTTKhachHangTheoSDT(String sdt) {
+	public KhachHang layTTKhachHangTheoSDT(String sdt) {
 		TypedQuery<KhachHang> query = em.createNamedQuery("KH.timTheoSDT", KhachHang.class);
-		query.setParameter("sdt", "%" + sdt + "%");
+		query.setParameter("sdt", sdt);
 		List<KhachHang> list = query.getResultList();
-		return list.size() != 0 ? list : new ArrayList<KhachHang>();
+		return list.size() != 0 ? list.get(0) : null;
 	}
 
 	@Override
-	public List<KhachHang> layTTKhachHangTheoCMND(String cmnd) {
+	public KhachHang layTTKhachHangTheoCMND(String cmnd) {
 		TypedQuery<KhachHang> query = em.createNamedQuery("KH.timTheoCMND", KhachHang.class);
-		query.setParameter("cmnd", "%" + cmnd + "%");
+		query.setParameter("cmnd", cmnd);
 		List<KhachHang> list = query.getResultList();
-		return list.size() != 0 ? list : new ArrayList<KhachHang>();
+		return list.size() != 0 ? list.get(0) : null;
 	}
 
 	@Override
@@ -75,6 +76,7 @@ public class KhachHangDAOImpl implements IKhachHangDAO {
 		EntityTransaction tr = em.getTransaction();
 		try {
 			tr.begin();
+			kh.setMaKH(phatSinhMaKH());
 			em.persist(kh);
 			tr.commit();
 			return kh;
@@ -84,4 +86,36 @@ public class KhachHangDAOImpl implements IKhachHangDAO {
 		}
 		return null;
 	}
+
+	@Override
+	public KhachHang suaKhachHang(KhachHang kh) {
+		EntityTransaction tr = em.getTransaction();
+		try {
+			tr.begin();
+			em.merge(kh);
+			tr.commit();
+			return kh;
+		} catch (Exception e) {
+			e.printStackTrace();
+			tr.rollback();
+		}
+		return null;
+	}
+
+	@Override
+	public String phatSinhMaKH() {
+		String query = "SELECT t.id FROM KhachHang t";
+		List<Integer> lstId = em.createQuery(query, Integer.class).getResultList();
+		if (lstId.size() != 0) {
+			int max = lstId.get(0);
+			for (Integer x : lstId) {
+				if (x > max) {
+					max = x;
+				}
+			}
+			return "KH00" + (max + 1);
+		}
+		return "KH001";
+	}
+
 }
