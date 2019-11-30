@@ -74,7 +74,6 @@ import model.TourTableModel;
 import utils.HintTextFieldUI;
 import utils.TienIch;
 import utils.address.Province;
-import javax.swing.border.BevelBorder;
 
 public class PnlTaoTour extends JPanel implements ActionListener, PropertyChangeListener {
 	private static final long serialVersionUID = 1L;
@@ -126,7 +125,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 	private JFormattedTextField txtGiaTrEm;
 	private Format current = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 
-	
 	/*
 	 * Khai báo giá trị đơn giá
 	 */
@@ -140,6 +138,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 	private JTable tblDSNGKH;
 	private JButton btnLoc;
 
+	
 	/**
 	 * Giao diện chức năng tạo tour
 	 */
@@ -154,7 +153,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		pnlTaoTour.setLayout(new BorderLayout(0, 0));
 
 		JPanel pnlTour = new JPanel();
-		pnlTour.setBackground(Color.WHITE);
 		pnlTour.setBorder(
 				new TitledBorder(null, "Th\u00F4ng tin tour", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pnlTaoTour.add(pnlTour, BorderLayout.CENTER);
@@ -366,7 +364,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		txtGiaTrEm.setValue(0);
 
 		JPanel pnlDSCTTour = new JPanel();
-		pnlDSCTTour.setBackground(Color.WHITE);
 		pnlDSCTTour.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Danh s\u00E1ch tour",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		pnlTour.add(pnlDSCTTour);
@@ -382,7 +379,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		pnlTimKiem.setLayout(new BoxLayout(pnlTimKiem, BoxLayout.X_AXIS));
 
 		JPanel pnlLuaChonTK = new JPanel();
-		pnlLuaChonTK.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		pnlLuaChonTK.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		FlowLayout fl_pnlLuaChonTK = (FlowLayout) pnlLuaChonTK.getLayout();
 		fl_pnlLuaChonTK.setAlignment(FlowLayout.LEFT);
 		pnlTimKiem.add(pnlLuaChonTK);
@@ -394,7 +391,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		cmbLuaChon.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		JPanel pnlLoaiTK = new JPanel();
-		pnlLoaiTK.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		FlowLayout flowLayout = (FlowLayout) pnlLoaiTK.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		pnlLoaiTK.setPreferredSize(new Dimension(450, 10));
@@ -421,7 +417,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		pnlLoaiTK.add(btnLoc);
 
 		pnlButton = new JPanel();
-		pnlButton.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		FlowLayout fl_pnlButton = (FlowLayout) pnlButton.getLayout();
 		fl_pnlButton.setAlignment(FlowLayout.RIGHT);
 		pnlChucNang.add(pnlButton);
@@ -448,7 +443,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		btnBoChon.setVisible(false);
 
 		pnlNgayKH = new JPanel();
-		pnlNgayKH.setBackground(Color.WHITE);
 		pnlNgayKH.setBorder(new TitledBorder(
 				new CompoundBorder(new LineBorder(new Color(0, 0, 0), 2, true),
 						new EtchedBorder(EtchedBorder.LOWERED, null, null)),
@@ -463,7 +457,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		pnlThemNgayKH.setLayout(new BoxLayout(pnlThemNgayKH, BoxLayout.X_AXIS));
 
 		JPanel pnlNhapNgayDi = new JPanel();
-		pnlNhapNgayDi.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		FlowLayout flowLayout_1 = (FlowLayout) pnlNhapNgayDi.getLayout();
 		flowLayout_1.setHgap(15);
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
@@ -484,6 +477,35 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		lblMaTourdb.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblMaTourdb.setText("<Mã tour du lịch>");
 
+		pnlNhap = new JPanel();
+		pnlNhapNgayDi.add(pnlNhap);
+
+		JLabel lblNgayKhoiHanh = new JLabel("Ngày khởi hành:");
+		pnlNhap.add(lblNgayKhoiHanh);
+		lblNgayKhoiHanh.setFont(new Font("Tahoma", Font.PLAIN, 18));
+
+		dtcNgayKhoiHanh = new JDateChooser();
+		pnlNhap.add(dtcNgayKhoiHanh);
+		dtcNgayKhoiHanh.setEnabled(false);
+
+		dtcNgayKhoiHanh.setFocusable(false);
+		dtcNgayKhoiHanh.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		dtcNgayKhoiHanh.setPreferredSize(new Dimension(150, 30));
+		dtcNgayKhoiHanh.setDateFormatString("dd/MM/yyyy");
+
+		JLabel lblSoKhachToiDa = new JLabel("Số người tối đa:");
+		pnlNhap.add(lblSoKhachToiDa);
+		lblSoKhachToiDa.setFont(new Font("Tahoma", Font.PLAIN, 18));
+
+		spnSoKhachToiDa = new JSpinner();
+		spnSoKhachToiDa.setEnabled(false);
+		spnSoKhachToiDa.setModel(new SpinnerNumberModel(10, 10, 40, 0));
+
+		spnSoKhachToiDa.setPreferredSize(new Dimension(40, 30));
+		pnlNhap.add(spnSoKhachToiDa);
+
+		spnSoKhachToiDa.setFont(new Font("Tahoma", Font.PLAIN, 18));
+
 		btnThemKH = new JButton("Thêm");
 		btnThemKH.setFont(new Font("Dialog", Font.PLAIN, 18));
 		pnlNhapNgayDi.add(btnThemKH);
@@ -497,7 +519,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		pnlNhapNgayDi.add(btnLuuNgayKH);
 
 		JPanel pnlDong = new JPanel();
-		pnlDong.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		FlowLayout fl_pnlDong = (FlowLayout) pnlDong.getLayout();
 		fl_pnlDong.setVgap(10);
 		fl_pnlDong.setAlignment(FlowLayout.RIGHT);
@@ -523,7 +544,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		btnSua.setVisible(false);
 
 		JPanel pnlButtonNorth = new JPanel();
-		pnlButtonNorth.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		FlowLayout flowLayout_2 = (FlowLayout) pnlButtonNorth.getLayout();
 		flowLayout_2.setAlignment(FlowLayout.RIGHT);
 		pnlDSCTTour.add(pnlButtonNorth, BorderLayout.SOUTH);
@@ -555,38 +575,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		lstTour = tourControl.layDsTourTheoYeuCau(2, nv.getMaNV());
 		hienDanhSachTour(tblDSTour, lstTour, scrDSTour);
 
-		JScrollPane scrollPane = new JScrollPane(tblDSNGKH);
-		scrollPane.setViewportBorder(new EmptyBorder(2, 2, 2, 2));
-		pnlDSNgayKH.add(scrollPane);
-		
-				pnlNhap = new JPanel();
-				scrollPane.setColumnHeaderView(pnlNhap);
-				
-						JLabel lblNgayKhoiHanh = new JLabel("Ngày khởi hành:");
-						pnlNhap.add(lblNgayKhoiHanh);
-						lblNgayKhoiHanh.setFont(new Font("Tahoma", Font.PLAIN, 18));
-						
-								dtcNgayKhoiHanh = new JDateChooser();
-								pnlNhap.add(dtcNgayKhoiHanh);
-								dtcNgayKhoiHanh.setEnabled(false);
-								
-										dtcNgayKhoiHanh.setFocusable(false);
-										dtcNgayKhoiHanh.setFont(new Font("Tahoma", Font.PLAIN, 16));
-										dtcNgayKhoiHanh.setPreferredSize(new Dimension(150, 30));
-										dtcNgayKhoiHanh.setDateFormatString("dd/MM/yyyy");
-										
-												JLabel lblSoKhachToiDa = new JLabel("Số người tối đa:");
-												pnlNhap.add(lblSoKhachToiDa);
-												lblSoKhachToiDa.setFont(new Font("Tahoma", Font.PLAIN, 18));
-												
-														spnSoKhachToiDa = new JSpinner();
-														spnSoKhachToiDa.setEnabled(false);
-														spnSoKhachToiDa.setModel(new SpinnerNumberModel(10, 10, 40, 0));
-														
-																spnSoKhachToiDa.setPreferredSize(new Dimension(40, 30));
-																pnlNhap.add(spnSoKhachToiDa);
-																
-																		spnSoKhachToiDa.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		pnlDSNgayKH.add(new JScrollPane(tblDSNGKH));
 		// Hiện địa điểm xuất phát, điểm đến
 
 		List<Province> lstdiaDiem = TienIch.layDiaLyHanhChinh();
@@ -714,7 +703,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				btnSua.setVisible(true);
 				btnSua.setSelected(true);
 				btnThemNgayKH.setVisible(true);
-				
 				if (btnSua.isSelected() == true) {
 					Tour tour = tourControl.layTourTheoMa(tblDSTour.getValueAt(row, 1).toString());
 					hienThongTinTour(tour);
