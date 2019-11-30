@@ -59,7 +59,7 @@ public class NgayKhoiHanhTableModel extends AbstractTableModel {
 			return new SimpleDateFormat("dd/MM/yyyy").format(ngayKhoiHanh.getNgayKhoiHanh());
 
 		case 3:
-			return ngayKhoiHanh.getSoKhachDaDangKy();
+			return ngayKhoiHanh.getSoKhachToiDa();
 		}
 		return null;
 	}
