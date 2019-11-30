@@ -675,8 +675,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 
 		cmbTimKiem.addActionListener(this);
 
-		btnSuaNgayKH.addActionListener(this);
-
 		btnLoc.addActionListener(this);
 
 		txtGiaNgLon.addPropertyChangeListener(this);
@@ -929,15 +927,19 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			tblDSNGKH.setEnabled(false);
 			dtcNgayKhoiHanh.setEnabled(true);
 			spnSoKhachToiDa.setEnabled(true);
-		} else if (o.equals(btnSuaNgayKH)) {
+		}
+		/*
+		 * 
+		 */
+		else if (o.equals(btnSuaNgayKH)) {
 			btnSuaNgayKH.setVisible(false);
-			;
 			tblDSNGKH.setEnabled(false);
 			btnThemKH.setVisible(false);
 			btnSua.setVisible(false);
 			btnLuuNgayKH.setVisible(true);
 			btnLuuNgayKH.setEnabled(true);
 			dtcNgayKhoiHanh.setEnabled(true);
+			spnSoKhachToiDa.setEnabled(true);
 		}
 
 		/*
@@ -976,7 +978,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 					hienDanhSachTour(tblDSTour, lstTour, scrDSTour);
 					ngkhTableModel = new NgayKhoiHanhTableModel(lstNgayKH);
 					tblDSNGKH.setModel(ngkhTableModel);
-					//
 
 				}
 			}
@@ -1151,7 +1152,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		String tenTour = txaTenTour.getText().trim();
 		double donGiaNL = Double.parseDouble(txtGiaNgLon.getValue().toString());
 		double dongiaTE = Double.parseDouble(txtGiaTrEm.getValue().toString());
-		
+
 		if (cmbDiaDanh.getSelectedItem() == null) {
 			JOptionPane.showMessageDialog(this, "Địa danh  không được để trống !");
 			cmbDiaDanh.requestFocusInWindow();
