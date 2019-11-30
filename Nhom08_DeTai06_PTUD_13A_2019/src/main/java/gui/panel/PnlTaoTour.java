@@ -74,6 +74,7 @@ import model.TourTableModel;
 import utils.HintTextFieldUI;
 import utils.TienIch;
 import utils.address.Province;
+import javax.swing.border.BevelBorder;
 
 public class PnlTaoTour extends JPanel implements ActionListener, PropertyChangeListener {
 	private static final long serialVersionUID = 1L;
@@ -84,7 +85,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 	private JLabel lblMaTourdb;
 	private JButton btnThem;
 	private JButton btnXoaTrang;
-	private JButton btnLuu;
+
 	private JPanel pnlCTTour;
 	private JPanel pnlNgayKH;
 	private JPanel pnlChucNang;
@@ -137,8 +138,9 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 
 	private JTable tblDSNGKH;
 	private JButton btnLoc;
+	private JPanel pnlButtonNorth;
+	private JButton btnLuu;
 
-	
 	/**
 	 * Giao diện chức năng tạo tour
 	 */
@@ -163,7 +165,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		pnlCTTour.setBorder(
 				new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "C\u1EADp nh\u1EADt th\u00F4ng tin tour",
 						TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pnlCTTour.setPreferredSize(new Dimension(10, 200));
 
 		JLabel lblDiaDanh = new JLabel("Chọn địa danh:");
 		lblDiaDanh.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -242,6 +243,9 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		JPanel panel = new JPanel();
 		btnXoaTrang = new JButton("Xoá trắng");
 		btnXoaTrang.setFont(new Font("Tahoma", Font.PLAIN, 18));
+
+		btnLuu = new JButton("Lưu");
+		btnLuu.setFont(new Font("Dialog", Font.PLAIN, 18));
 		GroupLayout gl_pnlCTTour = new GroupLayout(pnlCTTour);
 		gl_pnlCTTour.setHorizontalGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING).addGroup(gl_pnlCTTour
 				.createSequentialGroup()
@@ -266,7 +270,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 										.addComponent(cmbDiemXP, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 										.addComponent(txtGiaNgLon)))
 						.addGroup(gl_pnlCTTour.createSequentialGroup().addGap(12).addComponent(lblTenTour)))
-				.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING).addGroup(gl_pnlCTTour
+				.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.TRAILING).addGroup(gl_pnlCTTour
 						.createSequentialGroup().addPreferredGap(ComponentPlacement.RELATED)
 						.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.TRAILING).addComponent(label)
 								.addGroup(gl_pnlCTTour.createSequentialGroup()
@@ -279,31 +283,29 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 												.addComponent(cmbDiemDen, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 										.addPreferredGap(ComponentPlacement.RELATED)
 										.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
-												.addComponent(lblThoiGian).addComponent(lblPhuongTien))
+												.addComponent(lblThoiGian).addComponent(lblPhuongTien)
+												.addComponent(btnLuu, GroupLayout.PREFERRED_SIZE, 88,
+														GroupLayout.PREFERRED_SIZE))
 										.addPreferredGap(ComponentPlacement.UNRELATED)
-										.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING, false)
+										.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
 												.addComponent(cmbPhuongTien, GroupLayout.PREFERRED_SIZE, 147,
 														GroupLayout.PREFERRED_SIZE)
 												.addGroup(gl_pnlCTTour.createSequentialGroup()
 														.addComponent(spnNgay, GroupLayout.PREFERRED_SIZE, 47,
 																GroupLayout.PREFERRED_SIZE)
 														.addPreferredGap(ComponentPlacement.RELATED)
-														.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
-																.addComponent(btnXoaTrang)
-																.addGroup(gl_pnlCTTour.createSequentialGroup()
-																		.addComponent(lblNgy)
-																		.addPreferredGap(ComponentPlacement.UNRELATED)
-																		.addComponent(lblNgayDem,
-																				GroupLayout.DEFAULT_SIZE,
-																				GroupLayout.DEFAULT_SIZE,
-																				Short.MAX_VALUE)))))
-										.addPreferredGap(ComponentPlacement.RELATED).addComponent(lblm)
-										.addPreferredGap(ComponentPlacement.RELATED)))
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)).addGroup(
-								Alignment.TRAILING, gl_pnlCTTour.createSequentialGroup()
-										.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnDongThemTour,
-												GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-										.addGap(6)))));
+														.addComponent(lblNgy)
+														.addPreferredGap(ComponentPlacement.UNRELATED)
+														.addComponent(lblNgayDem)
+														.addPreferredGap(ComponentPlacement.UNRELATED)
+														.addComponent(lblm))
+												.addComponent(btnXoaTrang))
+										.addGap(38)))
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addGroup(gl_pnlCTTour.createSequentialGroup().addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(btnDongThemTour, GroupLayout.PREFERRED_SIZE, 33,
+										GroupLayout.PREFERRED_SIZE)
+								.addGap(6)))));
 		gl_pnlCTTour.setVerticalGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING).addGroup(gl_pnlCTTour
 				.createSequentialGroup()
 				.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING).addGroup(gl_pnlCTTour
@@ -339,15 +341,20 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 												.addComponent(lblGiaTrEm)
 												.addComponent(txtGiaTrEm, GroupLayout.PREFERRED_SIZE, 30,
 														GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblThoiGian)
+												.addComponent(lblThoiGian).addComponent(lblGiNgiLn)
 												.addComponent(spnNgay, GroupLayout.PREFERRED_SIZE,
 														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblNgy).addComponent(lblNgayDem).addComponent(lblm)
-												.addComponent(lblGiNgiLn))))
+												.addComponent(lblNgy).addComponent(lblNgayDem).addComponent(lblm))))
 								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.BASELINE).addComponent(btnCTTour)
-										.addComponent(lblCTTour).addComponent(btnXoaTrang))))
+								.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.TRAILING)
+										.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.BASELINE)
+												.addComponent(btnCTTour).addComponent(lblCTTour))
+										.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.BASELINE)
+												.addComponent(btnLuu, GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+												.addComponent(btnXoaTrang)))))
 				.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+		gl_pnlCTTour.linkSize(SwingConstants.VERTICAL, new Component[] { btnXoaTrang, btnLuu });
 		panel.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrTenTour = new JScrollPane();
@@ -379,7 +386,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		pnlTimKiem.setLayout(new BoxLayout(pnlTimKiem, BoxLayout.X_AXIS));
 
 		JPanel pnlLuaChonTK = new JPanel();
-		pnlLuaChonTK.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		pnlLuaChonTK.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		FlowLayout fl_pnlLuaChonTK = (FlowLayout) pnlLuaChonTK.getLayout();
 		fl_pnlLuaChonTK.setAlignment(FlowLayout.LEFT);
 		pnlTimKiem.add(pnlLuaChonTK);
@@ -391,6 +398,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		cmbLuaChon.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		JPanel pnlLoaiTK = new JPanel();
+		pnlLoaiTK.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		FlowLayout flowLayout = (FlowLayout) pnlLoaiTK.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		pnlLoaiTK.setPreferredSize(new Dimension(450, 10));
@@ -417,6 +425,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		pnlLoaiTK.add(btnLoc);
 
 		pnlButton = new JPanel();
+		pnlButton.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		FlowLayout fl_pnlButton = (FlowLayout) pnlButton.getLayout();
 		fl_pnlButton.setAlignment(FlowLayout.RIGHT);
 		pnlChucNang.add(pnlButton);
@@ -443,6 +452,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		btnBoChon.setVisible(false);
 
 		pnlNgayKH = new JPanel();
+		pnlNgayKH.setVisible(false);
 		pnlNgayKH.setBorder(new TitledBorder(
 				new CompoundBorder(new LineBorder(new Color(0, 0, 0), 2, true),
 						new EtchedBorder(EtchedBorder.LOWERED, null, null)),
@@ -457,6 +467,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		pnlThemNgayKH.setLayout(new BoxLayout(pnlThemNgayKH, BoxLayout.X_AXIS));
 
 		JPanel pnlNhapNgayDi = new JPanel();
+		pnlNhapNgayDi.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		FlowLayout flowLayout_1 = (FlowLayout) pnlNhapNgayDi.getLayout();
 		flowLayout_1.setHgap(15);
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
@@ -519,6 +530,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		pnlNhapNgayDi.add(btnLuuNgayKH);
 
 		JPanel pnlDong = new JPanel();
+		pnlDong.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		FlowLayout fl_pnlDong = (FlowLayout) pnlDong.getLayout();
 		fl_pnlDong.setVgap(10);
 		fl_pnlDong.setAlignment(FlowLayout.RIGHT);
@@ -536,16 +548,11 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		pnlNgayKH.add(pnlDSNgayKH, BorderLayout.CENTER);
 		pnlDSNgayKH.setLayout(new BorderLayout(0, 0));
 
-		btnLuu = new JButton("Lưu");
-		btnLuu.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		pnlNgayKH.setVisible(false);
-		pnlButton.add(btnLuu, 1);
-		btnLuu.setVisible(false);
-		btnSua.setVisible(false);
-
-		JPanel pnlButtonNorth = new JPanel();
-		FlowLayout flowLayout_2 = (FlowLayout) pnlButtonNorth.getLayout();
-		flowLayout_2.setAlignment(FlowLayout.RIGHT);
+		pnlButtonNorth = new JPanel();
+		pnlButtonNorth.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		pnlButtonNorth.setVisible(false);
+		FlowLayout fl_pnlButtonNorth = (FlowLayout) pnlButtonNorth.getLayout();
+		fl_pnlButtonNorth.setAlignment(FlowLayout.RIGHT);
 		pnlDSCTTour.add(pnlButtonNorth, BorderLayout.SOUTH);
 
 		btnThemNgayKH = new JButton("Thêm ngày khởi hành");
@@ -702,6 +709,8 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 					return;
 				btnSua.setVisible(true);
 				btnSua.setSelected(true);
+				pnlButtonNorth.setVisible(true);
+
 				btnThemNgayKH.setVisible(true);
 				if (btnSua.isSelected() == true) {
 					Tour tour = tourControl.layTourTheoMa(tblDSTour.getValueAt(row, 1).toString());
@@ -785,6 +794,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		 * Nút đóng giao diện cập nhật ngày khởi hành
 		 */
 		else if (o.equals(btnDong)) {
+			xoaTrangTTKH();
 			tblDSTour.clearSelection();
 			pnlNgayKH.setVisible(false);
 			pnlNhap.setVisible(false);
@@ -792,6 +802,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			btnSua.setVisible(false);
 			tblDSTour.setEnabled(true);
 			btnThemNgayKH.setVisible(false);
+			pnlButtonNorth.setVisible(true);
 			btnBoChon.setVisible(false);
 			btnThem.setVisible(true);
 			dtcNgayKhoiHanh.setEnabled(false);
@@ -954,6 +965,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				ngayKhoiHanh.setSoKhachToiDa(soNguoi);
 
 				ngayKhoiHanh.setTour(tourChon);
+				tourChon.getNgayKhoiHanh().remove(rowNgayKH);
 				tourChon.getNgayKhoiHanh().add(ngayKhoiHanh);
 
 				Tour touSua = tourControl.suaTour(tourChon);
@@ -1107,8 +1119,8 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 	private void hienThongTinTour(Tour tourSel) {
 		txaTenTour.setText(tourSel.getTenTour());
 		cmbDiaDanh.setSelectedItem(tourSel.getDiaDanh());
-		cmbDiemXP.setSelectedItem(tourSel.getDiemDen());
-		cmbDiemDen.setSelectedItem(tourSel.getDiemKhoiHanh());
+		cmbDiemXP.setSelectedItem(tourSel.getDiemKhoiHanh());
+		cmbDiemDen.setSelectedItem(tourSel.getDiemDen());
 		txtGiaNgLon.setValue(tourSel.getDonGiaNguoiLon());
 		txtGiaTrEm.setValue(tourSel.getDonGiaTreEm());
 		if (tourSel.getThoiGian() != null) {
@@ -1139,7 +1151,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		double donGiaNL = Double.parseDouble(txtGiaNgLon.getValue().toString());
 		double dongiaTE = Double.parseDouble(txtGiaTrEm.getValue().toString());
 
-		
 		if (cmbDiaDanh.getSelectedIndex() == -1) {
 
 			JOptionPane.showMessageDialog(this, "Địa danh  không được để trống !");
@@ -1151,7 +1162,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			cmbDiemXP.requestFocusInWindow();
 			return false;
 		}
-		if (cmbDiemDen.getSelectedIndex()  == -1) {
+		if (cmbDiemDen.getSelectedIndex() == -1) {
 			JOptionPane.showMessageDialog(this, "Điểm đến không được để trống !");
 			cmbDiemDen.requestFocusInWindow();
 			return false;

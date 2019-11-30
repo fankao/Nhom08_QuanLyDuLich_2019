@@ -20,6 +20,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import constant.HangSo;
+
 @Entity
 @Table(name = "phieudangky")
 @NamedQueries({ @NamedQuery(name = "PDK.timDSPDK", query = "SELECT pdk FROM PhieuDangKy pdk"),
@@ -55,8 +57,6 @@ public class PhieuDangKy {
 
 	private boolean daHuyPhieu;
 
-	private static final double THUE = 0.1;
-
 	public PhieuDangKy() {
 
 	}
@@ -80,7 +80,7 @@ public class PhieuDangKy {
 		for (KhachHangThamGia x : list) {
 			LocalDate ngaySinh = x.getNgaySinh().toLocalDate();
 			Period period = Period.between(ngaySinh, LocalDate.now());
-			if (period.getYears() >= 18) {
+			if (period.getYears() >= HangSo.NGUOILON) {
 				soNguoiLon++;
 				dotuoi[0] = soNguoiLon;
 			} else {
@@ -91,17 +91,19 @@ public class PhieuDangKy {
 		return dotuoi;
 	}
 
-	public double tinhTongTienPDK(List<KhachHangThamGia> list) {
-		double tt = 0;
-		int[] songuoi = tinhSoNguoiTheoDoTuoi(list);
-		if (songuoi.length == 0)
-			return 0;
-		else {
-			tt = (songuoi[0] * ngayKhoiHanh.getTour().getDonGiaNguoiLon()
-					+ songuoi[1] * ngayKhoiHanh.getTour().getDonGiaTreEm()) * getThue();
+	public double[] tinhThanhTien(List<KhachHangThamGia> list) {
+		double[] thanhTien = new double[2];
+		int[] songuoi = tinhSoNguoiTheoDoTuoi(this.getKhachHangThamGias());
+		if (songuoi.length == 0) {
+			thanhTien[0] = 0;
+			thanhTien[1] = 0;
+			return thanhTien;
+		} else {
+			thanhTien[0] = songuoi[0] * ngayKhoiHanh.getTour().getDonGiaNguoiLon();
+			thanhTien[1] = (+songuoi[1] * ngayKhoiHanh.getTour().getDonGiaTreEm());
 
 		}
-		return tt;
+		return thanhTien;
 	}
 
 	public int getId() {
@@ -174,10 +176,6 @@ public class PhieuDangKy {
 
 	public void setDaHuyPhieu(boolean daHuyPhieu) {
 		this.daHuyPhieu = daHuyPhieu;
-	}
-
-	public static double getThue() {
-		return THUE;
 	}
 
 	@Override

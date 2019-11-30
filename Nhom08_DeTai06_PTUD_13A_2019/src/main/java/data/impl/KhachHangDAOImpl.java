@@ -85,7 +85,7 @@ public class KhachHangDAOImpl implements IKhachHangDAO {
 		}
 		return null;
 	}
-
+	
 	@Override
 	public KhachHang suaKhachHang(KhachHang kh) {
 		EntityTransaction tr = em.getTransaction();
