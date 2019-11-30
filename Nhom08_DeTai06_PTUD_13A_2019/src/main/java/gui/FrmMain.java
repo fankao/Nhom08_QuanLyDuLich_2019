@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
@@ -36,9 +37,10 @@ import gui.panel.PnlDangKyTour;
 import gui.panel.PnlDuyetTour;
 import gui.panel.PnlHinhNen;
 import gui.panel.PnlTaoTour;
-import gui.panel.pnlThongKe;
+import gui.panel.PnlThongKe;
 import test.Testing;
 import utils.TienIch;
+import javax.swing.border.LineBorder;
 
 /**
  * frmMain.java
@@ -56,7 +58,6 @@ public class FrmMain extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JCheckBox chkQuanLyTour;
-	private JButton btnQuanLyPhieuDK;
 	private JButton btnThongKe;
 	private JButton btnDangXuat;
 	private JPanel pnlCenter;
@@ -73,7 +74,6 @@ public class FrmMain extends JFrame implements ActionListener {
 	private NhanVien nhanVien;
 	private JButton btnCapNhatTour;
 	private JButton btnDangKyTour;
-	private JButton btnHuyTourDK;
 	private JPanel pnlButtonBoder;
 	private JPanel pnlCardLayout;
 	private PnlTaoTour pnlTaoTour;
@@ -82,12 +82,17 @@ public class FrmMain extends JFrame implements ActionListener {
 	private JPanel pnlSubButton;
 	private JButton btnDuyetTour;
 	private PnlDuyetTour pnlDuyetTour;
+	private PnlThongKe pnlThongKe;
+	private JPanel pnlButtonBorderKH;
+	private JButton btnTTKhachHang;
+	private JButton btnPhieuDK;
+	private JCheckBox chkKhachHang;
 
 	/**
 	 * Giao diện màn hình chính
 	 */
 	public FrmMain(NhanVien nv) {
-		setSize(1800, 960);
+		setSize(1800, 1015);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		/*
 		 * 
@@ -172,15 +177,15 @@ public class FrmMain extends JFrame implements ActionListener {
 		chkQuanLyTour.setForeground(new Color(255, 255, 255));
 		chkQuanLyTour.setFont(new Font("Tahoma", Font.BOLD, 28));
 
-		btnQuanLyPhieuDK = new JButton("Khách hàng");
-		btnQuanLyPhieuDK.setHorizontalAlignment(SwingConstants.LEFT);
-		btnQuanLyPhieuDK.setAlignmentX(Component.CENTER_ALIGNMENT);
-		btnQuanLyPhieuDK.setHorizontalTextPosition(SwingConstants.RIGHT);
-		btnQuanLyPhieuDK.setIcon(new ImageIcon(FrmMain.class.getResource("/images/qlpdk.png")));
-		btnQuanLyPhieuDK.setFocusable(false);
-		btnQuanLyPhieuDK.setBorder(new EmptyBorder(0, 20, 0, 20));
-		btnQuanLyPhieuDK.setForeground(new Color(255, 255, 255));
-		btnQuanLyPhieuDK.setFont(new Font("Tahoma", Font.BOLD, 28));
+		chkKhachHang = new JCheckBox("Khách hàng");
+		chkKhachHang.setHorizontalAlignment(SwingConstants.LEFT);
+		chkKhachHang.setAlignmentX(Component.CENTER_ALIGNMENT);
+		chkKhachHang.setHorizontalTextPosition(SwingConstants.RIGHT);
+		chkKhachHang.setIcon(new ImageIcon(FrmMain.class.getResource("/images/qlpdk.png")));
+		chkKhachHang.setFocusable(false);
+		chkKhachHang.setBorder(new EmptyBorder(0, 20, 0, 20));
+		chkKhachHang.setForeground(new Color(255, 255, 255));
+		chkKhachHang.setFont(new Font("Tahoma", Font.BOLD, 28));
 
 		btnThongKe = new JButton("Thống kê");
 		btnThongKe.setHorizontalAlignment(SwingConstants.LEFT);
@@ -206,43 +211,61 @@ public class FrmMain extends JFrame implements ActionListener {
 		pnlButtonBoder = new JPanel();
 		pnlButtonBoder.setVisible(false);
 		pnlButtonBoder.setFocusable(false);
-		pnlButtonBoder.setBorder(null);
+		pnlButtonBoder.setBorder(new LineBorder(Color.WHITE));
+
+		pnlButtonBorderKH = new JPanel();
+		pnlButtonBorderKH.setVisible(false);
+		pnlButtonBorderKH.setBorder(new LineBorder(Color.WHITE));
 
 		GroupLayout gl_pnLeft = new GroupLayout(pnlLeft);
-		gl_pnLeft.setHorizontalGroup(
-			gl_pnLeft.createParallelGroup(Alignment.LEADING)
+		gl_pnLeft.setHorizontalGroup(gl_pnLeft.createParallelGroup(Alignment.LEADING)
 				.addComponent(chkQuanLyTour, GroupLayout.PREFERRED_SIZE, 405, Short.MAX_VALUE)
 				.addComponent(pnlTTNhanVien, GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
-				.addComponent(btnQuanLyPhieuDK, GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
 				.addGroup(gl_pnLeft.createSequentialGroup()
-					.addComponent(btnDangXuat, GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
-					.addContainerGap())
+						.addComponent(btnDangXuat, GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE).addContainerGap())
+				.addComponent(btnThongKe, GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
 				.addComponent(pnlButtonBoder, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
-				.addComponent(btnThongKe, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
-		);
-		gl_pnLeft.setVerticalGroup(
-			gl_pnLeft.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnLeft.createSequentialGroup()
-					.addComponent(pnlTTNhanVien, GroupLayout.PREFERRED_SIZE, 159, GroupLayout.PREFERRED_SIZE)
-					.addGap(31)
-					.addComponent(chkQuanLyTour, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(pnlButtonBoder, GroupLayout.PREFERRED_SIZE, 218, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnQuanLyPhieuDK, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(btnThongKe, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-					.addGap(164)
-					.addComponent(btnDangXuat, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-		);
+				.addComponent(chkKhachHang, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
+				.addComponent(pnlButtonBorderKH, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE));
+		gl_pnLeft.setVerticalGroup(gl_pnLeft.createParallelGroup(Alignment.LEADING).addGroup(gl_pnLeft
+				.createSequentialGroup()
+				.addComponent(pnlTTNhanVien, GroupLayout.PREFERRED_SIZE, 159, GroupLayout.PREFERRED_SIZE).addGap(20)
+				.addComponent(chkQuanLyTour, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addComponent(pnlButtonBoder, GroupLayout.PREFERRED_SIZE, 199, GroupLayout.PREFERRED_SIZE).addGap(20)
+				.addComponent(chkKhachHang, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addComponent(pnlButtonBorderKH, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE).addGap(20)
+				.addComponent(btnThongKe, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+				.addComponent(btnDangXuat, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
+				.addContainerGap()));
+		pnlButtonBorderKH.setLayout(new GridLayout(2, 0, 0, 0));
+
+		btnTTKhachHang = new JButton("Thông tin khách hàng");
+		btnTTKhachHang.setHorizontalAlignment(SwingConstants.LEADING);
+		btnTTKhachHang.setForeground(Color.WHITE);
+		btnTTKhachHang.setFont(new Font("Tahoma", Font.BOLD, 25));
+		btnTTKhachHang.setFocusable(false);
+		btnTTKhachHang.setBorder(new EmptyBorder(0, 30, 0, 0));
+		btnTTKhachHang.setBackground(new Color(23, 35, 51));
+		pnlButtonBorderKH.add(btnTTKhachHang);
+
+		btnPhieuDK = new JButton("Phiếu đăng ký");
+		btnPhieuDK.setHorizontalAlignment(SwingConstants.LEADING);
+		btnPhieuDK.setForeground(Color.WHITE);
+		btnPhieuDK.setFont(new Font("Tahoma", Font.BOLD, 25));
+		btnPhieuDK.setFocusable(false);
+		btnPhieuDK.setBorder(new EmptyBorder(0, 30, 0, 0));
+		btnPhieuDK.setBackground(new Color(23, 35, 51));
+		pnlButtonBorderKH.add(btnPhieuDK);
 		pnlButtonBoder.setLayout(new BorderLayout(0, 0));
 
 		pnlSubButton = new JPanel();
 		pnlButtonBoder.add(pnlSubButton);
-		pnlSubButton.setLayout(new GridLayout(4, 1, 0, 0));
+		pnlSubButton.setLayout(new GridLayout(3, 1, 0, 0));
 
-		btnCapNhatTour = new JButton("Câp nhật tour");
+		btnCapNhatTour = new JButton("Cập nhật tour");
 		btnCapNhatTour.setHorizontalAlignment(SwingConstants.LEADING);
 		pnlSubButton.add(btnCapNhatTour);
 		btnCapNhatTour.setIcon(new ImageIcon(FrmMain.class.getResource("/images/create_new_32px.png")));
@@ -261,16 +284,6 @@ public class FrmMain extends JFrame implements ActionListener {
 		btnDangKyTour.setBorder(new EmptyBorder(0, 30, 0, 0));
 		btnDangKyTour.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnDangKyTour.setBackground(new Color(23, 35, 51));
-
-		btnHuyTourDK = new JButton("Huỷ tour đăng ký");
-		btnHuyTourDK.setHorizontalAlignment(SwingConstants.LEADING);
-		pnlSubButton.add(btnHuyTourDK);
-		btnHuyTourDK.setIcon(new ImageIcon(FrmMain.class.getResource("/images/cancel_subscription_32px.png")));
-		btnHuyTourDK.setForeground(Color.WHITE);
-		btnHuyTourDK.setFocusable(false);
-		btnHuyTourDK.setBorder(new EmptyBorder(0, 30, 0, 0));
-		btnHuyTourDK.setFont(new Font("Tahoma", Font.BOLD, 25));
-		btnHuyTourDK.setBackground(new Color(23, 35, 51));
 		pnlTTNhanVien.setLayout(new BorderLayout(0, 0));
 
 		JPanel pnlHinhNV = new JPanel();
@@ -341,17 +354,20 @@ public class FrmMain extends JFrame implements ActionListener {
 		pnlDangKyTour = new PnlDangKyTour(nv);
 		pnlHinhNen = new PnlHinhNen();
 		pnlDuyetTour = new PnlDuyetTour();
+		pnlThongKe = new PnlThongKe();
 
 		// đặt tên cho panel
 		pnlTaoTour.setName("pnlTaoTour");
 		pnlDangKyTour.setName("pnlDangKyTour");
 		pnlHinhNen.setName("pnlHinhNen");
 		pnlDuyetTour.setName("pnlDuyetTour");
+		pnlThongKe.setName("pnlThongKe");
 
 		pnlCardLayout.add(pnlHinhNen, pnlHinhNen.getName());
 		pnlCardLayout.add(pnlTaoTour, pnlTaoTour.getName());
 		pnlCardLayout.add(pnlDangKyTour, pnlDangKyTour.getName());
 		pnlCardLayout.add(pnlDuyetTour, pnlDuyetTour.getName());
+		pnlCardLayout.add(pnlThongKe, pnlThongKe.getName());
 
 		// thiết lập màu cho button
 		chkQuanLyTour.setBackground(new Color(23, 35, 51));
@@ -367,7 +383,7 @@ public class FrmMain extends JFrame implements ActionListener {
 		btnDuyetTour.setBorder(new EmptyBorder(0, 30, 0, 0));
 		btnDuyetTour.setBackground(new Color(23, 35, 51));
 		pnlSubButton.add(btnDuyetTour);
-		btnQuanLyPhieuDK.setBackground(new Color(23, 35, 51));
+		chkKhachHang.setBackground(new Color(23, 35, 51));
 		btnThongKe.setBackground(new Color(23, 35, 51));
 		btnDangXuat.setBackground(new Color(23, 35, 51));
 		pnlButtonBoder.setBackground(new Color(23, 35, 51));
@@ -387,31 +403,83 @@ public class FrmMain extends JFrame implements ActionListener {
 	 */
 	private void ganSuKien() {
 		btnDangXuat.addActionListener(this);
-
 		btnThongKe.addActionListener(this);
-		btnQuanLyPhieuDK.addActionListener(this);
-
 		btnCapNhatTour.addActionListener(this);
-		btnHuyTourDK.addActionListener(this);
 		btnDangKyTour.addActionListener(this);
 		btnDuyetTour.addActionListener(this);
+		btnPhieuDK.addActionListener(this);
+		btnTTKhachHang.addActionListener(this);
 
 		chkQuanLyTour.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (chkQuanLyTour.isSelected()) {
+					TienIch.chuyenPanelKhiNhan(pnlCardLayout, pnlHinhNen);
+					TienIch.xoaDuongDan(pnlHinhNen, 1);
+					dongSubButtonKhachHang();
 					chkQuanLyTour.setBackground(new Color(41, 57, 80));
 					pnlButtonBoder.setVisible(true);
+					btnThongKe.setBackground(new Color(23, 35, 51));
+					chkKhachHang.setBackground(new Color(23, 35, 51));
+					btnThongKe.setEnabled(true);
 
 				} else {
 					dongSubButton();
 				}
 			}
 		});
-		chkQuanLyTour.addActionListener(this);
+		chkKhachHang.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if (chkKhachHang.isSelected()) {
+					TienIch.chuyenPanelKhiNhan(pnlCardLayout, pnlHinhNen);
+					TienIch.xoaDuongDan(pnlHinhNen, 1);
+					dongSubButton();
+
+					chkQuanLyTour.setBackground(new Color(23, 35, 51));
+					chkKhachHang.setBackground(new Color(41, 57, 80));
+
+					pnlButtonBorderKH.setVisible(true);
+					btnThongKe.setBackground(new Color(23, 35, 51));
+					btnThongKe.setEnabled(true);
+
+					chkQuanLyTour.setSelected(false);
+					pnlButtonBoder.setVisible(false);
+
+				} else {
+					dongSubButtonKhachHang();
+					dongSubButton();
+					chkQuanLyTour.setSelected(false);
+					pnlButtonBoder.setVisible(false);
+				}
+				TienIch.hienAnCacControl(true, btnCapNhatTour, btnDangKyTour, btnDangXuat, btnDuyetTour, btnPhieuDK,
+						btnThongKe, btnThongKe, btnTTKhachHang);
+
+			}
+
+		});
 
 	}
 
+	/*
+	 * Đóng các chức năng liên quan đến khách hàng
+	 */
+	private void dongSubButtonKhachHang() {
+		chkKhachHang.setBackground(new Color(23, 35, 51));
+		TienIch.chuyenPanelKhiNhan(pnlCardLayout, pnlHinhNen);
+		TienIch.xoaDuongDan(pnlHinhNen, 1);
+
+		btnPhieuDK.setBackground(new Color(23, 35, 51));
+		btnTTKhachHang.setBackground(new Color(23, 35, 51));
+		btnPhieuDK.setForeground(Color.WHITE);
+		btnTTKhachHang.setForeground(Color.WHITE);
+		pnlButtonBorderKH.setVisible(false);
+
+	}
+
+	/*
+	 * Đóng các chức năng liên quan đến tour
+	 */
 	private void dongSubButton() {
 		chkQuanLyTour.setBackground(new Color(23, 35, 51));
 		TienIch.chuyenPanelKhiNhan(pnlCardLayout, pnlHinhNen);
@@ -419,9 +487,10 @@ public class FrmMain extends JFrame implements ActionListener {
 		btnCapNhatTour.setBackground(new Color(23, 35, 51));
 		btnDangKyTour.setBackground(new Color(23, 35, 51));
 		btnCapNhatTour.setForeground(Color.WHITE);
-		btnHuyTourDK.setForeground(Color.WHITE);
 		btnDangKyTour.setForeground(Color.WHITE);
 		pnlButtonBoder.setVisible(false);
+
+		TienIch.hienAnCacControl(true, btnDangKyTour, btnCapNhatTour, btnThongKe);
 
 	}
 
@@ -437,8 +506,8 @@ public class FrmMain extends JFrame implements ActionListener {
 		if (o.equals(btnCapNhatTour)) {
 			TienIch.xoaDuongDan(pnlButtonBar, 1);
 			TienIch.themDuongDan(pnlButtonBar, btnCapNhatTour.getText());
-			TienIch.doiMauButton(btnCapNhatTour, new JButton[] { btnDangXuat, btnQuanLyPhieuDK, btnDuyetTour,
-					btnDangKyTour, btnHuyTourDK, btnThongKe });
+			TienIch.doiMauButton(btnCapNhatTour,
+					new JButton[] { btnDangXuat, btnDuyetTour, btnDangKyTour, btnThongKe });
 			TienIch.chuyenPanelKhiNhan(pnlCardLayout, pnlTaoTour);
 
 		}
@@ -449,8 +518,34 @@ public class FrmMain extends JFrame implements ActionListener {
 			TienIch.xoaDuongDan(pnlButtonBar, 1);
 			TienIch.themDuongDan(pnlButtonBar, btnDangKyTour.getText());
 			TienIch.doiMauButton(btnDangKyTour,
-					new JButton[] { btnDangXuat, btnCapNhatTour, btnDuyetTour, btnHuyTourDK, btnThongKe });
+					new JButton[] { btnDangXuat, btnCapNhatTour, btnDuyetTour, btnThongKe });
 			TienIch.chuyenPanelKhiNhan(pnlCardLayout, pnlDangKyTour);
+
+		}
+		/*
+		 * 
+		 */
+		/*
+		 * Hiện giao diện duyệt tour
+		 */
+		else if (o.equals(btnDuyetTour)) {
+			TienIch.xoaDuongDan(pnlButtonBar, 1);
+			TienIch.themDuongDan(pnlButtonBar, "Duyệt mở bán tour");
+			TienIch.doiMauButton(btnDuyetTour,
+					new JButton[] { btnDangXuat, btnDangKyTour, btnCapNhatTour, btnThongKe });
+			TienIch.chuyenPanelKhiNhan(pnlCardLayout, pnlDuyetTour);
+		}
+		/*
+		 * 
+		 */
+		else if (o.equals(btnPhieuDK)) {
+			TienIch.xoaDuongDan(pnlButtonBar, 1);
+			TienIch.themDuongDan(pnlButtonBar, "Thông tin đăng ký tour");
+			TienIch.doiMauButton(btnPhieuDK, new JButton[] { btnDangXuat, btnDangKyTour, btnCapNhatTour, btnThongKe,
+					btnTTKhachHang, btnDuyetTour });
+			TienIch.chuyenPanelKhiNhan(pnlCardLayout, pnlDuyetTour);
+
+		} else if (o.equals(btnTTKhachHang)) {
 
 		}
 		/*
@@ -459,35 +554,28 @@ public class FrmMain extends JFrame implements ActionListener {
 		else if (o.equals(btnThongKe)) {
 			dongSubButton();
 			TienIch.xoaDuongDan(pnlButtonBar, 1);
-			TienIch.doiMauButton(btnThongKe,
-					new JButton[] { btnDangXuat, btnDuyetTour, btnCapNhatTour, btnQuanLyPhieuDK });
-			TienIch.themDuongDan(pnlButtonBar, btnThongKe.getText());
-			TienIch.chuyenPanelKhiNhan(pnlContent, new pnlThongKe());
+			TienIch.themDuongDan(pnlButtonBar, "Thống kê");
+			TienIch.doiMauButton(btnThongKe, new JButton[] { btnDangXuat, btnDuyetTour, btnCapNhatTour });
+			TienIch.chuyenPanelKhiNhan(pnlCardLayout, pnlThongKe);
+			chkQuanLyTour.setSelected(false);
 
 		}
-		/*
-		 * Hiện giao diện duyệt tour
-		 */
-		else if (o.equals(btnDuyetTour)) {
-			TienIch.xoaDuongDan(pnlButtonBar, 1);
-			TienIch.themDuongDan(pnlButtonBar, "Duyệt mở bán tour");
-			TienIch.doiMauButton(btnDuyetTour, new JButton[] { btnDangXuat, btnQuanLyPhieuDK, btnDangKyTour,
-					btnCapNhatTour, btnHuyTourDK, btnThongKe });
-			TienIch.chuyenPanelKhiNhan(pnlCardLayout, pnlDuyetTour);
-		}
+
 		/*
 		 * Thông báo xác nhận đăng xuất
 		 */
 		else if (o.equals(btnDangXuat)) {
 			dongSubButton();
-			TienIch.doiMauButton(btnDangXuat,
-					new JButton[] { btnCapNhatTour, btnDuyetTour, btnQuanLyPhieuDK, btnThongKe });
+			TienIch.doiMauButton(btnDangXuat, new JButton[] { btnCapNhatTour, btnDuyetTour, btnThongKe });
 			if (JOptionPane.showConfirmDialog(this, "Bạn muốn đăng xuất khỏi phần mềm?", "Đăng xuất",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 
 				((Window) getRootPane().getParent()).dispose();
 				Testing.main(new String[] {});
 			}
+			chkQuanLyTour.setSelected(false);
+			btnDangXuat.setEnabled(true);
+			btnDangXuat.setBackground(new Color(23, 35, 51));
 		}
 
 	}

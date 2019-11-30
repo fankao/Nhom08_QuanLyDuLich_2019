@@ -30,7 +30,8 @@ import org.hibernate.annotations.NotFoundAction;
 @Table(name = "tour")
 @NamedQueries({ @NamedQuery(name = "Tour.timDSTour", query = "SELECT t FROM Tour t ORDER BY t.id"),
 		@NamedQuery(name = "Tour.timDSTourDaXoa", query = "SELECT t FROM Tour t WHERE t.daXoa=True ORDER BY t.id"),
-		@NamedQuery(name = "Tour.timDsTourChuaDuyet", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND t.daDuyet=:daDuyet ORDER BY t.id"),
+		@NamedQuery(name = "Tour.timDsTourChuaDuyet", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND t.daDuyet=:daDuyet AND size(t.ngayKhoiHanh) != 0"
+				+ " ORDER BY t.id"),
 		@NamedQuery(name = "Tour.timDsTourDaDuyet", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND t.daDuyet=:daDuyet ORDER BY t.id"),
 		@NamedQuery(name = "Tour.timDsTourTheoNhanVien", query = "SELECT t FROM Tour t WHERE t.daXoa=:daXoa AND daDuyet=False AND t.nhanVien.maNV=:manv ORDER BY t.id"), })
 public class Tour implements Serializable {

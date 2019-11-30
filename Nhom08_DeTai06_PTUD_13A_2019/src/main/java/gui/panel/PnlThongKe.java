@@ -33,7 +33,7 @@ import entities.KhachHangThamGia;
 import entities.PhieuDangKy;
 import javax.swing.border.EtchedBorder;
 
-public class pnlThongKe extends JPanel {
+public class PnlThongKe extends JPanel {
 	private JTabbedPane tabThongTinTK;
 	private JTextField txtTongDoanhThu;
 	private JTextField txtTongPDKDaHuy;
@@ -43,7 +43,7 @@ public class pnlThongKe extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public pnlThongKe() {
+	public PnlThongKe() {
 		setSize(1500, 800);
 		setLayout(new BorderLayout(0, 0));
 

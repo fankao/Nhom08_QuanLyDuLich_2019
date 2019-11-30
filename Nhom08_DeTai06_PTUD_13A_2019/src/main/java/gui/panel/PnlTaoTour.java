@@ -65,7 +65,6 @@ import com.toedter.calendar.JDateChooser;
 import control.ITourControl;
 import control.impl.TourControlImpl;
 import entities.DiaDanh;
-import entities.KhachHang;
 import entities.NgayKhoiHanh;
 import entities.NhanVien;
 import entities.PhuongTien;
@@ -874,7 +873,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				}
 
 			}
-
 		}
 		/*
 		 * Nhấn nút bỏ chọn
@@ -958,12 +956,12 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 					btnThem.setVisible(false);
 
 				}
-				System.out.println(ngayKhoiHanh);
 				ngayKhoiHanh.setNgayKhoiHanh(new Date(dtcNgayKhoiHanh.getDate().getTime()));
 				int soNguoi = (int) spnSoKhachToiDa.getValue();
-				ngayKhoiHanh.setSoNguoiThamGia(soNguoi);
+				ngayKhoiHanh.setSoKhachToiDa(soNguoi);
 
 				ngayKhoiHanh.setTour(tourChon);
+				tourChon.getNgayKhoiHanh().add(ngayKhoiHanh);
 
 				Tour touSua = tourControl.suaTour(tourChon);
 
@@ -1147,10 +1145,13 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		String tenTour = txaTenTour.getText().trim();
 		double donGiaNL = Double.parseDouble(txtGiaNgLon.getValue().toString());
 		double dongiaTE = Double.parseDouble(txtGiaTrEm.getValue().toString());
-
-		String ngayBatDau = ((JTextField) dtcNgayKhoiHanh.getDateEditor().getUiComponent()).getText();
+		if (cmbDiaDanh.getSelectedItem() == null) {
+			JOptionPane.showMessageDialog(this, "Địa danh  không được để trống !");
+			cmbDiaDanh.requestFocusInWindow();
+			return false;
+		}
 		if (cmbDiemXP.getSelectedItem() == null) {
-			JOptionPane.showMessageDialog(this, "Điểm xuaart phát không được để trống !");
+			JOptionPane.showMessageDialog(this, "Điểm xuất phát không được để trống !");
 			cmbDiemXP.requestFocusInWindow();
 			return false;
 		}
@@ -1261,12 +1262,14 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 	// Hien thi thong tin ngay khoi hanh
 	private void hienTTNgayKhoiHanh(NgayKhoiHanh nkh) {
 		dtcNgayKhoiHanh.setDate(nkh.getNgayKhoiHanh());
-		spnSoKhachToiDa.setValue(nkh.getSoNguoiThamGia());
+		spnSoKhachToiDa.setValue(nkh.getSoKhachDaDangKy());
 	}
 
 	// Xoa trang thong tin tour
 	private void xoaTrang() {
-		cmbDiaDanh.setSelectedIndex(0);
+		cmbDiaDanh.setSelectedItem(null);
+		cmbDiemDen.setSelectedItem(null);
+		cmbDiemXP.setSelectedItem(null);
 		txaTenTour.setText("");
 		cmbPhuongTien.setSelectedIndex(0);
 		txtGiaNgLon.setValue((Double) 0.0);

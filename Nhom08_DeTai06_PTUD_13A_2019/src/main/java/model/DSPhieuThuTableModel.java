@@ -63,8 +63,6 @@ public class DSPhieuThuTableModel extends AbstractTableModel {
 			return ptc.getSoTien();
 		case 5:
 			return ptc.getLoaiPhieu();
-		default:
-			return "";
 		}
 		return null;
 	}
