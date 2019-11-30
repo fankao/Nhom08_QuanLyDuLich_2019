@@ -675,8 +675,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 
 		cmbTimKiem.addActionListener(this);
 
-		btnSuaNgayKH.addActionListener(this);
-
 		btnLoc.addActionListener(this);
 
 		txtGiaNgLon.addPropertyChangeListener(this);
@@ -929,15 +927,19 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			tblDSNGKH.setEnabled(false);
 			dtcNgayKhoiHanh.setEnabled(true);
 			spnSoKhachToiDa.setEnabled(true);
-		} else if (o.equals(btnSuaNgayKH)) {
+		}
+		/*
+		 * 
+		 */
+		else if (o.equals(btnSuaNgayKH)) {
 			btnSuaNgayKH.setVisible(false);
-			;
 			tblDSNGKH.setEnabled(false);
 			btnThemKH.setVisible(false);
 			btnSua.setVisible(false);
 			btnLuuNgayKH.setVisible(true);
 			btnLuuNgayKH.setEnabled(true);
 			dtcNgayKhoiHanh.setEnabled(true);
+			spnSoKhachToiDa.setEnabled(true);
 		}
 
 		/*
@@ -953,7 +955,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				spnSoKhachToiDa.setEnabled(true);
 				int row = tblDSTour.getSelectedRow();
 				int rowNgayKH = tblDSNGKH.getSelectedRow();
-				NgayKhoiHanh ngayKhoiHanh = rowNgayKH == -1 ? null : lstNgayKH.get(row);
+				NgayKhoiHanh ngayKhoiHanh = rowNgayKH == -1 ? null : lstNgayKH.get(rowNgayKH);
 				Tour tourChon = tourControl.layTourTheoMa(tblDSTour.getValueAt(row, 1).toString());
 				if (btnThemKH.isSelected() && ngayKhoiHanh == null) {
 					ngayKhoiHanh = new NgayKhoiHanh();
@@ -973,8 +975,9 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				if (touSua != null) {
 					lstTour = tourControl.layDsTourTheoYeuCau(2, nhanvien.getMaNV());
 					lstNgayKH = tourControl.layDSNgayKhoiHanhTheoTour(tourChon.getMaTour());
-					tourTableModel.fireTableDataChanged();
-					ngkhTableModel.fireTableDataChanged();
+					hienDanhSachTour(tblDSTour, lstTour, scrDSTour);
+					ngkhTableModel = new NgayKhoiHanhTableModel(lstNgayKH);
+					tblDSNGKH.setModel(ngkhTableModel);
 
 				}
 			}
@@ -1149,8 +1152,10 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		String tenTour = txaTenTour.getText().trim();
 		double donGiaNL = Double.parseDouble(txtGiaNgLon.getValue().toString());
 		double dongiaTE = Double.parseDouble(txtGiaTrEm.getValue().toString());
+
 		
 		if (cmbDiaDanh.getSelectedIndex() == -1) {
+
 			JOptionPane.showMessageDialog(this, "Địa danh  không được để trống !");
 			cmbDiaDanh.requestFocusInWindow();
 			return false;

@@ -7,43 +7,28 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.Date;
 import java.text.Format;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
 
-import com.toedter.calendar.JDateChooser;
-
-import bus.IDangKyTourBUS;
-import bus.IKhachHangThamGiaBUS;
-import bus.impl.DangKyTourBUS;
-import bus.impl.KhachHangThamGiaBUS;
 import entities.KhachHangThamGia;
 import entities.PhieuDangKy;
 import utils.TienIch;
@@ -53,7 +38,7 @@ import utils.TienIch;
  * @author Gia Hưng, Minh Chiến
  * @version 1.0 Ngày tạo 5/10/2019
  */
-public class dlgPhieuThu extends JDialog implements ActionListener {
+public class dlgPhieuThu extends JDialog {
 
 	/**
 	 * 
@@ -61,7 +46,6 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private final JPanel pnlNoiDung = new JPanel();
 	private JTextField txtMaDK;
-	private JTextField txtNV;
 	private JTextField txtKH;
 	private JTextField txtDC;
 	private JTextField txtSoPT;
@@ -90,7 +74,6 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 	private JLabel lblSoPT;
 	private JLabel lblKH;
 	private JLabel lblDC;
-	private JLabel lblNV;
 	private JLabel lblTieuDe;
 
 	private final Format donVi = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
@@ -101,14 +84,13 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 	private JLabel lblDienThoai;
 	private JTextField txtSDT;
 	private JButton btnLuu;
-	private IDangKyTourBUS dangKyTourBUS;
-	private IKhachHangThamGiaBUS khachHangThamGiaBUS;
 	private static List<KhachHangThamGia> dsKHThamGia;
 	private static String maKH;
 
 	private static boolean daThemPhieuDK;
 	private PhieuDangKy phieuDangKy;
 	private boolean khachDKMuonThamGiaTour;
+	private JPanel pnlLiDo;
 
 	/**
 	 * Hiện giao diện phiếu thu
@@ -120,7 +102,7 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 		this.phieuDangKy = phieuDangKy;
 		this.khachDKMuonThamGiaTour = kq;
 
-		setBounds(100, 100, 1200, 597);
+		setBounds(100, 100, 1200, 755);
 		getContentPane().setLayout(new BorderLayout());
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -251,25 +233,6 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 						txtTour.setEditable(false);
 						txtTour.setColumns(20);
 						pnlTour.add(txtTour);
-					}
-				}
-				{
-					JPanel pnlTTNV = new JPanel();
-					FlowLayout flowLayout = (FlowLayout) pnlTTNV.getLayout();
-					flowLayout.setAlignment(FlowLayout.LEFT);
-					pnlNhapLieu.add(pnlTTNV);
-					{
-						lblNV = new JLabel("Nhân viên:");
-						lblNV.setFont(new Font("Tahoma", Font.PLAIN, 17));
-						pnlTTNV.add(lblNV);
-					}
-					{
-						txtNV = new JTextField();
-						txtNV.setPreferredSize(new Dimension(6, 35));
-						txtNV.setEditable(false);
-						txtNV.setFont(new Font("Tahoma", Font.PLAIN, 17));
-						txtNV.setColumns(20);
-						pnlTTNV.add(txtNV);
 					}
 				}
 				{
@@ -527,169 +490,72 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 				getRootPane().setDefaultButton(btnDong);
 			}
 		}
-		lblNV.setPreferredSize(lblMaPT.getPreferredSize());
 		lblKH.setPreferredSize(lblMaPT.getPreferredSize());
 		lblDC.setPreferredSize(lblMaPT.getPreferredSize());
 		lblSoTreEm.setPreferredSize(lblSoNguoiLon.getPreferredSize());
 		lblTour.setPreferredSize(lblMaPT.getPreferredSize());
+		{
+			pnlLiDo = new JPanel();
+			pnlLiDo.setBorder(new EmptyBorder(0, 2, 0, 0));
+			pnlLiDo.setPreferredSize(new Dimension(10, 150));
+			pnlNhapLieu.add(pnlLiDo);
+			
+			JLabel lblNoiDung = new JLabel("Nội dung:");
+			lblNoiDung.setFont(new Font("Tahoma", Font.PLAIN, 17));
+			
+			JPanel pnlLyDoNop = new JPanel();
+			GroupLayout gl_pnlLiDo = new GroupLayout(pnlLiDo);
+			gl_pnlLiDo.setHorizontalGroup(
+				gl_pnlLiDo.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_pnlLiDo.createSequentialGroup()
+						.addComponent(lblNoiDung)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(pnlLyDoNop, GroupLayout.PREFERRED_SIZE, 592, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap(488, Short.MAX_VALUE))
+			);
+			gl_pnlLiDo.setVerticalGroup(
+				gl_pnlLiDo.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_pnlLiDo.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(gl_pnlLiDo.createParallelGroup(Alignment.LEADING)
+							.addComponent(pnlLyDoNop, GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+							.addComponent(lblNoiDung))
+						.addContainerGap())
+			);
+			pnlLyDoNop.setLayout(new BorderLayout(0, 0));
+			
+			JScrollPane scrNoiDung = new JScrollPane();
+			pnlLyDoNop.add(scrNoiDung, BorderLayout.CENTER);
+			
+			JTextArea txaNoiDung = new JTextArea();
+			txaNoiDung.setFont(new Font("Arial", Font.PLAIN, 15));
+			scrNoiDung.setViewportView(txaNoiDung);
+			pnlLiDo.setLayout(gl_pnlLiDo);
+		}
 
-		TienIch.chinhKichThuocTitleTrenBorder(new JPanel[] { pnlNhapLieu, pnlThanhTien, pnlTTKHTG
+		TienIch.chinhKichThuocTitleTrenBorder(new JPanel[] { pnlNhapLieu, pnlThanhTien
 
 		}, "Tahoma", Font.BOLD, 18);
 
-		dangKyTourBUS = new DangKyTourBUS();
-		khachHangThamGiaBUS = new KhachHangThamGiaBUS();
-
-		dsKHThamGia = new ArrayList<KhachHangThamGia>();
-		maKH = TienIch.phatSinhMa(4);
-
-		// hiện thông tin phiếu thu
-		hienThongTinPhieuThu();
-
-		btnDong.addActionListener(this);
-		btnLuu.addActionListener(this);
-
-		/*
-		 * Nếu khách hàng đăng ký muốn tham gia tour
-		 */
-		if (khachDKMuonThamGiaTour) {
-			String ma = TienIch.phatSinhMa(4);
-			KhachHangThamGia khtg = new KhachHangThamGia("KHTG00" + ma, phieuDangKy.getKh().getHoVaTen(),
-					phieuDangKy.getKh().getNgaySinh());
-			dsKHThamGia.add(khtg);
-			TienIch.capNhatMaPhatSinh(4, ma);
-			txtMaKHTG.setText("KHTG00" + TienIch.phatSinhMa(4));
-			hienBangDSKHThamGiaTour(dsKHThamGia);
-		}
-		setVisible(true);
-
 	}
 
-	/**
-	 * Hàm hiện thông tin phiếu đăng ký
-	 */
-	private void hienThongTinPhieuThu() {
-		txtSoPT.setText(phieuDangKy.getMaPhieuDK().trim());
-		txtMaDK.setText(phieuDangKy.getMaPhieuDK().trim());
-		txtTour.setText(phieuDangKy.getTour().getMaTour().trim() + "-" + phieuDangKy.getTour().getTenTour().trim());
-
-		txtNgayTao.setText(new SimpleDateFormat("dd/MM/yyyy").format(phieuDangKy.getNgayTaoPhieu()));
-		txtNV.setText(phieuDangKy.getNv().getMaNV().trim() + " - " + phieuDangKy.getNv().getHoVaTen());
-		txtKH.setText(phieuDangKy.getKh().getMaKH().trim() + " - " + phieuDangKy.getKh().getHoVaTen());
-		txtSDT.setText(phieuDangKy.getKh().getSoDienThoai());
-
-		txtSoNguoiLon.setText(phieuDangKy.getSoNguoiLon() + "");
-		txtDonGiaNL.setValue(phieuDangKy.getTour().getDonGiaNguoiLon());
-		txtThanhTienNL.setValue(phieuDangKy.getTour().getDonGiaNguoiLon() * phieuDangKy.getSoNguoiLon());
-
-		txtSoTreEm.setText(phieuDangKy.getSoTreEm() + "");
-		txtDonGiaTE.setValue(phieuDangKy.getTour().getDonGiaTreEm());
-		txtThanhTienTE.setValue(phieuDangKy.getTour().getDonGiaTreEm() * phieuDangKy.getSoTreEm());
-
-		txtTongTien.setValue(phieuDangKy.tinhTongThanhTien());
-
-		txtDC.setText(phieuDangKy.getKh().getDiaChi().getTenDC());
-
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		Object o = e.getSource();
-
-		if (o.equals(btnDong)) {
-			this.dispose();
-		} else if (o.equals(btnThemKH)) {
-			if (kiemTraNhapLieu()) {
-				KhachHangThamGia kh = new KhachHangThamGia();
-				kh.setMaKHTG(txtMaKHTG.getText());
-				kh.setHoTenKHTG(txtHoTenKHTG.getText());
-				kh.setNgaySinh(new Date(System.currentTimeMillis()));
-				dsKHThamGia.add(kh);
-				if (dsKHThamGia.size() < phieuDangKy.tinhSoNguoiThamGia()) {
-					TienIch.capNhatMaPhatSinh(4, maKH);
-					maKH = TienIch.phatSinhMa(4);
-					txtMaKHTG.setText("KHTG00" + maKH);
-
-					txtHoTenKHTG.requestFocus();
-
-				} else {
-					txtHoTenKHTG.setRequestFocusEnabled(false);
-					btnThemKH.setEnabled(false);
-					txtHoTenKHTG.setText("");
-					txtHoTenKHTG.setEditable(false);
-				}
-				
-				txtHoTenKHTG.setText("");
-				txtMaKHTG.setText("");
-				hienBangDSKHThamGiaTour(dsKHThamGia);
-
-			}
-
-		} else if (o.equals(btnLuu)) {
-			if (dsKHThamGia.size() != 0) {
-				int confim = JOptionPane.showConfirmDialog(this, "Xác nhận lưu phiếu đăng ký ?", "Xác nhận",
-						JOptionPane.YES_NO_OPTION);
-				if (confim == JOptionPane.YES_OPTION) {
-					PhieuDangKy pdk = dangKyTourBUS.taoPhieuDangKy(phieuDangKy);
-					if (pdk != null) {
-						dsKHThamGia.forEach(x -> {
-							x.setPhieuDangKy(pdk);
-							KhachHangThamGia khtg = khachHangThamGiaBUS.themKhachHangTG(x);
-						});
-						String maPDK = TienIch.phatSinhMa(3);
-						TienIch.capNhatMaPhatSinh(3, maPDK);
-						TienIch.capNhatMaPhatSinh(2, pdk.getKh().getMaKH().trim().substring(4));
-						setDaThemPhieuDK(true);
-						this.dispose();
-					}
-
-				}
-			} else {
-				JOptionPane.showMessageDialog(this, "Chưa nhập thông tin khách tham gia", "Lỗi",
-						JOptionPane.ERROR_MESSAGE);
-			}
-
-		}
-
-	}
-
-	/**
-	 * Hiển danh sách khách hàng đăng ký tour
+	/*
+	 * private boolean kiemTraNhapLieu() { String tenKH =
+	 * txtHoTenKHTG.getText().trim();
 	 * 
-	 * @param ds
+	 * String ngSinh = ((JTextField)
+	 * dtcNgaySinh.getDateEditor().getUiComponent()).getText().trim();
+	 * 
+	 * if (tenKH.length() == 0 || ngSinh.length() == 0) { if (tenKH.length() == 0) {
+	 * JOptionPane.showMessageDialog(this, "Chưa nhập tên Khách hàng");
+	 * txtHoTenKHTG.requestFocus(); return false; }
+	 * 
+	 * if (ngSinh.length() == 0) { JOptionPane.showMessageDialog(this,
+	 * "Chưa nhập ngày sinh"); dtcNgaySinh.requestFocus(); return false; } return
+	 * false; } return true;
+	 * 
+	 * }
 	 */
-	private void hienBangDSKHThamGiaTour(List<KhachHangThamGia> ds) {
-		DefaultTableModel tblModel = (DefaultTableModel) tblKHTG.getModel();
-		tblModel.setRowCount(0);
-		int i = 1;
-		for (KhachHangThamGia khtg : ds) {
-			tblModel.addRow(new Object[] { i++, khtg.getMaKHTG(), khtg.getHoTenKHTG(), khtg.getNgaySinh() });
-		}
-
-	}
-
-	private boolean kiemTraNhapLieu() {
-		String tenKH = txtHoTenKHTG.getText().trim();
-
-		String ngSinh = ((JTextField) dtcNgaySinh.getDateEditor().getUiComponent()).getText().trim();
-
-		if (tenKH.length() == 0 || ngSinh.length() == 0) {
-			if (tenKH.length() == 0) {
-				JOptionPane.showMessageDialog(this, "Chưa nhập tên Khách hàng");
-				txtHoTenKHTG.requestFocus();
-				return false;
-			}
-
-			if (ngSinh.length() == 0) {
-				JOptionPane.showMessageDialog(this, "Chưa nhập ngày sinh");
-				dtcNgaySinh.requestFocus();
-				return false;
-			}
-			return false;
-		}
-		return true;
-
-	}
 
 	public static boolean isDaThemPhieuDK() {
 		return daThemPhieuDK;
@@ -700,5 +566,4 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 		daThemPhieuDK = daThemPhieuDKs;
 
 	}
-
 }
