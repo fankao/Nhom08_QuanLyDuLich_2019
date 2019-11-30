@@ -75,7 +75,7 @@
 			</textField>
 			<textField>
 				<reportElement x="660" y="-1" width="92" height="20" uuid="e9bae0e4-e700-4287-bcf4-d7fcdfcdceba"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Top"/>
 				<textFieldExpression><![CDATA[$F{soPhieuThu}]]></textFieldExpression>
 			</textField>
 		</band>
