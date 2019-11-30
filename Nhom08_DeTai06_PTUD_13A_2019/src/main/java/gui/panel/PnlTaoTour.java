@@ -46,6 +46,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
@@ -74,7 +75,6 @@ import model.TourTableModel;
 import utils.HintTextFieldUI;
 import utils.TienIch;
 import utils.address.Province;
-import javax.swing.border.BevelBorder;
 
 public class PnlTaoTour extends JPanel implements ActionListener, PropertyChangeListener {
 	private static final long serialVersionUID = 1L;
