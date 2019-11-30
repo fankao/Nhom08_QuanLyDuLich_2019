@@ -9,9 +9,18 @@
 	<field name="tenKhachHang" class="java.lang.String"/>
 	<field name="diaChiKH" class="java.lang.String"/>
 	<field name="soDienThoai" class="java.lang.String"/>
-	<field name="noidung" class="java.lang.String"/>
-	<field name="Field_1" class="java.lang.String"/>
+	<field name="noiDung" class="java.lang.String"/>
+	<field name="soPhieuThu" class="java.lang.String"/>
 	<field name="ngayTaoPhieu" class="java.lang.String"/>
+	<field name="soKhachNL" class="java.lang.String"/>
+	<field name="soKhachTE" class="java.lang.String"/>
+	<field name="donGiaNL" class="java.lang.String"/>
+	<field name="donGiaTE" class="java.lang.String"/>
+	<field name="thanhTienNL" class="java.lang.String"/>
+	<field name="thanhTienTE" class="java.lang.String"/>
+	<field name="congTien" class="java.lang.String"/>
+	<field name="tienThue" class="java.lang.String"/>
+	<field name="tongTienThanhToan" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -46,24 +55,26 @@
 				<text><![CDATA[PHIẾU THU]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="530" y="0" width="99" height="20" uuid="d78c0d4c-1bf2-4a41-bc7f-9739744b8712"/>
+				<reportElement x="520" y="0" width="99" height="20" uuid="d78c0d4c-1bf2-4a41-bc7f-9739744b8712"/>
 				<textElement>
 					<font size="15"/>
 				</textElement>
 				<text><![CDATA[Số phiếu thu :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="530" y="20" width="139" height="20" uuid="f44c6ebc-b00e-4a50-b652-cba450bc6eb5"/>
+				<reportElement x="520" y="20" width="139" height="20" uuid="f44c6ebc-b00e-4a50-b652-cba450bc6eb5"/>
 				<textElement>
 					<font size="15"/>
 				</textElement>
 				<text><![CDATA[Ngày tạo phiếu thu :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="670" y="20" width="82" height="20" uuid="9a623f1f-c45a-4502-9513-7609ba088b8c"/>
+				<reportElement x="660" y="20" width="91" height="20" uuid="9a623f1f-c45a-4502-9513-7609ba088b8c"/>
+				<textFieldExpression><![CDATA[$F{ngayTaoPhieu}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="670" y="-1" width="82" height="20" uuid="e9bae0e4-e700-4287-bcf4-d7fcdfcdceba"/>
+				<reportElement x="660" y="-1" width="92" height="20" uuid="e9bae0e4-e700-4287-bcf4-d7fcdfcdceba"/>
+				<textFieldExpression><![CDATA[$F{soPhieuThu}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -72,6 +83,7 @@
 			<textField>
 				<reportElement x="150" y="29" width="590" height="30" uuid="9dd119fb-25be-42d4-b53b-51f5f5e227e4"/>
 				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{maPDK}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="10" y="60" width="130" height="30" uuid="004ffd57-dc75-43d7-9900-3060441a5cbb"/>
@@ -83,6 +95,7 @@
 			<textField>
 				<reportElement x="150" y="60" width="590" height="30" uuid="972cdf02-e5d9-4457-a92b-a8d9bfde3ea0"/>
 				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{tenTour}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="0" width="180" height="19" uuid="9d8b7e9c-ad40-407c-bfaa-585b2126bac4"/>
@@ -101,6 +114,7 @@
 			<textField>
 				<reportElement x="150" y="150" width="590" height="30" uuid="1758b217-6546-4313-98fc-1da17481a1a1"/>
 				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{soDienThoai}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="10" y="90" width="130" height="30" uuid="f4b5f426-2d67-46e2-b904-b1a9136ef392"/>
@@ -112,6 +126,7 @@
 			<textField>
 				<reportElement x="150" y="90" width="590" height="30" uuid="47fcaaa9-fe56-4bf2-9860-79fbe53b4743"/>
 				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{tenKhachHang}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="10" y="120" width="130" height="30" uuid="c536450e-e398-4f6c-8f63-a93fa9841ad2"/>
@@ -130,6 +145,7 @@
 			<textField>
 				<reportElement x="150" y="120" width="590" height="30" uuid="36540239-e136-407c-8983-2d138903d900"/>
 				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{diaChiKH}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="10" y="150" width="130" height="30" uuid="622a4403-4773-404d-b651-ddabb83dd605"/>
@@ -140,6 +156,7 @@
 			</staticText>
 			<textField>
 				<reportElement x="150" y="180" width="591" height="50" uuid="596ca2b8-987e-4326-8531-ac1cbcf596de"/>
+				<textFieldExpression><![CDATA[$F{noiDung}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="1" y="261" width="751" height="159" uuid="053a320d-e734-4fb8-a77e-7f76f448a440"/>
@@ -184,22 +201,22 @@
 			<textField>
 				<reportElement x="380" y="270" width="120" height="30" uuid="30abf3c5-8088-4754-9c77-f4fe16072800"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{donGiaNL}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="160" y="270" width="120" height="30" uuid="e3b22787-71e7-4d46-b189-d10f9a421a01"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{soKhachNL}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="609" y="270" width="120" height="30" uuid="e7e0fbfe-6cd0-4bd6-aec3-f1345257ec4e"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{thanhTienNL}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="610" y="300" width="119" height="30" uuid="c8534a76-efe2-4835-9a85-83845c85211b"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{thanhTienTE}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="520" y="270" width="89" height="30" uuid="0e3b2b0d-3651-421b-ab6a-2b4d091175bd"/>
@@ -211,7 +228,7 @@
 			<textField>
 				<reportElement x="380" y="302" width="120" height="30" uuid="077aa9d9-ea5a-4720-b815-b528a7347f4c"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{donGiaTE}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="10" y="380" width="190" height="30" uuid="c24ce6ec-ce93-4656-b872-e254f9387856"/>
@@ -244,17 +261,17 @@
 			<textField>
 				<reportElement x="609" y="330" width="120" height="30" uuid="fe86c80b-0aa7-47b9-b197-87566004eed7"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{congTien}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="160" y="300" width="120" height="30" uuid="ced62ddc-07d2-45d3-b1b7-ab9266e010c0"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{soKhachTE}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="290" y="380" width="120" height="30" uuid="1a50384a-05b2-48c2-ad21-23179067bf1f"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{tienThue}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="300" y="299" width="79" height="32" uuid="6dd8fd02-4a5e-4783-b7c7-ec22230aa278"/>
@@ -273,7 +290,7 @@
 			<textField>
 				<reportElement x="610" y="380" width="118" height="30" uuid="52a4489d-44b2-4253-99c4-7f4ffa4ae9de"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["Text Field"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{tongTienThanhToan}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
