@@ -745,21 +745,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		timKiemTheoTuKhoa();
 	}
 
-	/*
-	 * private void hienThongTinTour(Tour tourSel) {
-	 * 
-	 * txaTenTour.setText(tourSel.getTenTour());
-	 * cmbDiaDanh.setSelectedItem(tourSel.getDiaDanh());
-	 * cmbDiemXP.setSelectedItem(tourSel.getDiemDen());
-	 * cmbDiemDen.setSelectedItem(tourSel.getDiemKhoiHanh());
-	 * txtGiaNgLon.setValue(tourSel.getDonGiaNguoiLon());
-	 * txtGiaTrEm.setValue(tourSel.getDonGiaTreEm());
-	 * spnNgay.setValue(tourSel.getThoiGian()[0]);
-	 * lblNgayDem.setText(tourSel.getThoiGian()[1] + "");
-	 * 
-	 * }
-	 */
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
