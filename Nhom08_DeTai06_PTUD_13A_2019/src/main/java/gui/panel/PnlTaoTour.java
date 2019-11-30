@@ -1153,17 +1153,19 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		double donGiaNL = Double.parseDouble(txtGiaNgLon.getValue().toString());
 		double dongiaTE = Double.parseDouble(txtGiaTrEm.getValue().toString());
 
-		if (cmbDiaDanh.getSelectedItem() == null) {
+		
+		if (cmbDiaDanh.getSelectedIndex() == -1) {
+
 			JOptionPane.showMessageDialog(this, "Địa danh  không được để trống !");
 			cmbDiaDanh.requestFocusInWindow();
 			return false;
 		}
-		if (cmbDiemXP.getSelectedItem() == null) {
+		if (cmbDiemXP.getSelectedIndex() == -1) {
 			JOptionPane.showMessageDialog(this, "Điểm xuất phát không được để trống !");
 			cmbDiemXP.requestFocusInWindow();
 			return false;
 		}
-		if (cmbDiemDen.getSelectedItem() == null) {
+		if (cmbDiemDen.getSelectedIndex() == -1) {
 			JOptionPane.showMessageDialog(this, "Điểm đến không được để trống !");
 			cmbDiemDen.requestFocusInWindow();
 			return false;
