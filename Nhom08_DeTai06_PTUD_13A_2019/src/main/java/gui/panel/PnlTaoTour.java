@@ -125,6 +125,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 	private JFormattedTextField txtGiaTrEm;
 	private Format current = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 
+	
 	/*
 	 * Khai báo giá trị đơn giá
 	 */
