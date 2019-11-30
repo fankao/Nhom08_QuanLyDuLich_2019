@@ -1160,7 +1160,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			cmbDiemXP.requestFocusInWindow();
 			return false;
 		}
-		if (cmbDiemDen.getSelectedIndex() == -1) {
+		if (cmbDiemDen.getSelectedIndex()  == -1) {
 			JOptionPane.showMessageDialog(this, "Điểm đến không được để trống !");
 			cmbDiemDen.requestFocusInWindow();
 			return false;
