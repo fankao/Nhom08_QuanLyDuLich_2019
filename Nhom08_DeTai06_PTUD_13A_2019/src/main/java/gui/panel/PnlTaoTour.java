@@ -786,15 +786,14 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		 * Nút đóng giao diện cập nhật tour
 		 */
 		else if (o.equals(btnDongThemTour)) {
+			tblDSTour.clearSelection();
 			btnThem.setVisible(true);
+			btnBoChon.setVisible(false);
 			pnlCTTour.setVisible(false);
 			btnLuu.setVisible(false);
-
-			tblDSTour.clearSelection();
+//			tblDSTour.clearSelection();
 			tblDSTour.setEnabled(true);
-
 			btnSua.setSelected(false);
-
 			btnThem.setSelected(false);
 
 		}
@@ -869,7 +868,13 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 						hienDanhSachTour(tblDSTour, lstTour, scrDSTour);
 						btnSua.setSelected(false);
 					}
+					pnlCTTour.setVisible(false);
 					tblDSTour.setEnabled(true);
+					tblDSTour.clearSelection();
+					btnBoChon.setVisible(false);
+					btnLuu.setVisible(false);
+					btnThem.setVisible(true);
+
 				}
 
 			}
@@ -939,7 +944,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		 * 
 		 */
 		else if (o.equals(btnLuuNgayKH)) {
-			if (kiemTraNgayKhoiHanh()) {
+			if (kiemTraNgayKhoiHanh() == true) {
 				btnLuuNgayKH.setVisible(false);
 				btnSuaNgayKH.setVisible(false);
 				btnThemKH.setVisible(true);
@@ -1143,10 +1148,10 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 	 * @return true hoặc falses
 	 */
 	private boolean kiemTraThongTin() {
-
 		String tenTour = txaTenTour.getText().trim();
 		double donGiaNL = Double.parseDouble(txtGiaNgLon.getValue().toString());
 		double dongiaTE = Double.parseDouble(txtGiaTrEm.getValue().toString());
+		
 		if (cmbDiaDanh.getSelectedItem() == null) {
 			JOptionPane.showMessageDialog(this, "Địa danh  không được để trống !");
 			cmbDiaDanh.requestFocusInWindow();
