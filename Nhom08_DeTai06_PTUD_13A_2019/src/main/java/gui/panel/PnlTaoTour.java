@@ -523,7 +523,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		btnSua.setVisible(false);
 
 		JPanel pnlButtonNorth = new JPanel();
-		pnlButtonNorth.setVisible(false);
 		pnlButtonNorth.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		FlowLayout flowLayout_2 = (FlowLayout) pnlButtonNorth.getLayout();
 		flowLayout_2.setAlignment(FlowLayout.RIGHT);
