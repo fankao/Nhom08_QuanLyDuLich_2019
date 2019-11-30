@@ -53,7 +53,6 @@ public class dlgPhieuThu extends JDialog {
 	private JPanel pnlNguoiLon;
 	private JFormattedTextField txtSoNguoiLon;
 	private JFormattedTextField txtDonGiaNL;
-	private JLabel lblThanhTienTE;
 	private JFormattedTextField txtThanhTienNL;
 	private JPanel pnlTreEm;
 	private JLabel lblSoTreEm;
@@ -67,8 +66,7 @@ public class dlgPhieuThu extends JDialog {
 	private JLabel lblDiaChiCty;
 	private JPanel pnlNhapLieu;
 	private JTextField txtNgayTao;
-	private JFormattedTextField txtTongTien;
-	private JPanel pnlThue;
+	private JFormattedTextField txtTienThue;
 	private JPanel pnlTongTien;
 	private JLabel lblMaPT;
 	private JLabel lblSoPT;
@@ -83,7 +81,7 @@ public class dlgPhieuThu extends JDialog {
 	private JTextField txtTour;
 	private JLabel lblDienThoai;
 	private JTextField txtSDT;
-	private JButton btnLuu;
+	private JButton btnInPhieu;
 	private static List<KhachHangThamGia> dsKHThamGia;
 	private static String maKH;
 
@@ -91,6 +89,12 @@ public class dlgPhieuThu extends JDialog {
 	private PhieuDangKy phieuDangKy;
 	private boolean khachDKMuonThamGiaTour;
 	private JPanel pnlLiDo;
+	private JPanel pnlCongTien;
+	private JPanel panel_3;
+	private JFormattedTextField txtCongTien;
+	private JLabel lblThanhTienTE;
+	private JLabel lblThanhTienNL;
+	private JLabel lblCongTien;
 
 	/**
 	 * Hiện giao diện phiếu thu
@@ -294,7 +298,7 @@ public class dlgPhieuThu extends JDialog {
 				pnlThanhTien.setBorder(new TitledBorder(new LineBorder(new Color(192, 192, 192), 3),
 						"Th\u00F4ng tin thanh to\u00E1n", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 				pnlTTPhieuThu.add(pnlThanhTien, BorderLayout.SOUTH);
-				pnlThanhTien.setLayout(new GridLayout(3, 1, 0, 0));
+				pnlThanhTien.setLayout(new GridLayout(4, 1, 0, 0));
 				{
 					pnlNguoiLon = new JPanel();
 					pnlThanhTien.add(pnlNguoiLon);
@@ -405,7 +409,7 @@ public class dlgPhieuThu extends JDialog {
 						fl_pnlThanhTienTE.setAlignment(FlowLayout.LEFT);
 						pnlTreEm.add(pnlThanhTienTE);
 						{
-							JLabel lblThanhTienNL = new JLabel("Thành tiền :");
+							lblThanhTienNL = new JLabel("Thành tiền :");
 							lblThanhTienNL.setHorizontalAlignment(SwingConstants.LEFT);
 							lblThanhTienNL.setFont(new Font("Tahoma", Font.PLAIN, 17));
 							pnlThanhTienTE.add(lblThanhTienNL);
@@ -420,53 +424,101 @@ public class dlgPhieuThu extends JDialog {
 					}
 				}
 				{
+					pnlCongTien = new JPanel();
+					pnlThanhTien.add(pnlCongTien);
+					pnlCongTien.setLayout(new GridLayout(0, 3, 0, 0));
+					{
+						JPanel panel = new JPanel();
+						pnlCongTien.add(panel);
+					}
+					{
+						JPanel panel = new JPanel();
+						pnlCongTien.add(panel);
+					}
+					{
+						panel_3 = new JPanel();
+						pnlCongTien.add(panel_3);
+						{
+							lblCongTien = new JLabel("Cộng tiền :");
+							lblCongTien.setHorizontalAlignment(SwingConstants.LEFT);
+							lblCongTien.setFont(new Font("Tahoma", Font.PLAIN, 17));
+						}
+						{
+							txtCongTien = new JFormattedTextField((Format) null);
+							txtCongTien.setFont(new Font("Tahoma", Font.PLAIN, 17));
+							txtCongTien.setEditable(false);
+							txtCongTien.setColumns(10);
+						}
+						panel_3.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+						panel_3.add(lblCongTien);
+						panel_3.add(txtCongTien);
+					}
+				}
+				{
 					pnlThueVaTTien = new JPanel();
 					pnlThanhTien.add(pnlThueVaTTien);
-					{
-						pnlThue = new JPanel();
-						pnlThue.setBorder(new EmptyBorder(5, 0, 5, 50));
-					}
 					{
 						pnlTongTien = new JPanel();
 						FlowLayout fl_pnlTongTien = (FlowLayout) pnlTongTien.getLayout();
 						fl_pnlTongTien.setAlignment(FlowLayout.LEFT);
 					}
+					
+										JLabel lblThue = new JLabel("Thuế GTGT (VAT): 10%");
+										lblThue.setHorizontalAlignment(SwingConstants.TRAILING);
+										lblThue.setFont(new Font("Tahoma", Font.PLAIN, 20));
+					
+					JLabel lblTngTienf = new JLabel("Tổng tiền thanh toán :");
+					lblTngTienf.setHorizontalAlignment(SwingConstants.TRAILING);
+					lblTngTienf.setFont(new Font("Tahoma", Font.PLAIN, 20));
+					
+					JFormattedTextField txtTongTienThanhToan = new JFormattedTextField((Format) null);
+					txtTongTienThanhToan.setFont(new Font("Tahoma", Font.PLAIN, 20));
+					txtTongTienThanhToan.setEditable(false);
+					txtTongTienThanhToan.setColumns(10);
 					GroupLayout gl_pnlThueVaTTien = new GroupLayout(pnlThueVaTTien);
-					gl_pnlThueVaTTien.setHorizontalGroup(gl_pnlThueVaTTien.createParallelGroup(Alignment.LEADING)
+					gl_pnlThueVaTTien.setHorizontalGroup(
+						gl_pnlThueVaTTien.createParallelGroup(Alignment.LEADING)
 							.addGroup(gl_pnlThueVaTTien.createSequentialGroup()
-									.addComponent(pnlThue, GroupLayout.PREFERRED_SIZE, 658, GroupLayout.PREFERRED_SIZE)
-									.addGap(111)
-									.addComponent(pnlTongTien, GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
-									.addGap(60)));
-					gl_pnlThueVaTTien
-							.setVerticalGroup(gl_pnlThueVaTTien.createParallelGroup(Alignment.LEADING)
+								.addContainerGap()
+								.addComponent(lblThue)
+								.addGap(29)
+								.addComponent(pnlTongTien, GroupLayout.PREFERRED_SIZE, 331, GroupLayout.PREFERRED_SIZE)
+								.addGap(36)
+								.addComponent(lblTngTienf, GroupLayout.PREFERRED_SIZE, 214, GroupLayout.PREFERRED_SIZE)
+								.addPreferredGap(ComponentPlacement.RELATED)
+								.addComponent(txtTongTienThanhToan, GroupLayout.PREFERRED_SIZE, 299, GroupLayout.PREFERRED_SIZE)
+								.addContainerGap(23, Short.MAX_VALUE))
+					);
+					gl_pnlThueVaTTien.setVerticalGroup(
+						gl_pnlThueVaTTien.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_pnlThueVaTTien.createSequentialGroup()
+								.addGroup(gl_pnlThueVaTTien.createParallelGroup(Alignment.LEADING)
 									.addGroup(gl_pnlThueVaTTien.createSequentialGroup()
-											.addComponent(pnlThue, GroupLayout.PREFERRED_SIZE, 47,
-													GroupLayout.PREFERRED_SIZE)
-											.addGap(0))
-									.addGroup(gl_pnlThueVaTTien
-											.createSequentialGroup().addGap(7).addComponent(pnlTongTien,
-													GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-											.addGap(6)));
-					pnlThue.setLayout(new FlowLayout(FlowLayout.TRAILING, 5, 5));
-
-					JLabel lblThue = new JLabel("Thuế GTGT (VAT): 10%");
-					lblThue.setHorizontalAlignment(SwingConstants.TRAILING);
-					lblThue.setFont(new Font("Tahoma", Font.PLAIN, 20));
-					pnlThue.add(lblThue);
+										.addGap(19)
+										.addComponent(lblThue))
+									.addGroup(gl_pnlThueVaTTien.createSequentialGroup()
+										.addContainerGap()
+										.addComponent(pnlTongTien, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+									.addGroup(gl_pnlThueVaTTien.createSequentialGroup()
+										.addGap(13)
+										.addGroup(gl_pnlThueVaTTien.createParallelGroup(Alignment.TRAILING)
+											.addComponent(txtTongTienThanhToan, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+											.addComponent(lblTngTienf, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))))
+								.addContainerGap())
+					);
 					{
-						JLabel lblTongTien = new JLabel("Tổng tiền :");
+						JLabel lblTongTien = new JLabel("Tiền thuế :");
 						lblTongTien.setHorizontalAlignment(SwingConstants.TRAILING);
 						lblTongTien.setFont(new Font("Tahoma", Font.PLAIN, 20));
 						pnlTongTien.add(lblTongTien);
 						lblTongTien.setPreferredSize(new Dimension(100, 21));
 					}
 					{
-						txtTongTien = new JFormattedTextField(donVi);
-						txtTongTien.setFont(new Font("Tahoma", Font.PLAIN, 20));
-						txtTongTien.setEditable(false);
-						txtTongTien.setColumns(10);
-						pnlTongTien.add(txtTongTien);
+						txtTienThue = new JFormattedTextField(donVi);
+						txtTienThue.setFont(new Font("Tahoma", Font.PLAIN, 20));
+						txtTienThue.setEditable(false);
+						txtTienThue.setColumns(10);
+						pnlTongTien.add(txtTienThue);
 					}
 					pnlThueVaTTien.setLayout(gl_pnlThueVaTTien);
 				}
@@ -478,9 +530,9 @@ public class dlgPhieuThu extends JDialog {
 
 			getContentPane().add(pnlButton, BorderLayout.SOUTH);
 			{
-				btnLuu = new JButton("Lưu phiếu đăng ký");
-				btnLuu.setFont(new Font("Tahoma", Font.PLAIN, 20));
-				pnlButton.add(btnLuu);
+				btnInPhieu = new JButton("In phiếu");
+				btnInPhieu.setFont(new Font("Tahoma", Font.PLAIN, 20));
+				pnlButton.add(btnInPhieu);
 			}
 			{
 				btnDong = new JButton("Đóng");
@@ -536,6 +588,8 @@ public class dlgPhieuThu extends JDialog {
 		TienIch.chinhKichThuocTitleTrenBorder(new JPanel[] { pnlNhapLieu, pnlThanhTien
 
 		}, "Tahoma", Font.BOLD, 18);
+		lblThanhTienNL.setPreferredSize(lblCongTien.getPreferredSize());
+		lblThanhTienTE.setPreferredSize(lblCongTien.getPreferredSize());
 
 	}
 
