@@ -11,12 +11,12 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
@@ -29,9 +29,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import control.IPhieuDangKyControl;
 import control.impl.PhieuDangKyControlImpl;
 import entities.KhachHangThamGia;
-
 import entities.PhieuDangKy;
-import javax.swing.border.EtchedBorder;
 
 public class PnlThongKe extends JPanel {
 	private JTabbedPane tabThongTinTK;

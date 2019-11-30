@@ -10,7 +10,6 @@ import javax.persistence.TypedQuery;
 
 import data.EntityManagerConnection;
 import data.IPhieuDangKyDAO;
-import entities.KhachHang;
 import entities.KhachHangThamGia;
 import entities.PhieuDangKy;
 

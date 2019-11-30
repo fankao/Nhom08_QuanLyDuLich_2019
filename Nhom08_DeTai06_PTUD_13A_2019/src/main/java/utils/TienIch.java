@@ -1,6 +1,5 @@
 package utils;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,11 +8,7 @@ import java.awt.Image;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URISyntaxException;
-import java.sql.Date;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -33,7 +28,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableColumn;
-import javax.swing.text.JTextComponent;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;

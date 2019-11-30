@@ -1,11 +1,11 @@
 package gui.panel;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
 
 public class PnlHinhNen extends JPanel {
 	private static final long serialVersionUID = 1L;

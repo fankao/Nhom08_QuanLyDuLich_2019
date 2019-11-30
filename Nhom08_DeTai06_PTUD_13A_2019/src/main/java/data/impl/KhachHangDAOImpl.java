@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
-import control.impl.KhachHangControlImpl;
 import data.EntityManagerConnection;
 import data.IKhachHangDAO;
 import entities.KhachHang;

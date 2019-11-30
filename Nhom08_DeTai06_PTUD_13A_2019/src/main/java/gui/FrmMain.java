@@ -14,7 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
@@ -28,9 +27,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 
 import entities.NhanVien;
 import gui.panel.PnlDangKyTour;
@@ -40,7 +38,6 @@ import gui.panel.PnlTaoTour;
 import gui.panel.PnlThongKe;
 import test.Testing;
 import utils.TienIch;
-import javax.swing.border.LineBorder;
 
 /**
  * frmMain.java

@@ -3,20 +3,27 @@ package gui.panel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.ListModel;
-import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -30,16 +37,6 @@ import entities.NgayKhoiHanh;
 import entities.Tour;
 import model.TourTableModel;
 import utils.TienIch;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.Dimension;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-
-import java.awt.FlowLayout;
 
 public class PnlDuyetTour extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;

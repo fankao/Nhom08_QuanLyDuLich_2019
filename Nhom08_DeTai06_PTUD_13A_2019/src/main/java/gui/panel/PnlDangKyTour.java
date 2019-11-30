@@ -19,6 +19,7 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -31,6 +32,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -62,9 +64,6 @@ import utils.TienIch;
 import utils.address.District;
 import utils.address.Province;
 import utils.address.Ward;
-import javax.swing.border.BevelBorder;
-import javax.swing.ImageIcon;
-import javax.swing.UIManager;
 
 public class PnlDangKyTour extends JPanel implements ActionListener, ListSelectionListener {
 
