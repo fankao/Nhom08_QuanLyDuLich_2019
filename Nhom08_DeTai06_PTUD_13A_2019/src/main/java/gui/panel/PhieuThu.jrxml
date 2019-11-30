@@ -70,10 +70,12 @@
 			</staticText>
 			<textField>
 				<reportElement x="660" y="20" width="91" height="20" uuid="9a623f1f-c45a-4502-9513-7609ba088b8c"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{ngayTaoPhieu}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="660" y="-1" width="92" height="20" uuid="e9bae0e4-e700-4287-bcf4-d7fcdfcdceba"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{soPhieuThu}]]></textFieldExpression>
 			</textField>
 		</band>
