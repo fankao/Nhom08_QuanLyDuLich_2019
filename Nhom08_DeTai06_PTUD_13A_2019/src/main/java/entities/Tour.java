@@ -62,7 +62,7 @@ public class Tour implements Serializable {
 	@JoinColumn(name = "madiadanh", nullable = false, updatable = true)
 	private DiaDanh diaDanh;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "tour")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "tour")
 	private List<NgayKhoiHanh> ngayKhoiHanh = new ArrayList<NgayKhoiHanh>();
 
 	private int[] thoiGian = new int[2];

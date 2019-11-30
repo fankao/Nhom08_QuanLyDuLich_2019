@@ -30,7 +30,7 @@ public class NgayKhoiHanh {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(columnDefinition = "VARCHAR(20)",unique = true,nullable = false)
+	@Column(unique = true,nullable = false)
 	private String maLT;
 	private Date ngayKhoiHanh;
 	private int soNguoiThamGia;

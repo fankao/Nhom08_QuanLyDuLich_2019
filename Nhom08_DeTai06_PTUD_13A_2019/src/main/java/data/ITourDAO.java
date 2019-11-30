@@ -25,5 +25,6 @@ public interface ITourDAO {
 	public Tour suaTour(Tour tour);
 
 	public String phatSinhMaTour();
+	public String phatSinhNgayKhoiHanh(String maTour);
 
 }

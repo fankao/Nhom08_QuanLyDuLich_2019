@@ -65,6 +65,7 @@ import com.toedter.calendar.JDateChooser;
 import control.ITourControl;
 import control.impl.TourControlImpl;
 import entities.DiaDanh;
+import entities.KhachHang;
 import entities.NgayKhoiHanh;
 import entities.NhanVien;
 import entities.PhuongTien;
@@ -412,6 +413,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		pnlLoaiTK.add(cmbTimKiem);
 
 		btnLoc = new JButton("Lọc");
+		btnLoc.setVisible(false);
 		pnlLoaiTK.add(btnLoc);
 
 		pnlButton = new JPanel();
@@ -484,6 +486,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 
 		dtcNgayKhoiHanh = new JDateChooser();
 		pnlNhap.add(dtcNgayKhoiHanh);
+		dtcNgayKhoiHanh.setEnabled(false);
 
 		dtcNgayKhoiHanh.setFocusable(false);
 		dtcNgayKhoiHanh.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -495,6 +498,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		lblSoKhachToiDa.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		spnSoKhachToiDa = new JSpinner();
+		spnSoKhachToiDa.setEnabled(false);
 		spnSoKhachToiDa.setModel(new SpinnerNumberModel(10, 10, 40, 0));
 
 		spnSoKhachToiDa.setPreferredSize(new Dimension(40, 30));
@@ -803,11 +807,13 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			pnlNgayKH.setVisible(false);
 			pnlNhap.setVisible(false);
 			btnThem.setSelected(false);
-			btnSua.setSelected(false);
+			btnSua.setVisible(false);
 			tblDSTour.setEnabled(true);
 			btnThemNgayKH.setVisible(false);
 			btnBoChon.setVisible(false);
 			btnThem.setVisible(true);
+			dtcNgayKhoiHanh.setEnabled(false);
+			spnSoKhachToiDa.setEnabled(false);
 
 		}
 		/*
@@ -821,8 +827,8 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				Tour tour = new Tour();
 				tour.setTenTour(txaTenTour.getText());
 				tour.setDiaDanh((DiaDanh) cmbDiaDanh.getSelectedItem());
-				tour.setDiemKhoiHanh(cmbDiemDen.getSelectedItem().toString());
-				tour.setDiemDen(cmbDiemXP.getSelectedItem().toString());
+				tour.setDiemKhoiHanh(cmbDiemXP.getSelectedItem().toString());
+				tour.setDiemDen(cmbDiemDen.getSelectedItem().toString());
 				tour.setNhanVien(nhanvien);
 				tour.setPhuongTien((PhuongTien) cmbPhuongTien.getSelectedItem());
 				tour.setThoiGian(new int[] { soNgay, soDem });
@@ -849,10 +855,17 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				if (btnSua.isSelected() == true) {
 					int row = tblDSTour.getSelectedRow();
 					Tour tourChon = tourControl.layTourTheoMa(tblDSTour.getValueAt(row, 1).toString());
-					tour.setMaTour(tourChon.getMaTour());
-					tour.setId(tourChon.getId());
-					Tour touSua = tourControl.suaTour(tour);
-					if (touSua != null) {
+					tourChon.setTenTour(tour.getTenTour());
+					tourChon.setDiaDanh(tour.getDiaDanh());
+					tourChon.setDiemKhoiHanh(tour.getDiemKhoiHanh());
+					tourChon.setDiemDen(tour.getDiemDen());
+					tourChon.setNhanVien(nhanvien);
+					tourChon.setPhuongTien(tour.getPhuongTien());
+					tourChon.setThoiGian(tour.getThoiGian());
+					tourChon.setDonGiaNguoiLon(tour.getDonGiaNguoiLon());
+					tourChon.setDonGiaTreEm(tour.getDonGiaTreEm());
+					Tour tourSua = tourControl.suaTour(tourChon);
+					if (tourSua != null) {
 						lstTour = tourControl.layDsTourTheoYeuCau(2, nhanvien.getMaNV());
 						hienDanhSachTour(tblDSTour, lstTour, scrDSTour);
 						btnSua.setSelected(false);
@@ -874,6 +887,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			btnLuuNgayKH.setEnabled(false);
 			tblDSTour.setEnabled(true);
 			btnThemNgayKH.setVisible(false);
+			pnlNgayKH.setVisible(false);
 		}
 		/*
 		 * Chọn nút thêm danh sách ngày khởi hành
@@ -901,79 +915,67 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		 * Chọn nút thêm ngày khởi hành
 		 */
 		else if (o.equals(btnThemKH)) {
+
 			xoaTrangTTKH();
+			btnThem.setSelected(true);
 			pnlNhap.setVisible(true);
 			btnThemKH.setSelected(true);
 			btnThemKH.setVisible(false);
 			btnLuuNgayKH.setVisible(true);
+			btnLuu.setEnabled(true);
 			tblDSNGKH.setEnabled(false);
-
+			dtcNgayKhoiHanh.setEnabled(true);
+			spnSoKhachToiDa.setEnabled(true);
 		} else if (o.equals(btnSuaNgayKH)) {
 			btnSuaNgayKH.setVisible(false);
-			btnThemKH.setVisible(false);
-			btnLuuNgayKH.setVisible(true);
+			;
 			tblDSNGKH.setEnabled(false);
-		} else if (o.equals(btnLuuNgayKH)) {
-//			if (kiemTraNgayKhoiHanh()) {
-//				tblDSNGKH.setEnabled(true);
-//				int row = tblDSTour.getSelectedRow();
-//				int rowNgKH = tblDSNGKH.getSelectedRow();
-//				NgayKhoiHanh ngayKhoiHanh = lstNgayKH.get(rowNgKH);
-//				if(btnThemKH.isSelected()) {
-//					ngayKhoiHanh = new NgayKhoiHanh();
-//				}
-//				
-//				ngayKhoiHanh.setNgayKhoiHanh(new Date(dtcNgayKhoiHanh.getDate().getTime()));
-//				int soNguoi = (int) spnSoKhachToiDa.getValue();
-//				ngayKhoiHanh.setSoNguoiThamGia(soNguoi);
-//
-//				Tour tourChon = tourControl.layTourTheoMa(tblDSTour.getValueAt(row, 1).toString());
-//
-//				String maNgKH = tourChon.getMaTour() + "-NGKH001";
-//				if (lstNgayKH.size() != 0) {
-//					int max = Integer.parseInt(lstNgayKH.get(0).getMaLT().split("-")[1].substring(6));
-//					for (NgayKhoiHanh x : lstNgayKH) {
-//						int suffix = Integer.parseInt(x.getMaLT().split("-")[1].substring(6));
-//						if (suffix > max) {
-//							max = suffix;
-//						}
-//
-//					}
-//					maNgKH = tourChon.getMaTour() + "-NGKH00" + (max + 1);
-//				}
-//				ngayKhoiHanh.setMaLT(maNgKH);
-//				ngayKhoiHanh.setTour(tourChon);
-//				tourChon.getNgayKhoiHanh().add(ngayKhoiHanh);
-//
-//				Tour touSua = tourControl.suaTour(tourChon);
-//
-//				if (touSua != null) {
-//					lstNgayKH.add(ngayKhoiHanh);
-//					lstTour.remove(row);
-//					lstTour.add(row, touSua);
-//					lstTour = tourControl.layDsTourTheoYeuCau(2, nhanvien.getMaNV());
-//					lstNgayKH = tourControl.layDSNgayKhoiHanhTheoTour(tourChon.getMaTour());
-//					tourTableModel.fireTableDataChanged();
-//					ngkhTableModel.fireTableDataChanged();
-//
-//				}
-//
-//				maNgKH = tourChon.getMaTour() + "-NGKH00" + (max + 1);
-//			}
-//			NgayKhoiHanh ngayKhoiHanh.setMaLT(maNgKH);
-//			ngayKhoiHanh.setTour(tourChon);
-//			tourChon.getNgayKhoiHanh().add(ngayKhoiHanh);
-//
-//			Tour touSua = tourControl.suaTour(tourChon);
-//
-//			if (touSua != null) {
-//				lstTour = tourControl.layDsTourTheoYeuCau(2, nhanvien.getMaNV());
-//				lstNgayKH = tourControl.layDSNgayKhoiHanhTheoTour(tourChon.getMaTour());
-//				tourTableModel.fireTableDataChanged();
-//				ngkhTableModel.fireTableDataChanged();
-//
-//
-//			}
+			btnThemKH.setVisible(false);
+			btnSua.setVisible(false);
+			btnLuuNgayKH.setVisible(true);
+			btnLuuNgayKH.setEnabled(true);
+			dtcNgayKhoiHanh.setEnabled(true);
+		}
+
+		/*
+		 * 
+		 */
+		else if (o.equals(btnLuuNgayKH)) {
+			if (kiemTraNgayKhoiHanh()) {
+				btnLuuNgayKH.setVisible(false);
+				btnSuaNgayKH.setVisible(false);
+				btnThemKH.setVisible(true);
+				tblDSNGKH.setEnabled(true);
+				dtcNgayKhoiHanh.setEnabled(false);
+				spnSoKhachToiDa.setEnabled(true);
+				int row = tblDSTour.getSelectedRow();
+				int rowNgayKH = tblDSNGKH.getSelectedRow();
+				NgayKhoiHanh ngayKhoiHanh = rowNgayKH == -1 ? null : lstNgayKH.get(row);
+				Tour tourChon = tourControl.layTourTheoMa(tblDSTour.getValueAt(row, 1).toString());
+				if (btnThemKH.isSelected() && ngayKhoiHanh == null) {
+					ngayKhoiHanh = new NgayKhoiHanh();
+					ngayKhoiHanh.setMaLT(tourControl.phatSinhNgayKhoiHanh(tourChon.getMaTour()));
+					btnThem.setVisible(false);
+
+				}
+				System.out.println(ngayKhoiHanh);
+				ngayKhoiHanh.setNgayKhoiHanh(new Date(dtcNgayKhoiHanh.getDate().getTime()));
+				int soNguoi = (int) spnSoKhachToiDa.getValue();
+				ngayKhoiHanh.setSoNguoiThamGia(soNguoi);
+
+				ngayKhoiHanh.setTour(tourChon);
+
+				Tour touSua = tourControl.suaTour(tourChon);
+
+				if (touSua != null) {
+					lstTour = tourControl.layDsTourTheoYeuCau(2, nhanvien.getMaNV());
+					lstNgayKH = tourControl.layDSNgayKhoiHanhTheoTour(tourChon.getMaTour());
+					tourTableModel.fireTableDataChanged();
+					ngkhTableModel.fireTableDataChanged();
+
+				}
+			}
+
 		}
 		/*
 		 * 
@@ -983,12 +985,14 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			case 1:
 				txtTimKiem.setEditable(true);
 				cmbTimKiem.setVisible(false);
+				btnLoc.setVisible(false);
 				txtTimKiem.setUI(new HintTextFieldUI("Nhập mã tour cần tìm ...", true));
 
 				break;
 			case 2:
 				txtTimKiem.setEditable(true);
 				cmbTimKiem.setVisible(false);
+				btnLoc.setVisible(false);
 				txtTimKiem.setUI(new HintTextFieldUI("Nhập tên tour cần tìm ...", true));
 
 				break;
@@ -996,6 +1000,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				txtTimKiem.setVisible(false);
 				cmbTimKiem.setSelectedItem(null);
 				cmbTimKiem.setVisible(true);
+				btnLoc.setVisible(true);
 				hienThiDSDiaDanh(lstDiaDanh, cmbTimKiem);
 
 				break;
@@ -1003,12 +1008,14 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				txtTimKiem.setVisible(false);
 				cmbTimKiem.setSelectedItem(null);
 				cmbTimKiem.setVisible(true);
+				btnLoc.setVisible(true);
 				cmbTimKiem.setModel(new DefaultComboBoxModel(PhuongTien.values()));
 				break;
 			case 5:
 				txtTimKiem.setVisible(false);
 				cmbTimKiem.setSelectedItem(null);
 				cmbTimKiem.setVisible(true);
+				btnLoc.setVisible(true);
 				hienDiaDiem(TienIch.layDiaLyHanhChinh(), cmbTimKiem);
 				break;
 
@@ -1016,6 +1023,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				txtTimKiem.setUI(new HintTextFieldUI(""));
 				txtTimKiem.setEditable(false);
 				cmbTimKiem.setVisible(false);
+				btnLoc.setVisible(false);
 				break;
 
 			}
@@ -1024,12 +1032,13 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		/*
 		 * 
 		 */
-		else if (o.equals(cmbTimKiem)) {
+		else if (o.equals(btnLoc)) {
 			List<Tour> dsTourCanTim = new ArrayList<Tour>();
 			for (Tour tour : lstTour) {
 				switch (cmbLuaChon.getSelectedIndex()) {
 				case 3:
 					// hiện danh sách tour theo địa danh
+					cmbTimKiem.setSelectedItem(cmbTimKiem.getSelectedItem());
 					DiaDanh key = (DiaDanh) cmbTimKiem.getSelectedItem();
 					if (key != null) {
 						if (tour.getDiaDanh().getTenDiaDanh().equalsIgnoreCase(key.getTenDiaDanh())) {
@@ -1140,6 +1149,16 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		double dongiaTE = Double.parseDouble(txtGiaTrEm.getValue().toString());
 
 		String ngayBatDau = ((JTextField) dtcNgayKhoiHanh.getDateEditor().getUiComponent()).getText();
+		if (cmbDiemXP.getSelectedItem() == null) {
+			JOptionPane.showMessageDialog(this, "Điểm xuaart phát không được để trống !");
+			cmbDiemXP.requestFocusInWindow();
+			return false;
+		}
+		if (cmbDiemDen.getSelectedItem() == null) {
+			JOptionPane.showMessageDialog(this, "Điểm đến không được để trống !");
+			cmbDiemDen.requestFocusInWindow();
+			return false;
+		}
 
 		if (!(tenTour.length() > 0)) {
 			JOptionPane.showMessageDialog(this, "Tên tour không được để trống !");
@@ -1174,7 +1193,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			return false;
 		}
 		if (soKhachToiDa < 10) {
-			JOptionPane.showMessageDialog(this, "Số khách tối đa không được bé hơn 10 hai người !");
+			JOptionPane.showMessageDialog(this, "Số khách tối đa không được bé hơn mười người !");
 			spnSoKhachToiDa.requestFocusInWindow();
 			return false;
 		}
@@ -1249,12 +1268,9 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 	private void xoaTrang() {
 		cmbDiaDanh.setSelectedIndex(0);
 		txaTenTour.setText("");
-		cmbDiemXP.setSelectedIndex(0);
-		cmbDiemDen.setSelectedIndex(0);
 		cmbPhuongTien.setSelectedIndex(0);
 		txtGiaNgLon.setValue((Double) 0.0);
 		txtGiaTrEm.setValue((Double) 0.0);
-		spnSoKhachToiDa.setValue(1);
 	}
 
 	private void xoaTrangTTKH() {
