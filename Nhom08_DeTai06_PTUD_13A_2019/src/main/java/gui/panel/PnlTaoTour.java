@@ -948,7 +948,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				spnSoKhachToiDa.setEnabled(true);
 				int row = tblDSTour.getSelectedRow();
 				int rowNgayKH = tblDSNGKH.getSelectedRow();
-				NgayKhoiHanh ngayKhoiHanh = rowNgayKH == -1 ? null : lstNgayKH.get(row);
+				NgayKhoiHanh ngayKhoiHanh = rowNgayKH == -1 ? null : lstNgayKH.get(rowNgayKH);
 				Tour tourChon = tourControl.layTourTheoMa(tblDSTour.getValueAt(row, 1).toString());
 				if (btnThemKH.isSelected() && ngayKhoiHanh == null) {
 					ngayKhoiHanh = new NgayKhoiHanh();
@@ -968,8 +968,9 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				if (touSua != null) {
 					lstTour = tourControl.layDsTourTheoYeuCau(2, nhanvien.getMaNV());
 					lstNgayKH = tourControl.layDSNgayKhoiHanhTheoTour(tourChon.getMaTour());
-					tourTableModel.fireTableDataChanged();
-					ngkhTableModel.fireTableDataChanged();
+					hienDanhSachTour(tblDSTour, lstTour, scrDSTour);
+					ngkhTableModel = new NgayKhoiHanhTableModel(lstNgayKH);
+					tblDSNGKH.setModel(ngkhTableModel);
 
 				}
 			}
