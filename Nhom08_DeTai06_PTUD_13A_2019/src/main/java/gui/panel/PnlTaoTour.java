@@ -971,6 +971,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 					hienDanhSachTour(tblDSTour, lstTour, scrDSTour);
 					ngkhTableModel = new NgayKhoiHanhTableModel(lstNgayKH);
 					tblDSNGKH.setModel(ngkhTableModel);
+					//
 
 				}
 			}
