@@ -66,6 +66,7 @@ public class TienIch {
 			btn.setBackground(new Color(23, 35, 51));
 			btn.setEnabled(true);
 		}
+		btnDoiMau.setEnabled(false);
 
 	}
 

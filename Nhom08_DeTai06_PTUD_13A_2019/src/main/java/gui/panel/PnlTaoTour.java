@@ -913,9 +913,10 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			}
 			ngayKhoiHanh.setNgayKhoiHanh(new Date(dtcNgayKhoiHanh.getDate().getTime()));
 			int soNguoi = (int) spnSoKhachToiDa.getValue();
-			ngayKhoiHanh.setSoNguoiThamGia(soNguoi);
+			ngayKhoiHanh.setSoKhachToiDa(soNguoi);
 
 			ngayKhoiHanh.setTour(tourChon);
+			tourChon.getNgayKhoiHanh().add(ngayKhoiHanh);
 
 			Tour touSua = tourControl.suaTour(tourChon);
 

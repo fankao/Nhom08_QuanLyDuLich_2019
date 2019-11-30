@@ -184,8 +184,6 @@ public class frmDangNhap extends JDialog implements ActionListener {
 		pnLogo.setLayout(gl_pnLogo);
 		contentPanel.add(pnDangNhap);
 
-		nhanVienControl = new NhanVienControl();
-
 		txtTaiKhoan.setText("NV001");
 		pwdMatKhau.setText("000000");
 
@@ -210,6 +208,7 @@ public class frmDangNhap extends JDialog implements ActionListener {
 		Object o = e.getSource();
 		if (o.equals(btnDangNhap)) {
 			if (txtTaiKhoan.getText().trim().length() != 0 && pwdMatKhau.getText().trim().length() != 0) {
+				nhanVienControl = new NhanVienControl();
 				TaiKhoan taiKhoan = new TaiKhoan(txtTaiKhoan.getText(), pwdMatKhau.getText());
 				nv = nhanVienControl.layNhanVienTheoTaiKhoan(taiKhoan);
 				if (nv != null) {

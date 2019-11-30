@@ -9,11 +9,12 @@ import javax.swing.table.AbstractTableModel;
 import entities.KhachHangThamGia;
 
 public class DSKhachHangTableModel extends AbstractTableModel {
+	private static final long serialVersionUID = 1L;
 	private static boolean isEdit = false;
-	private String[] tieuDe = { "STT", "Mã số", "Họ tên", "Ngày sinh", "Tuổi", "Ghi chú" };
+	private String[] tieuDe = { "STT", "Họ tên", "Ngày sinh", "Tuổi", "Ghi chú" };
 	private List<KhachHangThamGia> dsKhachThamGia = new ArrayList<KhachHangThamGia>();
-	private final Class<?>[] columnClass = new Class<?>[] { Integer.class, String.class, String.class, Date.class,
-			Integer.class, String.class };
+	private final Class<?>[] columnClass = new Class<?>[] { Integer.class, String.class, Date.class, Integer.class,
+			String.class };
 
 	public DSKhachHangTableModel(List<KhachHangThamGia> dsKhachThamGia) {
 		super();
@@ -49,14 +50,12 @@ public class DSKhachHangTableModel extends AbstractTableModel {
 		case 0:
 			return row + 1;
 		case 1:
-			return "KHTG00" + (row + 1);
-		case 2:
 			return khtg.getHoTenKHTG();
-		case 3:
+		case 2:
 			return khtg.getNgaySinh();
-		case 4:
+		case 3:
 			return khtg.tinhTuoiKhachHang();
-		case 5:
+		case 4:
 			return khtg.getDoTuoi();
 		}
 		return null;

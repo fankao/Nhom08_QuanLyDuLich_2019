@@ -30,10 +30,11 @@ public class NgayKhoiHanh {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column(unique = true,nullable = false)
+	@Column(unique = true, nullable = false)
 	private String maLT;
 	private Date ngayKhoiHanh;
-	private int soNguoiThamGia;
+	private int soKhachToiDa;
+	private int soKhachDaDangKy;
 	private boolean daXoa;
 	private boolean daDuSoLuong;
 	private boolean daXoaDoKhongDuSoLuong;
@@ -94,12 +95,20 @@ public class NgayKhoiHanh {
 		this.ngayKhoiHanh = ngayKhoiHanh;
 	}
 
-	public int getSoNguoiThamGia() {
-		return soNguoiThamGia;
+	public int getSoKhachToiDa() {
+		return soKhachToiDa;
 	}
 
-	public void setSoNguoiThamGia(int soNguoiThamGia) {
-		this.soNguoiThamGia = soNguoiThamGia;
+	public void setSoKhachToiDa(int soKhachToiDa) {
+		this.soKhachToiDa = soKhachToiDa;
+	}
+
+	public int getSoKhachDaDangKy() {
+		return soKhachDaDangKy;
+	}
+
+	public void setSoKhachDaDangKy(int soKhachDaDangKy) {
+		this.soKhachDaDangKy = soKhachDaDangKy;
 	}
 
 	public boolean isDaXoa() {
@@ -134,20 +143,11 @@ public class NgayKhoiHanh {
 		this.tour = tour;
 	}
 
-	public NgayKhoiHanh(String maLT, Date ngayKhoiHanh, int soNguoiThamGia, boolean daXoa, boolean daDuSoLuong,
-			boolean daXoaDoKhongDuSoLuong) {
-		super();
-		this.maLT = maLT;
-		this.ngayKhoiHanh = ngayKhoiHanh;
-		this.soNguoiThamGia = soNguoiThamGia;
-		this.daXoa = daXoa;
-		this.daDuSoLuong = daDuSoLuong;
-		this.daXoaDoKhongDuSoLuong = daXoaDoKhongDuSoLuong;
-	}
-
 	@Override
 	public String toString() {
-		return "LichTrinh [maLT=" + maLT + ", ngayKhoiHanh=" + ngayKhoiHanh + "]";
+		return "NgayKhoiHanh [id=" + id + ", maLT=" + maLT + ", ngayKhoiHanh=" + ngayKhoiHanh + ", soKhachToiDa="
+				+ soKhachToiDa + ", soKhachDaDangKy=" + soKhachDaDangKy + ", daXoa=" + daXoa + ", daDuSoLuong="
+				+ daDuSoLuong + ", daXoaDoKhongDuSoLuong=" + daXoaDoKhongDuSoLuong + ", tour=" + tour + "]";
 	}
 
 }
