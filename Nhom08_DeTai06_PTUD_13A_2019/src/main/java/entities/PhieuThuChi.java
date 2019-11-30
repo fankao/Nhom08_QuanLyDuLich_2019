@@ -99,6 +99,7 @@ public class PhieuThuChi {
 	public void setLoaiPhieu(LoaiPhieu loaiPhieu) {
 		this.loaiPhieu = loaiPhieu;
 	}
+	
 
 	@Override
 	public int hashCode() {

@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -43,21 +44,27 @@ import javax.swing.table.TableCellRenderer;
 
 import com.toedter.calendar.JDateChooser;
 
+import constant.HangSo;
 import control.IKhachHangControl;
 import control.IPhieuDangKyControl;
+import control.IPhieuThuChiControl;
 import control.ITourControl;
 import control.impl.KhachHangControlImpl;
 import control.impl.PhieuDangKyControlImpl;
+import control.impl.PhieuThuChiControlImpl;
 import control.impl.TourControlImpl;
 import entities.DiaChi;
 import entities.DiaDanh;
 import entities.DoTuoi;
 import entities.KhachHang;
 import entities.KhachHangThamGia;
+import entities.LoaiPhieu;
 import entities.NgayKhoiHanh;
 import entities.NhanVien;
 import entities.PhieuDangKy;
+import entities.PhieuThuChi;
 import entities.Tour;
+import gui.dialog.dlgPhieuThu;
 import model.DSKhachHangTableModel;
 import model.TourTableModel;
 import utils.TienIch;
@@ -96,7 +103,6 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 	private IPhieuDangKyControl phieuDangKyControl;
 	private IKhachHangControl khachHangControl;
 	private NhanVien nhanvien;
-	private static List<Tour> lstTour;
 	private static List<NgayKhoiHanh> dsNgayKhoiHanh;
 
 	private static List<Tour> dsTourDaDuyet;
@@ -860,10 +866,9 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 							dsNgayKhoiHanh = tourControl
 									.layDSNgayKhoiHanhTheoTour(phieuDangKy.getNgayKhoiHanh().getTour().getMaTour());
 							hienDanhSachNgayKhoiHanh(dsNgayKhoiHanh);
+							dlgPhieuThu dlgPhieuThu = new dlgPhieuThu(phieuDangKy, false);
+							dlgPhieuThu.setVisible(true);
 
-							/*
-							 * Xuất phiếu thu
-							 */
 						}
 					}
 				}

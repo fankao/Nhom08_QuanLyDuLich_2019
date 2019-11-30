@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.sql.Date;
 import java.text.Format;
 import java.text.NumberFormat;
 import java.util.List;
@@ -29,8 +30,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import constant.HangSo;
+import control.IPhieuThuChiControl;
+import control.impl.PhieuThuChiControlImpl;
 import entities.KhachHangThamGia;
+import entities.LoaiPhieu;
 import entities.PhieuDangKy;
+import entities.PhieuThuChi;
 import utils.TienIch;
 
 /**
@@ -462,50 +468,49 @@ public class dlgPhieuThu extends JDialog {
 						FlowLayout fl_pnlTongTien = (FlowLayout) pnlTongTien.getLayout();
 						fl_pnlTongTien.setAlignment(FlowLayout.LEFT);
 					}
-					
-										JLabel lblThue = new JLabel("Thuế GTGT (VAT): 10%");
-										lblThue.setHorizontalAlignment(SwingConstants.TRAILING);
-										lblThue.setFont(new Font("Tahoma", Font.PLAIN, 20));
-					
+
+					JLabel lblThue = new JLabel("Thuế GTGT (VAT): 10%");
+					lblThue.setHorizontalAlignment(SwingConstants.TRAILING);
+					lblThue.setFont(new Font("Tahoma", Font.PLAIN, 20));
+
 					JLabel lblTngTienf = new JLabel("Tổng tiền thanh toán :");
 					lblTngTienf.setHorizontalAlignment(SwingConstants.TRAILING);
 					lblTngTienf.setFont(new Font("Tahoma", Font.PLAIN, 20));
-					
+
 					JFormattedTextField txtTongTienThanhToan = new JFormattedTextField((Format) null);
 					txtTongTienThanhToan.setFont(new Font("Tahoma", Font.PLAIN, 20));
 					txtTongTienThanhToan.setEditable(false);
 					txtTongTienThanhToan.setColumns(10);
 					GroupLayout gl_pnlThueVaTTien = new GroupLayout(pnlThueVaTTien);
-					gl_pnlThueVaTTien.setHorizontalGroup(
-						gl_pnlThueVaTTien.createParallelGroup(Alignment.LEADING)
-							.addGroup(gl_pnlThueVaTTien.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(lblThue)
-								.addGap(29)
-								.addComponent(pnlTongTien, GroupLayout.PREFERRED_SIZE, 331, GroupLayout.PREFERRED_SIZE)
-								.addGap(36)
-								.addComponent(lblTngTienf, GroupLayout.PREFERRED_SIZE, 214, GroupLayout.PREFERRED_SIZE)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(txtTongTienThanhToan, GroupLayout.PREFERRED_SIZE, 299, GroupLayout.PREFERRED_SIZE)
-								.addContainerGap(23, Short.MAX_VALUE))
-					);
-					gl_pnlThueVaTTien.setVerticalGroup(
-						gl_pnlThueVaTTien.createParallelGroup(Alignment.LEADING)
-							.addGroup(gl_pnlThueVaTTien.createSequentialGroup()
-								.addGroup(gl_pnlThueVaTTien.createParallelGroup(Alignment.LEADING)
-									.addGroup(gl_pnlThueVaTTien.createSequentialGroup()
-										.addGap(19)
-										.addComponent(lblThue))
-									.addGroup(gl_pnlThueVaTTien.createSequentialGroup()
-										.addContainerGap()
-										.addComponent(pnlTongTien, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-									.addGroup(gl_pnlThueVaTTien.createSequentialGroup()
-										.addGap(13)
-										.addGroup(gl_pnlThueVaTTien.createParallelGroup(Alignment.TRAILING)
-											.addComponent(txtTongTienThanhToan, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-											.addComponent(lblTngTienf, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))))
-								.addContainerGap())
-					);
+					gl_pnlThueVaTTien
+							.setHorizontalGroup(
+									gl_pnlThueVaTTien.createParallelGroup(Alignment.LEADING)
+											.addGroup(gl_pnlThueVaTTien.createSequentialGroup().addContainerGap()
+													.addComponent(lblThue).addGap(29)
+													.addComponent(pnlTongTien, GroupLayout.PREFERRED_SIZE, 331,
+															GroupLayout.PREFERRED_SIZE)
+													.addGap(36)
+													.addComponent(lblTngTienf, GroupLayout.PREFERRED_SIZE, 214,
+															GroupLayout.PREFERRED_SIZE)
+													.addPreferredGap(ComponentPlacement.RELATED)
+													.addComponent(txtTongTienThanhToan, GroupLayout.PREFERRED_SIZE, 299,
+															GroupLayout.PREFERRED_SIZE)
+													.addContainerGap(23, Short.MAX_VALUE)));
+					gl_pnlThueVaTTien.setVerticalGroup(gl_pnlThueVaTTien.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_pnlThueVaTTien.createSequentialGroup().addGroup(gl_pnlThueVaTTien
+									.createParallelGroup(Alignment.LEADING)
+									.addGroup(
+											gl_pnlThueVaTTien.createSequentialGroup().addGap(19).addComponent(lblThue))
+									.addGroup(gl_pnlThueVaTTien.createSequentialGroup().addContainerGap().addComponent(
+											pnlTongTien, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+											Short.MAX_VALUE))
+									.addGroup(gl_pnlThueVaTTien.createSequentialGroup().addGap(13)
+											.addGroup(gl_pnlThueVaTTien.createParallelGroup(Alignment.TRAILING)
+													.addComponent(txtTongTienThanhToan, GroupLayout.PREFERRED_SIZE, 31,
+															GroupLayout.PREFERRED_SIZE)
+													.addComponent(lblTngTienf, GroupLayout.PREFERRED_SIZE, 25,
+															GroupLayout.PREFERRED_SIZE))))
+									.addContainerGap()));
 					{
 						JLabel lblTongTien = new JLabel("Tiền thuế :");
 						lblTongTien.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -551,34 +556,32 @@ public class dlgPhieuThu extends JDialog {
 			pnlLiDo.setBorder(new EmptyBorder(0, 2, 0, 0));
 			pnlLiDo.setPreferredSize(new Dimension(10, 150));
 			pnlNhapLieu.add(pnlLiDo);
-			
+
 			JLabel lblNoiDung = new JLabel("Nội dung:");
 			lblNoiDung.setFont(new Font("Tahoma", Font.PLAIN, 17));
-			
+
 			JPanel pnlLyDoNop = new JPanel();
 			GroupLayout gl_pnlLiDo = new GroupLayout(pnlLiDo);
-			gl_pnlLiDo.setHorizontalGroup(
-				gl_pnlLiDo.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_pnlLiDo.createSequentialGroup()
-						.addComponent(lblNoiDung)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(pnlLyDoNop, GroupLayout.PREFERRED_SIZE, 592, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(488, Short.MAX_VALUE))
-			);
-			gl_pnlLiDo.setVerticalGroup(
-				gl_pnlLiDo.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_pnlLiDo.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(gl_pnlLiDo.createParallelGroup(Alignment.LEADING)
-							.addComponent(pnlLyDoNop, GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
-							.addComponent(lblNoiDung))
-						.addContainerGap())
-			);
+			gl_pnlLiDo
+					.setHorizontalGroup(gl_pnlLiDo.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_pnlLiDo.createSequentialGroup().addComponent(lblNoiDung)
+									.addPreferredGap(ComponentPlacement.RELATED).addComponent(pnlLyDoNop,
+											GroupLayout.PREFERRED_SIZE, 592, GroupLayout.PREFERRED_SIZE)
+									.addContainerGap(488, Short.MAX_VALUE)));
+			gl_pnlLiDo
+					.setVerticalGroup(
+							gl_pnlLiDo.createParallelGroup(Alignment.LEADING)
+									.addGroup(gl_pnlLiDo.createSequentialGroup().addContainerGap()
+											.addGroup(gl_pnlLiDo.createParallelGroup(Alignment.LEADING)
+													.addComponent(pnlLyDoNop, GroupLayout.DEFAULT_SIZE, 143,
+															Short.MAX_VALUE)
+													.addComponent(lblNoiDung))
+											.addContainerGap()));
 			pnlLyDoNop.setLayout(new BorderLayout(0, 0));
-			
+
 			JScrollPane scrNoiDung = new JScrollPane();
 			pnlLyDoNop.add(scrNoiDung, BorderLayout.CENTER);
-			
+
 			JTextArea txaNoiDung = new JTextArea();
 			txaNoiDung.setFont(new Font("Arial", Font.PLAIN, 15));
 			scrNoiDung.setViewportView(txaNoiDung);
@@ -590,6 +593,27 @@ public class dlgPhieuThu extends JDialog {
 		}, "Tahoma", Font.BOLD, 18);
 		lblThanhTienNL.setPreferredSize(lblCongTien.getPreferredSize());
 		lblThanhTienTE.setPreferredSize(lblCongTien.getPreferredSize());
+
+		IPhieuThuChiControl phieuThuChiControl = new PhieuThuChiControlImpl();
+		PhieuThuChi phieuThuChi = new PhieuThuChi();
+		phieuThuChi.setMaPhieuChi(phieuThuChiControl.phatSinhMaPhieu(LoaiPhieu.PHIEUTHU));
+		phieuThuChi.setNgayTaoPhieuChi(new Date(System.currentTimeMillis()));
+		phieuThuChi.setLoaiPhieu(LoaiPhieu.PHIEUTHU);
+		phieuThuChi.setPdk(phieuDangKy);
+
+		double thanhTienNguoiLon = phieuDangKy.tinhThanhTien(phieuDangKy.getKhachHangThamGias())[0];
+		double thanhTienTremEm = phieuDangKy.tinhThanhTien(phieuDangKy.getKhachHangThamGias())[1];
+
+		double tongThanhTien = (thanhTienNguoiLon + thanhTienTremEm) * HangSo.THUE;
+
+		phieuThuChi.setSoTien(tongThanhTien);
+
+		PhieuThuChi phieuThuChiNew = phieuThuChiControl.themPhieu(phieuThuChi);
+		if (phieuThuChiNew != null) {
+			
+		}
+		
+		
 
 	}
 

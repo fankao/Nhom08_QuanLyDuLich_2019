@@ -219,4 +219,9 @@ public class Tour implements Serializable {
 		this.daXoa = daXoa;
 	}
 
+	@Override
+	public String toString() {
+		return this.maTour + "-" + this.tenTour;
+	}
+
 }

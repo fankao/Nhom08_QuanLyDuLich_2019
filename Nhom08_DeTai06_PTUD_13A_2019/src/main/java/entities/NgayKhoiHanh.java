@@ -142,9 +142,7 @@ public class NgayKhoiHanh {
 
 	@Override
 	public String toString() {
-		return "NgayKhoiHanh [id=" + id + ", maLT=" + maLT + ", ngayKhoiHanh=" + ngayKhoiHanh + ", soKhachToiDa="
-				+ soKhachToiDa + ", soKhachDaDangKy=" + soKhachDaDangKy + ", daXoa=" + daXoa + ", daDuSoLuong="
-				+ daDuSoLuong + ", daXoaDoKhongDuSoLuong=" + daXoaDoKhongDuSoLuong + ", tour=" + tour + "]";
+		return this.tour + "( Khởi hành ngày: " + this.ngayKhoiHanh + ")";
 	}
 
 }

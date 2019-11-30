@@ -23,7 +23,10 @@ import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
+import control.IPhieuThuChiControl;
+import control.impl.PhieuThuChiControlImpl;
 import entities.KhachHang;
+import entities.LoaiPhieu;
 import entities.NhanVien;
 import entities.PhieuDangKy;
 import utils.TienIch;
@@ -38,18 +41,17 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 	private JLabel lblDiaChis;
 	private JLabel lblTienChis;
 	private PhieuDangKy phieuDangKy;
-	private NhanVien nhanVien;
 	private JLabel lblTours;
 	private JButton btnLuu;
 	private JButton btnHuy;
 
+	private IPhieuThuChiControl phieuThuChiControl;
+
 	/**
 	 * Create the dialog.
 	 */
-	public DlgPhieuChi(PhieuDangKy pdk, NhanVien nv) {
+	public DlgPhieuChi(PhieuDangKy pdk) {
 		this.phieuDangKy = pdk;
-		this.nhanVien = nv;
-
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(DlgPhieuChi.class.getResource("/images/iconFrm.png")));
 		setTitle("Phiếu chi tiền");
@@ -259,9 +261,8 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 				buttonPane.add(btnHuy);
 			}
 		}
-		String mapc = TienIch.phatSinhMa(5);
-		String maPC = "PC00" + mapc;
-		txtMaPC.setText(maPC);
+		phieuThuChiControl = new PhieuThuChiControlImpl();
+		txtMaPC.setText(phieuThuChiControl.phatSinhMaPhieu(LoaiPhieu.PHIEUCHI));
 		txtNgayTao.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
 		hienThongTinKhachHang(pdk);
 		btnLuu.addActionListener(this);
@@ -277,11 +278,10 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 	private void hienThongTinKhachHang(PhieuDangKy pdk) {
 		KhachHang kh = pdk.getKh();
 		lblTenKH.setText(kh.getHoVaTen().trim());
-		lblTienChis.setText(pdk.tinhTongThanhTien() + "");
-		lblTours.setText(pdk.getTour().getMaTour().trim() + " - " + pdk.getTour().getTenTour());
-
+		lblTienChis.setText(pdk.tinhTongTienPDK(pdk.getKhachHangThamGias()) + "");
+		lblTours.setText(pdk.getNgayKhoiHanh() + "");
 		lblSDTs.setText(kh.getSoDienThoai());
-		lblDiaChis.setText(kh.getDiaChi().getTenDC());
+		lblDiaChis.setText(kh.getDiaChi().toString());
 
 	}
 
