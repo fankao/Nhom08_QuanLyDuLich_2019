@@ -716,6 +716,7 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 
 					JRDataSource Datasour = new JRBeanCollectionDataSource(dataSource);
 					try {
+						//
 						JasperReport report = JasperCompileManager.compileReport("/jasper/PhieuThu.jrxml");
 						JasperPrint filledRedport = JasperFillManager.fillReport(report, null, Datasour);
 						this.dispose();
