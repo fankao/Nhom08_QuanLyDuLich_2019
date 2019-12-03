@@ -60,7 +60,7 @@ import entities.NhanVien;
 import entities.PhieuDangKy;
 import entities.Tour;
 import gui.dialog.dlgPhieuThu;
-import model.DSKhachHangTableModel;
+import model.DSKhachHangTGTableModel;
 import model.TourTableModel;
 import utils.TienIch;
 import utils.address.District;
@@ -115,7 +115,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 	private JPanel pnlDSKhachHangTG;
 	private List<KhachHangThamGia> dsKhachHangThamGia;
 	private JDateChooser dtcNgaySinhKHTG;
-	private static DSKhachHangTableModel model;
+	private static DSKhachHangTGTableModel model;
 	private static NgayKhoiHanh ngayKhoiHanh;
 	private JTextField txtTimKiemTheoTen;
 	private JDateChooser dtcTuNgay;
@@ -897,7 +897,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 				khachHangThamGia.setDoTuoi(DoTuoi.TREEM);
 			}
 			dsKhachHangThamGia.add(khachHangThamGia);
-			model = new DSKhachHangTableModel(dsKhachHangThamGia);
+			model = new DSKhachHangTGTableModel(dsKhachHangThamGia);
 			tblDSKhachThamGia.setModel(model);
 		}
 		/*

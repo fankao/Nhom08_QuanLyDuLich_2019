@@ -543,7 +543,7 @@ public class FrmMain extends JFrame implements ActionListener {
 			TienIch.chuyenPanelKhiNhan(pnlCardLayout, pnlDuyetTour);
 
 		} else if (o.equals(btnTTKhachHang)) {
-
+			
 		}
 		/*
 		 * 
@@ -575,7 +575,6 @@ public class FrmMain extends JFrame implements ActionListener {
 			btnDangXuat.setEnabled(true);
 			btnDangXuat.setBackground(new Color(23, 35, 51));
 		}
-
 	}
 
 	public static JPanel getPnButtonBar() {
