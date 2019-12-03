@@ -34,8 +34,10 @@ import entities.NhanVien;
 import gui.panel.PnlDangKyTour;
 import gui.panel.PnlDuyetTour;
 import gui.panel.PnlHinhNen;
+import gui.panel.PnlKhachHang;
 import gui.panel.PnlTaoTour;
 import gui.panel.PnlThongKe;
+import gui.panel.pnlQuanLyPDK;
 import test.Testing;
 import utils.TienIch;
 
@@ -84,6 +86,8 @@ public class FrmMain extends JFrame implements ActionListener {
 	private JButton btnTTKhachHang;
 	private JButton btnPhieuDK;
 	private JCheckBox chkKhachHang;
+	private pnlQuanLyPDK pnlQuanLyPDK;
+	private PnlKhachHang pnlKhachHang;
 
 	/**
 	 * Giao diện màn hình chính
@@ -352,6 +356,8 @@ public class FrmMain extends JFrame implements ActionListener {
 		pnlHinhNen = new PnlHinhNen();
 		pnlDuyetTour = new PnlDuyetTour();
 		pnlThongKe = new PnlThongKe();
+		pnlQuanLyPDK = new pnlQuanLyPDK();
+		pnlKhachHang = new PnlKhachHang();
 
 		// đặt tên cho panel
 		pnlTaoTour.setName("pnlTaoTour");
@@ -359,12 +365,16 @@ public class FrmMain extends JFrame implements ActionListener {
 		pnlHinhNen.setName("pnlHinhNen");
 		pnlDuyetTour.setName("pnlDuyetTour");
 		pnlThongKe.setName("pnlThongKe");
+		pnlQuanLyPDK.setName("pnlQuanLyPDK");
+		pnlKhachHang.setName("pnlKhachHang");
 
 		pnlCardLayout.add(pnlHinhNen, pnlHinhNen.getName());
 		pnlCardLayout.add(pnlTaoTour, pnlTaoTour.getName());
 		pnlCardLayout.add(pnlDangKyTour, pnlDangKyTour.getName());
 		pnlCardLayout.add(pnlDuyetTour, pnlDuyetTour.getName());
 		pnlCardLayout.add(pnlThongKe, pnlThongKe.getName());
+		pnlCardLayout.add(pnlQuanLyPDK, pnlQuanLyPDK.getName());
+		pnlCardLayout.add(pnlKhachHang, pnlKhachHang.getName());
 
 		// thiết lập màu cho button
 		chkQuanLyTour.setBackground(new Color(23, 35, 51));
@@ -540,10 +550,16 @@ public class FrmMain extends JFrame implements ActionListener {
 			TienIch.themDuongDan(pnlButtonBar, "Thông tin đăng ký tour");
 			TienIch.doiMauButton(btnPhieuDK, new JButton[] { btnDangXuat, btnDangKyTour, btnCapNhatTour, btnThongKe,
 					btnTTKhachHang, btnDuyetTour });
-			TienIch.chuyenPanelKhiNhan(pnlCardLayout, pnlDuyetTour);
+			TienIch.chuyenPanelKhiNhan(pnlCardLayout, pnlQuanLyPDK);
 
 		} else if (o.equals(btnTTKhachHang)) {
-			
+			dongSubButton();
+			TienIch.xoaDuongDan(pnlButtonBar, 1);
+			TienIch.themDuongDan(pnlButtonBar, "Danh sách khách hàng");
+			TienIch.doiMauButton(btnTTKhachHang,
+					new JButton[] { btnDangXuat, btnDuyetTour, btnCapNhatTour, btnDangKyTour, btnPhieuDK, btnThongKe });
+			TienIch.chuyenPanelKhiNhan(pnlCardLayout, pnlKhachHang);
+			chkQuanLyTour.setSelected(false);
 		}
 		/*
 		 * 
