@@ -67,9 +67,6 @@ public class pnlQuanLyPhieuDangKy extends JPanel implements ActionListener {
 	private IQuanLyPhieuDKBUS quanLyPhieuDangKyBUS;
 	private IKhachHangThamGiaBUS khachHangThamGia;
 	private DangKyTourBUS dangKyTourBUS;
-	private JButton btnLuu;
-	private JButton btnSua;
-	private JButton btnHuy;
 	private List<PhieuDangKy> dsPDK;
 	private List<Tour> dsTour;
 	private List<KhachHangThamGia> dsKhDiCung;
@@ -583,27 +580,13 @@ public class pnlQuanLyPhieuDangKy extends JPanel implements ActionListener {
 		TienIch.chinhKichThuocTable(tblDsKhachHangDiCung, tblDsKhachHangDiCung.getColumnModel().getTotalColumnWidth(),
 				5, 5, 15, 10, 15);
 		scrollPane.setViewportView(tblDsKhachHangDiCung);
-
-		JPanel pnlChucNang = new JPanel();
-		pnlChucNang.setPreferredSize(new Dimension(10, 60));
-		FlowLayout flowLayout_1 = (FlowLayout) pnlChucNang.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.RIGHT);
-		pnlMain.add(pnlChucNang, BorderLayout.SOUTH);
-
-		btnSua = new JButton("Sửa");
-		btnSua.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		pnlChucNang.add(btnSua);
-		btnSua.setEnabled(false);
-
-		btnLuu = new JButton("Lưu");
-		btnLuu.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		pnlChucNang.add(btnLuu);
-		btnLuu.setEnabled(false);
-
-		btnHuy = new JButton("Hủy");
-		btnHuy.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		pnlChucNang.add(btnHuy);
-		btnHuy.setEnabled(false);
+		
+		JPanel panel = new JPanel();
+		pnlThongTinCT_PDK.add(panel, BorderLayout.SOUTH);
+		
+		JButton btnNewButton = new JButton("Hủy phiếu đăng ký");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		panel.add(btnNewButton);
 		TienIch.chinhKichThuocTitleTrenBorder(new JPanel[] {}, "Tahoma", Font.PLAIN, 18);
 
 		// Khai bao cac danh sach
@@ -618,9 +601,6 @@ public class pnlQuanLyPhieuDangKy extends JPanel implements ActionListener {
 	}
 
 	public void ganSuKien() {
-		btnSua.addActionListener(this);
-		btnLuu.addActionListener(this);
-		btnHuy.addActionListener(this);
 		// Bang danh sach tour
 		tblDsTour.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 

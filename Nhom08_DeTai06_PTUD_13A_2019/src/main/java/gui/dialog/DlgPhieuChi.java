@@ -27,9 +27,7 @@ import control.IPhieuThuChiControl;
 import control.impl.PhieuThuChiControlImpl;
 import entities.KhachHang;
 import entities.LoaiPhieu;
-import entities.NhanVien;
 import entities.PhieuDangKy;
-import utils.TienIch;
 
 public class DlgPhieuChi extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -72,20 +70,42 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 			lblNewLabel.setFont(new Font("Arial", Font.BOLD, 30));
 
 			JPanel panel = new JPanel();
+			
+			JPanel panel_3 = new JPanel();
+			panel_3.setLayout(new GridLayout(3, 0, 0, 0));
+			
+			JLabel label = new JLabel("Công ty du lịch Phương Nam");
+			label.setFont(new Font("Tahoma", Font.BOLD, 18));
+			panel_3.add(label);
+			
+			JLabel label_1 = new JLabel("Địa chỉ :12 Nguyễn Văn Bão,phường 3,quận Gò Vấp,Tp HCM");
+			panel_3.add(label_1);
+			
+			JLabel label_2 = new JLabel("SĐT:0123456789");
+			panel_3.add(label_2);
 			GroupLayout gl_pnlTieuDe = new GroupLayout(pnlTieuDe);
-			gl_pnlTieuDe.setHorizontalGroup(gl_pnlTieuDe.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_pnlTieuDe.createSequentialGroup().addGap(416).addComponent(lblNewLabel).addGap(18)
-							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 366, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(33, Short.MAX_VALUE)));
-			gl_pnlTieuDe
-					.setVerticalGroup(
-							gl_pnlTieuDe.createParallelGroup(Alignment.LEADING)
-									.addGroup(gl_pnlTieuDe.createSequentialGroup().addGap(46)
-											.addGroup(gl_pnlTieuDe.createParallelGroup(Alignment.LEADING)
-													.addComponent(panel, GroupLayout.PREFERRED_SIZE, 101,
-															Short.MAX_VALUE)
-													.addComponent(lblNewLabel))
-											.addContainerGap()));
+			gl_pnlTieuDe.setHorizontalGroup(
+				gl_pnlTieuDe.createParallelGroup(Alignment.LEADING)
+					.addGroup(Alignment.TRAILING, gl_pnlTieuDe.createSequentialGroup()
+						.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 356, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+						.addComponent(lblNewLabel)
+						.addGap(52)
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 366, GroupLayout.PREFERRED_SIZE))
+			);
+			gl_pnlTieuDe.setVerticalGroup(
+				gl_pnlTieuDe.createParallelGroup(Alignment.LEADING)
+					.addGroup(Alignment.TRAILING, gl_pnlTieuDe.createSequentialGroup()
+						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 101, Short.MAX_VALUE)
+						.addGap(57))
+					.addGroup(gl_pnlTieuDe.createSequentialGroup()
+						.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap())
+					.addGroup(Alignment.TRAILING, gl_pnlTieuDe.createSequentialGroup()
+						.addContainerGap(81, Short.MAX_VALUE)
+						.addComponent(lblNewLabel)
+						.addGap(41))
+			);
 			panel.setLayout(new GridLayout(2, 0, 0, 0));
 
 			JPanel panel_2 = new JPanel();
@@ -99,17 +119,24 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 			txtMaPC.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			txtMaPC.setColumns(10);
 			GroupLayout gl_panel_2 = new GroupLayout(panel_2);
-			gl_panel_2.setHorizontalGroup(gl_panel_2.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_panel_2.createSequentialGroup().addGap(20)
-							.addComponent(lblMaSo, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(txtMaPC,
-									GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(68, Short.MAX_VALUE)));
-			gl_panel_2.setVerticalGroup(gl_panel_2.createParallelGroup(Alignment.LEADING).addGroup(gl_panel_2
-					.createSequentialGroup().addGap(10)
-					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE).addComponent(lblMaSo).addComponent(
-							txtMaPC, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+			gl_panel_2.setHorizontalGroup(
+				gl_panel_2.createParallelGroup(Alignment.LEADING)
+					.addGroup(Alignment.TRAILING, gl_panel_2.createSequentialGroup()
+						.addContainerGap(59, Short.MAX_VALUE)
+						.addComponent(lblMaSo, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(txtMaPC, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addGap(31))
+			);
+			gl_panel_2.setVerticalGroup(
+				gl_panel_2.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panel_2.createSequentialGroup()
+						.addGap(10)
+						.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+							.addComponent(txtMaPC, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblMaSo))
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+			);
 			panel_2.setLayout(gl_panel_2);
 
 			JPanel panel_1 = new JPanel();
@@ -123,19 +150,24 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 			txtNgayTao.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			txtNgayTao.setColumns(10);
 			GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-			gl_panel_1.setHorizontalGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_panel_1.createSequentialGroup().addGap(20)
-							.addComponent(lblNgay, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(txtNgayTao,
-									GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(68, Short.MAX_VALUE)));
-			gl_panel_1.setVerticalGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_panel_1.createSequentialGroup().addGap(10)
-							.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-									.addComponent(lblNgay, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-									.addComponent(txtNgayTao, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-											GroupLayout.PREFERRED_SIZE))
-							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+			gl_panel_1.setHorizontalGroup(
+				gl_panel_1.createParallelGroup(Alignment.LEADING)
+					.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
+						.addContainerGap(62, Short.MAX_VALUE)
+						.addComponent(lblNgay, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(txtNgayTao, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addGap(28))
+			);
+			gl_panel_1.setVerticalGroup(
+				gl_panel_1.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panel_1.createSequentialGroup()
+						.addGap(10)
+						.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
+							.addComponent(txtNgayTao, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblNgay, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+			);
 			panel_1.setLayout(gl_panel_1);
 			pnlTieuDe.setLayout(gl_pnlTieuDe);
 		}
