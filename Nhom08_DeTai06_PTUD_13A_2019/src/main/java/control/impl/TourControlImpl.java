@@ -1,5 +1,6 @@
 package control.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import control.ITourControl;
@@ -104,6 +105,12 @@ public class TourControlImpl implements ITourControl {
 	public String phatSinhNgayKhoiHanh(String maTour) {
 
 		return tourDAO.phatSinhNgayKhoiHanh(maTour);
+	}
+
+	@Override
+	public List<NgayKhoiHanh> layDSNgayKhoiHanhTheoNgayKhoiHanh(String maTour, Date tuNgay, Date denNgay) {
+
+		return tourDAO.layDSNgayKhoiHanhTheoNgayKhoiHanh(maTour, tuNgay, denNgay);
 	}
 
 }

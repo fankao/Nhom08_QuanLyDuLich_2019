@@ -1,6 +1,6 @@
 package entities;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,7 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /********************************************
  * LichTrinh.java
@@ -23,12 +27,16 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "ngaykhoihanh")
+@NamedQueries({
+		@NamedQuery(name = "NgayKH.timNgayKhoiHanhTheoNgay", query = "SELECT ngkh FROM NgayKhoiHanh ngkh WHERE ngkh.tour.maTour=:maTour AND (ngkh.ngayKhoiHanh BETWEEN :startDate AND :toDate) ORDER BY ngkh.id") })
 public class NgayKhoiHanh {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(unique = true, nullable = false)
 	private String maLT;
+
+	@Temporal(TemporalType.DATE)
 	private Date ngayKhoiHanh;
 	private int soKhachToiDa;
 	private int soKhachDaDangKy;

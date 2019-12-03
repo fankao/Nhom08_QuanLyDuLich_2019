@@ -12,6 +12,8 @@ public interface IPhieuThuChiControl {
 
 	public PhieuThuChi layThongTinPhieu(String ma);
 
+	public PhieuThuChi suaPhieu(PhieuThuChi p);
+
 	public List<PhieuThuChi> layDSPhieu();
 
 	public List<PhieuThuChi> layDSPhieuTheoPhieuDK(String maPDK);

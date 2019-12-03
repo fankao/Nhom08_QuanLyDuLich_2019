@@ -9,6 +9,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -43,6 +45,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -80,13 +84,13 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 	private JTextField txtSoCMND;
 	private JTextField txtSdtKH;
 	private JButton btnTimKiem;
-	private JButton btnThemMoi;
+	private JButton btnThemMoiKH;
 	private JButton btnThemDC;
 	private JPanel pnlTimKiemKhachHang;
 	private JPanel pnlThongTinKH;
 	private JTable tblDSKhachThamGia;
 	private JButton btnDangKyTour;
-	private JButton btnHuyChon;
+	private JButton btnHuyChonNgayKH;
 	private JTable tblDSTour;
 	private TourTableModel tourTableModel;
 	private JComboBox<Province> cmbTinh;
@@ -117,7 +121,6 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 	private JPanel pnlDSKhachHangTG;
 	private List<KhachHangThamGia> dsKhachHangThamGia;
 	private JDateChooser dtcNgaySinhKHTG;
-	private static DSKhachHangTGTableModel model;
 	private static NgayKhoiHanh ngayKhoiHanh;
 	private JTextField txtTimKiemTheoTen;
 	private JDateChooser dtcTuNgay;
@@ -138,16 +141,22 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 	private JLabel lblNgayKHdb;
 	private JPanel pnlTTNgayKH;
 	private JCheckBox chkThamGiaTourDK;
+	private JButton btnXoaKHTG;
+	private JLabel lblTinhTrangKHTG;
+	private JButton btnHuyChonTour;
+	private JPanel pnlThemTTKHTG;
+	private JScrollPane scrDSKhachThamGia;
+	private JComboBox cmbDiaDanh;
 
 	@SuppressWarnings("unchecked")
 	public PnlDangKyTour(NhanVien nv) {
 		this.nhanvien = nv;
-		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
 		pnlTimKiemKhachHang = new JPanel();
 		pnlTimKiemKhachHang.setPreferredSize(new Dimension(400, 10));
 		pnlTimKiemKhachHang.setVisible(false);
-		add(pnlTimKiemKhachHang);
+		setLayout(new BorderLayout(0, 0));
+		add(pnlTimKiemKhachHang, BorderLayout.WEST);
 		pnlTimKiemKhachHang.setLayout(new BorderLayout(0, 0));
 
 		JPanel pnlButton = new JPanel();
@@ -157,10 +166,12 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlTimKiemKhachHang.add(pnlButton, BorderLayout.SOUTH);
 
 		btnXacNhan = new JButton("Xác nhận");
+		btnXacNhan.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/checked_25px.png")));
 		btnXacNhan.setFont(new Font("Dialog", Font.PLAIN, 18));
 		pnlButton.add(btnXacNhan);
 
 		btnDongTimKiem = new JButton("Đóng");
+		btnDongTimKiem.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/close_window_25px.png")));
 		btnDongTimKiem.setFont(new Font("Dialog", Font.PLAIN, 18));
 		pnlButton.add(btnDongTimKiem);
 
@@ -181,12 +192,14 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlKhachHang.add(pnlTimKiemVaThemMoi, BorderLayout.NORTH);
 
 		btnTimKiem = new JButton("Tìm kiếm");
-		btnTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnTimKiem.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/search_32px.png")));
+		btnTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		pnlTimKiemVaThemMoi.add(btnTimKiem);
 
-		btnThemMoi = new JButton("Thêm mới");
-		btnThemMoi.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		pnlTimKiemVaThemMoi.add(btnThemMoi);
+		btnThemMoiKH = new JButton("Thêm khách hàng");
+		btnThemMoiKH.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/plus_32px.png")));
+		btnThemMoiKH.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		pnlTimKiemVaThemMoi.add(btnThemMoiKH);
 
 		pnlThongTinKH = new JPanel();
 		pnlThongTinKH.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -225,6 +238,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		fl_pnlDiaChi.setAlignment(FlowLayout.LEFT);
 
 		btnLuuTTKhachHang = new JButton("Lưu");
+		btnLuuTTKhachHang.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/save_25px.png")));
 		btnLuuTTKhachHang.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		btnHuy = new JButton("Hủy");
@@ -282,10 +296,10 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 												GroupLayout.PREFERRED_SIZE))
 								.addComponent(txtSoCMND, GroupLayout.PREFERRED_SIZE, 228, GroupLayout.PREFERRED_SIZE))
 						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnHuy, GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-								.addComponent(btnLuuTTKhachHang, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
-										Short.MAX_VALUE))
+						.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(btnHuy, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnLuuTTKhachHang, GroupLayout.PREFERRED_SIZE, 84,
+										GroupLayout.PREFERRED_SIZE))
 						.addContainerGap()));
 		gl_pnlThongTinKH.setVerticalGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_pnlThongTinKH.createSequentialGroup().addContainerGap()
@@ -325,12 +339,13 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 														GroupLayout.PREFERRED_SIZE))
 										.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(btnLuuTTKhachHang,
 												GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)))
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
-		gl_pnlThongTinKH.linkSize(SwingConstants.VERTICAL, new Component[] { lblDiaChiKH, pnlDiaChi });
-		gl_pnlThongTinKH.linkSize(SwingConstants.VERTICAL, new Component[] { lblHoTenKH, txtHoTenKH });
-		gl_pnlThongTinKH.linkSize(SwingConstants.VERTICAL, new Component[] { lblSdt, txtSdtKH });
-		gl_pnlThongTinKH.linkSize(SwingConstants.VERTICAL, new Component[] { lblNgaySinh, dtcNgaySinh });
+						.addContainerGap(12, Short.MAX_VALUE)));
 		gl_pnlThongTinKH.linkSize(SwingConstants.VERTICAL, new Component[] { lblSoCmnd, txtSoCMND });
+		gl_pnlThongTinKH.linkSize(SwingConstants.VERTICAL, new Component[] { lblNgaySinh, dtcNgaySinh });
+		gl_pnlThongTinKH.linkSize(SwingConstants.VERTICAL, new Component[] { lblSdt, txtSdtKH });
+		gl_pnlThongTinKH.linkSize(SwingConstants.VERTICAL, new Component[] { lblHoTenKH, txtHoTenKH });
+		gl_pnlThongTinKH.linkSize(SwingConstants.VERTICAL, new Component[] { lblDiaChiKH, pnlDiaChi });
+		gl_pnlThongTinKH.linkSize(SwingConstants.HORIZONTAL, new Component[] { btnLuuTTKhachHang, btnHuy });
 
 		cmbTinh = new JComboBox();
 		cmbTinh.setVisible(false);
@@ -363,6 +378,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlThongTinKH.setLayout(gl_pnlThongTinKH);
 
 		JPanel pnlTour = new JPanel();
+		pnlTour.setPreferredSize(new Dimension(10, 800));
 		pnlTour.setBackground(Color.WHITE);
 		pnlTour.setBorder(
 				new TitledBorder(null, "Danh s\u00E1ch tour", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -382,35 +398,46 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		txtTimKiemTheoTen.setFont(new Font("Dialog", Font.PLAIN, 18));
 		txtTimKiemTheoTen.setColumns(10);
 
-		JLabel lblTimKiem = new JLabel("Tìm kiếm:");
+		JLabel lblTimKiem = new JLabel("Tìm kiếm theo tên tour:");
 		lblTimKiem.setFont(new Font("Dialog", Font.PLAIN, 18));
 
-		JComboBox cmbDiaDanh = new JComboBox();
+		cmbDiaDanh = new JComboBox();
 		cmbDiaDanh.setEditable(true);
-		cmbDiaDanh.setFont(new Font("Dialog", Font.PLAIN, 15));
+		cmbDiaDanh.setFont(new Font("Dialog", Font.PLAIN, 18));
 
 		btnLocDiaDanh = new JButton("Lọc");
-		btnLocDiaDanh.setFont(new Font("Dialog", Font.PLAIN, 15));
+		btnLocDiaDanh.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/filter_25px.png")));
+		btnLocDiaDanh.setFont(new Font("Arial", Font.PLAIN, 18));
+
+		JLabel lblDiaDanh = new JLabel("Chọn địa danh:");
+		lblDiaDanh.setFont(new Font("Dialog", Font.PLAIN, 18));
 		GroupLayout gl_pnlLuaChon = new GroupLayout(pnlLuaChon);
 		gl_pnlLuaChon.setHorizontalGroup(gl_pnlLuaChon.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_pnlLuaChon.createSequentialGroup().addContainerGap().addComponent(lblTimKiem)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
+				.addGroup(Alignment.LEADING, gl_pnlLuaChon.createSequentialGroup().addContainerGap()
+						.addComponent(lblTimKiem).addPreferredGap(ComponentPlacement.UNRELATED)
 						.addComponent(txtTimKiemTheoTen, GroupLayout.PREFERRED_SIZE, 331, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 424, Short.MAX_VALUE)
-						.addComponent(cmbDiaDanh, GroupLayout.PREFERRED_SIZE, 228, GroupLayout.PREFERRED_SIZE).addGap(6)
-						.addComponent(btnLocDiaDanh, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap()));
-		gl_pnlLuaChon.setVerticalGroup(gl_pnlLuaChon.createParallelGroup(Alignment.LEADING).addGroup(gl_pnlLuaChon
-				.createSequentialGroup().addContainerGap()
-				.addGroup(gl_pnlLuaChon.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_pnlLuaChon.createParallelGroup(Alignment.BASELINE)
-								.addComponent(cmbDiaDanh, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblTimKiem).addComponent(txtTimKiemTheoTen, GroupLayout.PREFERRED_SIZE,
-										30, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_pnlLuaChon.createSequentialGroup().addGap(1).addComponent(btnLocDiaDanh,
-								GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)))
-				.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
-		gl_pnlLuaChon.linkSize(SwingConstants.VERTICAL, new Component[] { txtTimKiemTheoTen, lblTimKiem });
+						.addPreferredGap(ComponentPlacement.RELATED, 34, Short.MAX_VALUE).addComponent(lblDiaDanh)
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addComponent(cmbDiaDanh, GroupLayout.PREFERRED_SIZE, 228, GroupLayout.PREFERRED_SIZE)
+						.addGap(20).addComponent(btnLocDiaDanh).addContainerGap()));
+		gl_pnlLuaChon.setVerticalGroup(gl_pnlLuaChon.createParallelGroup(Alignment.TRAILING).addGroup(gl_pnlLuaChon
+				.createSequentialGroup().addContainerGap(14, Short.MAX_VALUE)
+				.addGroup(gl_pnlLuaChon.createParallelGroup(Alignment.LEADING).addGroup(gl_pnlLuaChon
+						.createSequentialGroup()
+						.addGroup(gl_pnlLuaChon.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblDiaDanh, Alignment.TRAILING).addComponent(txtTimKiemTheoTen,
+										Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+						.addGap(5))
+						.addGroup(
+								gl_pnlLuaChon.createSequentialGroup()
+										.addComponent(cmbDiaDanh, GroupLayout.PREFERRED_SIZE, 30,
+												GroupLayout.PREFERRED_SIZE)
+										.addGap(5))
+						.addComponent(btnLocDiaDanh, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_pnlLuaChon.createSequentialGroup().addComponent(lblTimKiem).addGap(5)))
+				.addGap(9)));
+		gl_pnlLuaChon.linkSize(SwingConstants.VERTICAL,
+				new Component[] { txtTimKiemTheoTen, lblTimKiem, cmbDiaDanh, lblDiaDanh });
 		pnlLuaChon.setLayout(gl_pnlLuaChon);
 
 		JPanel pnlLamMoi = new JPanel();
@@ -422,11 +449,11 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		btnLamMoi.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/lammoi.png")));
 		btnLamMoi.setFont(new Font("Dialog", Font.PLAIN, 17));
 		GroupLayout gl_pnlLamMoi = new GroupLayout(pnlLamMoi);
-		gl_pnlLamMoi.setHorizontalGroup(gl_pnlLamMoi.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING,
-				gl_pnlLamMoi.createSequentialGroup().addContainerGap(122, Short.MAX_VALUE).addComponent(btnLamMoi)
-						.addGap(10)));
-		gl_pnlLamMoi.setVerticalGroup(gl_pnlLamMoi.createParallelGroup(Alignment.LEADING).addGroup(gl_pnlLamMoi
-				.createSequentialGroup().addGap(15).addComponent(btnLamMoi).addContainerGap(15, Short.MAX_VALUE)));
+		gl_pnlLamMoi.setHorizontalGroup(gl_pnlLamMoi.createParallelGroup(Alignment.TRAILING).addGroup(gl_pnlLamMoi
+				.createSequentialGroup().addContainerGap(39, Short.MAX_VALUE).addComponent(btnLamMoi).addGap(10)));
+		gl_pnlLamMoi.setVerticalGroup(gl_pnlLamMoi.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlLamMoi.createSequentialGroup().addGap(15).addComponent(btnLamMoi)
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		pnlLamMoi.setLayout(gl_pnlLamMoi);
 
 		pnlDSTour = new JPanel();
@@ -442,9 +469,10 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		fl_pnlHuyChonTour.setAlignment(FlowLayout.LEFT);
 		pnlTour.add(pnlHuyChonTour, BorderLayout.SOUTH);
 
-		JButton btnHuyChonTour = new JButton("Huỷ chọn tour");
+		btnHuyChonTour = new JButton("Huỷ chọn tour");
+		btnHuyChonTour.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/cancel_32px.png")));
 		btnHuyChonTour.setHorizontalAlignment(SwingConstants.LEFT);
-		btnHuyChonTour.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnHuyChonTour.setFont(new Font("Tahoma", Font.BOLD, 15));
 		pnlHuyChonTour.add(btnHuyChonTour);
 
 		JPanel pnlSouth = new JPanel();
@@ -478,6 +506,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 				return false;
 			}
 		};
+		tblDSNgayDi.setFont(new Font("Arial", Font.PLAIN, 15));
 		tblDSNgayDi.setModel(new DefaultTableModel(new Object[][] {},
 				new String[] { "STT", "M\u00E3 tour", "Ng\u00E0y kh\u1EDFi h\u00E0nh", "S\u1ED1 ch\u1ED7",
 						"S\u1ED1 ng\u01B0\u1EDDi \u0111\u0103ng k\u00FD", "T\u00ECnh tr\u1EA1ng" }) {
@@ -489,6 +518,8 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 				return columnTypes[columnIndex];
 			}
 		});
+		tblDSNgayDi.setRowHeight(25);
+		tblDSNgayDi.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
 		scrDSNgayDi.setViewportView(tblDSNgayDi);
 		tblDSNgayDi.setRowHeight(25);
 
@@ -504,16 +535,16 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlKhachHangThamGia.add(pnlDSKhachHangTG, BorderLayout.CENTER);
 		pnlDSKhachHangTG.setLayout(new BorderLayout(0, 0));
 
-		JScrollPane scrDSKhachThamGia = new JScrollPane();
+		scrDSKhachThamGia = new JScrollPane();
 		pnlDSKhachHangTG.add(scrDSKhachThamGia, BorderLayout.CENTER);
 
 		tblDSKhachThamGia = new JTable();
-		scrDSKhachThamGia.setViewportView(tblDSKhachThamGia);
 
-		JPanel pnlThemTTKHTG = new JPanel();
+		pnlThemTTKHTG = new JPanel();
+		pnlThemTTKHTG.setVisible(false);
 		pnlDSKhachHangTG.add(pnlThemTTKHTG, BorderLayout.NORTH);
-		FlowLayout flowLayout_2 = (FlowLayout) pnlThemTTKHTG.getLayout();
-		flowLayout_2.setAlignment(FlowLayout.LEFT);
+		FlowLayout fl_pnlThemTTKHTG = (FlowLayout) pnlThemTTKHTG.getLayout();
+		fl_pnlThemTTKHTG.setAlignment(FlowLayout.LEFT);
 
 		JLabel lblTen = new JLabel("Họ và tên:");
 		lblTen.setFont(new Font("Dialog", Font.PLAIN, 18));
@@ -537,8 +568,21 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlThemTTKHTG.add(dtcNgaySinhKHTG);
 
 		btnThemKHTG = new JButton("Thêm");
+		btnThemKHTG.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/add_25px.png")));
 		btnThemKHTG.setFont(new Font("Dialog", Font.PLAIN, 18));
 		pnlThemTTKHTG.add(btnThemKHTG);
+
+		btnXoaKHTG = new JButton("Xoá");
+		btnXoaKHTG.setVisible(false);
+		btnXoaKHTG.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/delete_25px.png")));
+		btnXoaKHTG.setFont(new Font("Dialog", Font.PLAIN, 18));
+		pnlThemTTKHTG.add(btnXoaKHTG);
+
+		lblTinhTrangKHTG = new JLabel("Chưa chọn ngày khởi hành\r\n");
+		lblTinhTrangKHTG.setForeground(Color.RED);
+		lblTinhTrangKHTG.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTinhTrangKHTG.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 18));
+		pnlKhachHangThamGia.add(lblTinhTrangKHTG, BorderLayout.SOUTH);
 
 		JPanel pnlDieuKhienND = new JPanel();
 		pnlSouth.add(pnlDieuKhienND, BorderLayout.SOUTH);
@@ -550,26 +594,35 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlHuyChon.setLayout(new GridLayout(0, 2, 0, 0));
 
 		pnlHuyChonNgayKH = new JPanel();
+		FlowLayout flowLayout_5 = (FlowLayout) pnlHuyChonNgayKH.getLayout();
+		flowLayout_5.setAlignment(FlowLayout.LEFT);
 		pnlHuyChon.add(pnlHuyChonNgayKH);
 
-		btnHuyChon = new JButton("Hủy chọn ngày khởi hành");
-		pnlHuyChonNgayKH.add(btnHuyChon);
-		btnHuyChon.setFont(new Font("Dialog", Font.PLAIN, 20));
+		btnHuyChonNgayKH = new JButton("Hủy chọn ngày khởi hành");
+		btnHuyChonNgayKH.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/cancel_32px.png")));
+		pnlHuyChonNgayKH.add(btnHuyChonNgayKH);
+		btnHuyChonNgayKH.setFont(new Font("Arial", Font.BOLD, 15));
 
 		pnlChonNgayKH = new JPanel();
+		FlowLayout flowLayout_6 = (FlowLayout) pnlChonNgayKH.getLayout();
+		flowLayout_6.setVgap(10);
+		flowLayout_6.setAlignment(FlowLayout.RIGHT);
 		pnlHuyChon.add(pnlChonNgayKH);
 
 		btnChonNgayKH = new JButton("Chọn ngày khởi hành");
-		btnChonNgayKH.setFont(new Font("Dialog", Font.PLAIN, 18));
+		btnChonNgayKH.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/checked_25px.png")));
+		btnChonNgayKH.setFont(new Font("Arial", Font.BOLD, 15));
 		pnlChonNgayKH.add(btnChonNgayKH);
 
 		JPanel pnlDangKyTour = new JPanel();
 		pnlDangKyTour.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		FlowLayout fl_pnlDangKyTour = (FlowLayout) pnlDangKyTour.getLayout();
+		fl_pnlDangKyTour.setVgap(10);
 		fl_pnlDangKyTour.setAlignment(FlowLayout.RIGHT);
 		pnlDieuKhienND.add(pnlDangKyTour);
 
 		btnDangKyTour = new JButton("Đăng ký");
+		btnDangKyTour.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/enter_25px.png")));
 		btnDangKyTour.setFont(new Font("Dialog", Font.PLAIN, 20));
 		pnlDangKyTour.add(btnDangKyTour);
 		pnlThongTinKH.setVisible(false);
@@ -613,7 +666,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 
 		JPanel pnlThongTinNgayKH = new JPanel();
 		pnlDSNgayKhoiHanh.add(pnlThongTinNgayKH, BorderLayout.SOUTH);
-		pnlThongTinNgayKH.setLayout(new GridLayout(0, 2, 0, 0));
+		pnlThongTinNgayKH.setLayout(new BoxLayout(pnlThongTinNgayKH, BoxLayout.X_AXIS));
 
 		pnlTTNgayKH = new JPanel();
 		pnlTTNgayKH.setBorder(new LineBorder(new Color(0, 153, 51), 2));
@@ -702,11 +755,19 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 
 	}
 
+	/**
+	 * Xử lý sự kiện cho control
+	 */
 	private void ganSuKien() {
 		btnTimKiem.addActionListener(this);
-		btnThemMoi.addActionListener(this);
+		btnThemMoiKH.addActionListener(this);
 		btnThemDC.addActionListener(this);
 		btnLuuDC.addActionListener(this);
+		btnHuy.addActionListener(this);
+		btnHuyChonNgayKH.addActionListener(this);
+		btnChonNgayKH.addActionListener(this);
+		btnHuyChonTour.addActionListener(this);
+		btnXoaKHTG.addActionListener(this);
 
 		btnLuuTTKhachHang.addActionListener(this);
 		btnHuy.addActionListener(this);
@@ -716,6 +777,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		btnDangKyTour.addActionListener(this);
 		btnDongTimKiem.addActionListener(this);
 		btnLamMoi.addActionListener(this);
+		btnXoaKHTG.addActionListener(this);
 
 		btnTimKiem.addActionListener(this);
 		btnTimKiemTheoNgay.addActionListener(this);
@@ -727,9 +789,29 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 
 		tblDSTour.getSelectionModel().addListSelectionListener(this);
 		tblDSNgayDi.getSelectionModel().addListSelectionListener(this);
+
+		AutoCompleteDecorator.decorate(cmbDiaDanh);
+
+		txtTimKiemTheoTen.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				String key = TienIch
+						.chuyenChuoiTiengVietThanhChuoiKhongDau(txtTimKiemTheoTen.getText().trim().toLowerCase());
+				List<Tour> dsTourCanTim = new ArrayList<Tour>();
+				for (Tour tour : dsTourDaDuyet) {
+					String name = TienIch.chuyenChuoiTiengVietThanhChuoiKhongDau(tour.getTenTour().toLowerCase());
+					if (name.contains(key)) {
+						dsTourCanTim.add(tour);
+					}
+				}
+				hienDanhSachTour(tblDSTour, dsTourCanTim, scrDSTour);
+			}
+		});
 	}
 
-	@Override
+	/**
+	 * Sự kiện click bảng
+	 */
 	public void valueChanged(ListSelectionEvent e) {
 		ListSelectionModel o = (ListSelectionModel) e.getSource();
 		if (o.equals(tblDSTour.getSelectionModel())) {
@@ -744,8 +826,11 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 			int row = tblDSNgayDi.getSelectedRow();
 			if (row == -1)
 				return;
+
 			ngayKhoiHanh = dsNgayKhoiHanh.get(row);
-			// pnlDSKhachHangTG.setVisible(true);
+			lblMaNgayKHdb.setText(ngayKhoiHanh.getMaLT());
+			lblNgayKHdb.setText(new SimpleDateFormat("dd/MM/yyyy").format(ngayKhoiHanh.getNgayKhoiHanh()));
+			btnXoaKHTG.setVisible(true);
 
 		}
 
@@ -790,7 +875,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 			pnlTimKiemKhachHang.add(pnlTimKiemKH, BorderLayout.CENTER);
 			pnlTimKiemKhachHang.setVisible(true);
 			pnlThongTinKH.setVisible(false);
-			btnThemMoi.setVisible(false);
+			btnThemMoiKH.setVisible(false);
 		}
 		/*
 		 * 
@@ -802,7 +887,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 				tblDSTour.setEnabled(true);
 				TienIch.hienAnCacControl(false, txtHoTenKH, txtSdtKH, txtSoCMND, dtcNgaySinh);
 				pnlTimKiemKhachHang.setVisible(false);
-				btnThemMoi.setVisible(true);
+				btnThemMoiKH.setVisible(true);
 				btnLuuTTKhachHang.setVisible(false);
 
 			} else {
@@ -810,20 +895,20 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 			}
 		}
 		/*
-		 * 
+		 * Đóng màn hình tìm kiếm khách hàng
 		 */
 		else if (o.equals(btnDongTimKiem)) {
 			xoaTrangThongTinKhachHang();
 			pnlTimKiemKhachHang.setVisible(false);
 		}
 		/*
-		 * 
+		 * Nút thêm mới khách hàng
 		 */
-		else if (o.equals(btnThemMoi)) {
+		else if (o.equals(btnThemMoiKH)) {
 			xoaTrangThongTinKhachHang();
 		}
 		/*
-		 * 
+		 * Thêm địa chỉ cho khách hàng
 		 */
 		else if (o.equals(btnThemDC)) {
 			btnThemDC.setVisible(false);
@@ -832,21 +917,28 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 			lstProvices = TienIch.layDiaLyHanhChinh();
 			hienDiaDiem(lstProvices, cmbTinh, "Tỉnh/Thành phố");
 		} else if (o.equals(cmbTinh)) {
-			if (cmbTinh.getSelectedIndex() != 0) {
+			if (cmbHuyen.getItemCount() > 1 && cmbXa.getItemCount() > 1) {
+				cmbXa.setModel(new DefaultComboBoxModel<Ward>());
+				cmbHuyen.setModel(new DefaultComboBoxModel<District>());
+			}
+			if (cmbTinh.getSelectedIndex() > 0) {
 				List<District> districts = lstProvices.get(cmbTinh.getSelectedIndex() - 1).getDistricts();
 				hienDiaDiem(districts, cmbHuyen, "Huyện/Quận");
 				cmbHuyen.setVisible(true);
 			}
 
 		} else if (o.equals(cmbHuyen)) {
-			if (cmbHuyen.getSelectedIndex() != 0) {
+			if (cmbXa.getItemCount() > 1) {
+				cmbXa.setModel(new DefaultComboBoxModel<Ward>());
+			}
+			if (cmbHuyen.getSelectedIndex() > 0) {
 				List<Ward> wards = lstProvices.get(cmbTinh.getSelectedIndex() - 1).getDistricts()
 						.get(cmbHuyen.getSelectedIndex() - 1).getWards();
 				hienDiaDiem(wards, cmbXa, "Xã/Phường");
 				cmbXa.setVisible(true);
 			}
 		} else if (o.equals(cmbXa)) {
-			if (cmbXa.getSelectedIndex() != 0) {
+			if (cmbXa.getSelectedIndex() > 0) {
 				btnLuuDC.setVisible(true);
 			}
 		} else if (o.equals(btnLuuDC)) {
@@ -866,31 +958,67 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 			btnLuuDC.setVisible(false);
 			btnThemDC.setVisible(true);
 
-		} else if (o.equals(btnLuuTTKhachHang)) {
-			KhachHang khachHang = new KhachHang();
-			khachHang.setHoVaTen(txtHoTenKH.getText());
-			khachHang.setSoCMND(txtSoCMND.getText());
-			khachHang.setNgaySinh(new Date(dtcNgaySinh.getDate().getTime()));
-			khachHang.setSoDienThoai(txtSdtKH.getText());
-			khachHang.setDiaChi(new DiaChi(cmbXa.getSelectedItem().toString(), cmbHuyen.getSelectedItem().toString(),
-					cmbTinh.getSelectedItem().toString()));
-			khachHang.setGioiTinh(rdbNam.isSelected() ? true : false);
-			int confirm = JOptionPane.showConfirmDialog(null,
-					"Lưu thông tin khách hàng " + khachHang.getHoVaTen() + " ?", "Xác nhận lưu khách hàng",
-					JOptionPane.YES_NO_OPTION);
-			if (confirm == JOptionPane.YES_OPTION) {
-				KhachHang khThem = khachHangControl.themKhachHang(khachHang);
-				if (khThem != null) {
-					JOptionPane.showMessageDialog(null, "Thêm khách hàng thành công");
-					khachHang = khThem;
-					TienIch.hienAnCacControl(false, txtHoTenKH, txtSdtKH, txtSoCMND, dtcNgaySinh);
-					btnLuuDC.setVisible(false);
-					btnThemDC.setVisible(false);
-					tblDSTour.setEnabled(true);
+		}
+		/*
+		 * Lưu thông tin khách hàng
+		 */
+		else if (o.equals(btnLuuTTKhachHang)) {
+			if (kiemTraNhapLieu()) {
+				KhachHang khachHang = new KhachHang();
+				khachHang.setHoVaTen(txtHoTenKH.getText());
+				khachHang.setSoCMND(txtSoCMND.getText());
+				khachHang.setNgaySinh(new Date(dtcNgaySinh.getDate().getTime()));
+				khachHang.setSoDienThoai(txtSdtKH.getText());
+				khachHang.setDiaChi(new DiaChi(cmbXa.getSelectedItem().toString(),
+						cmbHuyen.getSelectedItem().toString(), cmbTinh.getSelectedItem().toString()));
+				khachHang.setGioiTinh(rdbNam.isSelected() ? true : false);
+				int confirm = JOptionPane.showConfirmDialog(null,
+						"Lưu thông tin khách hàng " + khachHang.getHoVaTen() + " ?", "Xác nhận lưu khách hàng",
+						JOptionPane.YES_NO_OPTION);
+				if (confirm == JOptionPane.YES_OPTION) {
+					KhachHang khThem = khachHangControl.themKhachHang(khachHang);
+					if (khThem != null) {
+						JOptionPane.showMessageDialog(null, "Thêm khách hàng thành công");
+						khachHang = khThem;
+						TienIch.hienAnCacControl(false, txtHoTenKH, txtSdtKH, txtSoCMND, dtcNgaySinh);
+						btnLuuDC.setVisible(false);
+						btnThemDC.setVisible(false);
+						tblDSTour.setEnabled(true);
+					}
 				}
 			}
 
 		}
+		/*
+		 * Chọn ngày khởi hành để đăng ký
+		 */
+		else if (o.equals(btnChonNgayKH)) {
+			dsKhachHangThamGia = new ArrayList<KhachHangThamGia>();
+			hienBangDSKhachTG(tblDSKhachThamGia, dsKhachHangThamGia, scrDSKhachThamGia);
+			lblTinhTrangKHTG.setVisible(false);
+			pnlDSKhachHangTG.setVisible(true);
+			pnlThemTTKHTG.setVisible(true);
+
+			if (chkThamGiaTourDK.isSelected()) {
+				KhachHangThamGia khtg = new KhachHangThamGia();
+				khtg.setHoTenKHTG(khachHang.getHoVaTen());
+				khtg.setNgaySinh(khachHang.getNgaySinh());
+				khtg.setDoTuoi(DoTuoi.NGUOILON);
+				dsKhachHangThamGia.add(khtg);
+			}
+		}
+
+		/*
+		 * Huỷ chọn ngày khởi hành
+		 */
+		else if (o.equals(btnHuyChonNgayKH)) {
+			dsKhachHangThamGia = new ArrayList<KhachHangThamGia>();
+			hienBangDSKhachTG(tblDSKhachThamGia, dsKhachHangThamGia, scrDSKhachThamGia);
+			lblTinhTrangKHTG.setVisible(false);
+			pnlDSKhachHangTG.setVisible(true);
+			pnlThemTTKHTG.setVisible(true);
+		}
+
 		/*
 		 * 
 		 */
@@ -904,11 +1032,27 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 				khachHangThamGia.setDoTuoi(DoTuoi.TREEM);
 			}
 			dsKhachHangThamGia.add(khachHangThamGia);
-			model = new DSKhachHangTGTableModel(dsKhachHangThamGia);
-			tblDSKhachThamGia.setModel(model);
+			hienBangDSKhachTG(tblDSKhachThamGia, dsKhachHangThamGia, scrDSKhachThamGia);
 		}
 		/*
-		 * 
+		 * Nút xoá khách hàng tham gia vừa thêm
+		 */
+		else if (o.equals(btnXoaKHTG)) {
+			int row = tblDSKhachThamGia.getSelectedRow();
+			KhachHangThamGia khtg = dsKhachHangThamGia.get(row);
+			int confirm = JOptionPane.showConfirmDialog(this, "Xoá khách hàng tham gia vừa chọn khỏi danh sách",
+					"Xác nhận", JOptionPane.YES_NO_OPTION);
+			if (confirm == JOptionPane.YES_OPTION) {
+				tblDSKhachThamGia.clearSelection();
+				dsKhachHangThamGia.remove(khtg);
+				hienBangDSKhachTG(tblDSKhachThamGia, dsKhachHangThamGia, scrDSKhachThamGia);
+
+			}
+
+		}
+
+		/*
+		 * Nút đăng ký tour
 		 */
 		else if (o.equals(btnDangKyTour)) {
 			PhieuDangKy phieuDangKy = new PhieuDangKy();
@@ -922,12 +1066,8 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 			int soLuongKhachTang = dsKhachHangThamGia.size();
 			int soLuongKhachHangDaThamGia = soLuongKhachTang + ngayKhoiHanh.getSoKhachDaDangKy();
 
-			// nếu số lượng khách tham gia đã đến tối đa
-			if (soLuongKhachHangDaThamGia == soLuongKhachToiDa) {
-				phieuDangKy.getNgayKhoiHanh().setDaDuSoLuong(true);
-			}
 			// Nếu sô lượng khách tham gia > số lượng khách tối đa
-			else if (soLuongKhachHangDaThamGia > soLuongKhachToiDa) {
+			if (soLuongKhachHangDaThamGia > soLuongKhachToiDa) {
 				JOptionPane.showMessageDialog(null, "Số lượng khách tham gia vượt quá Số lượng khách tối đa",
 						"Thông báo", JOptionPane.ERROR_MESSAGE);
 
@@ -936,7 +1076,10 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 					JOptionPane.showMessageDialog(null, "Chưa có thông tin khách hành tham gia", "Thông báo",
 							JOptionPane.ERROR_MESSAGE);
 				} else {
-
+					// nếu số lượng khách tham gia đã đến tối đa
+					if (soLuongKhachHangDaThamGia == soLuongKhachToiDa) {
+						phieuDangKy.getNgayKhoiHanh().setDaDuSoLuong(true);
+					}
 					phieuDangKy.getNgayKhoiHanh().setSoKhachDaDangKy(soLuongKhachHangDaThamGia);
 					int confirm = JOptionPane.showConfirmDialog(null,
 							"Xác nhận đăng ký tour " + phieuDangKy.getNgayKhoiHanh().getTour().getTenTour() + " ?",
@@ -945,10 +1088,15 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 
 						PhieuDangKy phieuDangKyTour = phieuDangKyControl.themPhieuDangKy(phieuDangKy);
 						if (phieuDangKyTour != null) {
+							chkThamGiaTourDK.setSelected(false);
+							pnlThemTTKHTG.setVisible(false);
+							pnlDSKhachHangTG.setEnabled(false);
+							lblTinhTrangKHTG.setText("Đã lưu thông tin khách hàng tham gia tour");
+
 							dsNgayKhoiHanh = tourControl
 									.layDSNgayKhoiHanhTheoTour(phieuDangKy.getNgayKhoiHanh().getTour().getMaTour());
 							hienDanhSachNgayKhoiHanh(dsNgayKhoiHanh);
-							dlgPhieuThu dlgPhieuThu = new dlgPhieuThu(phieuDangKy, false);
+							dlgPhieuThu dlgPhieuThu = new dlgPhieuThu(phieuDangKy);
 							dlgPhieuThu.setVisible(true);
 
 						}
@@ -956,10 +1104,51 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 				}
 			}
 
-		} else if (o.equals(btnLamMoi)) {
+		}
+		/*
+		 * Nút Lọc tour theo địa danh
+		 */
+		else if (o.equals(btnLocDiaDanh)) {
+			try {
+				DiaDanh diaDanh = (DiaDanh) cmbDiaDanh.getEditor().getItem();
+				List<Tour> dsTourCanTim = new ArrayList<Tour>();
+				for (Tour tour : dsTourDaDuyet) {
+					if (tour.getDiaDanh().getTenDiaDanh().equalsIgnoreCase(diaDanh.getTenDiaDanh())) {
+						dsTourCanTim.add(tour);
+					}
+				}
+				if (dsTourCanTim.size() == 0) {
+					dsTourCanTim = dsTourDaDuyet;
+				}
+				hienDanhSachTour(tblDSTour, dsTourCanTim, scrDSTour);
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(this, "Địa danh vừa chọn không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		/*
+		 * Nút làm mới
+		 */
+		else if (o.equals(btnLamMoi)) {
 			dsTourDaDuyet = tourControl.layDsTourTheoYeuCau(3);
 			hienDanhSachTour(tblDSTour, dsTourDaDuyet, scrDSTour);
 		}
+
+	}
+
+	/**
+	 * Hiện danh sách khach hàng tham gia tour
+	 * 
+	 * @param tbl: bảng chứa danh sách khách hàng tham gia
+	 * @param ds:  danh sách khách hàng tham gia
+	 * @param src: Thanh cuộn
+	 */
+	private void hienBangDSKhachTG(JTable tbl, List<KhachHangThamGia> ds, JScrollPane src) {
+		DSKhachHangTGTableModel dsKhachHangTGTableModel = new DSKhachHangTGTableModel(ds);
+		tbl.setModel(dsKhachHangTGTableModel);
+		src.setViewportView(tbl);
+		tblDSKhachThamGia.setRowHeight(25);
+		TienIch.chinhKichThuocTable(tblDSKhachThamGia, tblDSKhachThamGia.getColumnModel().getTotalColumnWidth(), 2, 20,
+				15, 10, 20);
 
 	}
 
@@ -974,9 +1163,6 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		TienIch.xoaTrangCacJTextField(txtHoTenKH, txtSdtKH, txtSoCMND);
 
 		lblDiaChi.setText("");
-		cmbHuyen.setVisible(true);
-		cmbXa.setVisible(true);
-		cmbTinh.setVisible(true);
 
 		dtcNgaySinh.setDate(null);
 		tblDSTour.setEnabled(true);
@@ -1031,71 +1217,54 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 	 * @return true: nếu dữ liệu đúng / false: nếu không đúng
 	 */
 	private boolean kiemTraNhapLieu() {
-		String maTour = txtMaTour.getText().trim();
-		String tenKH = txtTenKH.getText().trim();
-		String soCM = txtCM.getText().trim();
-		String sdt = ftxtSdt.getText().trim();
-		String ngSinh = ((JTextField) dtcNgSinh.getDateEditor().getUiComponent()).getText().trim();
-		String dc = TienIch.chuyenChuoiTiengVietThanhChuoiKhongDau(txtDC.getText().trim());
-		int soNgLon = ((Number) spnSoNgLon.getValue()).intValue();
-		int soTrEm = ((Number) spnSoTrEm.getValue()).intValue();
 
-		if (maTour.length() == 0 || tenKH.length() == 0 || soCM.length() == 0 || sdt.length() == 0
-				|| ngSinh.length() == 0 || dc.length() == 0) {
-			if (maTour.length() == 0) {
-				JOptionPane.showMessageDialog(this, "Chưa chọn tour cần đăng ký");
-				txtTenKH.requestFocus();
-				return false;
-			}
+		String tenKH = txtHoTenKH.getText().trim();
+		String soCM = txtSoCMND.getText().trim();
+		String sdt = txtSdtKH.getText().trim();
+		String ngSinh = ((JTextField) dtcNgaySinh.getDateEditor().getUiComponent()).getText().trim();
+		String dc = lblDiaChi.getText();
 
+		if (tenKH.length() == 0 || soCM.length() == 0 || sdt.length() == 0 || ngSinh.length() == 0
+				|| dc.length() == 0) {
 			if (tenKH.length() == 0) {
 				JOptionPane.showMessageDialog(this, "Chưa nhập tên Khách hàng");
-				txtTenKH.requestFocus();
+				txtHoTenKH.requestFocus();
 				return false;
 			}
 			if (soCM.length() == 0) {
 				JOptionPane.showMessageDialog(this, "Chưa nhập số CMND");
-				txtCM.requestFocus();
+				txtSoCMND.requestFocus();
 				return false;
 			}
 			if (sdt.length() == 0) {
 				JOptionPane.showMessageDialog(this, "Chưa nhập số điện thoại");
-				ftxtSdt.requestFocus();
+				txtSdtKH.requestFocus();
 				return false;
 
 			}
 			if (ngSinh.length() == 0) {
 				JOptionPane.showMessageDialog(this, "Chưa nhập ngày sinh");
-				dtcNgSinh.requestFocus();
+				dtcNgaySinh.requestFocus();
 				return false;
 			}
 			if (dc.length() == 0) {
 				JOptionPane.showMessageDialog(this, "Chưa nhập địa chỉ");
-				txtDC.requestFocus();
 				return false;
 			}
 
 			return false;
 		}
-		/*
-		 * Kiểm tra số người tham gia tour
-		 */
-		if (soNgLon <= 0 && soTrEm <= 0) {
 
-			JOptionPane.showMessageDialog(this, "Số người tham gia phải lớn hơn 0");
-			spnSoNgLon.requestFocus();
-			return false;
-		}
 		////////////////////////////////
 		/*
 		 * Kiểm tra tuổi từ 18 trở lên
 		 */
-		LocalDate dt = new Date(dtcNgSinh.getDate().getTime()).toLocalDate();
+		LocalDate dt = new Date(dtcNgaySinh.getDate().getTime()).toLocalDate();
 		Period period = Period.between(dt, LocalDate.now());
 
 		if (period.getYears() < 18) {
 			JOptionPane.showMessageDialog(this, "Khách hàng phải đủ 18 tuổi mới được đăng ký");
-			dtcNgSinh.requestFocus();
+			dtcNgaySinh.requestFocus();
 			return false;
 		}
 		///////////////////////////////
@@ -1105,7 +1274,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		 */
 		if (!(sdt.matches("(\\+84|0)[0-9]{9}"))) {
 			JOptionPane.showMessageDialog(this, "Số điện thoại phải bắt đầu là 0 hoặc +84 tiếp sau là 10 ký số");
-			ftxtSdt.requestFocus();
+			txtSdtKH.requestFocus();
 			return false;
 		}
 
@@ -1115,31 +1284,11 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		 * Số chứng minh nhân dân (căn cước)
 		 */
 
-		if (soCM.matches("[0-9]{9,12}") == false) {
+		if (soCM.matches("[0-9]{9}|{12}") == false) {
 			JOptionPane.showMessageDialog(this, "CMND Gồm 9 hoặc 12 ký tự số");
-			txtCM.requestFocus();
+			txtSoCMND.requestFocus();
 			return false;
 		}
-
-		//////////////////////////////
-
-		/*
-		 * Địa chỉ
-		 */
-		if (!(dc.matches("[\\w ]{1,30}"))) {
-			JOptionPane.showMessageDialog(null, "Địa chỉ không chứa kí tự đặc biệt và không quá 30 kí tự!!!");
-			txtDC.requestFocus();
-			txtDC.selectAll();
-			return false;
-		}
-
-		////////////////////////////////////////////////////
-
-		/*
-		 * Kiểm tra số người tham gia
-		 */
-
-		///////////////////////////////////////////
 
 		return true;
 

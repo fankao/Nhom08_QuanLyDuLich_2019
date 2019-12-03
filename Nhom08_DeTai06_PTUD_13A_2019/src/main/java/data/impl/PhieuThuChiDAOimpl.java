@@ -66,4 +66,19 @@ public class PhieuThuChiDAOimpl implements IPhieuThuChiDAO {
 
 	}
 
+	@Override
+	public PhieuThuChi suaPhieu(PhieuThuChi p) {
+		EntityTransaction tr = em.getTransaction();
+		try {
+			tr.begin();
+			em.merge(p);
+			tr.commit();
+			return p;
+		} catch (Exception e) {
+			e.printStackTrace();
+			tr.rollback();
+		}
+		return null;
+	}
+
 }

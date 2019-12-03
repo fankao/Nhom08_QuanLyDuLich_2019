@@ -7,11 +7,19 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.net.URISyntaxException;
 import java.sql.Date;
 import java.text.Format;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
@@ -20,6 +28,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -33,22 +42,28 @@ import javax.swing.border.TitledBorder;
 import constant.HangSo;
 import control.IPhieuThuChiControl;
 import control.impl.PhieuThuChiControlImpl;
-import entities.KhachHangThamGia;
 import entities.LoaiPhieu;
 import entities.PhieuDangKy;
 import entities.PhieuThuChi;
+import gui.FrmPrint;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 import utils.TienIch;
+import java.awt.Dialog.ModalExclusionType;
+import java.awt.Dialog.ModalityType;
 
 /**
  * 
  * @author Gia Hưng, Minh Chiến
  * @version 1.0 Ngày tạo 5/10/2019
  */
-public class dlgPhieuThu extends JDialog {
-
-	/**
-	 * 
-	 */
+public class dlgPhieuThu extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private final JPanel pnlNoiDung = new JPanel();
 	private JTextField txtMaDK;
@@ -88,10 +103,6 @@ public class dlgPhieuThu extends JDialog {
 	private JLabel lblDienThoai;
 	private JTextField txtSDT;
 	private JButton btnInPhieu;
-	private static List<KhachHangThamGia> dsKHThamGia;
-	private static String maKH;
-
-	private static boolean daThemPhieuDK;
 	private PhieuDangKy phieuDangKy;
 	private boolean khachDKMuonThamGiaTour;
 	private JPanel pnlLiDo;
@@ -101,18 +112,28 @@ public class dlgPhieuThu extends JDialog {
 	private JLabel lblThanhTienTE;
 	private JLabel lblThanhTienNL;
 	private JLabel lblCongTien;
+	private JTextArea txaNoiDung;
+	private PhieuThuChi phieuThuChi;
+	private IPhieuThuChiControl phieuThuChiControl;
+	private JFormattedTextField txtTongTienThanhToan;
+	private double thanhTienNguoiLon;
+	private double thanhTienTremEm;
+	private double tongThanhTien;
+	private int soNguoiLon;
+	private int soTreEm;
+	private double congTien;
+	private double tienThue;
 
 	/**
 	 * Hiện giao diện phiếu thu
 	 */
-	public dlgPhieuThu(PhieuDangKy phieuDangKy, boolean kq) {
-		setModalityType(ModalityType.APPLICATION_MODAL);
+	public dlgPhieuThu(PhieuDangKy phieuDangKy) {
+		setModalityType(ModalityType.TOOLKIT_MODAL);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(dlgPhieuThu.class.getResource("/images/iconFrm.png")));
 		setTitle("Phiếu thu");
 		this.phieuDangKy = phieuDangKy;
-		this.khachDKMuonThamGiaTour = kq;
 
-		setBounds(100, 100, 1200, 755);
+		setBounds(100, 100, 1244, 856);
 		getContentPane().setLayout(new BorderLayout());
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -151,9 +172,9 @@ public class dlgPhieuThu extends JDialog {
 			GroupLayout gl_pnlTieuDe = new GroupLayout(pnlTieuDe);
 			gl_pnlTieuDe.setHorizontalGroup(gl_pnlTieuDe.createParallelGroup(Alignment.TRAILING)
 					.addGroup(gl_pnlTieuDe.createSequentialGroup()
-							.addComponent(pnlTTCongTy, GroupLayout.PREFERRED_SIZE, 356, GroupLayout.PREFERRED_SIZE)
-							.addGap(41).addComponent(lblTieuDe, GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
-							.addGap(67)
+							.addComponent(pnlTTCongTy, GroupLayout.PREFERRED_SIZE, 404, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblTieuDe, GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE).addGap(82)
 							.addGroup(gl_pnlTieuDe.createParallelGroup(Alignment.TRAILING).addComponent(lblSoPT)
 									.addComponent(lblNgayTao))
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -162,24 +183,25 @@ public class dlgPhieuThu extends JDialog {
 							.addContainerGap()));
 			gl_pnlTieuDe.setVerticalGroup(gl_pnlTieuDe.createParallelGroup(Alignment.LEADING).addGroup(gl_pnlTieuDe
 					.createSequentialGroup()
-					.addGroup(gl_pnlTieuDe.createParallelGroup(Alignment.LEADING)
-							.addComponent(pnlTTCongTy, GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-							.addGroup(gl_pnlTieuDe.createSequentialGroup().addContainerGap().addGroup(gl_pnlTieuDe
-									.createParallelGroup(Alignment.TRAILING)
+					.addGroup(gl_pnlTieuDe.createParallelGroup(Alignment.TRAILING)
+							.addComponent(pnlTTCongTy, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+							.addGroup(Alignment.LEADING, gl_pnlTieuDe.createSequentialGroup().addContainerGap()
+									.addGroup(gl_pnlTieuDe.createParallelGroup(Alignment.BASELINE)
+											.addComponent(lblSoPT, GroupLayout.PREFERRED_SIZE, 35,
+													GroupLayout.PREFERRED_SIZE)
+											.addComponent(txtSoPT, GroupLayout.PREFERRED_SIZE, 35,
+													GroupLayout.PREFERRED_SIZE))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(gl_pnlTieuDe.createParallelGroup(Alignment.BASELINE)
+											.addComponent(lblNgayTao, GroupLayout.PREFERRED_SIZE, 35,
+													GroupLayout.PREFERRED_SIZE)
+											.addComponent(txtNgayTao, GroupLayout.PREFERRED_SIZE, 35,
+													GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addGroup(Alignment.TRAILING,
+							gl_pnlTieuDe.createSequentialGroup().addContainerGap(30, Short.MAX_VALUE)
 									.addComponent(lblTieuDe, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-									.addGroup(gl_pnlTieuDe.createSequentialGroup()
-											.addGroup(gl_pnlTieuDe.createParallelGroup(Alignment.BASELINE)
-													.addComponent(lblSoPT, GroupLayout.PREFERRED_SIZE, 35,
-															GroupLayout.PREFERRED_SIZE)
-													.addComponent(txtSoPT, GroupLayout.PREFERRED_SIZE, 35,
-															GroupLayout.PREFERRED_SIZE))
-											.addPreferredGap(ComponentPlacement.RELATED)
-											.addGroup(gl_pnlTieuDe.createParallelGroup(Alignment.BASELINE)
-													.addComponent(lblNgayTao, GroupLayout.PREFERRED_SIZE, 35,
-															GroupLayout.PREFERRED_SIZE)
-													.addComponent(txtNgayTao, GroupLayout.PREFERRED_SIZE, 35,
-															GroupLayout.PREFERRED_SIZE))))))
-					.addContainerGap(39, Short.MAX_VALUE)));
+									.addGap(10)));
 			pnlTTCongTy.setLayout(new GridLayout(3, 0, 0, 0));
 			{
 				lblTenCty = new JLabel("Công ty du lịch Phương Nam");
@@ -188,10 +210,12 @@ public class dlgPhieuThu extends JDialog {
 			}
 			{
 				lblDiaChiCty = new JLabel("Địa chỉ :12 Nguyễn Văn Bão,phường 3,quận Gò Vấp,Tp HCM");
+				lblDiaChiCty.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				pnlTTCongTy.add(lblDiaChiCty);
 			}
 			{
-				JLabel lblSdtCty = new JLabel("SĐT:0123456789");
+				JLabel lblSdtCty = new JLabel("SĐT: 0123456789");
+				lblSdtCty.setFont(new Font("Tahoma", Font.PLAIN, 15));
 				pnlTTCongTy.add(lblSdtCty);
 			}
 			pnlTieuDe.setLayout(gl_pnlTieuDe);
@@ -241,7 +265,7 @@ public class dlgPhieuThu extends JDialog {
 						txtTour.setPreferredSize(new Dimension(6, 35));
 						txtTour.setFont(new Font("Tahoma", Font.PLAIN, 17));
 						txtTour.setEditable(false);
-						txtTour.setColumns(20);
+						txtTour.setColumns(40);
 						pnlTour.add(txtTour);
 					}
 				}
@@ -312,7 +336,7 @@ public class dlgPhieuThu extends JDialog {
 
 					JPanel pnlSoNguoiLon = new JPanel();
 					pnlNguoiLon.add(pnlSoNguoiLon);
-					pnlSoNguoiLon.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
+					pnlSoNguoiLon.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
 					lblSoNguoiLon = new JLabel("Người lớn :");
 					lblSoNguoiLon.setFont(new Font("Tahoma", Font.PLAIN, 17));
@@ -328,7 +352,6 @@ public class dlgPhieuThu extends JDialog {
 						JPanel pnlDonGiaNL = new JPanel();
 						FlowLayout fl_pnlDonGiaNL = (FlowLayout) pnlDonGiaNL.getLayout();
 						fl_pnlDonGiaNL.setAlignment(FlowLayout.LEFT);
-						fl_pnlDonGiaNL.setVgap(0);
 						pnlNguoiLon.add(pnlDonGiaNL);
 						{
 							JLabel lblDonGiaNL = new JLabel("Đơn giá :");
@@ -338,6 +361,7 @@ public class dlgPhieuThu extends JDialog {
 						}
 						{
 							txtDonGiaNL = new JFormattedTextField(donVi);
+
 							txtDonGiaNL.setEditable(false);
 							txtDonGiaNL.setFont(new Font("Tahoma", Font.PLAIN, 17));
 							txtDonGiaNL.setColumns(10);
@@ -350,7 +374,6 @@ public class dlgPhieuThu extends JDialog {
 						JPanel pnlThanhTienNL = new JPanel();
 						FlowLayout fl_pnlThanhTienNL = (FlowLayout) pnlThanhTienNL.getLayout();
 						fl_pnlThanhTienNL.setAlignment(FlowLayout.LEFT);
-						fl_pnlThanhTienNL.setVgap(0);
 						pnlNguoiLon.add(pnlThanhTienNL);
 						{
 							lblThanhTienTE = new JLabel("Thành tiền :");
@@ -360,6 +383,7 @@ public class dlgPhieuThu extends JDialog {
 						}
 						{
 							txtThanhTienNL = new JFormattedTextField(donVi);
+
 							txtThanhTienNL.setEditable(false);
 							txtThanhTienNL.setFont(new Font("Tahoma", Font.PLAIN, 17));
 							txtThanhTienNL.setColumns(10);
@@ -403,6 +427,7 @@ public class dlgPhieuThu extends JDialog {
 						}
 						{
 							txtDonGiaTE = new JFormattedTextField(donVi);
+
 							txtDonGiaTE.setFont(new Font("Tahoma", Font.PLAIN, 17));
 							txtDonGiaTE.setEditable(false);
 							txtDonGiaTE.setColumns(10);
@@ -422,6 +447,7 @@ public class dlgPhieuThu extends JDialog {
 						}
 						{
 							txtThanhTienTE = new JFormattedTextField(donVi);
+
 							txtThanhTienTE.setFont(new Font("Tahoma", Font.PLAIN, 17));
 							txtThanhTienTE.setEditable(false);
 							txtThanhTienTE.setColumns(10);
@@ -446,11 +472,12 @@ public class dlgPhieuThu extends JDialog {
 						pnlCongTien.add(panel_3);
 						{
 							lblCongTien = new JLabel("Cộng tiền :");
+							lblCongTien.setPreferredSize(new Dimension(100, 30));
 							lblCongTien.setHorizontalAlignment(SwingConstants.LEFT);
 							lblCongTien.setFont(new Font("Tahoma", Font.PLAIN, 17));
 						}
 						{
-							txtCongTien = new JFormattedTextField((Format) null);
+							txtCongTien = new JFormattedTextField(donVi);
 							txtCongTien.setFont(new Font("Tahoma", Font.PLAIN, 17));
 							txtCongTien.setEditable(false);
 							txtCongTien.setColumns(10);
@@ -477,7 +504,8 @@ public class dlgPhieuThu extends JDialog {
 					lblTngTienf.setHorizontalAlignment(SwingConstants.TRAILING);
 					lblTngTienf.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-					JFormattedTextField txtTongTienThanhToan = new JFormattedTextField((Format) null);
+					txtTongTienThanhToan = new JFormattedTextField((Format) null);
+					txtTongTienThanhToan.setLocale(new Locale("vi", "VN"));
 					txtTongTienThanhToan.setFont(new Font("Tahoma", Font.PLAIN, 20));
 					txtTongTienThanhToan.setEditable(false);
 					txtTongTienThanhToan.setColumns(10);
@@ -520,6 +548,7 @@ public class dlgPhieuThu extends JDialog {
 					}
 					{
 						txtTienThue = new JFormattedTextField(donVi);
+						txtTienThue.setLocale(new Locale("vi", "VN"));
 						txtTienThue.setFont(new Font("Tahoma", Font.PLAIN, 20));
 						txtTienThue.setEditable(false);
 						txtTienThue.setColumns(10);
@@ -582,7 +611,8 @@ public class dlgPhieuThu extends JDialog {
 			JScrollPane scrNoiDung = new JScrollPane();
 			pnlLyDoNop.add(scrNoiDung, BorderLayout.CENTER);
 
-			JTextArea txaNoiDung = new JTextArea();
+			txaNoiDung = new JTextArea();
+			txaNoiDung.setWrapStyleWord(true);
 			txaNoiDung.setFont(new Font("Arial", Font.PLAIN, 15));
 			scrNoiDung.setViewportView(txaNoiDung);
 			pnlLiDo.setLayout(gl_pnlLiDo);
@@ -591,29 +621,116 @@ public class dlgPhieuThu extends JDialog {
 		TienIch.chinhKichThuocTitleTrenBorder(new JPanel[] { pnlNhapLieu, pnlThanhTien
 
 		}, "Tahoma", Font.BOLD, 18);
-		lblThanhTienNL.setPreferredSize(lblCongTien.getPreferredSize());
-		lblThanhTienTE.setPreferredSize(lblCongTien.getPreferredSize());
+		lblThanhTienNL.setPreferredSize(new Dimension(100, 30));
+		lblThanhTienTE.setPreferredSize(new Dimension(100, 30));
 
-		IPhieuThuChiControl phieuThuChiControl = new PhieuThuChiControlImpl();
-		PhieuThuChi phieuThuChi = new PhieuThuChi();
+		phieuThuChiControl = new PhieuThuChiControlImpl();
+		phieuThuChi = new PhieuThuChi();
 		phieuThuChi.setMaPhieuChi(phieuThuChiControl.phatSinhMaPhieu(LoaiPhieu.PHIEUTHU));
 		phieuThuChi.setNgayTaoPhieuChi(new Date(System.currentTimeMillis()));
 		phieuThuChi.setLoaiPhieu(LoaiPhieu.PHIEUTHU);
 		phieuThuChi.setPdk(phieuDangKy);
 
-		double thanhTienNguoiLon = phieuDangKy.tinhThanhTien(phieuDangKy.getKhachHangThamGias())[0];
-		double thanhTienTremEm = phieuDangKy.tinhThanhTien(phieuDangKy.getKhachHangThamGias())[1];
+		soNguoiLon = phieuDangKy.tinhSoNguoiTheoDoTuoi(phieuDangKy.getKhachHangThamGias())[0];
+		soTreEm = phieuDangKy.tinhSoNguoiTheoDoTuoi(phieuDangKy.getKhachHangThamGias())[1];
 
-		double tongThanhTien = (thanhTienNguoiLon + thanhTienTremEm) * HangSo.THUE;
+		thanhTienNguoiLon = phieuDangKy.tinhThanhTien(phieuDangKy.getKhachHangThamGias())[0];
+		thanhTienTremEm = phieuDangKy.tinhThanhTien(phieuDangKy.getKhachHangThamGias())[1];
+
+		congTien = (thanhTienNguoiLon + thanhTienTremEm);
+		tienThue = (thanhTienNguoiLon + thanhTienTremEm) * HangSo.THUE;
+
+		tongThanhTien = congTien + tienThue;
 
 		phieuThuChi.setSoTien(tongThanhTien);
 
 		PhieuThuChi phieuThuChiNew = phieuThuChiControl.themPhieu(phieuThuChi);
 		if (phieuThuChiNew != null) {
-			
+			hienThongTinPhieuThu(phieuThuChi);
 		}
-		
-		
+
+		btnInPhieu.addActionListener(this);
+		btnDong.addActionListener(this);
+
+	}
+
+	/**
+	 * Hiện thông tin phiếu thu
+	 * 
+	 * @param phieuThuChi: phiếu thu
+	 */
+	private void hienThongTinPhieuThu(PhieuThuChi pt) {
+		txtSoPT.setText(pt.getMaPhieuChi());
+		txtNgayTao.setText(new SimpleDateFormat("dd/MM/yyyy").format(pt.getNgayTaoPhieuChi()));
+		txtMaDK.setText(pt.getPdk().getMaPhieuDK());
+		txtKH.setText(pt.getPdk().getKh().getHoVaTen());
+		txtTour.setText(pt.getPdk().getNgayKhoiHanh().getTour().toString());
+		txtDC.setText(pt.getPdk().getKh().getDiaChi().toString());
+		txtSDT.setText(pt.getPdk().getKh().getSoDienThoai());
+
+		txtSoNguoiLon.setText(soNguoiLon + "");
+		txtSoTreEm.setText(soTreEm + "");
+
+		txtThanhTienNL.setText(thanhTienNguoiLon + "");
+		txtThanhTienTE.setText(thanhTienTremEm + "");
+
+		txtDonGiaNL.setText(pt.getPdk().getNgayKhoiHanh().getTour().getDonGiaNguoiLon() + "");
+		txtDonGiaTE.setText(pt.getPdk().getNgayKhoiHanh().getTour().getDonGiaTreEm() + "");
+
+		txtCongTien.setText(congTien + "");
+		txtTienThue.setText(tienThue + "");
+		txtTongTienThanhToan.setText(tongThanhTien + "");
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
+		if (o.equals(btnInPhieu)) {
+			if (txaNoiDung.getText().trim().length() != 0) {
+				String noiDung = txaNoiDung.getText();
+				phieuThuChi.setLyDo(noiDung);
+				PhieuThuChi ptc = phieuThuChiControl.suaPhieu(phieuThuChi);
+				if (ptc != null) {
+					List<Map<String, ?>> dataSource = new ArrayList<Map<String, ?>>();
+
+					Map<String, Object> m = new HashMap<String, Object>();
+					m.put("soPhieuThu", txtSoPT.getText());
+					m.put("ngayTaoPhieu", txtNgayTao.getText());
+					m.put("maPDK", txtMaDK.getText());
+					m.put("tenTour", txtTour.getText());
+					m.put("tenKhachHang", txtKH.getText());
+					m.put("diaChiKH", txtDC.getText());
+					m.put("soDienThoai", txtSDT.getText());
+					m.put("noiDung", txaNoiDung.getText());
+					m.put("soKhachNL", txtSoNguoiLon.getText());
+					m.put("soKhachTE", txtSoTreEm.getText());
+					m.put("donGiaNL", txtDonGiaNL.getText());
+					m.put("donGiaTE", txtDonGiaTE.getText());
+					m.put("thanhTienNL", txtThanhTienNL.getText());
+					m.put("thanhTienTE", txtThanhTienTE.getText());
+					m.put("congTien", txtCongTien.getText());
+					m.put("tienThue", txtTienThue.getText());
+					m.put("tongTienThanhToan", txtTongTienThanhToan.getText());
+					dataSource.add(m);
+
+					JRDataSource Datasour = new JRBeanCollectionDataSource(dataSource);
+					try {
+						JasperReport report = JasperCompileManager.compileReport("/jasper/PhieuThu.jrxml");
+						JasperPrint filledRedport = JasperFillManager.fillReport(report, null, Datasour);
+						this.dispose();
+						FrmPrint frmPrint = new FrmPrint();
+						frmPrint.getContentPane().add(new JasperViewer(filledRedport), BorderLayout.CENTER);
+						frmPrint.setVisible(true);
+					} catch (JRException e1) {
+						e1.printStackTrace();
+						JOptionPane.showMessageDialog(this, "Lỗi không mở được phiếu thu", "Lỗi",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+
+			}
+		}
 
 	}
 
@@ -634,14 +751,4 @@ public class dlgPhieuThu extends JDialog {
 	 * 
 	 * }
 	 */
-
-	public static boolean isDaThemPhieuDK() {
-		return daThemPhieuDK;
-	}
-
-	public static void setDaThemPhieuDK(boolean daThemPhieuDKs) {
-
-		daThemPhieuDK = daThemPhieuDKs;
-
-	}
 }

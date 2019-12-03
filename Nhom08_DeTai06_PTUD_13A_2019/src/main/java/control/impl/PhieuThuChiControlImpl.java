@@ -45,4 +45,10 @@ public class PhieuThuChiControlImpl implements IPhieuThuChiControl {
 		return null;
 	}
 
+	@Override
+	public PhieuThuChi suaPhieu(PhieuThuChi p) {
+		// TODO Auto-generated method stub
+		return phieuThuChiDAO.suaPhieu(p);
+	}
+
 }

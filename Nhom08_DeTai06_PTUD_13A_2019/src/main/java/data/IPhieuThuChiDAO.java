@@ -10,6 +10,8 @@ public interface IPhieuThuChiDAO {
 
 	public PhieuThuChi themPhieu(PhieuThuChi p);
 
+	public PhieuThuChi suaPhieu(PhieuThuChi p);
+
 	public PhieuThuChi layThongTinPhieu(String ma);
 
 	public List<PhieuThuChi> layDSPhieu();
