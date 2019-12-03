@@ -925,6 +925,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			dtcNgayKhoiHanh.setEnabled(true);
 			spnSoKhachToiDa.setEnabled(true);
 		}
+
 		/*
 		 * 
 		 */
