@@ -91,28 +91,36 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 
 		JPanel pnlDSKhachHang = new JPanel();
 		GroupLayout gl_pnlTimKiemTTKH = new GroupLayout(pnlTimKiemTTKH);
-		gl_pnlTimKiemTTKH.setHorizontalGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_pnlTimKiemTTKH.createSequentialGroup().addContainerGap().addGroup(gl_pnlTimKiemTTKH
-						.createParallelGroup(Alignment.TRAILING)
-						.addComponent(pnlDSKhachHang, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
-						.addGroup(Alignment.LEADING,
-								gl_pnlTimKiemTTKH.createSequentialGroup().addComponent(lblLoaiTK)
-										.addPreferredGap(ComponentPlacement.UNRELATED)
-										.addComponent(cmbLoaiTK, 0, 0, Short.MAX_VALUE))
+		gl_pnlTimKiemTTKH.setHorizontalGroup(
+			gl_pnlTimKiemTTKH.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_pnlTimKiemTTKH.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.TRAILING)
+						.addComponent(pnlDSKhachHang, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+						.addGroup(Alignment.LEADING, gl_pnlTimKiemTTKH.createSequentialGroup()
+							.addComponent(lblLoaiTK)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(cmbLoaiTK, 0, 0, Short.MAX_VALUE))
 						.addComponent(lblNhap, Alignment.LEADING)
-						.addComponent(txtTuKhoa, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
-						.addContainerGap()));
-		gl_pnlTimKiemTTKH.setVerticalGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlTimKiemTTKH.createSequentialGroup().addContainerGap()
-						.addGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.BASELINE).addComponent(lblLoaiTK)
-								.addComponent(cmbLoaiTK, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
-						.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(lblNhap)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(txtTuKhoa, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(pnlDSKhachHang, GroupLayout.PREFERRED_SIZE, 291, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
-		gl_pnlTimKiemTTKH.linkSize(SwingConstants.VERTICAL, new Component[] { lblLoaiTK, cmbLoaiTK });
+						.addComponent(txtTuKhoa, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		gl_pnlTimKiemTTKH.setVerticalGroup(
+			gl_pnlTimKiemTTKH.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlTimKiemTTKH.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblLoaiTK)
+						.addComponent(cmbLoaiTK, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(lblNhap)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(txtTuKhoa, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(pnlDSKhachHang, GroupLayout.PREFERRED_SIZE, 279, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(58, Short.MAX_VALUE))
+		);
+		gl_pnlTimKiemTTKH.linkSize(SwingConstants.VERTICAL, new Component[] {lblLoaiTK, cmbLoaiTK});
 		pnlDSKhachHang.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrDSKH = new JScrollPane();
@@ -130,7 +138,7 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 		pnlThongTinTK.setLayout(new BorderLayout(0, 0));
 
 		JPanel pnlTTCTKhachHang = new JPanel();
-		pnlTTCTKhachHang.setPreferredSize(new Dimension(10, 150));
+		pnlTTCTKhachHang.setPreferredSize(new Dimension(10, 200));
 		pnlTTCTKhachHang.setBorder(new TitledBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null),
 				"Th\u00F4ng tin kh\u00E1ch h\u00E0ng", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pnlThongTinTK.add(pnlTTCTKhachHang, BorderLayout.CENTER);

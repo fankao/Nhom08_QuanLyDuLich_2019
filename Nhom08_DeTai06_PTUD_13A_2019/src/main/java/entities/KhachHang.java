@@ -31,6 +31,9 @@ public class KhachHang {
 	private Date ngaySinh;
 	@Column(columnDefinition = "VARCHAR(20)")
 	private String soDienThoai;
+
+	private boolean gioiTinh;
+
 	@Embedded
 	private DiaChi diaChi;
 
@@ -38,13 +41,14 @@ public class KhachHang {
 		// TODO Auto-generated constructor stub
 	}
 
-	public KhachHang(String maKH, String soCMND, String hoVaTen, Date ngaySinh, String soDienThoai) {
+	public KhachHang(String maKH, String soCMND, String hoVaTen, Date ngaySinh, String soDienThoai, boolean gioiTinh) {
 		super();
 		this.maKH = maKH;
 		this.soCMND = soCMND;
 		this.hoVaTen = hoVaTen;
 		this.ngaySinh = ngaySinh;
 		this.soDienThoai = soDienThoai;
+		this.gioiTinh = gioiTinh;
 	}
 
 	public int getId() {
@@ -93,6 +97,14 @@ public class KhachHang {
 
 	public void setSoDienThoai(String soDienThoai) {
 		this.soDienThoai = soDienThoai;
+	}
+
+	public boolean isGioiTinh() {
+		return gioiTinh;
+	}
+
+	public void setGioiTinh(boolean gioiTinh) {
+		this.gioiTinh = gioiTinh;
 	}
 
 	public DiaChi getDiaChi() {

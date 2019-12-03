@@ -75,7 +75,7 @@
 			</textField>
 			<textField>
 				<reportElement x="660" y="-1" width="92" height="20" uuid="e9bae0e4-e700-4287-bcf4-d7fcdfcdceba"/>
-				<textElement verticalAlignment="Top"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{soPhieuThu}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -84,80 +84,93 @@
 		<band height="420" splitType="Stretch">
 			<textField>
 				<reportElement x="150" y="29" width="590" height="30" uuid="9dd119fb-25be-42d4-b53b-51f5f5e227e4"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{maPDK}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="10" y="60" width="130" height="30" uuid="004ffd57-dc75-43d7-9900-3060441a5cbb"/>
-				<textElement>
-					<font size="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Tour :]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="150" y="60" width="590" height="30" uuid="972cdf02-e5d9-4457-a92b-a8d9bfde3ea0"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{tenTour}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="0" y="0" width="180" height="19" uuid="9d8b7e9c-ad40-407c-bfaa-585b2126bac4"/>
 				<textElement verticalAlignment="Middle">
-					<font size="10"/>
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Thông tin phiếu thu]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="30" width="130" height="30" uuid="8ad08b34-1027-4b9a-9302-523ac2b40b1b"/>
-				<textElement>
-					<font size="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Mã phiếu đăng ký :]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="150" y="150" width="590" height="30" uuid="1758b217-6546-4313-98fc-1da17481a1a1"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{soDienThoai}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="10" y="90" width="130" height="30" uuid="f4b5f426-2d67-46e2-b904-b1a9136ef392"/>
-				<textElement>
-					<font size="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Khách hàng :]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="150" y="90" width="590" height="30" uuid="47fcaaa9-fe56-4bf2-9860-79fbe53b4743"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{tenKhachHang}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="10" y="120" width="130" height="30" uuid="c536450e-e398-4f6c-8f63-a93fa9841ad2"/>
-				<textElement>
-					<font size="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Địa chỉ :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="180" width="130" height="30" uuid="29b17f33-5784-42be-b9b5-ffd7a841aeef"/>
-				<textElement>
-					<font size="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Nội dung :]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="150" y="120" width="590" height="30" uuid="36540239-e136-407c-8983-2d138903d900"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{diaChiKH}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="10" y="150" width="130" height="30" uuid="622a4403-4773-404d-b651-ddabb83dd605"/>
-				<textElement>
-					<font size="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Số điện thoại :]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="150" y="180" width="591" height="50" uuid="596ca2b8-987e-4326-8531-ac1cbcf596de"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{noiDung}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -165,11 +178,16 @@
 				<box padding="0">
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="-1" y="240" width="181" height="21" uuid="11b640a1-4169-4623-8f6e-a1f223f64dd2"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<text><![CDATA[Thông tin thanh toán]]></text>
 			</staticText>
 			<staticText>
@@ -177,121 +195,142 @@
 				<box padding="0">
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="520" y="300" width="89" height="30" uuid="0a712fcb-536c-40a9-a77d-47458655c968"/>
-				<textElement>
-					<font size="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Thành tiền :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="270" width="150" height="30" uuid="38166a37-3daf-4a20-b14f-c704d3a695d8"/>
-				<textElement>
-					<font size="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Số khách người lớn :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="200" y="380" width="88" height="30" uuid="bed8831a-5f22-43b8-a516-ebc741508a39"/>
-				<textElement>
-					<font size="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Tiền thuế :]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="380" y="270" width="120" height="30" uuid="30abf3c5-8088-4754-9c77-f4fe16072800"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{donGiaNL}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="160" y="270" width="120" height="30" uuid="e3b22787-71e7-4d46-b189-d10f9a421a01"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{soKhachNL}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="609" y="270" width="120" height="30" uuid="e7e0fbfe-6cd0-4bd6-aec3-f1345257ec4e"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{thanhTienNL}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="610" y="300" width="119" height="30" uuid="c8534a76-efe2-4835-9a85-83845c85211b"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{thanhTienTE}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="520" y="270" width="89" height="30" uuid="0e3b2b0d-3651-421b-ab6a-2b4d091175bd"/>
-				<textElement>
-					<font size="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Thành tiền :]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="380" y="302" width="120" height="30" uuid="077aa9d9-ea5a-4720-b815-b528a7347f4c"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{donGiaTE}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="10" y="380" width="190" height="30" uuid="c24ce6ec-ce93-4656-b872-e254f9387856"/>
-				<textElement>
-					<font size="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Thuế GTGT(VAT) 5%:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="520" y="330" width="89" height="30" uuid="1f6cfb74-f2b2-4bda-a309-dc3de62f1e35"/>
-				<textElement>
-					<font size="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Cộng tiền :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="300" y="270" width="79" height="30" uuid="37a9e853-e184-4192-9592-625962de91fc"/>
-				<textElement>
-					<font size="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Đơn giá :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="300" width="150" height="30" uuid="0473c651-fdc6-458c-a033-92637c15c00d"/>
-				<textElement>
-					<font size="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Số khách trẻ em :]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="609" y="330" width="120" height="30" uuid="fe86c80b-0aa7-47b9-b197-87566004eed7"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{congTien}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="160" y="300" width="120" height="30" uuid="ced62ddc-07d2-45d3-b1b7-ab9266e010c0"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{soKhachTE}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="290" y="380" width="120" height="30" uuid="1a50384a-05b2-48c2-ad21-23179067bf1f"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{tienThue}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="300" y="299" width="79" height="32" uuid="6dd8fd02-4a5e-4783-b7c7-ec22230aa278"/>
-				<textElement>
-					<font size="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Đơn giá :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="420" y="380" width="190" height="30" uuid="3a14ad26-1ec6-4e77-9708-ca3bd81bde75"/>
-				<textElement>
-					<font size="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Tổng tiền thanh toán :]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="610" y="380" width="118" height="30" uuid="52a4489d-44b2-4253-99c4-7f4ffa4ae9de"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{tongTienThanhToan}]]></textFieldExpression>
 			</textField>
 		</band>

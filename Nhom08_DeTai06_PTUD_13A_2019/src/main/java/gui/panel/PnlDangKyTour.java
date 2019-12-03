@@ -32,6 +32,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
@@ -65,6 +66,9 @@ import utils.TienIch;
 import utils.address.District;
 import utils.address.Province;
 import utils.address.Ward;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
 
 public class PnlDangKyTour extends JPanel implements ActionListener, ListSelectionListener {
 
@@ -118,6 +122,20 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 	private JButton btnLamMoi;
 	private JButton btnTimKiemTheoNgay;
 	private JButton btnLocDiaDanh;
+	private JLabel lblGioiTinh;
+	private JRadioButton rdbNam;
+	private JRadioButton rdbNu;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JDateChooser dtcDenNgay;
+	private JPanel pnlHuyChonNgayKH;
+	private JPanel pnlChonNgayKH;
+	private JButton btnChonNgayKH;
+	private JLabel lblMaNgayKH;
+	private JLabel lblMaNgayKHdb;
+	private JLabel lblNgayKH;
+	private JLabel lblNgayKHdb;
+	private JPanel pnlTTNgayKH;
+	private JCheckBox chkThamGiaTourDK;
 
 	@SuppressWarnings("unchecked")
 	public PnlDangKyTour(NhanVien nv) {
@@ -211,78 +229,100 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		btnHuy.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		dtcNgaySinh = new JDateChooser();
-		dtcNgaySinh.setFont(new Font("Dialog", Font.PLAIN, 18));
+		dtcNgaySinh.getCalendarButton().setFont(new Font("Dialog", Font.PLAIN, 17));
+		dtcNgaySinh.setFont(new Font("Arial", Font.PLAIN, 18));
 		dtcNgaySinh.setLocale(new Locale("vi", "VN"));
 		dtcNgaySinh.setDateFormatString("dd/MM/yyyy");
+
+		lblGioiTinh = new JLabel("Giới tính:");
+		lblGioiTinh.setFont(new Font("Dialog", Font.PLAIN, 18));
+
+		rdbNam = new JRadioButton("Nam");
+		rdbNam.setSelected(true);
+		buttonGroup.add(rdbNam);
+		rdbNam.setFont(new Font("Dialog", Font.PLAIN, 18));
+
+		rdbNu = new JRadioButton("Nữ");
+		buttonGroup.add(rdbNu);
+		rdbNu.setFont(new Font("Dialog", Font.PLAIN, 18));
 		GroupLayout gl_pnlThongTinKH = new GroupLayout(pnlThongTinKH);
-		gl_pnlThongTinKH.setHorizontalGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlThongTinKH.createSequentialGroup().addContainerGap()
-						.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_pnlThongTinKH.createSequentialGroup().addComponent(lblHoTenKH)
-										.addPreferredGap(ComponentPlacement.RELATED).addComponent(txtHoTenKH,
-												GroupLayout.PREFERRED_SIZE, 287, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_pnlThongTinKH.createSequentialGroup()
-										.addComponent(lblDiaChiKH, GroupLayout.PREFERRED_SIZE, 84,
-												GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.RELATED).addComponent(pnlDiaChi,
-												GroupLayout.PREFERRED_SIZE, 471, GroupLayout.PREFERRED_SIZE)))
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_pnlThongTinKH.createSequentialGroup().addComponent(lblSdt)
-										.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(txtSdtKH,
-												GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_pnlThongTinKH.createSequentialGroup()
-										.addComponent(lblNgaySinh, GroupLayout.PREFERRED_SIZE, 108,
-												GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(dtcNgaySinh,
-												GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)))
-						.addGap(18).addComponent(lblSoCmnd, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.LEADING)
-								.addComponent(txtSoCMND, GroupLayout.PREFERRED_SIZE, 228, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_pnlThongTinKH.createSequentialGroup()
-										.addComponent(btnLuuTTKhachHang, GroupLayout.PREFERRED_SIZE, 82,
-												GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(btnHuy,
-												GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)))
-						.addGap(129)));
-		gl_pnlThongTinKH.setVerticalGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlThongTinKH.createSequentialGroup().addContainerGap()
-						.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_pnlThongTinKH.createSequentialGroup()
-										.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.LEADING)
-												.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.BASELINE)
-														.addComponent(lblHoTenKH)
-														.addComponent(lblNgaySinh, GroupLayout.PREFERRED_SIZE, 25,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(txtHoTenKH, GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-												.addComponent(dtcNgaySinh, GroupLayout.PREFERRED_SIZE, 30,
-														GroupLayout.PREFERRED_SIZE))
-										.addGap(11)
-										.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.TRAILING)
-												.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.BASELINE)
-														.addComponent(txtSdtKH, GroupLayout.PREFERRED_SIZE, 31,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(btnLuuTTKhachHang, GroupLayout.PREFERRED_SIZE, 35,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(btnHuy, GroupLayout.PREFERRED_SIZE, 35,
-																GroupLayout.PREFERRED_SIZE))
-												.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.BASELINE)
-														.addComponent(lblSdt, GroupLayout.PREFERRED_SIZE, 25,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(lblDiaChiKH, GroupLayout.PREFERRED_SIZE, 25,
-																GroupLayout.PREFERRED_SIZE))
-												.addComponent(pnlDiaChi, GroupLayout.PREFERRED_SIZE, 38,
-														GroupLayout.PREFERRED_SIZE)))
-								.addComponent(lblSoCmnd, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtSoCMND, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(12, Short.MAX_VALUE)));
-		gl_pnlThongTinKH.linkSize(SwingConstants.VERTICAL, new Component[] { lblSoCmnd, txtSoCMND });
-		gl_pnlThongTinKH.linkSize(SwingConstants.VERTICAL, new Component[] { lblNgaySinh, dtcNgaySinh });
-		gl_pnlThongTinKH.linkSize(SwingConstants.VERTICAL, new Component[] { lblSdt, txtSdtKH });
-		gl_pnlThongTinKH.linkSize(SwingConstants.VERTICAL, new Component[] { lblHoTenKH, txtHoTenKH });
-		gl_pnlThongTinKH.linkSize(SwingConstants.VERTICAL, new Component[] { lblDiaChiKH, pnlDiaChi });
+		gl_pnlThongTinKH.setHorizontalGroup(
+			gl_pnlThongTinKH.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlThongTinKH.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_pnlThongTinKH.createSequentialGroup()
+							.addComponent(lblHoTenKH)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(txtHoTenKH, GroupLayout.PREFERRED_SIZE, 287, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_pnlThongTinKH.createSequentialGroup()
+							.addComponent(lblDiaChiKH, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(pnlDiaChi, GroupLayout.PREFERRED_SIZE, 471, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_pnlThongTinKH.createSequentialGroup()
+							.addComponent(lblSdt)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(txtSdtKH, GroupLayout.PREFERRED_SIZE, 158, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_pnlThongTinKH.createSequentialGroup()
+							.addComponent(lblNgaySinh, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(dtcNgaySinh, GroupLayout.PREFERRED_SIZE, 213, GroupLayout.PREFERRED_SIZE)))
+					.addGap(18)
+					.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblSoCmnd, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblGioiTinh))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_pnlThongTinKH.createSequentialGroup()
+							.addComponent(rdbNam)
+							.addGap(49)
+							.addComponent(rdbNu, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE))
+						.addComponent(txtSoCMND, GroupLayout.PREFERRED_SIZE, 228, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnHuy, GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+						.addComponent(btnLuuTTKhachHang, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		gl_pnlThongTinKH.setVerticalGroup(
+			gl_pnlThongTinKH.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlThongTinKH.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_pnlThongTinKH.createSequentialGroup()
+							.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.BASELINE)
+									.addComponent(lblHoTenKH)
+									.addComponent(lblNgaySinh, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+									.addComponent(txtHoTenKH, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addComponent(dtcNgaySinh, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+							.addGap(11)
+							.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.TRAILING)
+								.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.BASELINE)
+									.addComponent(txtSdtKH, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+									.addComponent(lblGioiTinh)
+									.addComponent(rdbNam)
+									.addComponent(rdbNu, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.BASELINE)
+									.addComponent(lblSdt, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+									.addComponent(lblDiaChiKH, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+								.addComponent(pnlDiaChi, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(lblSoCmnd, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_pnlThongTinKH.createSequentialGroup()
+							.addGroup(gl_pnlThongTinKH.createParallelGroup(Alignment.BASELINE)
+								.addComponent(txtSoCMND, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnHuy, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(btnLuuTTKhachHang, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		gl_pnlThongTinKH.linkSize(SwingConstants.VERTICAL, new Component[] {lblDiaChiKH, pnlDiaChi});
+		gl_pnlThongTinKH.linkSize(SwingConstants.VERTICAL, new Component[] {lblHoTenKH, txtHoTenKH});
+		gl_pnlThongTinKH.linkSize(SwingConstants.VERTICAL, new Component[] {lblSdt, txtSdtKH});
+		gl_pnlThongTinKH.linkSize(SwingConstants.VERTICAL, new Component[] {lblNgaySinh, dtcNgaySinh});
+		gl_pnlThongTinKH.linkSize(SwingConstants.VERTICAL, new Component[] {lblSoCmnd, txtSoCMND});
 
 		cmbTinh = new JComboBox();
 		cmbTinh.setVisible(false);
@@ -338,6 +378,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		lblTimKiem.setFont(new Font("Dialog", Font.PLAIN, 18));
 
 		JComboBox cmbDiaDanh = new JComboBox();
+		cmbDiaDanh.setEditable(true);
 		cmbDiaDanh.setFont(new Font("Dialog", Font.PLAIN, 15));
 
 		btnLocDiaDanh = new JButton("Lọc");
@@ -497,13 +538,22 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 
 		JPanel pnlHuyChon = new JPanel();
 		pnlHuyChon.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		FlowLayout fl_pnlHuyChon = (FlowLayout) pnlHuyChon.getLayout();
-		fl_pnlHuyChon.setAlignment(FlowLayout.LEFT);
 		pnlDieuKhienND.add(pnlHuyChon);
+		pnlHuyChon.setLayout(new GridLayout(0, 2, 0, 0));
+
+		pnlHuyChonNgayKH = new JPanel();
+		pnlHuyChon.add(pnlHuyChonNgayKH);
 
 		btnHuyChon = new JButton("Hủy chọn ngày khởi hành");
+		pnlHuyChonNgayKH.add(btnHuyChon);
 		btnHuyChon.setFont(new Font("Dialog", Font.PLAIN, 20));
-		pnlHuyChon.add(btnHuyChon);
+
+		pnlChonNgayKH = new JPanel();
+		pnlHuyChon.add(pnlChonNgayKH);
+
+		btnChonNgayKH = new JButton("Chọn ngày khởi hành");
+		btnChonNgayKH.setFont(new Font("Dialog", Font.PLAIN, 18));
+		pnlChonNgayKH.add(btnChonNgayKH);
 
 		JPanel pnlDangKyTour = new JPanel();
 		pnlDangKyTour.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -543,7 +593,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		lblDenNgay.setFont(new Font("Dialog", Font.PLAIN, 18));
 		pnlTimNgay.add(lblDenNgay);
 
-		JDateChooser dtcDenNgay = new JDateChooser();
+		dtcDenNgay = new JDateChooser();
 		dtcDenNgay.setPreferredSize(new Dimension(130, 25));
 		dtcDenNgay.setDateFormatString("dd/MM/yyyy");
 		dtcDenNgay.setMinimumSize(new Dimension(150, 21));
@@ -555,6 +605,34 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 
 		JPanel pnlThongTinNgayKH = new JPanel();
 		pnlDSNgayKhoiHanh.add(pnlThongTinNgayKH, BorderLayout.SOUTH);
+		pnlThongTinNgayKH.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		pnlTTNgayKH = new JPanel();
+		pnlTTNgayKH.setBorder(new LineBorder(new Color(0, 153, 51), 2));
+		FlowLayout flowLayout_3 = (FlowLayout) pnlTTNgayKH.getLayout();
+		flowLayout_3.setAlignment(FlowLayout.LEFT);
+		pnlThongTinNgayKH.add(pnlTTNgayKH);
+		
+		lblMaNgayKH = new JLabel("Mã:");
+		pnlTTNgayKH.add(lblMaNgayKH);
+		lblMaNgayKH.setFont(new Font("Dialog", Font.PLAIN, 18));
+		
+		lblMaNgayKHdb = new JLabel("<...>");
+		pnlTTNgayKH.add(lblMaNgayKHdb);
+		lblMaNgayKHdb.setFont(new Font("Dialog", Font.PLAIN, 18));
+		
+		lblNgayKH = new JLabel("Ngày khởi hành:");
+		pnlTTNgayKH.add(lblNgayKH);
+		lblNgayKH.setFont(new Font("Dialog", Font.PLAIN, 18));
+		
+		lblNgayKHdb = new JLabel("<...>");
+		pnlTTNgayKH.add(lblNgayKHdb);
+		lblNgayKHdb.setFont(new Font("Dialog", Font.PLAIN, 18));
+		
+		chkThamGiaTourDK = new JCheckBox("Tham gia tour đăng ký");
+		chkThamGiaTourDK.setHorizontalAlignment(SwingConstants.CENTER);
+		chkThamGiaTourDK.setFont(new Font("Dialog", Font.PLAIN, 18));
+		pnlThongTinNgayKH.add(chkThamGiaTourDK);
 
 		dsKhachHangThamGia = new ArrayList<KhachHangThamGia>();
 
@@ -717,6 +795,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 				TienIch.hienAnCacControl(false, txtHoTenKH, txtSdtKH, txtSoCMND, dtcNgaySinh);
 				pnlTimKiemKhachHang.setVisible(false);
 				btnThemMoi.setVisible(true);
+				btnLuuTTKhachHang.setVisible(false);
 
 			} else {
 				JOptionPane.showConfirmDialog(null, "Chưa tìm thấy thông tin khách hàng");
@@ -787,6 +866,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 			khachHang.setSoDienThoai(txtSdtKH.getText());
 			khachHang.setDiaChi(new DiaChi(cmbXa.getSelectedItem().toString(), cmbHuyen.getSelectedItem().toString(),
 					cmbTinh.getSelectedItem().toString()));
+			khachHang.setGioiTinh(rdbNam.isSelected() ? true : false);
 			int confirm = JOptionPane.showConfirmDialog(null,
 					"Lưu thông tin khách hàng " + khachHang.getHoVaTen() + " ?", "Xác nhận lưu khách hàng",
 					JOptionPane.YES_NO_OPTION);
@@ -909,6 +989,12 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		lblDiaChi.setVisible(true);
 		lblDiaChi.setText(kh.getDiaChi().toString());
 		btnThemDC.setVisible(false);
+
+		if (kh.isGioiTinh()) {
+			rdbNam.setSelected(true);
+		} else {
+			rdbNu.setSelected(true);
+		}
 
 	}
 

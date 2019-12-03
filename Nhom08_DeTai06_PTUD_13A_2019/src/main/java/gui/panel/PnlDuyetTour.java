@@ -15,9 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -36,7 +39,9 @@ import control.impl.TourControlImpl;
 import entities.NgayKhoiHanh;
 import entities.Tour;
 import model.TourTableModel;
+import utils.TableMouseListener;
 import utils.TienIch;
+import javax.swing.border.BevelBorder;
 
 public class PnlDuyetTour extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -51,6 +56,8 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 	private static List<NgayKhoiHanh> dsNgayKhoiHanh;
 	private static Tour tourChon;
 	private JButton btnHuyDuyet;
+	private JPopupMenu popupMenu;
+	private JMenuItem mnuXemTTTour;
 
 	/**
 	 * Khơi tạo giao diện duyệt mở bán tour
@@ -59,6 +66,7 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		JPanel pnlDSTourCanDuyet = new JPanel();
+		pnlDSTourCanDuyet.setBackground(Color.WHITE);
 		pnlDSTourCanDuyet.setPreferredSize(new Dimension(10, 350));
 		pnlDSTourCanDuyet.setBorder(
 				new TitledBorder(new CompoundBorder(new LineBorder(new Color(0, 0, 0), 2), new EmptyBorder(2, 2, 2, 2)),
@@ -72,9 +80,8 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		pnlDSTourCanDuyet.add(scrDSTourChuaDuyet, BorderLayout.CENTER);
 
 		JPanel pnlTTTour = new JPanel();
-		pnlTTTour.setPreferredSize(new Dimension(10, 300));
-		pnlTTTour.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0), 2), "Th\u00F4ng tin tour",
-				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		pnlTTTour.setPreferredSize(new Dimension(10, 20));
+		pnlTTTour.setBorder(new EmptyBorder(10, 0, 10, 0));
 		add(pnlTTTour);
 		pnlTTTour.setLayout(new BorderLayout(0, 0));
 
@@ -86,20 +93,12 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		pnlCenter.add(pnlCTTour);
 		pnlCTTour.setLayout(new BorderLayout(0, 0));
 
-		JPanel pnlDuyet = new JPanel();
-		pnlCTTour.add(pnlDuyet, BorderLayout.SOUTH);
-		FlowLayout flowLayout = (FlowLayout) pnlDuyet.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
-
-		btnDuyetTour = new JButton("Duyệt tour");
-		btnDuyetTour.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		pnlDuyet.add(btnDuyetTour);
-
 		JPanel pnlDSNgayKH = new JPanel();
 		pnlCenter.add(pnlDSNgayKH);
 		pnlDSNgayKH.setLayout(new BorderLayout(0, 0));
 
 		JPanel pnlDSTourDuyet = new JPanel();
+		pnlDSTourDuyet.setBackground(Color.WHITE);
 		pnlDSTourDuyet.setPreferredSize(new Dimension(10, 400));
 		pnlDSTourDuyet.setBorder(
 				new TitledBorder(new CompoundBorder(new LineBorder(new Color(0, 0, 0), 2), new EmptyBorder(2, 2, 2, 2)),
@@ -122,6 +121,12 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		tblDSTourChuaDuyet.setFillsViewportHeight(true);
 		tblDSTourDaDuyet.setFillsViewportHeight(true);
 
+		popupMenu = new JPopupMenu();
+		mnuXemTTTour = new JMenuItem("Xem chương trình tour");
+		mnuXemTTTour.setFont(new Font("Arial", Font.PLAIN, 18));
+		mnuXemTTTour.setIcon(new ImageIcon(this.getClass().getResource("/images/info_25px.png")));
+		popupMenu.add(mnuXemTTTour);
+
 		/*
 		 * Hiện thị các thông tin truy vấn từ cơ sở dữ liệu
 		 */
@@ -131,13 +136,21 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		dsTourChuaDuyet = tourControl.layDsTourTheoYeuCau(1);
 		hienDanhSachTour(tblDSTourChuaDuyet, dsTourChuaDuyet, scrDSTourChuaDuyet);
 
+		JPanel pnlDuyet = new JPanel();
+		pnlDSTourCanDuyet.add(pnlDuyet, BorderLayout.SOUTH);
+		FlowLayout flowLayout = (FlowLayout) pnlDuyet.getLayout();
+
+		btnDuyetTour = new JButton("Duyệt tour");
+		btnDuyetTour.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		pnlDuyet.add(btnDuyetTour);
+
 		// hiện danh sách tour đã duyệt
 		dsTourDaDuyet = tourControl.layDsTourTheoYeuCau(3);
 		hienDanhSachTour(tblDSTourDaDuyet, dsTourDaDuyet, scrDSTourDuyet);
 
 		JPanel pnlHuyDuyet = new JPanel();
+		pnlHuyDuyet.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		FlowLayout flowLayout_1 = (FlowLayout) pnlHuyDuyet.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		pnlDSTourDuyet.add(pnlHuyDuyet, BorderLayout.SOUTH);
 
 		btnHuyDuyet = new JButton("Huỷ duyệt");
@@ -185,7 +198,9 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 
 			}
 		});
-
+		mnuXemTTTour.addActionListener(this);
+		tblDSTourDaDuyet.addMouseListener(new TableMouseListener(tblDSTourDaDuyet, popupMenu));
+		tblDSTourChuaDuyet.addMouseListener(new TableMouseListener(tblDSTourChuaDuyet, popupMenu));
 	}
 
 	@Override
@@ -221,6 +236,11 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 					dsTourChuaDuyet = tourControl.layDsTourTheoYeuCau(1);
 					hienDanhSachTour(tblDSTourChuaDuyet, dsTourChuaDuyet, scrDSTourChuaDuyet);
 				}
+			}
+		} else if (o.equals(mnuXemTTTour)) {
+			String filepath = tourChon.getMoTa();
+			if (filepath != null) {
+				TienIch.hienFilePDF(filepath);
 			}
 		}
 

@@ -74,7 +74,7 @@
 			<staticText>
 				<reportElement x="0" y="0" width="180" height="19" uuid="d543e9a4-7ac1-4e84-a1b1-e74bff207334"/>
 				<textElement verticalAlignment="Middle">
-					<font size="10"/>
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Thông tin phiếu thu]]></text>
 			</staticText>
@@ -83,72 +83,93 @@
 				<box padding="0">
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<text><![CDATA[]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="40" width="130" height="30" uuid="38c87324-616d-4cb2-b2fd-af4f2450776e"/>
-				<textElement>
-					<font size="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Tour :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="80" width="130" height="30" uuid="81228de6-c5b2-42bd-99ad-e552923ac6a2"/>
-				<textElement>
-					<font size="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Khách hàng :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="120" width="130" height="30" uuid="c1ede9f7-21e5-4c27-ba2f-3e8be0534f9e"/>
-				<textElement>
-					<font size="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Địa chỉ :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="160" width="130" height="30" uuid="bbec4f59-1fae-41c0-9e49-2a9aa54df49f"/>
-				<textElement>
-					<font size="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Số điện thoại :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="200" width="130" height="30" uuid="7e08897c-7b0b-436f-87dc-2a5cc9900137"/>
-				<textElement>
-					<font size="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Số tiền chi :]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="10" y="240" width="130" height="30" uuid="b1229ca1-8e15-4563-be4a-20cdb539905c"/>
-				<textElement>
-					<font size="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
 				</textElement>
 				<text><![CDATA[Lí do chi :]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="140" y="40" width="540" height="30" uuid="e0385588-0f00-49aa-80e9-0d73e1e3ea67"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{tenTour}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="140" y="80" width="540" height="30" uuid="584d6372-f601-4120-8bb6-92d4be1cecab"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{tenKhachHang}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="140" y="120" width="540" height="30" uuid="2b7169be-5ce1-4b11-af69-d47d52006bc6"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{diaChi}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="140" y="160" width="540" height="30" uuid="94429fbe-804e-4eab-a9f3-d3d0b459168f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{soDienThoai}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="140" y="200" width="540" height="30" uuid="c8e56851-a97a-4345-a0e7-02f914bc1bfa"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{soTienChi}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="140" y="240" width="540" height="70" uuid="671ac92f-6dd4-46b0-97ac-14489598eca0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="16"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{liDoChi}]]></textFieldExpression>
 			</textField>
 		</band>
