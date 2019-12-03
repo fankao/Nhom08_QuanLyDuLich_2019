@@ -13,7 +13,6 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -21,11 +20,12 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import control.IKhachHangControl;
 import control.IPhieuDangKyControl;
@@ -34,30 +34,23 @@ import control.impl.PhieuDangKyControlImpl;
 import entities.KhachHang;
 import entities.KhachHangThamGia;
 import entities.PhieuDangKy;
-import entities.Tour;
 import model.DSKhachHangTGTableModel;
 import model.DSKhachHangTableModel;
 import model.DSPhieuDangKyModel;
 import utils.TienIch;
-import javax.swing.ListSelectionModel;
+import javax.swing.JTextPane;
+import java.awt.TextArea;
 
 public class pnlQuanLyPDK extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField txtMaPhieuDK;
 	private JTextField txtNgayTao;
 	private JTextField txtTrangThai;
-	private JTextField txtMaKH;
-	private JTextField txtTenKH;
-	private JTextField txtSdtKh;
-	private JTextField txtDiaChiKH;
-	private JTextField txtCMND_KH;
 	private JTextField txtTimKiemTour;
 	private JTextField txtTimKiemPDK;
 	private JComboBox<String> cmbTimKiemTour;
 	private JComboBox<String> cmbTimKiemPDK;
-	private JTextField txtTenTour;
 	private JTextField txtKhoiHanh;
-	private JTextField txtSoKhach;
 	private JTextField txtNgayKetThuc;
 	private JButton btnThem;
 	private JButton btnXoa1;
@@ -76,6 +69,16 @@ public class pnlQuanLyPDK extends JPanel {
 	private JScrollPane srcDsKhachTG;
 	private JButton btnBoChonKhachHang;
 	private JButton btnBoChonPDK;
+	private JButton btnLamMoiBangDSPDK;
+	private JButton btnLamMoiBangDSKH;
+	private JScrollPane srcDsPDK;
+	private JLabel lblMaKH;
+	private JLabel lblTenKH;
+	private JLabel lblSoDienThoai;
+	private JLabel lblSoCMND;
+	private JLabel lblNgaySinh;
+	private JLabel lblGioiTinh;
+	private JLabel lblDiaChi;
 
 	/**
 	 * Create the panel.
@@ -118,6 +121,10 @@ public class pnlQuanLyPDK extends JPanel {
 		cmbTimKiemTour = new JComboBox();
 		cmbTimKiemTour.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		pnlTimKiemTour.add(cmbTimKiemTour);
+		
+		btnLamMoiBangDSKH = new JButton("Lam moi");
+		btnLamMoiBangDSKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		pnlTimKiemTour.add(btnLamMoiBangDSKH);
 
 		JPanel pnlDsTour = new JPanel();
 		pnlTTTour.add(pnlDsTour, BorderLayout.CENTER);
@@ -146,12 +153,16 @@ public class pnlQuanLyPDK extends JPanel {
 		cmbTimKiemPDK = new JComboBox();
 		cmbTimKiemPDK.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		pnlTimKiemPDK.add(cmbTimKiemPDK);
+		
+		btnLamMoiBangDSPDK = new JButton("Lam moi");
+		btnLamMoiBangDSPDK.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		pnlTimKiemPDK.add(btnLamMoiBangDSPDK);
 
 		JPanel pnlDsPDK = new JPanel();
 		pnlTT_PDK.add(pnlDsPDK, BorderLayout.CENTER);
 		pnlDsPDK.setLayout(new BorderLayout(0, 0));
 
-		JScrollPane srcDsPDK = new JScrollPane();
+		srcDsPDK = new JScrollPane();
 		pnlDsPDK.add(srcDsPDK, BorderLayout.CENTER);
 		
 		JPanel pnlBoChonPDK = new JPanel();
@@ -182,105 +193,155 @@ public class pnlQuanLyPDK extends JPanel {
 		panel_2.add(pnlKhachHang);
 		pnlKhachHang.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Kh\u00E1ch H\u00E0ng",
 				TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-
-		JLabel lblMaKH = new JLabel("Mã khách hàng :");
+		pnlKhachHang.setLayout(new GridLayout(3, 0, 0, 0));
+		
+		JPanel panel_6 = new JPanel();
+		pnlKhachHang.add(panel_6);
+		
+		JLabel lblNewLabel = new JLabel("Mã khách hàng :");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		JLabel lblNewLabel_1 = new JLabel("Họ và tên :");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		JLabel label = new JLabel("");
+		
+		lblMaKH = new JLabel("New label");
 		lblMaKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
-
-		txtMaKH = new JTextField();
-		txtMaKH.setHorizontalAlignment(SwingConstants.LEFT);
-		txtMaKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtMaKH.setEditable(false);
-		txtMaKH.setColumns(10);
-
-		JLabel lblTenKH = new JLabel("Tên khách hàng :");
+		
+		lblTenKH = new JLabel("New label");
 		lblTenKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
-
-		txtTenKH = new JTextField();
-		txtTenKH.setHorizontalAlignment(SwingConstants.LEFT);
-		txtTenKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtTenKH.setEditable(false);
-		txtTenKH.setColumns(10);
-
-		JLabel lblSdtKH = new JLabel("Số điện thoại :");
-		lblSdtKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
-
-		txtSdtKh = new JTextField();
-		txtSdtKh.setHorizontalAlignment(SwingConstants.LEFT);
-		txtSdtKh.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtSdtKh.setEditable(false);
-		txtSdtKh.setColumns(10);
-
-		JLabel lblCMDN_KH = new JLabel("Số CMND :");
-		lblCMDN_KH.setFont(new Font("Tahoma", Font.PLAIN, 20));
-
-		JLabel lblDiachiKH = new JLabel("Địa chỉ :");
-		lblDiachiKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
-
-		txtDiaChiKH = new JTextField();
-		txtDiaChiKH.setHorizontalAlignment(SwingConstants.LEFT);
-		txtDiaChiKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtDiaChiKH.setEditable(false);
-		txtDiaChiKH.setColumns(10);
-
-		txtCMND_KH = new JTextField();
-		txtCMND_KH.setHorizontalAlignment(SwingConstants.LEFT);
-		txtCMND_KH.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtCMND_KH.setEditable(false);
-		txtCMND_KH.setColumns(10);
-		GroupLayout gl_pnlKhachHang = new GroupLayout(pnlKhachHang);
-		gl_pnlKhachHang.setHorizontalGroup(gl_pnlKhachHang.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlKhachHang.createSequentialGroup().addContainerGap().addGroup(gl_pnlKhachHang
-						.createParallelGroup(Alignment.LEADING, false).addGroup(gl_pnlKhachHang.createSequentialGroup()
-								.addGroup(gl_pnlKhachHang.createParallelGroup(Alignment.LEADING).addComponent(lblMaKH)
-										.addComponent(lblDiachiKH, GroupLayout.PREFERRED_SIZE, 121,
-												GroupLayout.PREFERRED_SIZE))
-								.addGap(27)
-								.addGroup(gl_pnlKhachHang.createParallelGroup(Alignment.LEADING, false)
-										.addComponent(txtDiaChiKH, GroupLayout.PREFERRED_SIZE, 619,
-												GroupLayout.PREFERRED_SIZE)
-										.addGroup(gl_pnlKhachHang.createSequentialGroup()
-												.addComponent(txtMaKH, GroupLayout.PREFERRED_SIZE, 173,
-														GroupLayout.PREFERRED_SIZE)
-												.addGap(54)
-												.addGroup(gl_pnlKhachHang.createParallelGroup(Alignment.LEADING)
-														.addComponent(lblCMDN_KH)
-														.addGroup(gl_pnlKhachHang.createSequentialGroup()
-																.addComponent(lblTenKH, GroupLayout.DEFAULT_SIZE,
-																		GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-																.addPreferredGap(ComponentPlacement.RELATED)
-																.addComponent(txtTenKH, GroupLayout.PREFERRED_SIZE, 233,
-																		GroupLayout.PREFERRED_SIZE))))))
-						.addGroup(gl_pnlKhachHang.createSequentialGroup().addComponent(lblSdtKH).addGap(44)
-								.addComponent(txtSdtKh, 0, 0, Short.MAX_VALUE).addGap(213)
-								.addComponent(txtCMND_KH, GroupLayout.PREFERRED_SIZE, 233, GroupLayout.PREFERRED_SIZE)))
-						.addContainerGap(82, Short.MAX_VALUE)));
-		gl_pnlKhachHang.setVerticalGroup(gl_pnlKhachHang.createParallelGroup(Alignment.LEADING).addGroup(gl_pnlKhachHang
-				.createSequentialGroup()
-				.addGroup(gl_pnlKhachHang.createParallelGroup(Alignment.LEADING).addGroup(gl_pnlKhachHang
-						.createSequentialGroup().addGap(4)
-						.addGroup(gl_pnlKhachHang.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblMaKH, GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-								.addComponent(txtMaKH, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
-						.addGap(10))
-						.addGroup(gl_pnlKhachHang.createSequentialGroup().addGap(3)
-								.addGroup(gl_pnlKhachHang.createParallelGroup(Alignment.BASELINE)
-										.addComponent(lblTenKH, GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-										.addComponent(txtTenKH, GroupLayout.PREFERRED_SIZE, 35,
-												GroupLayout.PREFERRED_SIZE))))
-				.addGap(2)
-				.addGroup(gl_pnlKhachHang.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_pnlKhachHang.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblSdtKH, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtSdtKh, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_pnlKhachHang.createParallelGroup(Alignment.BASELINE)
-								.addComponent(txtCMND_KH, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblCMDN_KH, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))
-				.addPreferredGap(ComponentPlacement.UNRELATED)
-				.addGroup(gl_pnlKhachHang.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblDiachiKH, GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-						.addComponent(txtDiaChiKH, GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
-				.addGap(12)));
-		pnlKhachHang.setLayout(gl_pnlKhachHang);
+		GroupLayout gl_panel_6 = new GroupLayout(panel_6);
+		gl_panel_6.setHorizontalGroup(
+			gl_panel_6.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_6.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblNewLabel)
+					.addGroup(gl_panel_6.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel_6.createSequentialGroup()
+							.addGap(727)
+							.addComponent(label))
+						.addGroup(gl_panel_6.createSequentialGroup()
+							.addGap(11)
+							.addComponent(lblMaKH, GroupLayout.PREFERRED_SIZE, 164, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblTenKH, GroupLayout.PREFERRED_SIZE, 354, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		gl_panel_6.setVerticalGroup(
+			gl_panel_6.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_6.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel_6.createParallelGroup(Alignment.LEADING)
+						.addComponent(label)
+						.addGroup(gl_panel_6.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblMaKH)
+							.addComponent(lblNewLabel_1)
+							.addComponent(lblTenKH, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		panel_6.setLayout(gl_panel_6);
+		
+		JPanel panel_7 = new JPanel();
+		pnlKhachHang.add(panel_7);
+		
+		JLabel lblNewLabel_2 = new JLabel("Ngày sinh :");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		lblNgaySinh = new JLabel("New label");
+		lblNgaySinh.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		JLabel lblNewLabel_7 = new JLabel("Số CMND :");
+		lblNewLabel_7.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		lblSoCMND = new JLabel("0123456789");
+		lblSoCMND.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		JLabel lblNewLabel_4 = new JLabel("Giới tính :");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		lblGioiTinh = new JLabel("Nam");
+		lblGioiTinh.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		GroupLayout gl_panel_7 = new GroupLayout(panel_7);
+		gl_panel_7.setHorizontalGroup(
+			gl_panel_7.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_7.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblNewLabel_2)
+					.addGap(58)
+					.addComponent(lblNgaySinh, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
+					.addGap(32)
+					.addComponent(lblNewLabel_7, GroupLayout.PREFERRED_SIZE, 152, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(lblSoCMND, GroupLayout.PREFERRED_SIZE, 164, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblNewLabel_4)
+					.addGap(10)
+					.addComponent(lblGioiTinh, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(40, Short.MAX_VALUE))
+		);
+		gl_panel_7.setVerticalGroup(
+			gl_panel_7.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_7.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel_7.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNewLabel_4)
+						.addComponent(lblGioiTinh)
+						.addGroup(gl_panel_7.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblNewLabel_2)
+							.addComponent(lblNgaySinh)
+							.addComponent(lblSoCMND)
+							.addComponent(lblNewLabel_7))))
+		);
+		panel_7.setLayout(gl_panel_7);
+		
+		JPanel panel_5 = new JPanel();
+		pnlKhachHang.add(panel_5);
+		
+		JLabel lblSinThoi = new JLabel("Số điện thoại :");
+		lblSinThoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		lblSoDienThoai = new JLabel("New label");
+		lblSoDienThoai.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		lblDiaChi = new JLabel("New label");
+		lblDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		JLabel label_2 = new JLabel("Đia chỉ :");
+		label_2.setHorizontalAlignment(SwingConstants.RIGHT);
+		label_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		GroupLayout gl_panel_5 = new GroupLayout(panel_5);
+		gl_panel_5.setHorizontalGroup(
+			gl_panel_5.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_5.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblSinThoi)
+					.addGap(26)
+					.addComponent(lblSoDienThoai, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(label_2, GroupLayout.PREFERRED_SIZE, 146, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(lblDiaChi, GroupLayout.PREFERRED_SIZE, 339, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(43, Short.MAX_VALUE))
+		);
+		gl_panel_5.setVerticalGroup(
+			gl_panel_5.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_5.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panel_5.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblDiaChi, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panel_5.createParallelGroup(Alignment.BASELINE)
+							.addComponent(label_2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblSinThoi, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblSoDienThoai)))
+					.addContainerGap(17, Short.MAX_VALUE))
+		);
+		panel_5.setLayout(gl_panel_5);
 
 		JPanel pnlPDK = new JPanel();
 		panel_2.add(pnlPDK);
@@ -317,12 +378,6 @@ public class pnlQuanLyPDK extends JPanel {
 		JLabel lblTnTour = new JLabel("Tên tour :");
 		lblTnTour.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-		txtTenTour = new JTextField();
-		txtTenTour.setHorizontalAlignment(SwingConstants.LEFT);
-		txtTenTour.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtTenTour.setEditable(false);
-		txtTenTour.setColumns(10);
-
 		JLabel lblNgyKhiHnh = new JLabel("Ngày khởi hành :");
 		lblNgyKhiHnh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
@@ -333,112 +388,86 @@ public class pnlQuanLyPDK extends JPanel {
 		txtKhoiHanh.setEditable(false);
 		txtKhoiHanh.setColumns(10);
 
-		JLabel lblSKhch = new JLabel("Số khách :");
-		lblSKhch.setFont(new Font("Tahoma", Font.PLAIN, 20));
-
-		txtSoKhach = new JTextField();
-		txtSoKhach.setHorizontalAlignment(SwingConstants.LEFT);
-		txtSoKhach.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtSoKhach.setEditable(false);
-		txtSoKhach.setColumns(10);
-
-		JLabel lblNgyKtThc = new JLabel("Ngày kết thúc :");
+		JLabel lblNgyKtThc = new JLabel("Thời gian :");
 		lblNgyKtThc.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		txtNgayKetThuc = new JTextField();
-		txtNgayKetThuc.setText("15\\15\\2222");
 		txtNgayKetThuc.setHorizontalAlignment(SwingConstants.LEFT);
 		txtNgayKetThuc.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtNgayKetThuc.setEditable(false);
 		txtNgayKetThuc.setColumns(10);
+		
+		JPanel panel_4 = new JPanel();
 		GroupLayout gl_pnlPDK = new GroupLayout(pnlPDK);
-		gl_pnlPDK.setHorizontalGroup(gl_pnlPDK.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlPDK.createSequentialGroup().addContainerGap()
-						.addGroup(gl_pnlPDK.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblPhieuDK, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblTnTour, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblNgyKhiHnh))
-						.addGap(7)
-						.addGroup(gl_pnlPDK.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_pnlPDK.createSequentialGroup()
-										.addGroup(gl_pnlPDK.createParallelGroup(Alignment.LEADING, false)
-												.addComponent(txtTenTour)
-												.addGroup(gl_pnlPDK.createSequentialGroup()
-														.addComponent(txtMaPhieuDK, GroupLayout.PREFERRED_SIZE, 144,
-																GroupLayout.PREFERRED_SIZE)
-														.addGap(12)
-														.addComponent(lblNgayTao, GroupLayout.PREFERRED_SIZE, 90,
-																GroupLayout.PREFERRED_SIZE)
-														.addGap(5).addComponent(txtNgayTao, GroupLayout.PREFERRED_SIZE,
-																144, GroupLayout.PREFERRED_SIZE)))
-										.addGap(12)
-										.addGroup(gl_pnlPDK.createParallelGroup(Alignment.TRAILING)
-												.addGroup(gl_pnlPDK.createSequentialGroup()
-														.addComponent(lblTrangThai, GroupLayout.PREFERRED_SIZE, 116,
-																GroupLayout.PREFERRED_SIZE)
-														.addPreferredGap(ComponentPlacement.RELATED))
-												.addGroup(Alignment.LEADING,
-														gl_pnlPDK.createSequentialGroup()
-																.addComponent(lblSKhch, GroupLayout.PREFERRED_SIZE, 99,
-																		GroupLayout.PREFERRED_SIZE)
-																.addGap(21)))
-										.addGroup(gl_pnlPDK.createParallelGroup(Alignment.LEADING)
-												.addComponent(txtTrangThai, GroupLayout.DEFAULT_SIZE, 161,
-														Short.MAX_VALUE)
-												.addComponent(txtSoKhach, GroupLayout.DEFAULT_SIZE, 161,
-														Short.MAX_VALUE)))
-								.addGroup(gl_pnlPDK.createSequentialGroup()
-										.addComponent(txtKhoiHanh, GroupLayout.PREFERRED_SIZE, 163,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(35)
-										.addComponent(lblNgyKtThc, GroupLayout.PREFERRED_SIZE, 151,
-												GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(ComponentPlacement.RELATED).addComponent(txtNgayKetThuc,
-												GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-												GroupLayout.PREFERRED_SIZE)))
-						.addContainerGap()));
-		gl_pnlPDK.setVerticalGroup(gl_pnlPDK.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlPDK.createSequentialGroup().addGroup(gl_pnlPDK.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_pnlPDK.createSequentialGroup().addGap(16).addComponent(lblTrangThai,
-								GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_pnlPDK.createSequentialGroup().addContainerGap().addGroup(gl_pnlPDK
-								.createParallelGroup(Alignment.LEADING)
+		gl_pnlPDK.setHorizontalGroup(
+			gl_pnlPDK.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlPDK.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_pnlPDK.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblPhieuDK, GroupLayout.PREFERRED_SIZE, 170, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblTnTour, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNgyKhiHnh))
+					.addGap(7)
+					.addGroup(gl_pnlPDK.createParallelGroup(Alignment.LEADING)
+						.addComponent(panel_4, GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
+						.addGroup(gl_pnlPDK.createSequentialGroup()
+							.addComponent(txtKhoiHanh, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
+							.addGap(77)
+							.addComponent(lblNgyKtThc)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(txtNgayKetThuc, GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE))
+						.addGroup(gl_pnlPDK.createSequentialGroup()
+							.addComponent(txtMaPhieuDK, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
+							.addGap(12)
+							.addComponent(lblNgayTao, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+							.addGap(5)
+							.addComponent(txtNgayTao, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
+							.addGap(12)
+							.addComponent(lblTrangThai, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(txtTrangThai, GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)))
+					.addContainerGap())
+		);
+		gl_pnlPDK.setVerticalGroup(
+			gl_pnlPDK.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlPDK.createSequentialGroup()
+					.addGroup(gl_pnlPDK.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_pnlPDK.createSequentialGroup()
+							.addGap(16)
+							.addComponent(lblTrangThai, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_pnlPDK.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(gl_pnlPDK.createParallelGroup(Alignment.LEADING)
 								.addComponent(txtTrangThai, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_pnlPDK.createSequentialGroup().addGap(3).addComponent(lblPhieuDK,
-										GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_pnlPDK.createSequentialGroup()
+									.addGap(3)
+									.addComponent(lblPhieuDK, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
 								.addComponent(txtMaPhieuDK, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_pnlPDK.createSequentialGroup().addGap(3).addComponent(lblNgayTao,
-										GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_pnlPDK.createSequentialGroup()
+									.addGap(3)
+									.addComponent(lblNgayTao, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
 								.addComponent(txtNgayTao, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))))
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(gl_pnlPDK.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_pnlPDK
-										.createSequentialGroup().addGap(18)
-										.addGroup(gl_pnlPDK.createParallelGroup(Alignment.BASELINE)
-												.addComponent(lblTnTour).addComponent(txtTenTour,
-														GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)))
-								.addGroup(gl_pnlPDK.createSequentialGroup().addGap(14)
-										.addGroup(gl_pnlPDK.createParallelGroup(Alignment.BASELINE)
-												.addComponent(txtSoKhach, GroupLayout.PREFERRED_SIZE, 35,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblSKhch, GroupLayout.PREFERRED_SIZE, 25,
-														GroupLayout.PREFERRED_SIZE))))
-						.addGroup(gl_pnlPDK.createParallelGroup(Alignment.LEADING).addGroup(gl_pnlPDK
-								.createSequentialGroup()
-								.addPreferredGap(ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-								.addGroup(gl_pnlPDK.createParallelGroup(Alignment.BASELINE)
-										.addComponent(lblNgyKtThc, GroupLayout.PREFERRED_SIZE, 25,
-												GroupLayout.PREFERRED_SIZE)
-										.addComponent(txtNgayKetThuc, GroupLayout.PREFERRED_SIZE, 35,
-												GroupLayout.PREFERRED_SIZE))
-								.addContainerGap())
-								.addGroup(gl_pnlPDK.createSequentialGroup().addGap(18)
-										.addGroup(gl_pnlPDK.createParallelGroup(Alignment.BASELINE)
-												.addComponent(txtKhoiHanh, GroupLayout.PREFERRED_SIZE, 35,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblNgyKhiHnh, GroupLayout.PREFERRED_SIZE, 25,
-														GroupLayout.PREFERRED_SIZE))
-										.addContainerGap()))));
+					.addGroup(gl_pnlPDK.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_pnlPDK.createSequentialGroup()
+							.addGap(18)
+							.addComponent(lblTnTour))
+						.addGroup(gl_pnlPDK.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(gl_pnlPDK.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_pnlPDK.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblNgyKtThc, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+							.addComponent(txtNgayKetThuc, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_pnlPDK.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblNgyKhiHnh, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+							.addComponent(txtKhoiHanh, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		panel_4.setLayout(new BorderLayout(0, 0));
+		
+		TextArea textArea = new TextArea();
+		panel_4.add(textArea, BorderLayout.CENTER);
 		pnlPDK.setLayout(gl_pnlPDK);
 
 		JPanel panel_3 = new JPanel();
@@ -522,6 +551,7 @@ public class pnlQuanLyPDK extends JPanel {
 		hienBangDSKhachHang(tblDSKhachHang, dsKhachHang, srcDsKhachHang);
 		hienBangDSPDK(tblDSPhieuDangKy, dsPDK, srcDsPDK);
 		hienBangDSKhachTG(tblDSKhachTG, dsKhachHangTG, srcDsKhachTG);
+		ganSuKien();
 	}
 	
 	private void hienBangDSKhachHang(JTable tbl, List<KhachHang> ds, JScrollPane src) {
@@ -542,5 +572,46 @@ public class pnlQuanLyPDK extends JPanel {
 		src.setViewportView(tbl);
 
 	}
-
+	private void ganSuKien() {
+		tblDSKhachHang.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				int row = tblDSKhachHang.getSelectedRow();
+					if (row == -1)
+						return ;
+				String maKH = (String) tblDSKhachHang.getValueAt(row, 1);
+				dsPDK = phieuDangKyControl.layDSPhieuDangKyTheoKH(maKH);
+				hienBangDSPDK(tblDSPhieuDangKy, dsPDK,srcDsPDK );
+			}
+		});
+		tblDSPhieuDangKy.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				// TODO Auto-generated method stub
+				int row = tblDSKhachHang.getSelectedRow();
+				if (row == -1 )
+					return;
+				PhieuDangKy pdk = new PhieuDangKy();
+				String maKH = (String) tblDSKhachHang.getValueAt(row, 1);
+				dsPDK = phieuDangKyControl.layDSPhieuDangKyTheoKH(maKH);
+				pdk = dsPDK.get(row);
+				hienThongTinPDK(pdk);
+			}
+		});
+	}
+	private void hienThongTinPDK(PhieuDangKy pdk) {
+		lblMaKH.setText(pdk.getKh().getMaKH());
+		lblTenKH.setText(pdk.getKh().getHoVaTen());
+		lblSoDienThoai.setText(pdk.getKh().getSoDienThoai());
+		lblNgaySinh.setText(pdk.getKh().getNgaySinh().toString());
+		lblSoCMND.setText(pdk.getKh().getSoCMND());
+		lblDiaChi.setText(pdk.getKh().getDiaChi().toString());
+		if(pdk.getKh().isGioiTinh())
+			lblGioiTinh.setText("Nam");
+		lblGioiTinh.setText("Nữ");
+		
+		
+	}
 }

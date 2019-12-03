@@ -8,6 +8,8 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.border.EtchedBorder;
 import java.awt.GridLayout;
+import java.util.List;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -16,6 +18,12 @@ import java.awt.FlowLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
+
+import control.IKhachHangControl;
+import control.impl.KhachHangControlImpl;
+import entities.KhachHang;
+import model.DSKhachHangTableModel;
+
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -32,6 +40,9 @@ public class PnlKhachHang extends JPanel {
 	private JTextField txtSoCMND;
 	private JTextField txtSoDienThoai;
 	private JTextField txtDiaChi;
+	private IKhachHangControl khachHangControl;
+	private List<KhachHang> dsKH;
+	private JScrollPane srcDSKhachHang;
 
 	public PnlKhachHang() {
 		setLayout(new BorderLayout(0, 0));
@@ -218,11 +229,20 @@ public class PnlKhachHang extends JPanel {
 		pnlMain.add(pnlDSKhachHang);
 		pnlDSKhachHang.setLayout(new BorderLayout(0, 0));
 		
-		JScrollPane pnlTieuDe = new JScrollPane();
-		pnlDSKhachHang.add(pnlTieuDe, BorderLayout.CENTER);
+		srcDSKhachHang = new JScrollPane();
+		pnlDSKhachHang.add(srcDSKhachHang, BorderLayout.CENTER);
 		
 		tblDSKhachHang = new JTable();
-		pnlTieuDe.setViewportView(tblDSKhachHang);
-
+		srcDSKhachHang.setViewportView(tblDSKhachHang);
+		
+		tblDSKhachHang = new JTable();
+		khachHangControl = new KhachHangControlImpl();
+		dsKH = khachHangControl.layDSKhachHang();
+		hienBanThongTinKH(tblDSKhachHang, dsKH, srcDSKhachHang);
+	}
+	private void hienBanThongTinKH(JTable tbl,List<KhachHang> ds,JScrollPane src) {
+		DSKhachHangTableModel dsKhachHangTableModel = new DSKhachHangTableModel(ds);
+		tbl.setModel(dsKhachHangTableModel);
+		src.setViewportView(tbl);
 	}
 }
