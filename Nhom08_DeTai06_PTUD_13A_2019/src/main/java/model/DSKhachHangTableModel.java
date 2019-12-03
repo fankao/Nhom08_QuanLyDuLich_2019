@@ -6,19 +6,18 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import entities.KhachHangThamGia;
+import entities.KhachHang;
 
 public class DSKhachHangTableModel extends AbstractTableModel {
-	private static final long serialVersionUID = 1L;
 	private static boolean isEdit = false;
-	private String[] tieuDe = { "STT", "Họ tên", "Ngày sinh", "Tuổi", "Ghi chú" };
-	private List<KhachHangThamGia> dsKhachThamGia = new ArrayList<KhachHangThamGia>();
-	private final Class<?>[] columnClass = new Class<?>[] { Integer.class, String.class, Date.class, Integer.class,
-			String.class };
+	private String[] tieuDe = { "STT", "Mã KH", "Họ tên", "Ngày sinh", "Số CMND", "Số điện thoại" };
+	private List<KhachHang> dsKhachHang = new ArrayList<KhachHang>();
+	private final Class<?>[] columnClass = new Class<?>[] { Integer.class, String.class, String.class, Date.class,
+			String.class, String.class };
 
-	public DSKhachHangTableModel(List<KhachHangThamGia> dsKhachThamGia) {
+	public DSKhachHangTableModel(List<KhachHang> dsKhachHang) {
 		super();
-		this.dsKhachThamGia = dsKhachThamGia;
+		this.dsKhachHang = dsKhachHang;
 	}
 
 	@Override
@@ -34,7 +33,7 @@ public class DSKhachHangTableModel extends AbstractTableModel {
 	@Override
 	public int getRowCount() {
 		// TODO Auto-generated method stub
-		return dsKhachThamGia.size();
+		return dsKhachHang.size();
 	}
 
 	@Override
@@ -45,28 +44,24 @@ public class DSKhachHangTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int row, int colum) {
-		KhachHangThamGia khtg = dsKhachThamGia.get(row);
+		KhachHang kh = dsKhachHang.get(row);
 		switch (colum) {
 		case 0:
 			return row + 1;
 		case 1:
-			return khtg.getHoTenKHTG();
+			return kh.getMaKH();
 		case 2:
-			return khtg.getNgaySinh();
+			return kh.getHoVaTen();
 		case 3:
-			return khtg.tinhTuoiKhachHang();
+			return kh.getNgaySinh();
 		case 4:
-			return khtg.getDoTuoi();
+			return kh.getSoCMND();
+
+		case 5:
+			return kh.getSoDienThoai();
+
 		}
 		return null;
-	}
-
-	public List<KhachHangThamGia> getDsKhachThamGia() {
-		return dsKhachThamGia;
-	}
-
-	public void setDsKhachThamGia(List<KhachHangThamGia> dsKhachThamGia) {
-		this.dsKhachThamGia = dsKhachThamGia;
 	}
 
 }
