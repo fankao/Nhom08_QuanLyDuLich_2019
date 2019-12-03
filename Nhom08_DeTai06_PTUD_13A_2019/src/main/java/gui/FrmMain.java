@@ -552,7 +552,8 @@ public class FrmMain extends JFrame implements ActionListener {
 			dongSubButton();
 			TienIch.xoaDuongDan(pnlButtonBar, 1);
 			TienIch.themDuongDan(pnlButtonBar, "Thống kê");
-			TienIch.doiMauButton(btnThongKe, new JButton[] { btnDangXuat, btnDuyetTour, btnCapNhatTour });
+			TienIch.doiMauButton(btnThongKe, new JButton[] { btnDangXuat, btnDuyetTour, btnCapNhatTour, btnDangKyTour,
+					btnPhieuDK, btnTTKhachHang });
 			TienIch.chuyenPanelKhiNhan(pnlCardLayout, pnlThongKe);
 			chkQuanLyTour.setSelected(false);
 

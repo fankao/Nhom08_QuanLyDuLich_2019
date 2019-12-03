@@ -35,7 +35,7 @@ public class PhieuThuChiDAOimpl implements IPhieuThuChiDAO {
 
 	@Override
 	public PhieuThuChi layThongTinPhieu(String ma) {
-		
+
 		return null;
 	}
 
@@ -53,7 +53,8 @@ public class PhieuThuChiDAOimpl implements IPhieuThuChiDAO {
 
 	@Override
 	public String phatSinhMaPhieu(LoaiPhieu loaiPhieu) {
-		List<Integer> lstId = em.createQuery("SELECT p.id FROM PhieuThuChi p", Integer.class).getResultList();
+		List<Integer> lstId = em.createQuery("SELECT p.id FROM PhieuThuChi p ORDER BY p.id", Integer.class)
+				.getResultList();
 		int max = 0;
 		if (lstId.size() != 0) {
 			max = lstId.get(lstId.size() - 1);

@@ -2,6 +2,7 @@ package utils;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -17,6 +18,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
@@ -295,6 +297,11 @@ public class TienIch {
 
 	}
 
+	/**
+	 * Lấy danh sách địa điểm
+	 * 
+	 * @return danh sách đại điểm
+	 */
 	public static List<Province> layDiaLyHanhChinh() {
 		Gson gson = new Gson();
 		List<Province> province = null;
@@ -307,6 +314,17 @@ public class TienIch {
 			e.printStackTrace();
 		}
 		return province;
+	}
+
+	public static void hienFilePDF(String filepath) {
+		try {
+			File file = new File("./chuongtrinhtour/" + filepath);
+			Desktop desktop = Desktop.getDesktop();
+			desktop.open(file);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "File " + filepath + " không tồn tại trong thư mục", "Lỗi",
+					JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 }
