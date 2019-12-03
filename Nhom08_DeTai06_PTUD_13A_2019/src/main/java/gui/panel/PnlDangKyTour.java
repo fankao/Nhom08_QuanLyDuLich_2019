@@ -139,7 +139,6 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 
 	@SuppressWarnings("unchecked")
 	public PnlDangKyTour(NhanVien nv) {
-		// setSize(1518,908);
 		this.nhanvien = nv;
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
