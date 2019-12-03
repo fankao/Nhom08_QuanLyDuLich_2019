@@ -178,7 +178,7 @@ public class PnlThongKe extends JPanel {
 		double tongTien = 0.0;
 		double tongTienTren1phieu = 0.0;
 		for (PhieuDangKy phieuDK : dsPDK) {
-			tongTienTren1phieu = phieuDK.tinhTongTienPDK((List<KhachHangThamGia>) phieuDK.getKhachHangThamGias());
+//			tongTienTren1phieu = phieuDK.tinhTongTienPDK((List<KhachHangThamGia>) phieuDK.getKhachHangThamGias());
 			if (phieuDK.getNgayTaoPhieu().toLocalDate().getMonth().getValue() == thang) {
 				tongTien += tongTienTren1phieu;
 			}

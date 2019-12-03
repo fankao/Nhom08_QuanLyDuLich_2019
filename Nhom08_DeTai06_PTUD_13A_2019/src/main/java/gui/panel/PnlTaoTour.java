@@ -920,7 +920,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			btnThemKH.setSelected(true);
 			btnThemKH.setVisible(false);
 			btnLuuNgayKH.setVisible(true);
-			btnLuu.setEnabled(true);
+			btnLuuNgayKH.setEnabled(true);
 			tblDSNGKH.setEnabled(false);
 			dtcNgayKhoiHanh.setEnabled(true);
 			spnSoKhachToiDa.setEnabled(true);

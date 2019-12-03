@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.10.0.final using JasperReports Library version 6.10.0-unknown  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PhieuChi" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="61212bc1-33d6-4651-9f1a-85075860133b">
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="soPhieuChi" class="java.lang.String"/>
+	<field name="ngayTaoPhieuThu" class="java.lang.String"/>
+	<field name="tenTour" class="java.lang.String"/>
+	<field name="tenKhachHang" class="java.lang.String"/>
+	<field name="diaChi" class="java.lang.String"/>
+	<field name="soDienThoai" class="java.lang.String"/>
+	<field name="soTienChi" class="java.lang.String"/>
+	<field name="liDoChi" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="115" splitType="Stretch">
+			<staticText>
+				<reportElement x="-10" y="0" width="291" height="20" uuid="437b5f07-1400-4d52-8f37-81f62b42b755"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Công ty du lịch Phương Nam]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-10" y="60" width="291" height="20" uuid="87cbea8c-180d-48c8-8396-212ab68db629"/>
+				<textElement>
+					<font size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[SĐT:0123456789]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-10" y="20" width="291" height="40" uuid="ccf8445f-5272-4b84-aea7-1b3e9ae7f64e"/>
+				<textElement>
+					<font size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Địa chỉ :12 Nguyễn Văn Bão,phường 3,quận Gò Vấp,Tp HCM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="500" y="0" width="99" height="20" uuid="579064db-b1be-49e4-94b2-deab3de98b41"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Số phiếu chi :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="500" y="20" width="139" height="20" uuid="69c4b0b4-8f68-4d3e-967f-7059d7c40db4"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Ngày tạo phiếu thu :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="281" y="50" width="199" height="54" uuid="b131c4ad-b900-4c9c-a2e9-c7e3e7edd4e0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Sans" size="30" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PHIẾU CHI]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="640" y="0" width="112" height="21" uuid="4d457269-a590-4e18-bd21-3c6dea2a8957"/>
+				<textFieldExpression><![CDATA[$F{soPhieuChi}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="640" y="20" width="112" height="21" uuid="b3e4bead-55d9-4364-a19a-8bfb0f80d19b"/>
+				<textFieldExpression><![CDATA[$F{ngayTaoPhieuThu}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="320" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="180" height="19" uuid="d543e9a4-7ac1-4e84-a1b1-e74bff207334"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Thông tin phiếu thu]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="20" width="751" height="300" uuid="b4b911de-2e6c-4c12-a947-19154001ef45"/>
+				<box padding="0">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="40" width="130" height="30" uuid="38c87324-616d-4cb2-b2fd-af4f2450776e"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Tour :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="80" width="130" height="30" uuid="81228de6-c5b2-42bd-99ad-e552923ac6a2"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Khách hàng :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="120" width="130" height="30" uuid="c1ede9f7-21e5-4c27-ba2f-3e8be0534f9e"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Địa chỉ :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="160" width="130" height="30" uuid="bbec4f59-1fae-41c0-9e49-2a9aa54df49f"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Số điện thoại :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="200" width="130" height="30" uuid="7e08897c-7b0b-436f-87dc-2a5cc9900137"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Số tiền chi :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="240" width="130" height="30" uuid="b1229ca1-8e15-4563-be4a-20cdb539905c"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[Lí do chi :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="140" y="40" width="540" height="30" uuid="e0385588-0f00-49aa-80e9-0d73e1e3ea67"/>
+				<textFieldExpression><![CDATA[$F{tenTour}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="80" width="540" height="30" uuid="584d6372-f601-4120-8bb6-92d4be1cecab"/>
+				<textFieldExpression><![CDATA[$F{tenKhachHang}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="120" width="540" height="30" uuid="2b7169be-5ce1-4b11-af69-d47d52006bc6"/>
+				<textFieldExpression><![CDATA[$F{diaChi}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="160" width="540" height="30" uuid="94429fbe-804e-4eab-a9f3-d3d0b459168f"/>
+				<textFieldExpression><![CDATA[$F{soDienThoai}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="200" width="540" height="30" uuid="c8e56851-a97a-4345-a0e7-02f914bc1bfa"/>
+				<textFieldExpression><![CDATA[$F{soTienChi}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="240" width="540" height="70" uuid="671ac92f-6dd4-46b0-97ac-14489598eca0"/>
+				<textFieldExpression><![CDATA[$F{liDoChi}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="94" splitType="Stretch">
+			<staticText>
+				<reportElement x="570" y="10" width="181" height="20" uuid="ea9e9416-1543-4007-8c68-e5490355f7ae"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Nhân viên tạo phiếu]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>
