@@ -1138,6 +1138,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 							JOptionPane.INFORMATION_MESSAGE);
 					dsNgayKhoiHanhCanTim = dsNgayKhoiHanh;
 					hienDanhSachNgayKhoiHanh(dsNgayKhoiHanhCanTim);
+					//
 				}
 			}
 
