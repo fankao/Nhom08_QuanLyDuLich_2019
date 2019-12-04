@@ -19,7 +19,5 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="libs/jcalendar-1.4.jar"/>
 	<classpathentry kind="lib" path="libs/swingx-core-1.6.2-AutoCompletition.jar"/>
-	<classpathentry exported="true" kind="con" path="net.sf.jasperreports.JR_CONTAINER"/>
-	<classpathentry exported="true" kind="con" path="com.jaspersoft.server.JRS_CONTAINER"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

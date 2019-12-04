@@ -22,4 +22,5 @@ public interface ITourControl {
 
 	public List<DiaDanh> layDSDiaDanh();
 	public String phatSinhNgayKhoiHanh(String maTour);
+	
 }

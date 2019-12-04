@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.InputStream;
 import java.sql.Date;
 import java.text.Format;
@@ -26,6 +27,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -41,6 +43,7 @@ import javax.swing.border.TitledBorder;
 import constant.HangSo;
 import control.IPhieuThuChiControl;
 import control.impl.PhieuThuChiControlImpl;
+import entities.KhachHangThamGia;
 import entities.LoaiPhieu;
 import entities.PhieuDangKy;
 import entities.PhieuThuChi;
@@ -55,6 +58,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.swing.JRViewer;
 import net.sf.jasperreports.view.JasperViewer;
 import utils.TienIch;
 
@@ -96,15 +100,13 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 	private JLabel lblTieuDe;
 
 	private final Format donVi = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
-	private JButton btnDong;
 	private JPanel pnlTour;
 	private JLabel lblTour;
 	private JTextField txtTour;
 	private JLabel lblDienThoai;
 	private JTextField txtSDT;
 	private JButton btnInPhieu;
-	private PhieuDangKy phieuDangKy;
-	private boolean khachDKMuonThamGiaTour;
+
 	private JPanel pnlLiDo;
 	private JPanel pnlCongTien;
 	private JPanel panel_3;
@@ -113,7 +115,7 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 	private JLabel lblThanhTienNL;
 	private JLabel lblCongTien;
 	private JTextArea txaNoiDung;
-	private PhieuThuChi phieuThuChi;
+
 	private IPhieuThuChiControl phieuThuChiControl;
 	private JFormattedTextField txtTongTienThanhToan;
 	private double thanhTienNguoiLon;
@@ -124,15 +126,18 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 	private double congTien;
 	private double tienThue;
 
+	private PhieuDangKy phieuDangKy;
+	private PhieuThuChi phieuThuChi;
+
 	/**
 	 * Hiện giao diện phiếu thu
 	 */
-	public dlgPhieuThu(PhieuDangKy phieuDangKy) {
+	public dlgPhieuThu(PhieuThuChi ptc, List<KhachHangThamGia> khachThamGias) {
 		setModalityType(ModalityType.TOOLKIT_MODAL);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(dlgPhieuThu.class.getResource("/images/iconFrm.png")));
 		setTitle("Phiếu thu");
-		this.phieuDangKy = phieuDangKy;
-
+		this.phieuThuChi = ptc;
+		this.phieuDangKy = phieuThuChi.getPdk();
 		setBounds(100, 100, 1244, 856);
 		getContentPane().setLayout(new BorderLayout());
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -568,13 +573,6 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 				btnInPhieu.setFont(new Font("Tahoma", Font.PLAIN, 20));
 				pnlButton.add(btnInPhieu);
 			}
-			{
-				btnDong = new JButton("Đóng");
-				btnDong.setFont(new Font("Tahoma", Font.PLAIN, 20));
-				btnDong.setActionCommand("OK");
-				pnlButton.add(btnDong);
-				getRootPane().setDefaultButton(btnDong);
-			}
 		}
 		lblKH.setPreferredSize(lblMaPT.getPreferredSize());
 		lblDC.setPreferredSize(lblMaPT.getPreferredSize());
@@ -624,18 +622,19 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 		lblThanhTienNL.setPreferredSize(new Dimension(100, 30));
 		lblThanhTienTE.setPreferredSize(new Dimension(100, 30));
 
+		/*
+		 * Tạo phiếu thu
+		 */
 		phieuThuChiControl = new PhieuThuChiControlImpl();
-		phieuThuChi = new PhieuThuChi();
-		phieuThuChi.setMaPhieuChi(phieuThuChiControl.phatSinhMaPhieu(LoaiPhieu.PHIEUTHU));
-		phieuThuChi.setNgayTaoPhieuChi(new Date(System.currentTimeMillis()));
-		phieuThuChi.setLoaiPhieu(LoaiPhieu.PHIEUTHU);
-		phieuThuChi.setPdk(phieuDangKy);
+		ptc.setMaPhieuChi(phieuThuChiControl.phatSinhMaPhieu(LoaiPhieu.PHIEUTHU));
+		ptc.setNgayTaoPhieuChi(new Date(System.currentTimeMillis()));
+		ptc.setLoaiPhieu(LoaiPhieu.PHIEUTHU);
 
-		soNguoiLon = phieuDangKy.tinhSoNguoiTheoDoTuoi(phieuDangKy.getKhachHangThamGias())[0];
-		soTreEm = phieuDangKy.tinhSoNguoiTheoDoTuoi(phieuDangKy.getKhachHangThamGias())[1];
+		soNguoiLon = phieuDangKy.tinhSoNguoiTheoDoTuoi(khachThamGias)[0];
+		soTreEm = phieuDangKy.tinhSoNguoiTheoDoTuoi(khachThamGias)[1];
 
-		thanhTienNguoiLon = phieuDangKy.tinhThanhTien(phieuDangKy.getKhachHangThamGias())[0];
-		thanhTienTremEm = phieuDangKy.tinhThanhTien(phieuDangKy.getKhachHangThamGias())[1];
+		thanhTienNguoiLon = phieuDangKy.tinhThanhTien(khachThamGias)[0];
+		thanhTienTremEm = phieuDangKy.tinhThanhTien(khachThamGias)[1];
 
 		congTien = (thanhTienNguoiLon + thanhTienTremEm);
 		tienThue = (thanhTienNguoiLon + thanhTienTremEm) * HangSo.THUE;
@@ -644,13 +643,12 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 
 		phieuThuChi.setSoTien(tongThanhTien);
 
-		PhieuThuChi phieuThuChiNew = phieuThuChiControl.themPhieu(phieuThuChi);
+		PhieuThuChi phieuThuChiNew = phieuThuChiControl.themPhieu(ptc);
 		if (phieuThuChiNew != null) {
-			hienThongTinPhieuThu(phieuThuChi);
+			hienThongTinPhieuThu(phieuThuChiNew);
 		}
 
 		btnInPhieu.addActionListener(this);
-		btnDong.addActionListener(this);
 
 	}
 
@@ -715,14 +713,13 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 					dataSource.add(m);
 
 					JRDataSource Datasour = new JRBeanCollectionDataSource(dataSource);
-					InputStream jrxmlInput = JRLoader.getResourceInputStream("/PhieuThu.jrxml");
+					String file = "src/main/resources/PhieuThu.jrxml";
 					try {
-						JasperDesign design =  JRXmlLoader.load(jrxmlInput);
-						JasperReport report = JasperCompileManager.compileReport(design);
+						JasperReport report = JasperCompileManager.compileReport(file);
 						JasperPrint filledRedport = JasperFillManager.fillReport(report, null, Datasour);
 						this.dispose();
-						FrmPrint frmPrint = new FrmPrint();
-						frmPrint.getContentPane().add(new JasperViewer(filledRedport), BorderLayout.CENTER);
+						JRViewer viewer = new JRViewer(filledRedport);
+						JFrame frmPrint = new FrmPrint(viewer);
 						frmPrint.setVisible(true);
 					} catch (JRException e1) {
 						e1.printStackTrace();

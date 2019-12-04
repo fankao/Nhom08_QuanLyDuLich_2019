@@ -14,8 +14,10 @@ public interface IPhieuThuChiDAO {
 
 	public PhieuThuChi layThongTinPhieu(String ma);
 
-	public List<PhieuThuChi> layDSPhieu();
+	public List<PhieuThuChi> layDSPhieuThu();
 
-	public List<PhieuThuChi> layDSPhieuTheoPhieuDK(String maPDK);
+	public List<PhieuThuChi> layDSPhieuThuTheoPhieuDK(String maPDK);
+
+	public List<PhieuThuChi> layDSPhieuChiTheoPhieuDK(String maPDK);
 
 }

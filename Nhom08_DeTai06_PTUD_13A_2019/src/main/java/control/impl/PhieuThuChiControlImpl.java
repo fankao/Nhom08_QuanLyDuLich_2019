@@ -51,4 +51,28 @@ public class PhieuThuChiControlImpl implements IPhieuThuChiControl {
 		return phieuThuChiDAO.suaPhieu(p);
 	}
 
+	@Override
+	public double tinhTongTienPhieuThuTheoPDK(String maPDK) {
+		List<PhieuThuChi> list = phieuThuChiDAO.layDSPhieuThuTheoPhieuDK(maPDK);
+		double tongTienPhieuThu = 0;
+		if (list.size() != 0) {
+			for (PhieuThuChi pt : list) {
+				tongTienPhieuThu += pt.getSoTien();
+			}
+		}
+		return tongTienPhieuThu;
+	}
+
+	@Override
+	public double tinhTongTienPhieuPhieuChiTheoPDK(String maPDK) {
+		List<PhieuThuChi> list = phieuThuChiDAO.layDSPhieuChiTheoPhieuDK(maPDK);
+		double tongTienPhieuChi = 0;
+		if (list.size() != 0) {
+			for (PhieuThuChi pt : list) {
+				tongTienPhieuChi += pt.getSoTien();
+			}
+		}
+		return tongTienPhieuChi;
+	}
+
 }

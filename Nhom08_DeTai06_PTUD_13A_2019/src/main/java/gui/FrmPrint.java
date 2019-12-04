@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import net.sf.jasperreports.swing.JRViewer;
+import net.sf.jasperreports.view.JasperViewer;
+
 public class FrmPrint extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -13,7 +16,7 @@ public class FrmPrint extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrmPrint() {
+	public FrmPrint(JRViewer viewer) {
 		setSize(800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -21,6 +24,12 @@ public class FrmPrint extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+
+		JPanel pnlPrint = new JPanel();
+		pnlPrint.setLayout(new BorderLayout(0, 0));
+		contentPane.add(pnlPrint, BorderLayout.CENTER);
+		pnlPrint.add(viewer, BorderLayout.CENTER);
+		
 	}
 
 }

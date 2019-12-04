@@ -67,6 +67,7 @@ import entities.KhachHangThamGia;
 import entities.NgayKhoiHanh;
 import entities.NhanVien;
 import entities.PhieuDangKy;
+import entities.PhieuThuChi;
 import entities.Tour;
 import gui.dialog.dlgPhieuThu;
 import model.DSKhachHangTGTableModel;
@@ -1088,7 +1089,9 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 							dsNgayKhoiHanh = tourControl
 									.layDSNgayKhoiHanhTheoTour(phieuDangKy.getNgayKhoiHanh().getTour().getMaTour());
 							hienDanhSachNgayKhoiHanh(dsNgayKhoiHanh);
-							dlgPhieuThu dlgPhieuThu = new dlgPhieuThu(phieuDangKy);
+							PhieuThuChi phieuThuChi = new PhieuThuChi();
+							phieuThuChi.setPdk(phieuDangKy);
+							dlgPhieuThu dlgPhieuThu = new dlgPhieuThu(phieuThuChi, phieuDangKy.getKhachHangThamGias());
 							dlgPhieuThu.setVisible(true);
 
 						}
@@ -1121,17 +1124,23 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		 * Tìm kiếm ngày khởi hành theo ngày
 		 */
 		else if (o.equals(btnTimKiemTheoNgay)) {
-			String maTour = tblDSTour.getValueAt(tblDSTour.getSelectedRow(), 1).toString();
-			List<NgayKhoiHanh> dsNgayKhoiHanhCanTim = tourControl.layDSNgayKhoiHanhTheoNgayKhoiHanh(maTour,
-					dtcTuNgay.getDate(), dtcDenNgay.getDate());
-			if (dsNgayKhoiHanhCanTim.size() != 0) {
-				hienDanhSachNgayKhoiHanh(dsNgayKhoiHanhCanTim);
-			} else {
-				JOptionPane.showMessageDialog(null, "Không tìm thấy ngày khởi hành cần tìm", "Thông báo",
-						JOptionPane.INFORMATION_MESSAGE);
-				dsNgayKhoiHanhCanTim = dsNgayKhoiHanh;
-				hienDanhSachNgayKhoiHanh(dsNgayKhoiHanhCanTim);
+			String tuNgay = ((JTextField) dtcTuNgay.getDateEditor().getUiComponent()).getText();
+			String denNgay = ((JTextField) dtcDenNgay.getDateEditor().getUiComponent()).getText();
+
+			if (tuNgay.length() != 0 && denNgay.length() != 0) {
+				String maTour = tblDSTour.getValueAt(tblDSTour.getSelectedRow(), 1).toString();
+				List<NgayKhoiHanh> dsNgayKhoiHanhCanTim = tourControl.layDSNgayKhoiHanhTheoNgayKhoiHanh(maTour,
+						dtcTuNgay.getDate(), dtcDenNgay.getDate());
+				if (dsNgayKhoiHanhCanTim.size() != 0) {
+					hienDanhSachNgayKhoiHanh(dsNgayKhoiHanhCanTim);
+				} else {
+					JOptionPane.showMessageDialog(null, "Không tìm thấy ngày khởi hành cần tìm", "Thông báo",
+							JOptionPane.INFORMATION_MESSAGE);
+					dsNgayKhoiHanhCanTim = dsNgayKhoiHanh;
+					hienDanhSachNgayKhoiHanh(dsNgayKhoiHanhCanTim);
+				}
 			}
+
 		}
 
 		/*

@@ -25,7 +25,7 @@ import constant.HangSo;
 @Entity
 @Table(name = "phieudangky")
 @NamedQueries({ @NamedQuery(name = "PDK.timDSPDK", query = "SELECT pdk FROM PhieuDangKy pdk"),
-	@NamedQuery(name = "PDK.timPDKTheoMa", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.maPhieuDK = : maPDK"),
+		@NamedQuery(name = "PDK.timPDKTheoMa", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.maPhieuDK = : maPDK"),
 		@NamedQuery(name = "PDK.timDSPDKTheoKH", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.kh.maKH = :makh"),
 		@NamedQuery(name = "PDK.timDSTheoTour", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.ngayKhoiHanh.tour.maTour=:matour"),
 		@NamedQuery(name = "PDK.timDSKhachThamGiaTheoTour", query = "SELECT pdk.khachHangThamGias FROM PhieuDangKy pdk WHERE pdk.ngayKhoiHanh.tour.maTour=:matour") })
@@ -74,6 +74,12 @@ public class PhieuDangKy {
 		this.daHuyPhieu = daHuyPhieu;
 	}
 
+	/**
+	 * tính số người theo độ tuôi
+	 * 
+	 * @param list: danh sách khách hàng tham gia của tour
+	 * @return: trả về mảng độ tuổi, gồm 2 phần tử
+	 */
 	public int[] tinhSoNguoiTheoDoTuoi(List<KhachHangThamGia> list) {
 		int dotuoi[] = new int[2];
 		int soNguoiLon = 0;
@@ -92,6 +98,12 @@ public class PhieuDangKy {
 		return dotuoi;
 	}
 
+	/**
+	 * Tính thành tiền dựa và danh sách khách hàng tham gia tour
+	 * 
+	 * @param list: danh sách khách hàng tham fi
+	 * @return
+	 */
 	public double[] tinhThanhTien(List<KhachHangThamGia> list) {
 		double[] thanhTien = new double[2];
 		int[] songuoi = tinhSoNguoiTheoDoTuoi(this.getKhachHangThamGias());

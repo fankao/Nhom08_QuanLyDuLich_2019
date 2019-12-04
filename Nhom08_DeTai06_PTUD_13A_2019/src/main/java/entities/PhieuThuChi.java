@@ -13,10 +13,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "phieuthuchi")
+@NamedQueries({
+		@NamedQuery(name = "PTC.timDSPhieuThu", query = "SELECT pt FROM PhieuThuChi pt WHERE pt.loaiPhieu=:loaiPhieu ORDER BY pt.id"),
+		@NamedQuery(name = "PTC.timDSPhieuThuTheoPDK", query = "SELECT pt FROM PhieuThuChi pt WHERE pt.loaiPhieu=:loaiPhieu AND pt.pdk.maPhieuDK=:mapdk ORDER BY pt.id"),
+		@NamedQuery(name = "PTC.timDSPhieuChiTheoPDK", query = "SELECT pt FROM PhieuThuChi pt WHERE pt.loaiPhieu=:loaiPhieu AND pt.pdk.maPhieuDK=:mapdk ORDER BY pt.id") })
 public class PhieuThuChi {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -99,7 +105,6 @@ public class PhieuThuChi {
 	public void setLoaiPhieu(LoaiPhieu loaiPhieu) {
 		this.loaiPhieu = loaiPhieu;
 	}
-	
 
 	@Override
 	public int hashCode() {
@@ -128,8 +133,11 @@ public class PhieuThuChi {
 
 	@Override
 	public String toString() {
-		return "PhieuChi [maPhieuChi=" + maPhieuChi.trim() + ", ngayTaoPhieuChi=" + ngayTaoPhieuChi + ", soTienChi="
-				+ soTien + ", lyDoChi=" + lyDo + "]";
+		return "PhieuThuChi [id=" + id + ", maPhieuChi=" + maPhieuChi + ", ngayTaoPhieuChi=" + ngayTaoPhieuChi
+				+ ", soTien=" + soTien + ", lyDo=" + lyDo + ", pdk=" + pdk + ", loaiPhieu=" + loaiPhieu + "]";
 	}
+	
+
+	
 
 }

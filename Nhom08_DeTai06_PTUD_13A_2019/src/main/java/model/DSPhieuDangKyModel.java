@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import constant.HangSo;
 import entities.PhieuDangKy;
 
 public class DSPhieuDangKyModel extends AbstractTableModel {
@@ -56,12 +57,12 @@ public class DSPhieuDangKyModel extends AbstractTableModel {
 			return pdk.getNv().getHoVaTen();
 		case 4:
 			if (pdk.getNgayKhoiHanh().isDaXoaDoKhongDuSoLuong())
-				return "Chờ hủy";
+				return HangSo.CHOHUYPHIEUDK;
 			if (pdk.isDaHoanThanhTour())
-				return "Đã hoàn thành";
+				return HangSo.DAHOANTHANHTOUR;
 			if (pdk.isDaHuyPhieu())
-				return "Đã hủy";
-			return "Đang chờ xử lý";
+				return HangSo.DAHUYPHIEUDK;
+			return HangSo.DANGXULY;
 		}
 		return null;
 	}

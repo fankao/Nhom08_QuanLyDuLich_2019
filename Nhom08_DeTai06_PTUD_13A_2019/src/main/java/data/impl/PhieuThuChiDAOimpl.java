@@ -1,10 +1,12 @@
 package data.impl;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import data.EntityManagerConnection;
 import data.IPhieuThuChiDAO;
@@ -40,18 +42,6 @@ public class PhieuThuChiDAOimpl implements IPhieuThuChiDAO {
 	}
 
 	@Override
-	public List<PhieuThuChi> layDSPhieu() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<PhieuThuChi> layDSPhieuTheoPhieuDK(String maPDK) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String phatSinhMaPhieu(LoaiPhieu loaiPhieu) {
 		List<Integer> lstId = em.createQuery("SELECT p.id FROM PhieuThuChi p ORDER BY p.id", Integer.class)
 				.getResultList();
@@ -79,6 +69,32 @@ public class PhieuThuChiDAOimpl implements IPhieuThuChiDAO {
 			tr.rollback();
 		}
 		return null;
+	}
+
+	@Override
+	public List<PhieuThuChi> layDSPhieuThu() {
+		TypedQuery<PhieuThuChi> query = em.createNamedQuery("PTC.timDSPhieuThu", PhieuThuChi.class);
+		query.setParameter("loaiPhieu", LoaiPhieu.PHIEUTHU);
+		List<PhieuThuChi> list = query.getResultList();
+		return list.size() != 0 ? list : new ArrayList<PhieuThuChi>();
+	}
+
+	@Override
+	public List<PhieuThuChi> layDSPhieuThuTheoPhieuDK(String maPDK) {
+		TypedQuery<PhieuThuChi> query = em.createNamedQuery("PTC.timDSPhieuThuTheoPDK", PhieuThuChi.class);
+		query.setParameter("loaiPhieu", LoaiPhieu.PHIEUTHU);
+		query.setParameter("mapdk", maPDK);
+		List<PhieuThuChi> list = query.getResultList();
+		return list.size() != 0 ? list : new ArrayList<PhieuThuChi>();
+	}
+
+	@Override
+	public List<PhieuThuChi> layDSPhieuChiTheoPhieuDK(String maPDK) {
+		TypedQuery<PhieuThuChi> query = em.createNamedQuery("PTC.timDSPhieuChiTheoPDK", PhieuThuChi.class);
+		query.setParameter("loaiPhieu", LoaiPhieu.PHIEUCHI);
+		query.setParameter("mapdk", maPDK);
+		List<PhieuThuChi> list = query.getResultList();
+		return list.size() != 0 ? list : new ArrayList<PhieuThuChi>();
 	}
 
 }
