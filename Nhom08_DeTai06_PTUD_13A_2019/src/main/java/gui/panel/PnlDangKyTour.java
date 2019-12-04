@@ -54,6 +54,7 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 import com.toedter.calendar.JDateChooser;
 
+import constant.HangSo;
 import control.IKhachHangControl;
 import control.IPhieuDangKyControl;
 import control.ITourControl;
@@ -1019,7 +1020,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 			KhachHangThamGia khachHangThamGia = new KhachHangThamGia();
 			khachHangThamGia.setHoTenKHTG(txtHoVaTenKHTG.getText());
 			khachHangThamGia.setNgaySinh(new Date(dtcNgaySinhKHTG.getDate().getTime()));
-			if (khachHangThamGia.tinhTuoiKhachHang() > 14) {
+			if (khachHangThamGia.tinhTuoiKhachHang() > HangSo.NGUOILON) {
 				khachHangThamGia.setDoTuoi(DoTuoi.NGUOILON);
 			} else {
 				khachHangThamGia.setDoTuoi(DoTuoi.TREEM);
