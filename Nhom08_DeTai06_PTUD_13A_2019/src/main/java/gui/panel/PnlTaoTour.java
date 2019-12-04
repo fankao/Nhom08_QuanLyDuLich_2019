@@ -1256,9 +1256,11 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			spnNgay.setValue(tourSel.getThoiGian()[0]);
 			lblNgayDem.setText(tourSel.getThoiGian()[1] + "");
 		}
-
+		if(tourSel.getPhuongTien() == PhuongTien.XE)
+			cmbPhuongTien.setSelectedIndex(0);
+		else if (tourSel.getPhuongTien() == PhuongTien.HANGKHONG)
+			cmbPhuongTien.setSelectedIndex(1);
 	}
-
 	@Override
 	public void propertyChange(PropertyChangeEvent e) {
 		Object o = e.getSource();
@@ -1316,7 +1318,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			return false;
 		}
 		try {
-			String diemKH = (String) cmbDiemXP.getEditor().getItem();
+			String diemKH = cmbDiemXP.getEditor().getItem().toString();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "Điểm xuất phát không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
 			cmbDiemXP.requestFocusInWindow();
@@ -1324,10 +1326,30 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		}
 
 		try {
-			String diemDen = (String) cmbDiemDen.getEditor().getItem();
+			String diemDen = cmbDiemDen.getEditor().getItem().toString();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, "Điểm đến không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
 			cmbDiemDen.requestFocusInWindow();
+			return false;
+		}
+		if(Double.parseDouble(txtGiaNgLon.getValue().toString()) > 20000000) {
+			JOptionPane.showMessageDialog(this, "Đơn giá người lớn không được lớn hơn hai mươi triệu");
+			txtGiaNgLon.requestFocusInWindow();
+			return false;
+		}
+		if(Double.parseDouble(txtGiaNgLon.getValue().toString()) < 1000000 ) {
+			JOptionPane.showMessageDialog(this, "Đơn giá người lớn không được bé hơn một triệu");
+			txtGiaNgLon.requestFocusInWindow();
+			return false;
+		}
+		if(Double.parseDouble(txtGiaTrEm.getValue().toString()) > 20000000) {
+			JOptionPane.showMessageDialog(this, "Đơn giá trẻ em không được lớn hơn hai mươi triệu");
+			txtGiaTrEm.requestFocusInWindow();
+			return false;
+		}
+		if(Double.parseDouble(txtGiaTrEm.getValue().toString()) > 20000000) {
+			JOptionPane.showMessageDialog(this, "Đơn giá trẻ em không được bé hơn một triệu");
+			txtGiaTrEm.requestFocusInWindow();
 			return false;
 		}
 

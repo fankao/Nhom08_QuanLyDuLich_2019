@@ -32,6 +32,7 @@ import control.impl.KhachHangControlImpl;
 import entities.KhachHang;
 import model.DSKhachHangTableModel;
 import utils.TienIch;
+import javax.swing.ListSelectionModel;
 
 public class PnlKhachHang extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 1L;
@@ -96,7 +97,6 @@ public class PnlKhachHang extends JPanel implements ActionListener{
 		label.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		txtHoTen = new JTextField();
-		txtHoTen.setEnabled(false);
 		txtHoTen.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtHoTen.setColumns(10);
 		
@@ -118,7 +118,6 @@ public class PnlKhachHang extends JPanel implements ActionListener{
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		txtSoCMND = new JTextField();
-		txtSoCMND.setEnabled(false);
 		txtSoCMND.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoCMND.setColumns(10);
 		
@@ -126,7 +125,6 @@ public class PnlKhachHang extends JPanel implements ActionListener{
 		label_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		txtSoDienThoai = new JTextField();
-		txtSoDienThoai.setEnabled(false);
 		txtSoDienThoai.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoDienThoai.setColumns(10);
 		
@@ -134,7 +132,6 @@ public class PnlKhachHang extends JPanel implements ActionListener{
 		label_5.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		txtDiaChi = new JTextField();
-		txtDiaChi.setEnabled(false);
 		txtDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtDiaChi.setColumns(10);
 		GroupLayout gl_pnlTTKH = new GroupLayout(pnlTTKH);
@@ -241,14 +238,12 @@ public class PnlKhachHang extends JPanel implements ActionListener{
 		
 		srcDSKhachHang = new JScrollPane();
 		pnlDSKhachHang.add(srcDSKhachHang, BorderLayout.CENTER);
-		
-		tblDSKhachHang = new JTable();
-		srcDSKhachHang.setViewportView(tblDSKhachHang);
 		btnSua.setVisible(false);
 		btnLuu.setVisible(false);
 		btnHuy.setVisible(false);
 		
 		tblDSKhachHang = new JTable();
+		tblDSKhachHang.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		khachHangControl = new KhachHangControlImpl();
 		dsKH = khachHangControl.layDSKhachHang();
 		hienBanThongTinKH(tblDSKhachHang, dsKH, srcDSKhachHang);
@@ -265,9 +260,9 @@ public class PnlKhachHang extends JPanel implements ActionListener{
 		txtSoCMND.setText(kh.getSoCMND());
 		txtSoDienThoai.setText(kh.getSoDienThoai());
 		if(kh.isGioiTinh() == true) 
-			cmbGioiTinh.setSelectedItem((String) "Nam");
-		
-		cmbGioiTinh.setSelectedItem((String) "Nữ");
+			cmbGioiTinh.setSelectedIndex(0);
+		else
+		 cmbGioiTinh.setSelectedItem((String) "Nữ");
 		dtcNgaySinh.setDate(kh.getNgaySinh());
 			
 	}
@@ -276,6 +271,7 @@ public class PnlKhachHang extends JPanel implements ActionListener{
 		txtSoCMND.setText("");
 		txtSoDienThoai.setText("");
 		dtcNgaySinh.setDate(null);
+		txtDiaChi.setText("");
 			
 	}
 	private void ganSuKien () {
@@ -312,15 +308,15 @@ public class PnlKhachHang extends JPanel implements ActionListener{
 			khSua.setSoCMND(txtSoCMND.getText().trim());
 			khSua.setSoDienThoai(txtSoDienThoai.getText().trim());
 			System.out.println(cmbGioiTinh.getSelectedIndex());
-			if(cmbGioiTinh.getSelectedItem().equals("Nam"))
+			if(cmbGioiTinh.getSelectedIndex() == 0)
 				khSua.setGioiTinh(true);
-			else if(cmbGioiTinh.getSelectedItem().equals("Nữ"))
+			else if(cmbGioiTinh.getSelectedIndex() == 1)
 				khSua.setGioiTinh(false);
 			khSua.setNgaySinh(new Date(dtcNgaySinh.getDate().getTime()));
 			dsKH = khachHangControl.layDSKhachHang();
 			hienBanThongTinKH(tblDSKhachHang, dsKH, srcDSKhachHang);
-			khachHangControl.suaKhachHang(khSua);	
-			System.out.println(khSua.isGioiTinh());
+			KhachHang khTest = khachHangControl.suaKhachHang(khSua);	
+			System.out.println(khTest.isGioiTinh());
 			TienIch.hienAnCacControl(false, txtHoTen,txtDiaChi,txtSoCMND,txtSoDienThoai);
 			tblDSKhachHang.setEnabled(true);
 			btnSua.setVisible(false);
