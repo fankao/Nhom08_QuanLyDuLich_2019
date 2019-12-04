@@ -1,5 +1,7 @@
 package entities;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -49,6 +51,29 @@ public class NgayKhoiHanh {
 	private Tour tour;
 
 	public NgayKhoiHanh() {
+	}
+
+	/**
+	 * Huỷ ngày khởi hành do không đủ số người tham gia
+	 * 
+	 * @param ngayKhoiHanh: ngày khởi hành cần huỷ
+	 * @return: ngày khởi hànhs
+	 */
+	public NgayKhoiHanh capNhatNgayKhoiHanhKhongDuSoLuong(NgayKhoiHanh ngayKhoiHanh) {
+		java.sql.Date ngayKH = new java.sql.Date(ngayKhoiHanh.getNgayKhoiHanh().getTime());
+		LocalDate date = ngayKH.toLocalDate();
+		int soNguoiToiThieu = Math.round(ngayKhoiHanh.getSoKhachToiDa() * (2 / 3));
+		Period period = Period.between(LocalDate.now(), date);
+
+		// Nếu ngày hiện tại cách ngày khởi hành còn 5 ngày và số người đã đăng ký tour
+		// không vượt quá 2/3 số khách tối đa
+		if ((period.getDays() <= 5 || period.getMonths() >= 1) && ngayKhoiHanh.getSoKhachDaDangKy() < soNguoiToiThieu) {
+			// thì tiến hành huỷ ngày đi này
+			ngayKhoiHanh.setDaXoaDoKhongDuSoLuong(true);
+			return ngayKhoiHanh;
+		}
+		return null;
+
 	}
 
 	@Override

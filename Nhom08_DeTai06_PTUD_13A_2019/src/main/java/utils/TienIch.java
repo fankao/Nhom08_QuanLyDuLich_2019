@@ -25,6 +25,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
+import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
@@ -293,6 +294,9 @@ public class TienIch {
 		}
 		for (int i = 0; i < panels.length; i++) {
 			SwingUtilities.updateComponentTreeUI(panels[i]);
+			panels[i].repaint();
+			panels[i].validate();
+
 		}
 
 	}

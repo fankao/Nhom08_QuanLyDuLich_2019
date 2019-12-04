@@ -18,5 +18,7 @@ public interface IPhieuDangKyControl {
 	public PhieuDangKy suaPhieuDangKy(PhieuDangKy pdk);
 
 	public PhieuDangKy layTTPhieuDangKyTheoMa(String maPDK);
+	
+	public List<PhieuDangKy> capNhatTrangThaiDangKyTour(List<PhieuDangKy> pdks);
 
 }

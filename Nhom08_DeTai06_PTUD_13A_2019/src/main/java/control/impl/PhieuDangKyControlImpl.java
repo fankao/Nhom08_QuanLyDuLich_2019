@@ -1,5 +1,6 @@
 package control.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import control.IPhieuDangKyControl;
@@ -58,4 +59,19 @@ public class PhieuDangKyControlImpl implements IPhieuDangKyControl {
 		return phieuDangKyDAO.layDSKhachThamGiaTour(maTour);
 	}
 
+	/**
+	 * Cập nhật trạng thái đã huỷ cho các phiếu đăng ký không đủ số lượng khách tham
+	 * gia
+	 */
+	@Override
+	public List<PhieuDangKy> capNhatTrangThaiDangKyTour(List<PhieuDangKy> pdks) {
+		List<PhieuDangKy> dsPhieuDKBiHuy = new ArrayList<PhieuDangKy>();
+		for (PhieuDangKy p : pdks) {
+			if (p.getNgayKhoiHanh().capNhatNgayKhoiHanhKhongDuSoLuong(p.getNgayKhoiHanh()) != null) {
+				PhieuDangKy pdkHuy = suaPhieuDangKy(p);
+				dsPhieuDKBiHuy.add(pdkHuy);
+			}
+		}
+		return dsPhieuDKBiHuy;
+	}
 }

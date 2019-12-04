@@ -9,8 +9,7 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.net.URISyntaxException;
+import java.io.InputStream;
 import java.sql.Date;
 import java.text.Format;
 import java.text.NumberFormat;
@@ -53,10 +52,11 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import utils.TienIch;
-import java.awt.Dialog.ModalExclusionType;
-import java.awt.Dialog.ModalityType;
 
 /**
  * 
@@ -715,9 +715,10 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 					dataSource.add(m);
 
 					JRDataSource Datasour = new JRBeanCollectionDataSource(dataSource);
+					InputStream jrxmlInput = JRLoader.getResourceInputStream("/PhieuThu.jrxml");
 					try {
-						//
-						JasperReport report = JasperCompileManager.compileReport("/jasper/PhieuThu.jrxml");
+						JasperDesign design =  JRXmlLoader.load(jrxmlInput);
+						JasperReport report = JasperCompileManager.compileReport(design);
 						JasperPrint filledRedport = JasperFillManager.fillReport(report, null, Datasour);
 						this.dispose();
 						FrmPrint frmPrint = new FrmPrint();

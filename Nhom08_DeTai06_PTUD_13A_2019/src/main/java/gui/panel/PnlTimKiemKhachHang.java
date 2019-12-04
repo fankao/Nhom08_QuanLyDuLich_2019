@@ -41,6 +41,8 @@ import control.impl.KhachHangControlImpl;
 import entities.KhachHang;
 import utils.HintTextFieldUI;
 import utils.TienIch;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
 
 public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -56,6 +58,8 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 	private JLabel lblCMNDdb;
 	private JLabel lblDienThoaidb;
 	private JLabel lblDiaChidb;
+	private JLabel lblGioiTinhdb;
+	private JButton btnBoChon;
 
 	/**
 	 * Khơi tạo giao diện tìm kiếm thông tin khách hàng
@@ -90,37 +94,34 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 		txtTuKhoa.setColumns(20);
 
 		JPanel pnlDSKhachHang = new JPanel();
+
+		btnBoChon = new JButton("Huỷ chọn");
+		btnBoChon.setIcon(new ImageIcon(PnlTimKiemKhachHang.class.getResource("/images/cancel_32px.png")));
+		btnBoChon.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		GroupLayout gl_pnlTimKiemTTKH = new GroupLayout(pnlTimKiemTTKH);
-		gl_pnlTimKiemTTKH.setHorizontalGroup(
-			gl_pnlTimKiemTTKH.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_pnlTimKiemTTKH.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.TRAILING)
-						.addComponent(pnlDSKhachHang, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
-						.addGroup(Alignment.LEADING, gl_pnlTimKiemTTKH.createSequentialGroup()
-							.addComponent(lblLoaiTK)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(cmbLoaiTK, 0, 0, Short.MAX_VALUE))
-						.addComponent(lblNhap, Alignment.LEADING)
-						.addComponent(txtTuKhoa, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE))
-					.addContainerGap())
-		);
-		gl_pnlTimKiemTTKH.setVerticalGroup(
-			gl_pnlTimKiemTTKH.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_pnlTimKiemTTKH.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblLoaiTK)
-						.addComponent(cmbLoaiTK, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(lblNhap)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(txtTuKhoa, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(pnlDSKhachHang, GroupLayout.PREFERRED_SIZE, 279, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(58, Short.MAX_VALUE))
-		);
-		gl_pnlTimKiemTTKH.linkSize(SwingConstants.VERTICAL, new Component[] {lblLoaiTK, cmbLoaiTK});
+		gl_pnlTimKiemTTKH.setHorizontalGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_pnlTimKiemTTKH.createSequentialGroup().addContainerGap()
+						.addGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.LEADING)
+								.addComponent(pnlDSKhachHang, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+								.addGroup(gl_pnlTimKiemTTKH.createSequentialGroup().addComponent(lblLoaiTK)
+										.addPreferredGap(ComponentPlacement.UNRELATED)
+										.addComponent(cmbLoaiTK, 0, 0, Short.MAX_VALUE))
+								.addComponent(lblNhap)
+								.addComponent(txtTuKhoa, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+								.addComponent(btnBoChon))
+						.addContainerGap()));
+		gl_pnlTimKiemTTKH.setVerticalGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlTimKiemTTKH.createSequentialGroup().addContainerGap()
+						.addGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.BASELINE).addComponent(lblLoaiTK)
+								.addComponent(cmbLoaiTK, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(lblNhap)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(txtTuKhoa, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(pnlDSKhachHang, GroupLayout.PREFERRED_SIZE, 279, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnBoChon)
+						.addContainerGap(26, Short.MAX_VALUE)));
+		gl_pnlTimKiemTTKH.linkSize(SwingConstants.VERTICAL, new Component[] { lblLoaiTK, cmbLoaiTK });
 		pnlDSKhachHang.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrDSKH = new JScrollPane();
@@ -138,11 +139,11 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 		pnlThongTinTK.setLayout(new BorderLayout(0, 0));
 
 		JPanel pnlTTCTKhachHang = new JPanel();
-		pnlTTCTKhachHang.setPreferredSize(new Dimension(10, 200));
+		pnlTTCTKhachHang.setPreferredSize(new Dimension(10, 300));
 		pnlTTCTKhachHang.setBorder(new TitledBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null),
 				"Th\u00F4ng tin kh\u00E1ch h\u00E0ng", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pnlThongTinTK.add(pnlTTCTKhachHang, BorderLayout.CENTER);
-		pnlTTCTKhachHang.setLayout(new GridLayout(5, 0, 0, 0));
+		pnlTTCTKhachHang.setLayout(new GridLayout(6, 0, 0, 0));
 
 		JPanel pnlHoTen = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) pnlHoTen.getLayout();
@@ -155,9 +156,24 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 		lblHoVaTen.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		pnlHoTen.add(lblHoVaTen);
 
-		lblHoVaTendb = new JLabel("New label");
+		lblHoVaTendb = new JLabel("");
 		lblHoVaTendb.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		pnlHoTen.add(lblHoVaTendb);
+
+		JPanel panel_1 = new JPanel();
+		FlowLayout flowLayout_4 = (FlowLayout) panel_1.getLayout();
+		flowLayout_4.setHgap(10);
+		flowLayout_4.setAlignment(FlowLayout.LEFT);
+		flowLayout_4.setVgap(10);
+		pnlTTCTKhachHang.add(panel_1);
+
+		JLabel lblGioiTinh = new JLabel("Giới tính:");
+		lblGioiTinh.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_1.add(lblGioiTinh);
+
+		lblGioiTinhdb = new JLabel("");
+		lblGioiTinhdb.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		panel_1.add(lblGioiTinhdb);
 
 		JPanel panel = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel.getLayout();
@@ -170,7 +186,7 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 		lblNgaySinh.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel.add(lblNgaySinh);
 
-		lblNgaySinhdb = new JLabel("New label");
+		lblNgaySinhdb = new JLabel("");
 		lblNgaySinhdb.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		panel.add(lblNgaySinhdb);
 
@@ -185,7 +201,7 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 		lblCMND.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		pnlCMND.add(lblCMND);
 
-		lblCMNDdb = new JLabel("New label");
+		lblCMNDdb = new JLabel("");
 		lblCMNDdb.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		pnlCMND.add(lblCMNDdb);
 
@@ -200,7 +216,7 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 		lblDienThoai.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		pnlSDT.add(lblDienThoai);
 
-		lblDienThoaidb = new JLabel("New label");
+		lblDienThoaidb = new JLabel("");
 		lblDienThoaidb.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		pnlSDT.add(lblDienThoaidb);
 
@@ -215,7 +231,7 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 		lblDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		pnlDC.add(lblDiaChi);
 
-		lblDiaChidb = new JLabel("New label");
+		lblDiaChidb = new JLabel("");
 		lblDiaChidb.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		pnlDC.add(lblDiaChidb);
 
@@ -247,6 +263,7 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 
 	private void ganSuKien() {
 		cmbLoaiTK.addActionListener(this);
+		btnBoChon.addActionListener(this);
 		lstDSKH.addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -258,6 +275,11 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 				lblCMNDdb.setText(khachHang.getSoCMND());
 				lblDienThoaidb.setText(khachHang.getSoDienThoai());
 				lblDiaChidb.setText(khachHang.getDiaChi().toString());
+				if (khachHang.isGioiTinh()) {
+					lblGioiTinhdb.setText("Nam");
+				} else {
+					lblGioiTinhdb.setText("Nữ");
+				}
 
 			}
 		});
@@ -293,7 +315,7 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 						break;
 
 					default:
-						break;
+						dsKhachHangTim = dsKhachHang;
 					}
 				}
 				hienDanhSachKhachHang(dsKhachHangTim);
@@ -328,6 +350,13 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 			default:
 				break;
 			}
+		} else if (o.equals(btnBoChon)) {
+			lblCMNDdb.setText("");
+			lblHoVaTendb.setText("");
+			lblDienThoaidb.setText("");
+			lblGioiTinhdb.setText("");
+			lblNgaySinhdb.setText("");
+			lblDiaChidb.setText("");
 		}
 
 	}
