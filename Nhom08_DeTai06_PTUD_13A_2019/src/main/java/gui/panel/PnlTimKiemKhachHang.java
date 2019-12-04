@@ -19,6 +19,8 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -41,8 +43,6 @@ import control.impl.KhachHangControlImpl;
 import entities.KhachHang;
 import utils.HintTextFieldUI;
 import utils.TienIch;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
 
 public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;

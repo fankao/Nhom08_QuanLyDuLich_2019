@@ -25,6 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -41,7 +42,6 @@ import entities.Tour;
 import model.TourTableModel;
 import utils.TableMouseListener;
 import utils.TienIch;
-import javax.swing.border.BevelBorder;
 
 public class PnlDuyetTour extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;

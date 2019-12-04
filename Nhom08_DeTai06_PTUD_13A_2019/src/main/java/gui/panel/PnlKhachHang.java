@@ -1,41 +1,37 @@
 package gui.panel;
 
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.border.LineBorder;
 import java.awt.Color;
-import javax.swing.border.EtchedBorder;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.FlowLayout;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import com.toedter.calendar.JDateChooser;
 
 import control.IKhachHangControl;
 import control.impl.KhachHangControlImpl;
-import entities.DiaChi;
 import entities.KhachHang;
 import model.DSKhachHangTableModel;
 import utils.TienIch;
-
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 
 public class PnlKhachHang extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 1L;

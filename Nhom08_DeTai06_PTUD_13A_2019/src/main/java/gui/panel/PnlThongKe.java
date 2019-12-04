@@ -28,7 +28,6 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import control.IPhieuDangKyControl;
 import control.impl.PhieuDangKyControlImpl;
-import entities.KhachHangThamGia;
 import entities.PhieuDangKy;
 
 public class PnlThongKe extends JPanel {
