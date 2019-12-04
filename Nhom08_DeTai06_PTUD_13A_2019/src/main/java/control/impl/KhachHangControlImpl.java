@@ -56,4 +56,10 @@ public class KhachHangControlImpl implements IKhachHangControl {
 		return khachHangDAO.themKhachHang(kh);
 	}
 
+	@Override
+	public KhachHang suaKhachHang(KhachHang kh) {
+		// TODO Auto-generated method stub
+		return khachHangDAO.suaKhachHang(kh);
+	}
+
 }

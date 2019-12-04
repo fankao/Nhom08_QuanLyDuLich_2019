@@ -10,4 +10,6 @@ public interface IKhachHangControl {
 	public KhachHang themKhachHang(KhachHang kh);
 
 	public KhachHang layTTKhachHangTheoYeuCau(int yc, String tim);
+	
+	public KhachHang suaKhachHang(KhachHang kh);
 }

@@ -6,6 +6,10 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.TextArea;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,10 +31,14 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import com.toedter.calendar.JDateChooser;
+
+import constant.HangSo;
 import control.IKhachHangControl;
 import control.IPhieuDangKyControl;
 import control.impl.KhachHangControlImpl;
 import control.impl.PhieuDangKyControlImpl;
+import entities.DoTuoi;
 import entities.KhachHang;
 import entities.KhachHangThamGia;
 import entities.PhieuDangKy;
@@ -38,25 +46,13 @@ import model.DSKhachHangTGTableModel;
 import model.DSKhachHangTableModel;
 import model.DSPhieuDangKyModel;
 import utils.TienIch;
-import javax.swing.JTextPane;
-import java.awt.TextArea;
 
-public class pnlQuanLyPDK extends JPanel {
+public class pnlQuanLyPDK extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 1L;
-	private JTextField txtMaPhieuDK;
-	private JTextField txtNgayTao;
-	private JTextField txtTrangThai;
 	private JTextField txtTimKiemTour;
 	private JTextField txtTimKiemPDK;
 	private JComboBox<String> cmbTimKiemTour;
 	private JComboBox<String> cmbTimKiemPDK;
-	private JTextField txtKhoiHanh;
-	private JTextField txtNgayKetThuc;
-	private JButton btnThem;
-	private JButton btnXoa1;
-	private JButton btnluu;
-	private JButton btnHuy;
-	private JButton BtnBoChon;
 	private JTable tblDSKhachHang;
 	private JTable tblDSPhieuDangKy;
 	private JTable tblDSKhachTG;
@@ -79,6 +75,21 @@ public class pnlQuanLyPDK extends JPanel {
 	private JLabel lblNgaySinh;
 	private JLabel lblGioiTinh;
 	private JLabel lblDiaChi;
+	private JLabel lblTrangThai;
+	private JLabel lblNgayTao;
+	private JLabel lblMaPDK;
+	private JLabel lblNgayKhoiHanh;
+	private TextArea txaTenTuor;
+	private JLabel lblThoiGian;
+	private JTextField txtHoTenKhachhTG;
+	private JDateChooser dtcNgaySinhKhachTG;
+	private JButton btnHuy;
+	private JButton btnThem;
+	private JButton btnXoa;
+	private JButton btnBoChon;
+	private JButton btnLuu;
+	private JButton btnSua;
+	private JPanel pnlNhapTTKhachTG;
 
 	/**
 	 * Create the panel.
@@ -207,10 +218,10 @@ public class pnlQuanLyPDK extends JPanel {
 		
 		JLabel label = new JLabel("");
 		
-		lblMaKH = new JLabel("New label");
+		lblMaKH = new JLabel("");
 		lblMaKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
-		lblTenKH = new JLabel("New label");
+		lblTenKH = new JLabel("");
 		lblTenKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		GroupLayout gl_panel_6 = new GroupLayout(panel_6);
 		gl_panel_6.setHorizontalGroup(
@@ -252,20 +263,20 @@ public class pnlQuanLyPDK extends JPanel {
 		JLabel lblNewLabel_2 = new JLabel("Ngày sinh :");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
-		lblNgaySinh = new JLabel("New label");
+		lblNgaySinh = new JLabel("");
 		lblNgaySinh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel lblNewLabel_7 = new JLabel("Số CMND :");
 		lblNewLabel_7.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
-		lblSoCMND = new JLabel("0123456789");
+		lblSoCMND = new JLabel("");
 		lblSoCMND.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel lblNewLabel_4 = new JLabel("Giới tính :");
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
-		lblGioiTinh = new JLabel("Nam");
+		lblGioiTinh = new JLabel("");
 		lblGioiTinh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		GroupLayout gl_panel_7 = new GroupLayout(panel_7);
 		gl_panel_7.setHorizontalGroup(
@@ -306,10 +317,10 @@ public class pnlQuanLyPDK extends JPanel {
 		JLabel lblSinThoi = new JLabel("Số điện thoại :");
 		lblSinThoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
-		lblSoDienThoai = new JLabel("New label");
+		lblSoDienThoai = new JLabel("");
 		lblSoDienThoai.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
-		lblDiaChi = new JLabel("New label");
+		lblDiaChi = new JLabel("");
 		lblDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel label_2 = new JLabel("Đia chỉ :");
@@ -351,29 +362,11 @@ public class pnlQuanLyPDK extends JPanel {
 		JLabel lblPhieuDK = new JLabel("Mã phiếu đăng ký :");
 		lblPhieuDK.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-		txtMaPhieuDK = new JTextField();
-		txtMaPhieuDK.setHorizontalAlignment(SwingConstants.LEFT);
-		txtMaPhieuDK.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtMaPhieuDK.setEditable(false);
-		txtMaPhieuDK.setColumns(10);
+		JLabel lblNgayTao_N = new JLabel("Ngày tạo:");
+		lblNgayTao_N.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-		JLabel lblNgayTao = new JLabel("Ngày tạo:");
-		lblNgayTao.setFont(new Font("Tahoma", Font.PLAIN, 20));
-
-		txtNgayTao = new JTextField();
-		txtNgayTao.setHorizontalAlignment(SwingConstants.LEFT);
-		txtNgayTao.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtNgayTao.setEditable(false);
-		txtNgayTao.setColumns(10);
-
-		JLabel lblTrangThai = new JLabel("Trạng thái :");
-		lblTrangThai.setFont(new Font("Tahoma", Font.PLAIN, 20));
-
-		txtTrangThai = new JTextField();
-		txtTrangThai.setHorizontalAlignment(SwingConstants.LEFT);
-		txtTrangThai.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtTrangThai.setEditable(false);
-		txtTrangThai.setColumns(10);
+		JLabel lblTrangThai_N = new JLabel("Trạng thái :");
+		lblTrangThai_N.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		JLabel lblTnTour = new JLabel("Tên tour :");
 		lblTnTour.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -381,23 +374,25 @@ public class pnlQuanLyPDK extends JPanel {
 		JLabel lblNgyKhiHnh = new JLabel("Ngày khởi hành :");
 		lblNgyKhiHnh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
-		txtKhoiHanh = new JTextField();
-		txtKhoiHanh.setText("15\\15\\2222");
-		txtKhoiHanh.setHorizontalAlignment(SwingConstants.LEFT);
-		txtKhoiHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtKhoiHanh.setEditable(false);
-		txtKhoiHanh.setColumns(10);
-
 		JLabel lblNgyKtThc = new JLabel("Thời gian :");
 		lblNgyKtThc.setFont(new Font("Tahoma", Font.PLAIN, 20));
-
-		txtNgayKetThuc = new JTextField();
-		txtNgayKetThuc.setHorizontalAlignment(SwingConstants.LEFT);
-		txtNgayKetThuc.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtNgayKetThuc.setEditable(false);
-		txtNgayKetThuc.setColumns(10);
 		
 		JPanel panel_4 = new JPanel();
+		
+		lblMaPDK = new JLabel("");
+		lblMaPDK.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		lblNgayTao = new JLabel("");
+		lblNgayTao.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		lblTrangThai = new JLabel("");
+		lblTrangThai.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		lblNgayKhoiHanh = new JLabel("");
+		lblNgayKhoiHanh.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		
+		lblThoiGian = new JLabel("");
+		lblThoiGian.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		GroupLayout gl_pnlPDK = new GroupLayout(pnlPDK);
 		gl_pnlPDK.setHorizontalGroup(
 			gl_pnlPDK.createParallelGroup(Alignment.LEADING)
@@ -409,23 +404,24 @@ public class pnlQuanLyPDK extends JPanel {
 						.addComponent(lblNgyKhiHnh))
 					.addGap(7)
 					.addGroup(gl_pnlPDK.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel_4, GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
 						.addGroup(gl_pnlPDK.createSequentialGroup()
-							.addComponent(txtKhoiHanh, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
-							.addGap(77)
+							.addComponent(lblNgayKhoiHanh, GroupLayout.PREFERRED_SIZE, 229, GroupLayout.PREFERRED_SIZE)
+							.addGap(81)
 							.addComponent(lblNgyKtThc)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(txtNgayKetThuc, GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE))
+							.addComponent(lblThoiGian, GroupLayout.PREFERRED_SIZE, 229, GroupLayout.PREFERRED_SIZE))
+						.addComponent(panel_4, GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
 						.addGroup(gl_pnlPDK.createSequentialGroup()
-							.addComponent(txtMaPhieuDK, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
-							.addGap(12)
-							.addComponent(lblNgayTao, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-							.addGap(5)
-							.addComponent(txtNgayTao, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
-							.addGap(12)
-							.addComponent(lblTrangThai, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(lblMaPDK, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
+							.addGap(32)
+							.addComponent(lblNgayTao_N, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(txtTrangThai, GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)))
+							.addComponent(lblNgayTao, GroupLayout.PREFERRED_SIZE, 129, GroupLayout.PREFERRED_SIZE)
+							.addGap(14)
+							.addComponent(lblTrangThai_N)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblTrangThai, GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		gl_pnlPDK.setVerticalGroup(
@@ -433,20 +429,17 @@ public class pnlQuanLyPDK extends JPanel {
 				.addGroup(gl_pnlPDK.createSequentialGroup()
 					.addGroup(gl_pnlPDK.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_pnlPDK.createSequentialGroup()
-							.addGap(16)
-							.addComponent(lblTrangThai, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_pnlPDK.createSequentialGroup()
-							.addContainerGap()
+							.addGap(3)
 							.addGroup(gl_pnlPDK.createParallelGroup(Alignment.LEADING)
-								.addComponent(txtTrangThai, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_pnlPDK.createSequentialGroup()
-									.addGap(3)
-									.addComponent(lblPhieuDK, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-								.addComponent(txtMaPhieuDK, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_pnlPDK.createSequentialGroup()
-									.addGap(3)
-									.addComponent(lblNgayTao, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-								.addComponent(txtNgayTao, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))))
+								.addGroup(gl_pnlPDK.createParallelGroup(Alignment.BASELINE)
+									.addComponent(lblPhieuDK, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+									.addComponent(lblMaPDK))
+								.addComponent(lblNgayTao, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNgayTao_N, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_pnlPDK.createParallelGroup(Alignment.TRAILING, false)
+							.addComponent(lblTrangThai, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(lblTrangThai_N, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)))
+					.addGap(7)
 					.addGroup(gl_pnlPDK.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_pnlPDK.createSequentialGroup()
 							.addGap(18)
@@ -454,20 +447,22 @@ public class pnlQuanLyPDK extends JPanel {
 						.addGroup(gl_pnlPDK.createSequentialGroup()
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)))
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGroup(gl_pnlPDK.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_pnlPDK.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblNgyKtThc, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-							.addComponent(txtNgayKetThuc, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_pnlPDK.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblNgyKhiHnh, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-							.addComponent(txtKhoiHanh, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
+						.addGroup(gl_pnlPDK.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+							.addGroup(gl_pnlPDK.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblNgyKhiHnh, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblNgayKhoiHanh)
+								.addComponent(lblNgyKtThc, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_pnlPDK.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+							.addComponent(lblThoiGian, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)))
+					.addGap(21))
 		);
 		panel_4.setLayout(new BorderLayout(0, 0));
 		
-		TextArea textArea = new TextArea();
-		panel_4.add(textArea, BorderLayout.CENTER);
+		txaTenTuor = new TextArea();
+		panel_4.add(txaTenTuor, BorderLayout.CENTER);
 		pnlPDK.setLayout(gl_pnlPDK);
 
 		JPanel panel_3 = new JPanel();
@@ -477,24 +472,52 @@ public class pnlQuanLyPDK extends JPanel {
 		panel_3.setLayout(new BorderLayout(0, 0));
 
 		JPanel pnlChucNang = new JPanel();
-		FlowLayout fl_pnlChucNang = (FlowLayout) pnlChucNang.getLayout();
-		fl_pnlChucNang.setAlignment(FlowLayout.RIGHT);
 		panel_3.add(pnlChucNang, BorderLayout.NORTH);
-
+		pnlChucNang.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		pnlNhapTTKhachTG = new JPanel();
+		FlowLayout fl_pnlNhapTTKhachTG = (FlowLayout) pnlNhapTTKhachTG.getLayout();
+		fl_pnlNhapTTKhachTG.setAlignment(FlowLayout.LEFT);
+		pnlChucNang.add(pnlNhapTTKhachTG);
+		
+		JLabel lblNewLabel_3 = new JLabel("Họ tên :");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		pnlNhapTTKhachTG.add(lblNewLabel_3);
+		
+		txtHoTenKhachhTG = new JTextField();
+		txtHoTenKhachhTG.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		pnlNhapTTKhachTG.add(txtHoTenKhachhTG);
+		txtHoTenKhachhTG.setColumns(12);
+		
+		JLabel lblNewLabel_5 = new JLabel("Ngày sịnh :");
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		pnlNhapTTKhachTG.add(lblNewLabel_5);
+		
+		dtcNgaySinhKhachTG = new JDateChooser();
+		pnlNhapTTKhachTG.add(dtcNgaySinhKhachTG);
+		
+		JPanel panel_9 = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) panel_9.getLayout();
+		flowLayout.setAlignment(FlowLayout.RIGHT);
+		pnlChucNang.add(panel_9);
+		
 		btnThem = new JButton("Thêm");
-		pnlChucNang.add(btnThem);
-
-		btnXoa1 = new JButton("Xóa");
-		pnlChucNang.add(btnXoa1);
-
+		panel_9.add(btnThem);
+		
+		btnSua = new JButton("Sua");
+		panel_9.add(btnSua);
+		
+		btnXoa = new JButton("Xóa");
+		panel_9.add(btnXoa);
+		
 		btnHuy = new JButton("Hủy");
-		pnlChucNang.add(btnHuy);
-
-		btnluu = new JButton("Lưu");
-		pnlChucNang.add(btnluu);
-
-		BtnBoChon = new JButton("Bỏ chọn");
-		pnlChucNang.add(BtnBoChon);
+		panel_9.add(btnHuy);
+		
+		btnLuu = new JButton("Lưu");
+		panel_9.add(btnLuu);
+		
+		btnBoChon = new JButton("Bỏ chọn");
+		panel_9.add(btnBoChon);
 
 		srcDsKhachTG = new JScrollPane();
 		panel_3.add(srcDsKhachTG, BorderLayout.CENTER);
@@ -551,6 +574,7 @@ public class pnlQuanLyPDK extends JPanel {
 		hienBangDSKhachHang(tblDSKhachHang, dsKhachHang, srcDsKhachHang);
 		hienBangDSPDK(tblDSPhieuDangKy, dsPDK, srcDsPDK);
 		hienBangDSKhachTG(tblDSKhachTG, dsKhachHangTG, srcDsKhachTG);
+		pnlNhapTTKhachTG.setVisible(false);
 		ganSuKien();
 	}
 	
@@ -573,6 +597,16 @@ public class pnlQuanLyPDK extends JPanel {
 
 	}
 	private void ganSuKien() {
+		btnBoChonKhachHang.addActionListener(this);
+		btnBoChonPDK.addActionListener(this);
+		btnLamMoiBangDSKH.addActionListener(this);
+		btnLamMoiBangDSPDK.addActionListener(this);
+		btnThem.addActionListener(this);
+		btnXoa.addActionListener(this);
+		btnLuu.addActionListener(this);
+		btnBoChon.addActionListener(this);
+		btnSua.addActionListener(this);
+		
 		tblDSKhachHang.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			
 			@Override
@@ -589,15 +623,17 @@ public class pnlQuanLyPDK extends JPanel {
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				// TODO Auto-generated method stub
-				int row = tblDSKhachHang.getSelectedRow();
+				int row = tblDSPhieuDangKy.getSelectedRow();
 				if (row == -1 )
 					return;
+				String maPDK = (String) tblDSPhieuDangKy.getValueAt(row, 1);
+				System.out.println(maPDK);
 				PhieuDangKy pdk = new PhieuDangKy();
-				String maKH = (String) tblDSKhachHang.getValueAt(row, 1);
-				dsPDK = phieuDangKyControl.layDSPhieuDangKyTheoKH(maKH);
-				pdk = dsPDK.get(row);
+				pdk = phieuDangKyControl.layTTPhieuDangKyTheoMa(maPDK);
 				hienThongTinPDK(pdk);
+				dsKhachHangTG = pdk.getKhachHangThamGias();
+				hienBangDSKhachTG(tblDSKhachTG, dsKhachHangTG, srcDsKhachTG);
+				
 			}
 		});
 	}
@@ -611,7 +647,46 @@ public class pnlQuanLyPDK extends JPanel {
 		if(pdk.getKh().isGioiTinh())
 			lblGioiTinh.setText("Nam");
 		lblGioiTinh.setText("Nữ");
-		
-		
+		lblMaPDK.setText(pdk.getMaPhieuDK());
+		lblNgayTao.setText(pdk.getNgayTaoPhieu().toString());
+		if (pdk.getNgayKhoiHanh().isDaXoaDoKhongDuSoLuong())
+			lblTrangThai.setText("Chờ hủy");
+		if (pdk.isDaHoanThanhTour())
+			lblTrangThai.setText("Đã hoàn thành");
+		if (pdk.isDaHuyPhieu())
+			lblTrangThai.setText("Đã hủy");
+		lblTrangThai.setText("Đang chờ xử lý");
+		txaTenTuor.setText(pdk.getNgayKhoiHanh().getTour().getTenTour());
+		lblNgayKhoiHanh.setText(pdk.getNgayKhoiHanh().getNgayKhoiHanh().toString());
+		lblThoiGian.setText(pdk.getNgayKhoiHanh().getTour().getThoiGian()[0]+" Ngày "+pdk.getNgayKhoiHanh().getTour().getThoiGian()[1]+" Đêm");
+		}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
+		if(o.equals(btnThem)) {
+			pnlNhapTTKhachTG.setVisible(true);
+		}else if(o.equals(btnLuu)) {
+			int row = tblDSPhieuDangKy.getSelectedRow();
+			if (row == -1 )
+				return;
+			String maPDK = (String) tblDSPhieuDangKy.getValueAt(row, 1);
+			System.out.println(maPDK);
+			PhieuDangKy pdk = new PhieuDangKy();
+			pdk = phieuDangKyControl.layTTPhieuDangKyTheoMa(maPDK);
+			dsKhachHangTG = pdk.getKhachHangThamGias();
+			KhachHangThamGia khachTG = new KhachHangThamGia();
+			int i = dsKhachHangTG.size() + 1;
+			khachTG.setMaKHTG(pdk.getMaPhieuDK() + "-KHTG00" + i);
+			khachTG.setHoTenKHTG(txtHoTenKhachhTG.getText().trim());
+			khachTG.setNgaySinh(new Date(dtcNgaySinhKhachTG.getDate().getTime()));
+			if(khachTG.tinhTuoiKhachHang() >  HangSo.NGUOILON)
+				khachTG.setDoTuoi(DoTuoi.NGUOILON);
+			else
+				khachTG.setDoTuoi(DoTuoi.TREEM);
+			dsKhachHangTG.add(khachTG);
+			pdk.setKhachHangThamGias(dsKhachHangTG);
+			phieuDangKyControl.suaPhieuDangKy(pdk);
+		}
 	}
 }

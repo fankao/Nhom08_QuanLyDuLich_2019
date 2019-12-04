@@ -4,10 +4,15 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.border.EtchedBorder;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.util.List;
 
 import javax.swing.GroupLayout;
@@ -21,8 +26,10 @@ import com.toedter.calendar.JDateChooser;
 
 import control.IKhachHangControl;
 import control.impl.KhachHangControlImpl;
+import entities.DiaChi;
 import entities.KhachHang;
 import model.DSKhachHangTableModel;
+import utils.TienIch;
 
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
@@ -30,7 +37,7 @@ import javax.swing.JTable;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
-public class PnlKhachHang extends JPanel {
+public class PnlKhachHang extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private JTable tblDSKhachHang;
 	private JButton btnSua;
@@ -43,8 +50,10 @@ public class PnlKhachHang extends JPanel {
 	private IKhachHangControl khachHangControl;
 	private List<KhachHang> dsKH;
 	private JScrollPane srcDSKhachHang;
+	private JComboBox cmbGioiTinh;
+	private JDateChooser dtcNgaySinh;
 
-	public PnlKhachHang() {
+	public PnlKhachHang(){
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel pnlMain = new JPanel();
@@ -91,26 +100,29 @@ public class PnlKhachHang extends JPanel {
 		label.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		txtHoTen = new JTextField();
+		txtHoTen.setEnabled(false);
 		txtHoTen.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtHoTen.setColumns(10);
 		
 		JLabel label_1 = new JLabel("Gioi tinh :");
 		label_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
-		JComboBox cmbGioiTinh = new JComboBox();
+		cmbGioiTinh = new JComboBox();
+		cmbGioiTinh.setEnabled(false);
 		cmbGioiTinh.setModel(new DefaultComboBoxModel(new String[] {"Nam", "Nữ"}));
 		cmbGioiTinh.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel label_2 = new JLabel("Ngày sinh :");
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
-		JDateChooser dtcNgaySinh = new JDateChooser();
+		dtcNgaySinh = new JDateChooser();
 		dtcNgaySinh.getCalendarButton().setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		JLabel label_3 = new JLabel("Số CMND :");
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		txtSoCMND = new JTextField();
+		txtSoCMND.setEnabled(false);
 		txtSoCMND.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoCMND.setColumns(10);
 		
@@ -118,6 +130,7 @@ public class PnlKhachHang extends JPanel {
 		label_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		txtSoDienThoai = new JTextField();
+		txtSoDienThoai.setEnabled(false);
 		txtSoDienThoai.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoDienThoai.setColumns(10);
 		
@@ -125,6 +138,7 @@ public class PnlKhachHang extends JPanel {
 		label_5.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		txtDiaChi = new JTextField();
+		txtDiaChi.setEnabled(false);
 		txtDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtDiaChi.setColumns(10);
 		GroupLayout gl_pnlTTKH = new GroupLayout(pnlTTKH);
@@ -234,15 +248,106 @@ public class PnlKhachHang extends JPanel {
 		
 		tblDSKhachHang = new JTable();
 		srcDSKhachHang.setViewportView(tblDSKhachHang);
+		btnSua.setVisible(false);
+		btnLuu.setVisible(false);
+		btnHuy.setVisible(false);
 		
 		tblDSKhachHang = new JTable();
 		khachHangControl = new KhachHangControlImpl();
 		dsKH = khachHangControl.layDSKhachHang();
 		hienBanThongTinKH(tblDSKhachHang, dsKH, srcDSKhachHang);
+		ganSuKien();
 	}
 	private void hienBanThongTinKH(JTable tbl,List<KhachHang> ds,JScrollPane src) {
 		DSKhachHangTableModel dsKhachHangTableModel = new DSKhachHangTableModel(ds);
 		tbl.setModel(dsKhachHangTableModel);
 		src.setViewportView(tbl);
+	}
+	private void hienThiThongTinKhachHang(KhachHang kh) {
+		txtHoTen.setText(kh.getHoVaTen());
+		txtDiaChi.setText(kh.getDiaChi().toString());
+		txtSoCMND.setText(kh.getSoCMND());
+		txtSoDienThoai.setText(kh.getSoDienThoai());
+		if(kh.isGioiTinh() == true) 
+			cmbGioiTinh.setSelectedItem((String) "Nam");
+		
+		cmbGioiTinh.setSelectedItem((String) "Nữ");
+		dtcNgaySinh.setDate(kh.getNgaySinh());
+			
+	}
+	private void xoaTrang() {
+		txtHoTen.setText("");
+		txtSoCMND.setText("");
+		txtSoDienThoai.setText("");
+		dtcNgaySinh.setDate(null);
+			
+	}
+	private void ganSuKien () {
+		btnSua.addActionListener(this);
+		btnLuu.addActionListener(this);
+		btnHuy.addActionListener(this);
+		tblDSKhachHang.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				// TODO Auto-generated method stub
+				int row = tblDSKhachHang.getSelectedRow();
+				if(row == -1)
+					return;
+				dsKH = khachHangControl.layDSKhachHang();
+				KhachHang kh = dsKH.get(row);
+				hienThiThongTinKhachHang(kh);
+				btnSua.setVisible(true);
+				btnLuu.setVisible(false);
+				btnHuy.setVisible(false);
+			}
+		});
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
+		if(o.equals(btnLuu)) {
+			int row = tblDSKhachHang.getSelectedRow();
+			if(row == -1)
+				return;
+			dsKH = khachHangControl.layDSKhachHang();
+			KhachHang khSua = dsKH.get(row);
+			khSua.setHoVaTen(txtHoTen.getText().trim());
+			khSua.setSoCMND(txtSoCMND.getText().trim());
+			khSua.setSoDienThoai(txtSoDienThoai.getText().trim());
+			System.out.println(cmbGioiTinh.getSelectedIndex());
+			if(cmbGioiTinh.getSelectedItem().equals("Nam"))
+				khSua.setGioiTinh(true);
+			else if(cmbGioiTinh.getSelectedItem().equals("Nữ"))
+				khSua.setGioiTinh(false);
+			khSua.setNgaySinh(new Date(dtcNgaySinh.getDate().getTime()));
+			dsKH = khachHangControl.layDSKhachHang();
+			hienBanThongTinKH(tblDSKhachHang, dsKH, srcDSKhachHang);
+			khachHangControl.suaKhachHang(khSua);	
+			System.out.println(khSua.isGioiTinh());
+			TienIch.hienAnCacControl(false, txtHoTen,txtDiaChi,txtSoCMND,txtSoDienThoai);
+			tblDSKhachHang.setEnabled(true);
+			btnSua.setVisible(false);
+			btnLuu.setVisible(false);
+			btnHuy.setVisible(false);
+		}
+		else if(o.equals(btnSua)) {
+			TienIch.hienAnCacControl(true, txtHoTen,txtDiaChi,txtSoCMND,txtSoDienThoai);
+			cmbGioiTinh.setEnabled(true);
+			btnSua.setVisible(false);
+			btnLuu.setVisible(true);
+			btnHuy.setVisible(true);
+			tblDSKhachHang.setEnabled(false);
+		}else if(o.equals(btnHuy)) {
+			tblDSKhachHang.clearSelection();
+			xoaTrang();
+			TienIch.hienAnCacControl(false, txtHoTen,txtDiaChi,txtSoCMND,txtSoDienThoai);
+			cmbGioiTinh.setEnabled(false);
+			tblDSKhachHang.setEnabled(true);
+			btnSua.setVisible(false);
+			btnLuu.setVisible(false);
+			btnHuy.setVisible(false);
+		}
+		
 	}
 }

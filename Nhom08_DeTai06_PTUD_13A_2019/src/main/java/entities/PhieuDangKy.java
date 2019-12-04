@@ -25,6 +25,7 @@ import constant.HangSo;
 @Entity
 @Table(name = "phieudangky")
 @NamedQueries({ @NamedQuery(name = "PDK.timDSPDK", query = "SELECT pdk FROM PhieuDangKy pdk"),
+	@NamedQuery(name = "PDK.timPDKTheoMa", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.maPhieuDK = : maPDK"),
 		@NamedQuery(name = "PDK.timDSPDKTheoKH", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.kh.maKH = :makh"),
 		@NamedQuery(name = "PDK.timDSTheoTour", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.ngayKhoiHanh.tour.maTour=:matour"),
 		@NamedQuery(name = "PDK.timDSKhachThamGiaTheoTour", query = "SELECT pdk.khachHangThamGias FROM PhieuDangKy pdk WHERE pdk.ngayKhoiHanh.tour.maTour=:matour") })

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
-
 import entities.KhachHangThamGia;
 
 public class DSKhachHangTGTableModel extends AbstractTableModel {
@@ -57,6 +56,7 @@ public class DSKhachHangTGTableModel extends AbstractTableModel {
 			return khtg.tinhTuoiKhachHang();
 		case 4:
 			return khtg.getDoTuoi();
+
 		}
 		return null;
 	}

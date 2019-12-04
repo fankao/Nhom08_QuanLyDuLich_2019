@@ -104,8 +104,11 @@ public class PhieuDangKyDAOImpl implements IPhieuDangKyDAO {
 	 */
 	@Override
 	public PhieuDangKy layTTPhieuDangKyTheoMa(String maPDK) {
-
-		return em.find(PhieuDangKy.class, maPDK);
+	
+		TypedQuery<PhieuDangKy> query = em.createNamedQuery("PDK.timPDKTheoMa", PhieuDangKy.class);
+		query.setParameter("maPDK", maPDK);
+		List<PhieuDangKy> list = query.getResultList();
+		return list.size() != 0 ? list.get(0) : null;
 	}
 
 	/**
