@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.logging.Level;
 
 import javax.swing.ImageIcon;
@@ -17,7 +18,10 @@ import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import control.IPhieuDangKyControl;
 import control.impl.NhanVienControl;
+import control.impl.PhieuDangKyControlImpl;
+import entities.PhieuDangKy;
 import gui.frmDangNhap;
 
 public class DlgSplashScreen extends JWindow {
@@ -64,6 +68,8 @@ public class DlgSplashScreen extends JWindow {
 		java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.OFF);
 		NhanVienControl nhanVienControl = new NhanVienControl();
 		java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
+		IPhieuDangKyControl dangKyControl = new PhieuDangKyControlImpl();
+		List<PhieuDangKy> phieuDangKies = dangKyControl.capNhatTrangThaiDangKyTour(dangKyControl.layDSPhieuDangKy());
 
 	}
 
@@ -103,7 +109,7 @@ public class DlgSplashScreen extends JWindow {
 				frame.setSize(600, 400);
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setVisible(true);
-				NhanVienControl nhanVienControl = new NhanVienControl();
+
 			}
 
 		};

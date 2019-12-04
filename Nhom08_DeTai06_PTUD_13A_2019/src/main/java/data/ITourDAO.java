@@ -1,5 +1,6 @@
 package data;
 
+import java.util.Date;
 import java.util.List;
 
 import entities.NgayKhoiHanh;
@@ -17,6 +18,8 @@ public interface ITourDAO {
 
 	public List<NgayKhoiHanh> layDSNgayKhoiHanhTheoTour(String maTour);
 
+	public List<NgayKhoiHanh> layDSNgayKhoiHanhTheoNgayKhoiHanh(String maTour, Date tuNgay, Date denNgay);
+
 	public Tour layTourTheoMa(String maTour);
 
 	public Tour themTour(Tour tour);
@@ -24,6 +27,7 @@ public interface ITourDAO {
 	public Tour suaTour(Tour tour);
 
 	public String phatSinhMaTour();
+
 	public String phatSinhNgayKhoiHanh(String maTour);
 
 }

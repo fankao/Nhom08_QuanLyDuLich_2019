@@ -35,6 +35,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -55,6 +56,7 @@ import bus.impl.DangKyTourBUS;
 import entities.DiaChi;
 import entities.DiaDanh;
 import entities.KhachHang;
+import entities.KhachHangThamGia;
 import entities.NhanVien;
 import entities.PhieuDangKy;
 import entities.Tour;
@@ -62,6 +64,7 @@ import gui.FrmMain;
 import gui.frmDangNhap;
 import gui.dialog.dlgLocTour;
 import gui.dialog.dlgPhieuThu;
+import model.DSKhachHangTGTableModel;
 import utils.HintTextFieldUI;
 import utils.TienIch;
 
@@ -1093,6 +1096,8 @@ public class pnlPhieuDangKyTour extends JPanel implements ActionListener, Change
 		return true;
 
 	}
+
+	
 
 	/**
 	 * Hàm hiện thông tin khách hàng

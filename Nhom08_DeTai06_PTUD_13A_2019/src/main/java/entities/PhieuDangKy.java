@@ -101,7 +101,7 @@ public class PhieuDangKy {
 			return thanhTien;
 		} else {
 			thanhTien[0] = songuoi[0] * ngayKhoiHanh.getTour().getDonGiaNguoiLon();
-			thanhTien[1] = (+songuoi[1] * ngayKhoiHanh.getTour().getDonGiaTreEm());
+			thanhTien[1] = songuoi[1] * ngayKhoiHanh.getTour().getDonGiaTreEm();
 
 		}
 		return thanhTien;

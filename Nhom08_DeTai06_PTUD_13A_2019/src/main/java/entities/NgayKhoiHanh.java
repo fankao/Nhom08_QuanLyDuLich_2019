@@ -1,6 +1,8 @@
 package entities;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,7 +13,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /********************************************
  * LichTrinh.java
@@ -23,12 +29,16 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "ngaykhoihanh")
+@NamedQueries({
+		@NamedQuery(name = "NgayKH.timNgayKhoiHanhTheoNgay", query = "SELECT ngkh FROM NgayKhoiHanh ngkh WHERE ngkh.tour.maTour=:maTour AND (ngkh.ngayKhoiHanh BETWEEN :startDate AND :toDate) ORDER BY ngkh.id") })
 public class NgayKhoiHanh {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(unique = true, nullable = false)
 	private String maLT;
+
+	@Temporal(TemporalType.DATE)
 	private Date ngayKhoiHanh;
 	private int soKhachToiDa;
 	private int soKhachDaDangKy;
@@ -41,6 +51,29 @@ public class NgayKhoiHanh {
 	private Tour tour;
 
 	public NgayKhoiHanh() {
+	}
+
+	/**
+	 * Huỷ ngày khởi hành do không đủ số người tham gia
+	 * 
+	 * @param ngayKhoiHanh: ngày khởi hành cần huỷ
+	 * @return: ngày khởi hànhs
+	 */
+	public NgayKhoiHanh capNhatNgayKhoiHanhKhongDuSoLuong(NgayKhoiHanh ngayKhoiHanh) {
+		java.sql.Date ngayKH = new java.sql.Date(ngayKhoiHanh.getNgayKhoiHanh().getTime());
+		LocalDate date = ngayKH.toLocalDate();
+		int soNguoiToiThieu = Math.round(ngayKhoiHanh.getSoKhachToiDa() * (2 / 3));
+		Period period = Period.between(LocalDate.now(), date);
+
+		// Nếu ngày hiện tại cách ngày khởi hành còn 5 ngày và số người đã đăng ký tour
+		// không vượt quá 2/3 số khách tối đa
+		if ((period.getDays() <= 5 || period.getMonths() >= 1) && ngayKhoiHanh.getSoKhachDaDangKy() < soNguoiToiThieu) {
+			// thì tiến hành huỷ ngày đi này
+			ngayKhoiHanh.setDaXoaDoKhongDuSoLuong(true);
+			return ngayKhoiHanh;
+		}
+		return null;
+
 	}
 
 	@Override

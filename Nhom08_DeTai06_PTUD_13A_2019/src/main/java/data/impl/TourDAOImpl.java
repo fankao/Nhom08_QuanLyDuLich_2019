@@ -1,6 +1,7 @@
 package data.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -165,5 +166,21 @@ public class TourDAOImpl implements ITourDAO {
 			return maTour + "-NGKH00" + (max + 1);
 		}
 		return maTour + "-NGKH001";
+	}
+
+	/**
+	 * Lấy danh sách ngày khởi hành của tour theo trong khoảng thời gian
+	 * 
+	 * @param maTour:  mã tour
+	 * @param tuNgay:  từ ngày
+	 * @param denNgay: đến ngày
+	 */
+	public List<NgayKhoiHanh> layDSNgayKhoiHanhTheoNgayKhoiHanh(String maTour, Date tuNgay, Date denNgay) {
+		TypedQuery<NgayKhoiHanh> query = em.createNamedQuery("NgayKH.timNgayKhoiHanhTheoNgay", NgayKhoiHanh.class);
+		query.setParameter("maTour", maTour);
+		query.setParameter("startDate", tuNgay);
+		query.setParameter("toDate", denNgay);
+		List<NgayKhoiHanh> dsNgayKH = query.getResultList();
+		return dsNgayKH.size() != 0 ? dsNgayKH : new ArrayList<NgayKhoiHanh>();
 	}
 }
