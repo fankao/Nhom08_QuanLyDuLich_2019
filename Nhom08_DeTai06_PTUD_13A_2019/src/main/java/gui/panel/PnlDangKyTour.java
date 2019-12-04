@@ -1015,16 +1015,19 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		 * 
 		 */
 		else if (o.equals(btnThemKHTG)) {
-			KhachHangThamGia khachHangThamGia = new KhachHangThamGia();
-			khachHangThamGia.setHoTenKHTG(txtHoVaTenKHTG.getText());
-			khachHangThamGia.setNgaySinh(new Date(dtcNgaySinhKHTG.getDate().getTime()));
-			if (khachHangThamGia.tinhTuoiKhachHang() > HangSo.NGUOILON) {
-				khachHangThamGia.setDoTuoi(DoTuoi.NGUOILON);
-			} else {
-				khachHangThamGia.setDoTuoi(DoTuoi.TREEM);
+			
+			if(ktTTNhapKhachHangTG()) {
+				KhachHangThamGia khachHangThamGia = new KhachHangThamGia();
+				khachHangThamGia.setHoTenKHTG(txtHoVaTenKHTG.getText());
+				khachHangThamGia.setNgaySinh(new Date(dtcNgaySinhKHTG.getDate().getTime()));
+				if (khachHangThamGia.tinhTuoiKhachHang() > HangSo.NGUOILON) {
+					khachHangThamGia.setDoTuoi(DoTuoi.NGUOILON);
+				} else {
+					khachHangThamGia.setDoTuoi(DoTuoi.TREEM);
+				}
+				dsKhachHangThamGia.add(khachHangThamGia);
+				hienBangDSKhachTG(tblDSKhachThamGia, dsKhachHangThamGia, scrDSKhachThamGia);
 			}
-			dsKhachHangThamGia.add(khachHangThamGia);
-			hienBangDSKhachTG(tblDSKhachThamGia, dsKhachHangThamGia, scrDSKhachThamGia);
 		}
 		/*
 		 * Nút xoá khách hàng tham gia vừa thêm
@@ -1121,16 +1124,18 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		 * Tìm kiếm ngày khởi hành theo ngày
 		 */
 		else if (o.equals(btnTimKiemTheoNgay)) {
-			String maTour = tblDSTour.getValueAt(tblDSTour.getSelectedRow(), 1).toString();
-			List<NgayKhoiHanh> dsNgayKhoiHanhCanTim = tourControl.layDSNgayKhoiHanhTheoNgayKhoiHanh(maTour,
-					dtcTuNgay.getDate(), dtcDenNgay.getDate());
-			if (dsNgayKhoiHanhCanTim.size() != 0) {
-				hienDanhSachNgayKhoiHanh(dsNgayKhoiHanhCanTim);
-			} else {
-				JOptionPane.showMessageDialog(null, "Không tìm thấy ngày khởi hành cần tìm", "Thông báo",
-						JOptionPane.INFORMATION_MESSAGE);
-				dsNgayKhoiHanhCanTim = dsNgayKhoiHanh;
-				hienDanhSachNgayKhoiHanh(dsNgayKhoiHanhCanTim);
+			if(ktNgayKhoiHanh()) {
+				String maTour = tblDSTour.getValueAt(tblDSTour.getSelectedRow(), 1).toString();
+				List<NgayKhoiHanh> dsNgayKhoiHanhCanTim = tourControl.layDSNgayKhoiHanhTheoNgayKhoiHanh(maTour,
+						dtcTuNgay.getDate(), dtcDenNgay.getDate());
+				if (dsNgayKhoiHanhCanTim.size() != 0) {
+					hienDanhSachNgayKhoiHanh(dsNgayKhoiHanhCanTim);
+				} else {
+					JOptionPane.showMessageDialog(null, "Không tìm thấy ngày khởi hành cần tìm", "Thông báo",
+							JOptionPane.INFORMATION_MESSAGE);
+					dsNgayKhoiHanhCanTim = dsNgayKhoiHanh;
+					hienDanhSachNgayKhoiHanh(dsNgayKhoiHanhCanTim);
+				}
 			}
 		}
 
@@ -1400,7 +1405,45 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		return true;
 
 	}
-
+	
+	/**
+	 * Kiem tra tim kiem ngay khoi hanh
+	 * @return true hoặc false
+	 */
+	private boolean ktNgayKhoiHanh() {
+		if(dtcTuNgay.getDate() == null) {
+			JOptionPane.showMessageDialog(this, "Chưa chọn từ ngày !");
+			return false;
+		}if(dtcDenNgay .getDate() == null){
+			JOptionPane.showMessageDialog(this, "Chưa chọn đến ngày !");
+			return false;
+		}
+		LocalDate tuNgay = new Date(dtcTuNgay.getDate().getTime()).toLocalDate();
+		LocalDate denNgay = new Date(dtcDenNgay.getDate().getTime()).toLocalDate();
+		if (denNgay.isBefore(tuNgay)) {
+			JOptionPane.showMessageDialog(this, "Đến ngày không thể trước từ ngày");
+			dtcDenNgay.requestFocusInWindow();
+			return false;
+		}
+		return true;
+		
+	}
+	private boolean ktTTNhapKhachHangTG() {
+		if (txtHoVaTenKHTG.getText().length() <= 0) {
+			JOptionPane.showMessageDialog(this, "Tên khách hàng tham gia không được để trống !");
+			return false;
+		}
+		if(dtcNgaySinhKHTG.getDate() == null) {
+			JOptionPane.showMessageDialog(this, "Ngày sinh khách hàng tham gia không được để trống");
+			return false;
+		}
+		if (dtcNgaySinhKHTG.getDate().equals(LocalDate.now())) {
+			JOptionPane.showMessageDialog(this, "Ngày sinh khách hàng tham gia không thể là ngày hiện tại");
+			return false;
+		}
+		
+		return true;
+	}
 	/*
 	 * =============================================
 	 * 
