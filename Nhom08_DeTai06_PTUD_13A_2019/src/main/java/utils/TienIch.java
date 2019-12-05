@@ -325,8 +325,7 @@ public class TienIch {
 			Desktop desktop = Desktop.getDesktop();
 			desktop.open(file);
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "File " + filepath + " không tồn tại trong thư mục", "Lỗi",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Không mở được file", "Lỗi", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

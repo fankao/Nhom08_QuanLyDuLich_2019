@@ -10,5 +10,6 @@ public class HangSo {
 	public static final String DAHUYPHIEUDK = "Đã huỷ đăng ký";
 	public static final String DAHOANTHANHTOUR = "Đã hoàn thành tour";
 	public static final String DANGXULY = "Đang xử lý";
+	public static final String DADUSOLUONG = "Đã đủ số lượng";
 
 }

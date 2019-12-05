@@ -221,7 +221,7 @@ public class Tour implements Serializable {
 
 	@Override
 	public String toString() {
-		return this.maTour + "-" + this.tenTour;
+		return this.tenTour;
 	}
 
 }

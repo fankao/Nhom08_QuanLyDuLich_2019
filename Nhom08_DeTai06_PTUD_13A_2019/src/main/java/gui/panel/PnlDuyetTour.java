@@ -56,8 +56,6 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 	private static List<NgayKhoiHanh> dsNgayKhoiHanh;
 	private static Tour tourChon;
 	private JButton btnHuyDuyet;
-	private JPopupMenu popupMenu;
-	private JMenuItem mnuXemTTTour;
 
 	/**
 	 * Khơi tạo giao diện duyệt mở bán tour
@@ -120,12 +118,6 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		tblDSTourChuaDuyet = new JTable();
 		tblDSTourChuaDuyet.setFillsViewportHeight(true);
 		tblDSTourDaDuyet.setFillsViewportHeight(true);
-
-		popupMenu = new JPopupMenu();
-		mnuXemTTTour = new JMenuItem("Xem chương trình tour");
-		mnuXemTTTour.setFont(new Font("Arial", Font.PLAIN, 18));
-		mnuXemTTTour.setIcon(new ImageIcon(this.getClass().getResource("/images/info_25px.png")));
-		popupMenu.add(mnuXemTTTour);
 
 		/*
 		 * Hiện thị các thông tin truy vấn từ cơ sở dữ liệu
@@ -198,9 +190,8 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 
 			}
 		});
-		mnuXemTTTour.addActionListener(this);
-		tblDSTourDaDuyet.addMouseListener(new TableMouseListener(tblDSTourDaDuyet, popupMenu));
-		tblDSTourChuaDuyet.addMouseListener(new TableMouseListener(tblDSTourChuaDuyet, popupMenu));
+		tblDSTourDaDuyet.addMouseListener(new TableMouseListener(tblDSTourDaDuyet));
+		tblDSTourChuaDuyet.addMouseListener(new TableMouseListener(tblDSTourChuaDuyet));
 	}
 
 	@Override
@@ -236,11 +227,6 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 					dsTourChuaDuyet = tourControl.layDsTourTheoYeuCau(1);
 					hienDanhSachTour(tblDSTourChuaDuyet, dsTourChuaDuyet, scrDSTourChuaDuyet);
 				}
-			}
-		} else if (o.equals(mnuXemTTTour)) {
-			String filepath = tourChon.getMoTa();
-			if (filepath != null) {
-				TienIch.hienFilePDF(filepath);
 			}
 		}
 

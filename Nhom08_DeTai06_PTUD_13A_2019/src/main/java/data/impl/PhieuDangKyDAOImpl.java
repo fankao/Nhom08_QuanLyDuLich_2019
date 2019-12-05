@@ -104,7 +104,7 @@ public class PhieuDangKyDAOImpl implements IPhieuDangKyDAO {
 	 */
 	@Override
 	public PhieuDangKy layTTPhieuDangKyTheoMa(String maPDK) {
-	
+
 		TypedQuery<PhieuDangKy> query = em.createNamedQuery("PDK.timPDKTheoMa", PhieuDangKy.class);
 		query.setParameter("maPDK", maPDK);
 		List<PhieuDangKy> list = query.getResultList();
@@ -151,4 +151,20 @@ public class PhieuDangKyDAOImpl implements IPhieuDangKyDAO {
 		return "PDK001/" + LocalDate.now().getMonthValue() + "" + LocalDate.now().getYear();
 	}
 
+	@Override
+	public PhieuDangKy layPhieuDangKyTheoKHVaNgayKH(String maKH, String maNGKH) {
+		TypedQuery<PhieuDangKy> query = em.createNamedQuery("PDK.timPDKTheoKHVaNgayKhoiHanh", PhieuDangKy.class);
+		query.setParameter("makh", maKH);
+		query.setParameter("malt", maNGKH);
+		List<PhieuDangKy> list = query.getResultList();
+		return list.size() != 0 ? list.get(0) : null;
+	}
+
+	@Override
+	public List<PhieuDangKy> layDSPhieuDangKyTheoThang(int thang) {
+		TypedQuery<PhieuDangKy> query = em.createNamedQuery("PDK.timDSPDKTheoThang", PhieuDangKy.class);
+		query.setParameter("thang", thang);
+		List<PhieuDangKy> list = query.getResultList();
+		return list.size() != 0 ? list : new ArrayList<PhieuDangKy>();
+	}
 }
