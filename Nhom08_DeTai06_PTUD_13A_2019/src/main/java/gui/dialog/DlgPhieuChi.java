@@ -299,15 +299,15 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 			}
 		}
 		phieuThuChiControl = new PhieuThuChiControlImpl();
-		phieuThuChi.setMaPhieuChi(phieuThuChiControl.phatSinhMaPhieu(LoaiPhieu.PHIEUCHI));
-		phieuThuChi.setNgayTaoPhieuChi(new Date(System.currentTimeMillis()));
-		phieuThuChi.setSoTien(tienChiTra);
+		p.setMaPhieuChi(phieuThuChiControl.phatSinhMaPhieu(LoaiPhieu.PHIEUCHI));
+		p.setNgayTaoPhieuChi(new Date(System.currentTimeMillis()));
+		p.setSoTien(tienChiTra);
 
-		PhieuThuChi phieuThuChiThem = phieuThuChiControl.themPhieu(phieuThuChi);
+		PhieuThuChi phieuThuChiThem = phieuThuChiControl.themPhieu(p);
 		if (phieuThuChiThem != null) {
 			txtMaPC.setText(p.getMaPhieuChi() + "");
-			txtNgayTao.setText(new SimpleDateFormat("dd/MM/yyyy").format(phieuThuChi.getNgayTaoPhieuChi()));
-			hienThongTinPhieuChi(phieuThuChi);
+			txtNgayTao.setText(new SimpleDateFormat("dd/MM/yyyy").format(p.getNgayTaoPhieuChi()));
+			hienThongTinPhieuChi(p);
 		}
 
 		btnLuu.addActionListener(this);

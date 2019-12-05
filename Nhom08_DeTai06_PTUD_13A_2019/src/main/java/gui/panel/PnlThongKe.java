@@ -27,16 +27,21 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import control.IPhieuDangKyControl;
+import control.IPhieuThuChiControl;
 import control.impl.PhieuDangKyControlImpl;
+import control.impl.PhieuThuChiControlImpl;
 import entities.KhachHangThamGia;
 import entities.PhieuDangKy;
+import entities.PhieuThuChi;
 
 public class PnlThongKe extends JPanel {
 	private JTabbedPane tabThongTinTK;
 	private JTextField txtTongDoanhThu;
 	private JTextField txtTongPDKDaHuy;
 	private IPhieuDangKyControl phieuDangKyControl;
+	private IPhieuThuChiControl phieuThuChiControl;
 	private List<PhieuDangKy> dsPDK;
+	private List<PhieuThuChi> dsPhieuThuChi;
 	private JPanel pnlThongKeDoanhThuTheoThang;
 
 	/**
@@ -167,6 +172,7 @@ public class PnlThongKe extends JPanel {
 		pnlSoLieu.setLayout(new BorderLayout(0, 0));
 
 		phieuDangKyControl = new PhieuDangKyControlImpl();
+		phieuThuChiControl = new PhieuThuChiControlImpl();
 		dsPDK = phieuDangKyControl.layDSPhieuDangKy();
 		ChartPanel CpnlBDoanhThu = new ChartPanel((taoBieuDoDoanhThu()));
 		CpnlBDoanhThu.setLayout(new BorderLayout(0, 0));
@@ -183,15 +189,14 @@ public class PnlThongKe extends JPanel {
 	// Tính tổng doanh thu của một tháng
 	private double layDoanhThuTheoThang(int thang) {
 		double tongTien = 0.0;
-		double[] tongTienTren1phieu = null;
-		for (PhieuDangKy phieuDK : dsPDK) {
-			if (phieuDK.getNgayTaoPhieu().toLocalDate().getMonth().getValue() == thang) {
-				tongTienTren1phieu = phieuDK.tinhThanhTien(phieuDK.getKhachHangThamGias());
-				tongTien += tongTienTren1phieu[0];
-				tongTien += tongTienTren1phieu[1];
+		double tongTienPT = 0.0;
+		double tongTienPC = 0.0;
+		dsPDK = phieuDangKyControl.layDSPhieuDangKyTheoThang(thang);
+		for (PhieuDangKy pdk : dsPDK) {
+			tongTienPT +=phieuThuChiControl.tinhTongTienPhieuThuTheoPDK(pdk.getMaPhieuDK());
+			tongTienPC +=phieuThuChiControl.tinhTongTienPhieuPhieuChiTheoPDK(pdk.getMaPhieuDK());
 			}
-			System.out.println(tongTien);
-		}
+		tongTien = tongTienPT - tongTienPC;
 		return tongTien;
 	}
 

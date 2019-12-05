@@ -2,6 +2,7 @@ package gui.panel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -11,14 +12,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.sql.Date;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -31,12 +34,13 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import com.toedter.calendar.JDateChooser;
 
 import constant.HangSo;
 import control.IKhachHangControl;
@@ -45,28 +49,17 @@ import control.IPhieuThuChiControl;
 import control.impl.KhachHangControlImpl;
 import control.impl.PhieuDangKyControlImpl;
 import control.impl.PhieuThuChiControlImpl;
-import entities.DoTuoi;
 import entities.KhachHang;
 import entities.KhachHangThamGia;
-import entities.LoaiPhieu;
 import entities.NhanVien;
 import entities.PhieuDangKy;
 import entities.PhieuThuChi;
-import entities.Tour;
 import gui.dialog.DlgPhieuChi;
-import gui.dialog.DlgPhieuThu;
 import model.DSKhachHangTGTableModel;
 import model.DSKhachHangTableModel;
 import model.DSPhieuDangKyModel;
 import utils.HintTextFieldUI;
 import utils.TienIch;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.BevelBorder;
-import java.awt.Component;
 
 public class pnlQuanLyPDK extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -384,25 +377,32 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		label_2.setHorizontalAlignment(SwingConstants.LEFT);
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		GroupLayout gl_panel_5 = new GroupLayout(panel_5);
-		gl_panel_5.setHorizontalGroup(gl_panel_5.createParallelGroup(Alignment.LEADING).addGroup(gl_panel_5
-				.createSequentialGroup().addContainerGap()
-				.addGroup(gl_panel_5.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblSoDienThoai, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblSinThoi, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE))
-				.addGap(170).addComponent(label_2, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.UNRELATED)
-				.addComponent(lblDiaChi, GroupLayout.PREFERRED_SIZE, 410, GroupLayout.PREFERRED_SIZE)
-				.addContainerGap()));
-		gl_panel_5.setVerticalGroup(gl_panel_5.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_5.createSequentialGroup().addGroup(gl_panel_5.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_5.createSequentialGroup().addContainerGap().addComponent(lblSoDienThoai))
-						.addGroup(gl_panel_5.createSequentialGroup().addGap(14).addGroup(gl_panel_5
-								.createParallelGroup(Alignment.BASELINE)
-								.addComponent(lblSinThoi, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-								.addComponent(label_2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblDiaChi, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))))
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
-		gl_panel_5.linkSize(SwingConstants.VERTICAL, new Component[] { lblDiaChi, label_2 });
+		gl_panel_5.setHorizontalGroup(
+			gl_panel_5.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_5.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblSinThoi, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(lblSoDienThoai, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
+					.addGap(31)
+					.addComponent(label_2, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(lblDiaChi, GroupLayout.PREFERRED_SIZE, 410, GroupLayout.PREFERRED_SIZE)
+					.addGap(16))
+		);
+		gl_panel_5.setVerticalGroup(
+			gl_panel_5.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_5.createSequentialGroup()
+					.addGap(14)
+					.addGroup(gl_panel_5.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblSoDienThoai, GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+						.addGroup(gl_panel_5.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblSinThoi, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+							.addComponent(label_2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblDiaChi, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		gl_panel_5.linkSize(SwingConstants.VERTICAL, new Component[] {lblDiaChi, label_2});
 		panel_5.setLayout(gl_panel_5);
 
 		pnlTTPDK = new JPanel();
@@ -692,7 +692,7 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 				pdkDuocChon = phieuDangKyControl.layTTPhieuDangKyTheoMa(maPDK);
 				hienThongTinPDK(pdkDuocChon);
 				String tinhTrang = (String) tblDSPhieuDangKy.getValueAt(row, 4);
-				if (!tinhTrang.equalsIgnoreCase(HangSo.DAHOANTHANHTOUR)) {
+				if (!tinhTrang.equalsIgnoreCase(HangSo.DAHOANTHANHTOUR) || pdkDuocChon.isDaHuyPhieu()) {
 					btnHuyDangKyTour.setEnabled(true);
 				}
 
