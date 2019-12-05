@@ -24,11 +24,13 @@ import constant.HangSo;
 
 @Entity
 @Table(name = "phieudangky")
-@NamedQueries({ @NamedQuery(name = "PDK.timDSPDK", query = "SELECT pdk FROM PhieuDangKy pdk"),
-		@NamedQuery(name = "PDK.timPDKTheoMa", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.maPhieuDK = : maPDK"),
-		@NamedQuery(name = "PDK.timDSPDKTheoKH", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.kh.maKH = :makh"),
-		@NamedQuery(name = "PDK.timDSTheoTour", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.ngayKhoiHanh.tour.maTour=:matour"),
-		@NamedQuery(name = "PDK.timDSKhachThamGiaTheoTour", query = "SELECT pdk.khachHangThamGias FROM PhieuDangKy pdk WHERE pdk.ngayKhoiHanh.tour.maTour=:matour") })
+@NamedQueries({ @NamedQuery(name = "PDK.timDSPDK", query = "SELECT pdk FROM PhieuDangKy pdk ORDER BY pdk.id"),
+		@NamedQuery(name = "PDK.timDSPDKTheoThang", query = "SELECT pdk FROM PhieuDangKy pdk WHERE MONTH(pdk.ngayTaoPhieu)=:thang ORDER BY pdk.id"),
+		@NamedQuery(name = "PDK.timPDKTheoMa", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.maPhieuDK = : maPDK ORDER BY pdk.id"),
+		@NamedQuery(name = "PDK.timDSPDKTheoKH", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.kh.maKH = :makh ORDER BY pdk.id"),
+		@NamedQuery(name = "PDK.timDSTheoTour", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.ngayKhoiHanh.tour.maTour=:matour ORDER BY pdk.id"),
+		@NamedQuery(name = "PDK.timDSKhachThamGiaTheoTour", query = "SELECT pdk.khachHangThamGias FROM PhieuDangKy pdk WHERE pdk.ngayKhoiHanh.tour.maTour=:matour ORDER BY pdk.id"),
+		@NamedQuery(name = "PDK.timPDKTheoKHVaNgayKhoiHanh", query = "SELECT pdk FROM PhieuDangKy pdk WHERE pdk.kh.maKH = :makh AND pdk.ngayKhoiHanh.maLT=:malt ORDER BY pdk.id") })
 public class PhieuDangKy {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,6 +55,8 @@ public class PhieuDangKy {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "khachhangthamgiaID", nullable = false)
 	private List<KhachHangThamGia> khachHangThamGias = new ArrayList<KhachHangThamGia>();
+
+	private boolean thamGiaTourDangKy;
 
 	private boolean daHoanThanhTour;
 
@@ -173,6 +177,14 @@ public class PhieuDangKy {
 
 	public void setKhachHangThamGias(List<KhachHangThamGia> khachHangThamGias) {
 		this.khachHangThamGias = khachHangThamGias;
+	}
+
+	public boolean isThamGiaTourDangKy() {
+		return thamGiaTourDangKy;
+	}
+
+	public void setThamGiaTourDangKy(boolean thamGiaTourDangKy) {
+		this.thamGiaTourDangKy = thamGiaTourDangKy;
 	}
 
 	public boolean isDaHoanThanhTour() {

@@ -67,7 +67,7 @@ import utils.TienIch;
  * @author Gia Hưng, Minh Chiến
  * @version 1.0 Ngày tạo 5/10/2019
  */
-public class dlgPhieuThu extends JDialog implements ActionListener {
+public class DlgPhieuThu extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private final JPanel pnlNoiDung = new JPanel();
 	private JTextField txtMaDK;
@@ -132,9 +132,9 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 	/**
 	 * Hiện giao diện phiếu thu
 	 */
-	public dlgPhieuThu(PhieuThuChi ptc, List<KhachHangThamGia> khachThamGias) {
+	public DlgPhieuThu(PhieuThuChi ptc, List<KhachHangThamGia> khachThamGias) {
 		setModalityType(ModalityType.TOOLKIT_MODAL);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(dlgPhieuThu.class.getResource("/images/iconFrm.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(DlgPhieuThu.class.getResource("/images/iconFrm.png")));
 		setTitle("Phiếu thu");
 		this.phieuThuChi = ptc;
 		this.phieuDangKy = phieuThuChi.getPdk();
@@ -658,6 +658,7 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 	 * @param phieuThuChi: phiếu thu
 	 */
 	private void hienThongTinPhieuThu(PhieuThuChi pt) {
+		NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("vi", "vn"));
 		txtSoPT.setText(pt.getMaPhieuChi());
 		txtNgayTao.setText(new SimpleDateFormat("dd/MM/yyyy").format(pt.getNgayTaoPhieuChi()));
 		txtMaDK.setText(pt.getPdk().getMaPhieuDK());
@@ -669,15 +670,15 @@ public class dlgPhieuThu extends JDialog implements ActionListener {
 		txtSoNguoiLon.setText(soNguoiLon + "");
 		txtSoTreEm.setText(soTreEm + "");
 
-		txtThanhTienNL.setText(thanhTienNguoiLon + "");
-		txtThanhTienTE.setText(thanhTienTremEm + "");
+		txtThanhTienNL.setText(format.format(thanhTienNguoiLon));
+		txtThanhTienTE.setText(format.format(thanhTienTremEm));
 
-		txtDonGiaNL.setText(pt.getPdk().getNgayKhoiHanh().getTour().getDonGiaNguoiLon() + "");
-		txtDonGiaTE.setText(pt.getPdk().getNgayKhoiHanh().getTour().getDonGiaTreEm() + "");
+		txtDonGiaNL.setText(format.format(pt.getPdk().getNgayKhoiHanh().getTour().getDonGiaNguoiLon()));
+		txtDonGiaTE.setText(format.format(pt.getPdk().getNgayKhoiHanh().getTour().getDonGiaTreEm()));
 
-		txtCongTien.setText(congTien + "");
-		txtTienThue.setText(tienThue + "");
-		txtTongTienThanhToan.setText(tongThanhTien + "");
+		txtCongTien.setText(format.format(congTien) + "");
+		txtTienThue.setText(format.format(congTien) + "");
+		txtTongTienThanhToan.setText(format.format(tongThanhTien));
 
 	}
 

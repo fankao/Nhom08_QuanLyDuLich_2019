@@ -263,6 +263,7 @@ public class FrmMain extends JFrame implements ActionListener {
 		pnlButtonBoder.setLayout(new BorderLayout(0, 0));
 
 		pnlSubButton = new JPanel();
+		pnlSubButton.setBackground(new Color(23, 35, 51));
 		pnlButtonBoder.add(pnlSubButton);
 		pnlSubButton.setLayout(new GridLayout(3, 1, 0, 0));
 
@@ -356,7 +357,7 @@ public class FrmMain extends JFrame implements ActionListener {
 		pnlHinhNen = new PnlHinhNen();
 		pnlDuyetTour = new PnlDuyetTour();
 		pnlThongKe = new PnlThongKe();
-		pnlQuanLyPDK = new pnlQuanLyPDK();
+		pnlQuanLyPDK = new pnlQuanLyPDK(nv);
 		pnlKhachHang = new PnlKhachHang();
 
 		// đặt tên cho panel
@@ -382,6 +383,7 @@ public class FrmMain extends JFrame implements ActionListener {
 		btnDangKyTour.setBackground(new Color(23, 35, 51));
 
 		btnDuyetTour = new JButton("Duyệt tour");
+		btnDuyetTour.setVisible(false);
 		btnDuyetTour.setIcon(new ImageIcon(FrmMain.class.getResource("/images/check_file_32px.png")));
 		btnDuyetTour.setHorizontalAlignment(SwingConstants.LEADING);
 		btnDuyetTour.setForeground(Color.WHITE);
@@ -394,6 +396,10 @@ public class FrmMain extends JFrame implements ActionListener {
 		btnThongKe.setBackground(new Color(23, 35, 51));
 		btnDangXuat.setBackground(new Color(23, 35, 51));
 		pnlButtonBoder.setBackground(new Color(23, 35, 51));
+
+		if (nv.getQuyen().getQuyen() != 1) {
+			btnDuyetTour.setVisible(true);
+		}
 
 		// gán sự kiện
 		ganSuKien();

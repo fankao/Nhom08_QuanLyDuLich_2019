@@ -143,6 +143,6 @@ public class KhachHang {
 	@Override
 	public String toString() {
 
-		return this.hoVaTen + ",SDT:" + this.soDienThoai + ",CMND:" + this.soCMND;
+		return this.hoVaTen;
 	}
 }

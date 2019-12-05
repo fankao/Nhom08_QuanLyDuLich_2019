@@ -7,6 +7,8 @@ import entities.PhieuDangKy;
 
 public interface IPhieuDangKyDAO {
 	public List<PhieuDangKy> layDSPhieuDangKy();
+	
+	public List<PhieuDangKy> layDSPhieuDangKyTheoThang(int thang);
 
 	public List<PhieuDangKy> layDSPhieuDangKyTheoKH(String maKH);
 
@@ -15,7 +17,8 @@ public interface IPhieuDangKyDAO {
 	public List<KhachHangThamGia> layDSKhachThamGiaTour(String maTour);
 
 	public String phatSinhMaPDK();
-
+	
+	public PhieuDangKy layPhieuDangKyTheoKHVaNgayKH(String maKH, String maNGKH);
 
 	public PhieuDangKy themPhieuDangKy(PhieuDangKy pdk);
 

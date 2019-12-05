@@ -69,7 +69,13 @@ public class DlgSplashScreen extends JWindow {
 		NhanVienControl nhanVienControl = new NhanVienControl();
 		java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
 		IPhieuDangKyControl dangKyControl = new PhieuDangKyControlImpl();
-		List<PhieuDangKy> phieuDangKies = dangKyControl.capNhatTrangThaiDangKyTour(dangKyControl.layDSPhieuDangKy());
+		// Cập nhật phiếu đăng ký chờ huỷ do ngày khởi hành không đủ số lượng khách tham
+		// gia
+		List<PhieuDangKy> phieuDangKies = dangKyControl.capNhatTrangThaiDangKyTour(1, dangKyControl.layDSPhieuDangKy());
+
+		// Cập nhật phiếu đăng ký đã hoàn thành tour
+		List<PhieuDangKy> dsPhieuDKHoanThanh = dangKyControl.capNhatTrangThaiDangKyTour(2,
+				dangKyControl.layDSPhieuDangKy());
 
 	}
 

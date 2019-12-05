@@ -7,15 +7,24 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.sql.Date;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -28,6 +37,18 @@ import control.impl.PhieuThuChiControlImpl;
 import entities.KhachHang;
 import entities.LoaiPhieu;
 import entities.PhieuDangKy;
+import entities.PhieuThuChi;
+import gui.FrmPrint;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.swing.JRViewer;
+
+import javax.swing.JTextArea;
 
 public class DlgPhieuChi extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -38,24 +59,27 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 	private JLabel lblSDTs;
 	private JLabel lblDiaChis;
 	private JLabel lblTienChis;
-	private PhieuDangKy phieuDangKy;
+
 	private JLabel lblTours;
 	private JButton btnLuu;
-	private JButton btnHuy;
 
 	private IPhieuThuChiControl phieuThuChiControl;
+	private PhieuDangKy phieuDangKy;
+	private PhieuThuChi phieuThuChi;
+	private JTextArea txaLyDo;
 
 	/**
 	 * Create the dialog.
 	 */
-	public DlgPhieuChi(PhieuDangKy pdk) {
-		this.phieuDangKy = pdk;
+	public DlgPhieuChi(PhieuThuChi p, double tienChiTra) {
+		this.phieuDangKy = p.getPdk();
+		this.phieuThuChi = p;
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(DlgPhieuChi.class.getResource("/images/iconFrm.png")));
 		setTitle("Phiếu chi tiền");
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setModalityType(ModalityType.APPLICATION_MODAL);
-		setBounds(100, 100, 1013, 713);
+		setBounds(100, 100, 1013, 634);
 		setLocationRelativeTo(null);
 
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -70,46 +94,42 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 			lblNewLabel.setFont(new Font("Arial", Font.BOLD, 30));
 
 			JPanel panel = new JPanel();
-			
+
 			JPanel panel_3 = new JPanel();
 			panel_3.setLayout(new GridLayout(3, 0, 0, 0));
-			
+
 			JLabel label = new JLabel("Công ty du lịch Phương Nam");
 			label.setFont(new Font("Tahoma", Font.BOLD, 18));
 			panel_3.add(label);
-			
+
 			JLabel label_1 = new JLabel("Địa chỉ :12 Nguyễn Văn Bão,phường 3,quận Gò Vấp,Tp HCM");
 			panel_3.add(label_1);
-			
+
 			JLabel label_2 = new JLabel("SĐT:0123456789");
 			panel_3.add(label_2);
 			GroupLayout gl_pnlTieuDe = new GroupLayout(pnlTieuDe);
-			gl_pnlTieuDe.setHorizontalGroup(
-				gl_pnlTieuDe.createParallelGroup(Alignment.LEADING)
-					.addGroup(Alignment.TRAILING, gl_pnlTieuDe.createSequentialGroup()
-						.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 356, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
-						.addComponent(lblNewLabel)
-						.addGap(52)
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 366, GroupLayout.PREFERRED_SIZE))
-			);
-			gl_pnlTieuDe.setVerticalGroup(
-				gl_pnlTieuDe.createParallelGroup(Alignment.LEADING)
-					.addGroup(Alignment.TRAILING, gl_pnlTieuDe.createSequentialGroup()
-						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 101, Short.MAX_VALUE)
-						.addGap(57))
-					.addGroup(gl_pnlTieuDe.createSequentialGroup()
-						.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)
-						.addContainerGap())
-					.addGroup(Alignment.TRAILING, gl_pnlTieuDe.createSequentialGroup()
-						.addContainerGap(81, Short.MAX_VALUE)
-						.addComponent(lblNewLabel)
-						.addGap(41))
-			);
+			gl_pnlTieuDe
+					.setHorizontalGroup(gl_pnlTieuDe.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING,
+							gl_pnlTieuDe.createSequentialGroup()
+									.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 356, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+									.addComponent(lblNewLabel).addGap(52)
+									.addComponent(panel, GroupLayout.PREFERRED_SIZE, 366, GroupLayout.PREFERRED_SIZE)));
+			gl_pnlTieuDe
+					.setVerticalGroup(gl_pnlTieuDe.createParallelGroup(Alignment.LEADING)
+							.addGroup(Alignment.TRAILING, gl_pnlTieuDe.createSequentialGroup()
+									.addComponent(panel, GroupLayout.PREFERRED_SIZE, 101, Short.MAX_VALUE).addGap(57))
+							.addGroup(
+									gl_pnlTieuDe.createSequentialGroup()
+											.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 87,
+													GroupLayout.PREFERRED_SIZE)
+											.addContainerGap())
+							.addGroup(Alignment.TRAILING, gl_pnlTieuDe.createSequentialGroup()
+									.addContainerGap(81, Short.MAX_VALUE).addComponent(lblNewLabel).addGap(41)));
 			panel.setLayout(new GridLayout(2, 0, 0, 0));
 
-			JPanel panel_2 = new JPanel();
-			panel.add(panel_2);
+			JPanel pnlMaPC = new JPanel();
+			panel.add(pnlMaPC);
 
 			JLabel lblMaSo = new JLabel("Mã phiếu:");
 			lblMaSo.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -118,29 +138,24 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 			txtMaPC.setEditable(false);
 			txtMaPC.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			txtMaPC.setColumns(10);
-			GroupLayout gl_panel_2 = new GroupLayout(panel_2);
-			gl_panel_2.setHorizontalGroup(
-				gl_panel_2.createParallelGroup(Alignment.LEADING)
-					.addGroup(Alignment.TRAILING, gl_panel_2.createSequentialGroup()
-						.addContainerGap(59, Short.MAX_VALUE)
-						.addComponent(lblMaSo, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(txtMaPC, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGap(31))
-			);
-			gl_panel_2.setVerticalGroup(
-				gl_panel_2.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_panel_2.createSequentialGroup()
-						.addGap(10)
-						.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
-							.addComponent(txtMaPC, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblMaSo))
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-			);
-			panel_2.setLayout(gl_panel_2);
+			GroupLayout gl_pnlMaPC = new GroupLayout(pnlMaPC);
+			gl_pnlMaPC.setHorizontalGroup(gl_pnlMaPC.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING,
+					gl_pnlMaPC.createSequentialGroup().addContainerGap(59, Short.MAX_VALUE)
+							.addComponent(lblMaSo, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(txtMaPC,
+									GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(31)));
+			gl_pnlMaPC.setVerticalGroup(gl_pnlMaPC.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_pnlMaPC.createSequentialGroup().addGap(10)
+							.addGroup(gl_pnlMaPC.createParallelGroup(Alignment.BASELINE)
+									.addComponent(txtMaPC, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+											GroupLayout.PREFERRED_SIZE)
+									.addComponent(lblMaSo))
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+			pnlMaPC.setLayout(gl_pnlMaPC);
 
-			JPanel panel_1 = new JPanel();
-			panel.add(panel_1);
+			JPanel pnlNgayTaoPC = new JPanel();
+			panel.add(pnlNgayTaoPC);
 
 			JLabel lblNgay = new JLabel("Ngày tạo:");
 			lblNgay.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -149,26 +164,22 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 			txtNgayTao.setEditable(false);
 			txtNgayTao.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			txtNgayTao.setColumns(10);
-			GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-			gl_panel_1.setHorizontalGroup(
-				gl_panel_1.createParallelGroup(Alignment.LEADING)
-					.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
-						.addContainerGap(62, Short.MAX_VALUE)
-						.addComponent(lblNgay, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(txtNgayTao, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addGap(28))
-			);
-			gl_panel_1.setVerticalGroup(
-				gl_panel_1.createParallelGroup(Alignment.LEADING)
-					.addGroup(gl_panel_1.createSequentialGroup()
-						.addGap(10)
-						.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-							.addComponent(txtNgayTao, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblNgay, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-			);
-			panel_1.setLayout(gl_panel_1);
+			GroupLayout gl_pnlNgayTaoPC = new GroupLayout(pnlNgayTaoPC);
+			gl_pnlNgayTaoPC.setHorizontalGroup(gl_pnlNgayTaoPC.createParallelGroup(Alignment.LEADING).addGroup(
+					Alignment.TRAILING,
+					gl_pnlNgayTaoPC.createSequentialGroup().addContainerGap(62, Short.MAX_VALUE)
+							.addComponent(lblNgay, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(txtNgayTao,
+									GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(28)));
+			gl_pnlNgayTaoPC.setVerticalGroup(gl_pnlNgayTaoPC.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_pnlNgayTaoPC.createSequentialGroup().addGap(10)
+							.addGroup(gl_pnlNgayTaoPC.createParallelGroup(Alignment.BASELINE)
+									.addComponent(txtNgayTao, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+											GroupLayout.PREFERRED_SIZE)
+									.addComponent(lblNgay, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+			pnlNgayTaoPC.setLayout(gl_pnlNgayTaoPC);
 			pnlTieuDe.setLayout(gl_pnlTieuDe);
 		}
 
@@ -184,7 +195,7 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 		pnlCTTT.add(pnlKH);
 
 		JLabel lblKH = new JLabel("Họ tên khách hàng:");
-		lblKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblKH.setFont(new Font("Arial", Font.BOLD, 20));
 		pnlKH.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 		pnlKH.add(lblKH);
 
@@ -192,26 +203,26 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 		lblTenKH.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		pnlKH.add(lblTenKH);
 
-		JPanel panel = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
-		flowLayout.setVgap(10);
-		flowLayout.setHgap(10);
-		flowLayout.setAlignment(FlowLayout.LEFT);
-		pnlCTTT.add(panel);
+		JPanel pnlTour = new JPanel();
+		FlowLayout fl_pnlTour = (FlowLayout) pnlTour.getLayout();
+		fl_pnlTour.setVgap(10);
+		fl_pnlTour.setHgap(10);
+		fl_pnlTour.setAlignment(FlowLayout.LEFT);
+		pnlCTTT.add(pnlTour);
 
 		JLabel lblTour = new JLabel("Tour đăng ký:");
-		lblTour.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panel.add(lblTour);
+		lblTour.setFont(new Font("Arial", Font.BOLD, 20));
+		pnlTour.add(lblTour);
 
 		lblTours = new JLabel("Hạ Long");
 		lblTours.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		panel.add(lblTours);
+		pnlTour.add(lblTours);
 
 		JPanel pnlSDT = new JPanel();
 		pnlCTTT.add(pnlSDT);
 
 		JLabel lbl = new JLabel("Số điện thoại:");
-		lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lbl.setFont(new Font("Arial", Font.BOLD, 20));
 		pnlSDT.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 		pnlSDT.add(lbl);
 
@@ -223,7 +234,7 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 		pnlCTTT.add(pblDiaChi);
 
 		JLabel lblDiaChi = new JLabel("Địa chỉ:");
-		lblDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblDiaChi.setFont(new Font("Arial", Font.BOLD, 20));
 		pblDiaChi.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 		pblDiaChi.add(lblDiaChi);
 
@@ -235,7 +246,7 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 		pnlCTTT.add(pnlTienChi);
 
 		JLabel txtSoTien = new JLabel("Số tiền chi:");
-		txtSoTien.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		txtSoTien.setFont(new Font("Arial", Font.BOLD, 20));
 		pnlTienChi.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
 		pnlTienChi.add(txtSoTien);
 
@@ -247,7 +258,7 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 		pnlTTPhieuChi.add(pnlLyDoChi, BorderLayout.CENTER);
 
 		JLabel lblLyDo = new JLabel("Lý do chi:");
-		lblLyDo.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblLyDo.setFont(new Font("Arial", Font.BOLD, 20));
 
 		JPanel pnlLyDo = new JPanel();
 		GroupLayout gl_pnlLyDoChi = new GroupLayout(pnlLyDoChi);
@@ -262,56 +273,57 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 				.setVerticalGroup(gl_pnlLyDoChi.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_pnlLyDoChi.createSequentialGroup().addContainerGap()
 								.addGroup(gl_pnlLyDoChi.createParallelGroup(Alignment.LEADING)
-										.addComponent(pnlLyDo, GroupLayout.PREFERRED_SIZE, 194,
+										.addComponent(pnlLyDo, GroupLayout.PREFERRED_SIZE, 118,
 												GroupLayout.PREFERRED_SIZE)
 										.addComponent(lblLyDo))
-								.addContainerGap(39, Short.MAX_VALUE)));
+								.addContainerGap(99, Short.MAX_VALUE)));
 		pnlLyDo.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrLyDoChi = new JScrollPane();
 		pnlLyDo.add(scrLyDoChi, BorderLayout.CENTER);
 
-		JTextPane txpLyDoChi = new JTextPane();
-		txpLyDoChi.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		scrLyDoChi.setViewportView(txpLyDoChi);
+		txaLyDo = new JTextArea();
+		txaLyDo.setFont(new Font("Arial", Font.PLAIN, 18));
+		scrLyDoChi.setViewportView(txaLyDo);
 		pnlLyDoChi.setLayout(gl_pnlLyDoChi);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane);
 			{
-				btnLuu = new JButton("Xuất phiếu chi");
+				btnLuu = new JButton("In phiếu chi");
 				btnLuu.setFont(new Font("Tahoma", Font.PLAIN, 20));
 				btnLuu.setActionCommand("OK");
 				buttonPane.add(btnLuu);
 				getRootPane().setDefaultButton(btnLuu);
 			}
-			{
-				btnHuy = new JButton("Huỷ bỏ");
-				btnHuy.setFont(new Font("Tahoma", Font.PLAIN, 20));
-				btnHuy.setActionCommand("Cancel");
-				buttonPane.add(btnHuy);
-			}
 		}
 		phieuThuChiControl = new PhieuThuChiControlImpl();
-		txtMaPC.setText(phieuThuChiControl.phatSinhMaPhieu(LoaiPhieu.PHIEUCHI));
-		txtNgayTao.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-		hienThongTinKhachHang(pdk);
+		phieuThuChi.setMaPhieuChi(phieuThuChiControl.phatSinhMaPhieu(LoaiPhieu.PHIEUCHI));
+		phieuThuChi.setNgayTaoPhieuChi(new Date(System.currentTimeMillis()));
+		phieuThuChi.setSoTien(tienChiTra);
+
+		PhieuThuChi phieuThuChiThem = phieuThuChiControl.themPhieu(phieuThuChi);
+		if (phieuThuChiThem != null) {
+			txtMaPC.setText(p.getMaPhieuChi() + "");
+			txtNgayTao.setText(new SimpleDateFormat("dd/MM/yyyy").format(phieuThuChi.getNgayTaoPhieuChi()));
+			hienThongTinPhieuChi(phieuThuChi);
+		}
+
 		btnLuu.addActionListener(this);
-		btnHuy.addActionListener(this);
-		setVisible(true);
 	}
 
 	/**
 	 * Hiên thông tin phiếu đăng ký tour
 	 * 
-	 * @param pdk
+	 * @param ptc: phiếu chi
 	 */
-	private void hienThongTinKhachHang(PhieuDangKy pdk) {
-		KhachHang kh = pdk.getKh();
+	private void hienThongTinPhieuChi(PhieuThuChi ptc) {
+		NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("vi", "vn"));
+		KhachHang kh = ptc.getPdk().getKh();
 		lblTenKH.setText(kh.getHoVaTen().trim());
-		lblTienChis.setText(pdk.tinhTongTienPDK(pdk.getKhachHangThamGias()) + "");
-		lblTours.setText(pdk.getNgayKhoiHanh() + "");
+		lblTienChis.setText(format.format(ptc.getSoTien()));
+		lblTours.setText(ptc.getPdk().getNgayKhoiHanh() + "");
 		lblSDTs.setText(kh.getSoDienThoai());
 		lblDiaChis.setText(kh.getDiaChi().toString());
 
@@ -321,9 +333,42 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o.equals(btnLuu)) {
-			this.dispose();
-		} else if (o.equals(btnHuy)) {
-			this.dispose();
+			if (txaLyDo.getText().trim().length() != 0) {
+				String noiDung = txaLyDo.getText();
+				phieuThuChi.setLyDo(noiDung);
+				PhieuThuChi ptc = phieuThuChiControl.suaPhieu(phieuThuChi);
+				if (ptc != null) {
+					List<Map<String, ?>> dataSource = new ArrayList<Map<String, ?>>();
+
+					Map<String, Object> m = new HashMap<String, Object>();
+					m.put("soPhieuChi", txtMaPC.getText());
+					m.put("ngayTaoPhieuThu", txtNgayTao.getText());
+					m.put("tenTour", lblTours.getText());
+					m.put("tenKhachHang", lblTenKH.getText());
+					m.put("diaChi", lblDiaChis.getText());
+					m.put("soDienThoai", lblSDTs.getText());
+					m.put("soTienChi", lblTienChis.getText());
+					m.put("liDoChi", txaLyDo.getText());
+
+					dataSource.add(m);
+
+					JRDataSource Datasour = new JRBeanCollectionDataSource(dataSource);
+					String file = "src/main/resources/PhieuChi.jrxml";
+					try {
+						JasperReport report = JasperCompileManager.compileReport(file);
+						JasperPrint filledRedport = JasperFillManager.fillReport(report, null, Datasour);
+						this.dispose();
+						JRViewer viewer = new JRViewer(filledRedport);
+						JFrame frmPrint = new FrmPrint(viewer);
+						frmPrint.setVisible(true);
+					} catch (JRException e1) {
+						e1.printStackTrace();
+						JOptionPane.showMessageDialog(this, "Lỗi không mở được phiếu chi", "Lỗi",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
+
+			}
 		}
 
 	}

@@ -29,8 +29,10 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -69,9 +71,10 @@ import entities.NhanVien;
 import entities.PhieuDangKy;
 import entities.PhieuThuChi;
 import entities.Tour;
-import gui.dialog.dlgPhieuThu;
+import gui.dialog.DlgPhieuThu;
 import model.DSKhachHangTGTableModel;
 import model.TourTableModel;
+import utils.TableMouseListener;
 import utils.TienIch;
 import utils.address.District;
 import utils.address.Province;
@@ -152,6 +155,8 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 	private JPanel pnlThongTinNgayKH;
 	private JPanel pnlButtonNgayKH;
 	private JPanel pnlDangKyTour;
+	private JPopupMenu popupMenu;
+	private JMenuItem mnuXemTTTour;
 
 	@SuppressWarnings("unchecked")
 	public PnlDangKyTour(NhanVien nv) {
@@ -702,12 +707,10 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		chkThamGiaTourDK.setHorizontalAlignment(SwingConstants.CENTER);
 		chkThamGiaTourDK.setFont(new Font("Dialog", Font.PLAIN, 18));
 		pnlThongTinNgayKH.add(chkThamGiaTourDK);
-
-		dsKhachHangThamGia = new ArrayList<KhachHangThamGia>();
-
 		/*
 		 * Khởi tạo các control
 		 */
+		dsKhachHangThamGia = new ArrayList<KhachHangThamGia>();
 		tourControl = new TourControlImpl();
 		phieuDangKyControl = new PhieuDangKyControlImpl();
 		khachHangControl = new KhachHangControlImpl();
@@ -834,16 +837,19 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 			hienDanhSachNgayKhoiHanh(dsNgayKhoiHanh);
 			pnlHuyChonTour.setVisible(true);
 
+			tblDSTour.setEnabled(false);
+
 		} else if (o.equals(tblDSNgayDi.getSelectionModel())) {
 			int row = tblDSNgayDi.getSelectedRow();
 			if (row == -1)
 				return;
-
 			ngayKhoiHanh = dsNgayKhoiHanh.get(row);
-			hienThongTinNgayKH();
+
 			btnXoaKHTG.setVisible(true);
 			pnlButtonNgayKH.setVisible(true);
 			pnlDangKyTour.setVisible(true);
+
+			hienThongTinNgayKH();
 
 		}
 
@@ -987,19 +993,36 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		 * Chọn ngày khởi hành để đăng ký
 		 */
 		else if (o.equals(btnChonNgayKH)) {
-			dsKhachHangThamGia = new ArrayList<KhachHangThamGia>();
-			hienBangDSKhachTG(tblDSKhachThamGia, dsKhachHangThamGia, scrDSKhachThamGia);
-			lblTinhTrangKHTG.setVisible(false);
-			pnlDSKhachHangTG.setVisible(true);
-			pnlThemTTKHTG.setVisible(true);
 
-			if (chkThamGiaTourDK.isSelected()) {
-				KhachHangThamGia khtg = new KhachHangThamGia();
-				khtg.setHoTenKHTG(khachHang.getHoVaTen());
-				khtg.setNgaySinh(khachHang.getNgaySinh());
-				khtg.setDoTuoi(DoTuoi.NGUOILON);
-				dsKhachHangThamGia.add(khtg);
+			PhieuDangKy phieuDangKy = phieuDangKyControl.layPhieuDangKyTheoKHVaNgayKH(khachHang.getMaKH(),
+					ngayKhoiHanh.getMaLT());
+			if (phieuDangKy == null && !ngayKhoiHanh.isDaDuSoLuong()) {
+				dsKhachHangThamGia = new ArrayList<KhachHangThamGia>();
+				hienBangDSKhachTG(tblDSKhachThamGia, dsKhachHangThamGia, scrDSKhachThamGia);
+				lblTinhTrangKHTG.setVisible(false);
+				pnlDSKhachHangTG.setVisible(true);
+				pnlThemTTKHTG.setVisible(true);
+
+				if (chkThamGiaTourDK.isSelected()) {
+					KhachHangThamGia khtg = new KhachHangThamGia();
+					khtg.setHoTenKHTG(khachHang.getHoVaTen());
+					khtg.setNgaySinh(khachHang.getNgaySinh());
+					khtg.setDoTuoi(DoTuoi.NGUOILON);
+					dsKhachHangThamGia.add(khtg);
+				}
+			} else {
+				if (phieuDangKy != null) {
+					JOptionPane.showMessageDialog(null, "Đã đăng ký ngày khởi hành này", "Thông báo",
+							JOptionPane.INFORMATION_MESSAGE);
+					lblTinhTrangKHTG.setText("Đã đăng ký ngày khởi hành này");
+				} else if (ngayKhoiHanh.isDaDuSoLuong()) {
+					JOptionPane.showMessageDialog(null, "Ngày khởi hành này đã đủ số lượng", "Thông báo",
+							JOptionPane.INFORMATION_MESSAGE);
+					lblTinhTrangKHTG.setText("Ngày khởi hành này đã đủ số lượng");
+				}
+
 			}
+
 		}
 
 		/*
@@ -1007,7 +1030,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		 */
 		else if (o.equals(btnHuyChonNgayKH)) {
 			dsKhachHangThamGia = new ArrayList<KhachHangThamGia>();
-			lamMoiBangDanhSachKhachHangTG(dsKhachHangThamGia);
+			huyThemKhachHangThamGia(dsKhachHangThamGia);
 			huyChonNgayKhoiHanh();
 
 		}
@@ -1084,17 +1107,15 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 
 						PhieuDangKy phieuDangKyTour = phieuDangKyControl.themPhieuDangKy(phieuDangKy);
 						if (phieuDangKyTour != null) {
-							chkThamGiaTourDK.setSelected(false);
 							pnlThemTTKHTG.setVisible(false);
 							pnlDSKhachHangTG.setEnabled(false);
-							lblTinhTrangKHTG.setText("Đã lưu thông tin khách hàng tham gia tour");
 
 							dsNgayKhoiHanh = tourControl
 									.layDSNgayKhoiHanhTheoTour(phieuDangKy.getNgayKhoiHanh().getTour().getMaTour());
 							hienDanhSachNgayKhoiHanh(dsNgayKhoiHanh);
 							PhieuThuChi phieuThuChi = new PhieuThuChi();
 							phieuThuChi.setPdk(phieuDangKy);
-							dlgPhieuThu dlgPhieuThu = new dlgPhieuThu(phieuThuChi, phieuDangKy.getKhachHangThamGias());
+							DlgPhieuThu dlgPhieuThu = new DlgPhieuThu(phieuThuChi, phieuDangKy.getKhachHangThamGias());
 							dlgPhieuThu.setVisible(true);
 
 						}
@@ -1168,7 +1189,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 	 * Huỷ chọn tour
 	 */
 	private void huyChonTour() {
-
+		tblDSTour.setEnabled(true);
 		tblDSTour.clearSelection();
 		huyChonNgayKhoiHanh();
 		pnlHuyChonTour.setVisible(false);
@@ -1194,9 +1215,10 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 	 * 
 	 * @param khtgs: danh sách khách hàng tham gia tour
 	 */
-	private void lamMoiBangDanhSachKhachHangTG(List<KhachHangThamGia> khtgs) {
-		pnlThemTTKHTG.setVisible(true);
-		lblTinhTrangKHTG.setVisible(false);
+	private void huyThemKhachHangThamGia(List<KhachHangThamGia> khtgs) {
+		pnlThemTTKHTG.setVisible(false);
+		lblTinhTrangKHTG.setVisible(true);
+		lblTinhTrangKHTG.setText("Chưa chọn ngày khởi hành");
 		pnlDSKhachHangTG.setVisible(false);
 		hienBangDSKhachTG(tblDSKhachThamGia, khtgs, scrDSKhachThamGia);
 	}
@@ -1210,21 +1232,20 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		DefaultTableModel tblModel = (DefaultTableModel) tblDSNgayDi.getModel();
 		int i = 1;
 		tblModel.setRowCount(0);
+		String tinhTrang = HangSo.CHUADANGKY;
 		for (NgayKhoiHanh x : lstNgayKH) {
-			List<PhieuDangKy> dsPhieuDK = phieuDangKyControl.layDSPhieuDangKyTheoTour(x.getTour().getMaTour());
-			List<KhachHangThamGia> dsKhachHangTG = phieuDangKyControl.layDSKhachThamGiaTour(x.getTour().getMaTour());
-
-			boolean daDangKy = dsKhachHangTG.contains(x);
-			String tinhTrang = "Chờ đăng ký";
-			if (daDangKy) {
-				tinhTrang = "Đã đăng ký";
+			PhieuDangKy phieuDangKy = phieuDangKyControl.layPhieuDangKyTheoKHVaNgayKH(khachHang.getMaKH(), x.getMaLT());
+			if (phieuDangKy != null) {
+				tinhTrang = HangSo.DADANGKY;
 			} else if (x.isDaDuSoLuong()) {
-				tinhTrang = "Đã đủ số lượng";
-
+				tinhTrang = HangSo.DADUSOLUONG;
+			} else {
+				tinhTrang = HangSo.CHUADANGKY;
 			}
 			tblModel.addRow(new Object[] { i, x.getMaLT(), x.getNgayKhoiHanh(), x.getSoKhachToiDa(),
 					x.getSoKhachDaDangKy(), tinhTrang });
 			i++;
+
 		}
 
 	}

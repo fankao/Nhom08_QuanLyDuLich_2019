@@ -1,7 +1,10 @@
 package control.impl;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import control.IPhieuDangKyControl;
 import data.IPhieuDangKyDAO;
@@ -64,14 +67,44 @@ public class PhieuDangKyControlImpl implements IPhieuDangKyControl {
 	 * gia
 	 */
 	@Override
-	public List<PhieuDangKy> capNhatTrangThaiDangKyTour(List<PhieuDangKy> pdks) {
-		List<PhieuDangKy> dsPhieuDKBiHuy = new ArrayList<PhieuDangKy>();
+	public List<PhieuDangKy> capNhatTrangThaiDangKyTour(int yeuCau, List<PhieuDangKy> pdks) {
+		List<PhieuDangKy> dsPhieuLoc = new ArrayList<PhieuDangKy>();
 		for (PhieuDangKy p : pdks) {
-			if (p.getNgayKhoiHanh().capNhatNgayKhoiHanhKhongDuSoLuong(p.getNgayKhoiHanh()) != null) {
-				PhieuDangKy pdkHuy = suaPhieuDangKy(p);
-				dsPhieuDKBiHuy.add(pdkHuy);
+			switch (yeuCau) {
+			case 1:
+				if (p.getNgayKhoiHanh().capNhatNgayKhoiHanhKhongDuSoLuong(p.getNgayKhoiHanh()) != null) {
+					PhieuDangKy pdkHuy = suaPhieuDangKy(p);
+					dsPhieuLoc.add(pdkHuy);
+				}
+				break;
+			case 2:
+				Date date = new Date(p.getNgayKhoiHanh().getNgayKhoiHanh().getTime());
+				LocalDate ngayKH = date.toLocalDate();
+				if (ngayKH.isEqual(LocalDate.now())
+						&& p.getNgayKhoiHanh().capNhatNgayKhoiHanhKhongDuSoLuong(p.getNgayKhoiHanh()) == null
+						&& p.isDaHuyPhieu() == false) {
+					p.setDaHoanThanhTour(true);
+					dsPhieuLoc.add(p);
+				}
+				break;
+
+			default:
+				break;
 			}
+
 		}
-		return dsPhieuDKBiHuy;
+		return dsPhieuLoc;
+	}
+
+	@Override
+	public PhieuDangKy layPhieuDangKyTheoKHVaNgayKH(String maKH, String maNGKH) {
+		// TODO Auto-generated method stub
+		return phieuDangKyDAO.layPhieuDangKyTheoKHVaNgayKH(maKH, maNGKH);
+	}
+
+	@Override
+	public List<PhieuDangKy> layDSPhieuDangKyTheoThang(int thang) {
+
+		return phieuDangKyDAO.layDSPhieuDangKyTheoThang(thang);
 	}
 }

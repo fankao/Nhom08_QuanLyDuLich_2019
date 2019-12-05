@@ -61,7 +61,7 @@ import entities.Tour;
 import gui.FrmMain;
 import gui.frmDangNhap;
 import gui.dialog.dlgLocTour;
-import gui.dialog.dlgPhieuThu;
+import gui.dialog.DlgPhieuThu;
 import utils.HintTextFieldUI;
 import utils.TienIch;
 
@@ -847,8 +847,8 @@ public class pnlPhieuDangKyTour extends JPanel implements ActionListener, Change
 					khachDKMuonThamGiaTour = true;
 				}
 				if (sel == JOptionPane.YES_OPTION) {
-					dlgPhieuThu dlgPhieuThu = new dlgPhieuThu(pdk, khachDKMuonThamGiaTour);
-					boolean daThemPhieu = gui.dialog.dlgPhieuThu.isDaThemPhieuDK();
+					DlgPhieuThu dlgPhieuThu = new DlgPhieuThu(pdk, khachDKMuonThamGiaTour);
+					boolean daThemPhieu = gui.dialog.DlgPhieuThu.isDaThemPhieuDK();
 
 					System.out.println(daThemPhieu);
 					if (daThemPhieu) {

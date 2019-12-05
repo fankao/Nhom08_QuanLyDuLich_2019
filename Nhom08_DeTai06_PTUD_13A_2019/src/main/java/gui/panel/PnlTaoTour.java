@@ -150,8 +150,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 	private static int soNgay = 0, soDem = 0;
 
 	private static String duongDanCTTour;
-	private JPopupMenu popupMenu;
-	private JMenuItem mnuXemTTTour;
 	private JPanel pnlIconDong;
 	private JPanel pnlTinhTrangTour;
 	private JLabel lblTinhTrangTour;
@@ -613,12 +611,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		btnThem.setPreferredSize(btnXoaTrang.getPreferredSize());
 		btnXoaTrang.setVisible(false);
 
-		popupMenu = new JPopupMenu();
-		mnuXemTTTour = new JMenuItem("Xem chương trình tour");
-		mnuXemTTTour.setFont(new Font("Arial", Font.PLAIN, 18));
-		mnuXemTTTour.setIcon(new ImageIcon(this.getClass().getResource("/images/info_25px.png")));
-		popupMenu.add(mnuXemTTTour);
-
 		/*
 		 * ===========================================
 		 * ===========================================
@@ -655,6 +647,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		btnSua.setPreferredSize(btnBoChon.getPreferredSize());
 		TienIch.chinhKichThuocTitleTrenBorder(new JPanel[] { pnlTour, pnlNgayKH }, "Arial", Font.PLAIN, 20);
 		TienIch.chinhKichThuocTitleTrenBorder(new JPanel[] { pnlCTTour, pnlDSCTTour }, "Arial", Font.PLAIN, 18);
+		((JTextField) dtcNgayKhoiHanh.getDateEditor().getUiComponent()).setEditable(false);
 
 	}
 
@@ -743,8 +736,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 
 		cmbTimKiem.addActionListener(this);
 
-		mnuXemTTTour.addActionListener(this);
-
 		txtGiaNgLon.addPropertyChangeListener(this);
 		txtGiaTrEm.addPropertyChangeListener(this);
 
@@ -792,7 +783,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 
 			}
 		});
-		tblDSTour.addMouseListener(new TableMouseListener(tblDSTour, popupMenu));
+		tblDSTour.addMouseListener(new TableMouseListener(tblDSTour));
 
 		AutoCompleteDecorator.decorate(cmbDiaDanh);
 		AutoCompleteDecorator.decorate(cmbDiemDen);
@@ -862,13 +853,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		else if (o.equals(btnLamMoi)) {
 			hienDanhSachTour(tblDSTour, lstTour, scrDSTour);
 		}
-		/*
-		 * Nút hiện thông tin tour khi nhấn chuột phải
-		 */
-		else if (o.equals(mnuXemTTTour)) {
-			TienIch.hienFilePDF(duongDanCTTour);
-		}
-
 		/*
 		 * Nút đóng giao diện cập nhật tour
 		 */
@@ -1025,6 +1009,8 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			tblDSNGKH.setEnabled(false);
 			dtcNgayKhoiHanh.setEnabled(true);
 			spnSoKhachToiDa.setEnabled(true);
+
+			btnSua.setSelected(false);
 		}
 
 		/*
@@ -1039,6 +1025,8 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			btnLuuNgayKH.setEnabled(true);
 			dtcNgayKhoiHanh.setEnabled(true);
 			spnSoKhachToiDa.setEnabled(true);
+
+			btnThemKH.setSelected(false);
 		}
 
 		/*
@@ -1053,8 +1041,17 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				dtcNgayKhoiHanh.setEnabled(false);
 				spnSoKhachToiDa.setEnabled(true);
 				int row = tblDSTour.getSelectedRow();
+
+				if (row == -1)
+					return;
+
 				int rowNgayKH = tblDSNGKH.getSelectedRow();
-				NgayKhoiHanh ngayKhoiHanh = rowNgayKH == -1 ? null : lstNgayKH.get(rowNgayKH);
+
+				NgayKhoiHanh ngayKhoiHanh = null;
+				if (rowNgayKH > -1 && rowNgayKH <= tblDSNGKH.getRowCount() - 1) {
+					ngayKhoiHanh = lstNgayKH.get(rowNgayKH);
+				}
+
 				Tour tourChon = tourControl.layTourTheoMa(tblDSTour.getValueAt(row, 1).toString());
 				if (btnThemKH.isSelected() && ngayKhoiHanh == null) {
 					ngayKhoiHanh = new NgayKhoiHanh();
@@ -1065,10 +1062,13 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				ngayKhoiHanh.setNgayKhoiHanh(dtcNgayKhoiHanh.getDate());
 				int soNguoi = (int) spnSoKhachToiDa.getValue();
 				ngayKhoiHanh.setSoKhachToiDa(soNguoi);
-
 				ngayKhoiHanh.setTour(tourChon);
-				tourChon.getNgayKhoiHanh().remove(rowNgayKH);
-				tourChon.getNgayKhoiHanh().add(ngayKhoiHanh);
+				if (btnSua.isSelected()) {
+					tourChon.getNgayKhoiHanh().remove(rowNgayKH);
+					tourChon.getNgayKhoiHanh().add(rowNgayKH, ngayKhoiHanh);
+				} else {
+					tourChon.getNgayKhoiHanh().add(ngayKhoiHanh);
+				}
 
 				Tour touSua = tourControl.suaTour(tourChon);
 
@@ -1076,8 +1076,12 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 					lstTour = tourControl.layDsTourTheoYeuCau(2, nhanvien.getMaNV());
 					lstNgayKH = tourControl.layDSNgayKhoiHanhTheoTour(tourChon.getMaTour());
 					hienDanhSachTour(tblDSTour, lstTour, scrDSTour);
+					tblDSTour.setRowSelectionInterval(row, row);
 					ngkhTableModel = new NgayKhoiHanhTableModel(lstNgayKH);
 					tblDSNGKH.setModel(ngkhTableModel);
+
+					dtcNgayKhoiHanh.setEnabled(false);
+					spnSoKhachToiDa.setEnabled(false);
 
 				}
 			}
@@ -1206,10 +1210,10 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		}
 	}
 
+	/**
+	 * Tìm kiếm tour du lịch
+	 */
 	private void timKiemTheoTuKhoa() {
-		/*
-		 * Xử lý sự kiện tìm kiếm
-		 */
 		txtTimKiem.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
@@ -1244,6 +1248,11 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 
 	}
 
+	/**
+	 * Hiên thông tin tour du lịch
+	 * 
+	 * @param tourSel
+	 */
 	private void hienThongTinTour(Tour tourSel) {
 		txaTenTour.setText(tourSel.getTenTour());
 		cmbDiaDanh.setSelectedItem(tourSel.getDiaDanh());
@@ -1256,11 +1265,12 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			spnNgay.setValue(tourSel.getThoiGian()[0]);
 			lblNgayDem.setText(tourSel.getThoiGian()[1] + "");
 		}
-		if(tourSel.getPhuongTien() == PhuongTien.XE)
+		if (tourSel.getPhuongTien() == PhuongTien.XE)
 			cmbPhuongTien.setSelectedIndex(0);
 		else if (tourSel.getPhuongTien() == PhuongTien.HANGKHONG)
 			cmbPhuongTien.setSelectedIndex(1);
 	}
+
 	@Override
 	public void propertyChange(PropertyChangeEvent e) {
 		Object o = e.getSource();
@@ -1332,22 +1342,22 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			cmbDiemDen.requestFocusInWindow();
 			return false;
 		}
-		if(Double.parseDouble(txtGiaNgLon.getValue().toString()) > 20000000) {
+		if (Double.parseDouble(txtGiaNgLon.getValue().toString()) > 20000000) {
 			JOptionPane.showMessageDialog(this, "Đơn giá người lớn không được lớn hơn hai mươi triệu");
 			txtGiaNgLon.requestFocusInWindow();
 			return false;
 		}
-		if(Double.parseDouble(txtGiaNgLon.getValue().toString()) < 1000000 ) {
+		if (Double.parseDouble(txtGiaNgLon.getValue().toString()) < 1000000) {
 			JOptionPane.showMessageDialog(this, "Đơn giá người lớn không được bé hơn một triệu");
 			txtGiaNgLon.requestFocusInWindow();
 			return false;
 		}
-		if(Double.parseDouble(txtGiaTrEm.getValue().toString()) > 20000000) {
+		if (Double.parseDouble(txtGiaTrEm.getValue().toString()) > 20000000) {
 			JOptionPane.showMessageDialog(this, "Đơn giá trẻ em không được lớn hơn hai mươi triệu");
 			txtGiaTrEm.requestFocusInWindow();
 			return false;
 		}
-		if(Double.parseDouble(txtGiaTrEm.getValue().toString()) > 20000000) {
+		if (Double.parseDouble(txtGiaTrEm.getValue().toString()) > 20000000) {
 			JOptionPane.showMessageDialog(this, "Đơn giá trẻ em không được bé hơn một triệu");
 			txtGiaTrEm.requestFocusInWindow();
 			return false;
@@ -1375,6 +1385,35 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			return false;
 		}
 		return true;
+	}
+
+	// Kiểm tra ngày khởi hành.Ngày khởi hành phải sau ngày hiện tại 10 ngày.
+	public boolean ktNgayKhoiHanh() {
+		LocalDate ngayKhoiHanh = new Date(dtcNgayKhoiHanh.getDate().getTime()).toLocalDate();
+		Period period = Period.between(LocalDate.now(), ngayKhoiHanh);
+		return period.getDays() >= 10 || period.getMonths() >= 1 ? true : false;
+	}
+
+	// Hien thi thong tin ngay khoi hanh
+	private void hienTTNgayKhoiHanh(NgayKhoiHanh nkh) {
+		dtcNgayKhoiHanh.setDate(nkh.getNgayKhoiHanh());
+		spnSoKhachToiDa.setValue(nkh.getSoKhachToiDa());
+	}
+
+	// Xoa trang thong tin tour
+	private void xoaTrang() {
+		cmbDiaDanh.setSelectedItem(null);
+		cmbDiemDen.setSelectedItem(null);
+		cmbDiemXP.setSelectedItem(null);
+		txaTenTour.setText("");
+		cmbPhuongTien.setSelectedIndex(0);
+		txtGiaNgLon.setValue((Double) 0.0);
+		txtGiaTrEm.setValue((Double) 0.0);
+	}
+
+	private void xoaTrangTTKH() {
+		dtcNgayKhoiHanh.setDate(null);
+		spnSoKhachToiDa.setValue(2);
 	}
 
 	/*
@@ -1418,13 +1457,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		}
 	}
 
-	// Kiểm tra ngày khởi hành.Ngày khởi hành phải sau ngày hiện tại 10 ngày.
-	public boolean ktNgayKhoiHanh() {
-		LocalDate ngayKhoiHanh = new Date(dtcNgayKhoiHanh.getDate().getTime()).toLocalDate();
-		Period period = Period.between(LocalDate.now(), ngayKhoiHanh);
-		return period.getDays() >= 10 || period.getMonths() >= 1 ? true : false;
-	}
-
 	@SuppressWarnings("unused")
 	private class CenterRenderrer extends DefaultTableCellRenderer {
 
@@ -1433,28 +1465,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		public CenterRenderrer() {
 			this.setHorizontalAlignment(SwingConstants.CENTER);
 		}
-	}
-
-	// Hien thi thong tin ngay khoi hanh
-	private void hienTTNgayKhoiHanh(NgayKhoiHanh nkh) {
-		dtcNgayKhoiHanh.setDate(nkh.getNgayKhoiHanh());
-		spnSoKhachToiDa.setValue(nkh.getSoKhachDaDangKy());
-	}
-
-	// Xoa trang thong tin tour
-	private void xoaTrang() {
-		cmbDiaDanh.setSelectedItem(null);
-		cmbDiemDen.setSelectedItem(null);
-		cmbDiemXP.setSelectedItem(null);
-		txaTenTour.setText("");
-		cmbPhuongTien.setSelectedIndex(0);
-		txtGiaNgLon.setValue((Double) 0.0);
-		txtGiaTrEm.setValue((Double) 0.0);
-	}
-
-	private void xoaTrangTTKH() {
-		dtcNgayKhoiHanh.setDate(null);
-		spnSoKhachToiDa.setValue(2);
 	}
 
 	@SuppressWarnings("unused")

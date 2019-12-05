@@ -11,7 +11,7 @@ public interface IPhieuDangKyControl {
 	public List<PhieuDangKy> layDSPhieuDangKyTheoKH(String maKH);
 
 	public List<PhieuDangKy> layDSPhieuDangKyTheoTour(String maTour);
-	
+
 	public List<KhachHangThamGia> layDSKhachThamGiaTour(String maTour);
 
 	public PhieuDangKy themPhieuDangKy(PhieuDangKy pdk);
@@ -19,7 +19,11 @@ public interface IPhieuDangKyControl {
 	public PhieuDangKy suaPhieuDangKy(PhieuDangKy pdk);
 
 	public PhieuDangKy layTTPhieuDangKyTheoMa(String maPDK);
-	
-	public List<PhieuDangKy> capNhatTrangThaiDangKyTour(List<PhieuDangKy> pdks);
+
+	public List<PhieuDangKy> capNhatTrangThaiDangKyTour(int yeuCau, List<PhieuDangKy> pdks);
+
+	public PhieuDangKy layPhieuDangKyTheoKHVaNgayKH(String maKH, String maNGKH);
+
+	public  List<PhieuDangKy> layDSPhieuDangKyTheoThang(int thang);
 
 }
