@@ -319,7 +319,7 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 					}
 				}
 				hienDanhSachKhachHang(dsKhachHangTim);
-
+				//
 			}
 		});
 
