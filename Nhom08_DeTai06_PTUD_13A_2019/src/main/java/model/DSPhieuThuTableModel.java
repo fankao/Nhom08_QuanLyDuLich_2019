@@ -10,10 +10,10 @@ import entities.LoaiPhieu;
 import entities.PhieuThuChi;
 
 public class DSPhieuThuTableModel extends AbstractTableModel {
-	private String[] tieuDe = { "STT", "Mã phiếu", "Ngày tạo", "Lý do", "Số tiền", "Loại phiếu" };
+	private String[] tieuDe = { "STT", "Mã phiếu", "Ngày tạo", "Khách hàng", "Nhân Viên", "Loại phiếu", "Số tiền" };
 	private List<PhieuThuChi> dsPhieuTC = new ArrayList<PhieuThuChi>();
 	private final Class<?>[] columnClass = new Class<?>[] { Integer.class, String.class, Date.class, String.class,
-			Double.class, LoaiPhieu.class };
+			String.class, LoaiPhieu.class, Double.class };
 
 	public DSPhieuThuTableModel(List<PhieuThuChi> dsPhieuTC) {
 		super();
@@ -58,12 +58,15 @@ public class DSPhieuThuTableModel extends AbstractTableModel {
 		case 2:
 			return ptc.getNgayTaoPhieuChi();
 		case 3:
-			return ptc.getLyDo();
+			return ptc.getPdk().getKh().getHoVaTen();
 		case 4:
-			return ptc.getSoTien();
+			return ptc.getPdk().getNv().getHoVaTen();
 		case 5:
 			return ptc.getLoaiPhieu();
+		case 6:
+			return ptc.getSoTien();
 		}
+		
 		return null;
 	}
 
