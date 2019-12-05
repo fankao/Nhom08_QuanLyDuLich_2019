@@ -72,9 +72,9 @@ public class PhieuThuChiDAOimpl implements IPhieuThuChiDAO {
 	}
 
 	@Override
-	public List<PhieuThuChi> layDSPhieuThu() {
-		TypedQuery<PhieuThuChi> query = em.createNamedQuery("PTC.timDSPhieuThu", PhieuThuChi.class);
-		query.setParameter("loaiPhieu", LoaiPhieu.PHIEUTHU);
+	public List<PhieuThuChi> layDSPhieuTheoThang(int thang) {
+		TypedQuery<PhieuThuChi> query = em.createNamedQuery("PTC.timDSPhieuTheoThang", PhieuThuChi.class);
+		query.setParameter("thang", thang);
 		List<PhieuThuChi> list = query.getResultList();
 		return list.size() != 0 ? list : new ArrayList<PhieuThuChi>();
 	}

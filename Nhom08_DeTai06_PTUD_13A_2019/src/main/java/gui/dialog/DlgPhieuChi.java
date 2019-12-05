@@ -8,7 +8,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,8 +26,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 
@@ -47,8 +46,6 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.swing.JRViewer;
-
-import javax.swing.JTextArea;
 
 public class DlgPhieuChi extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -307,7 +304,7 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 		if (phieuThuChiThem != null) {
 			txtMaPC.setText(p.getMaPhieuChi() + "");
 			txtNgayTao.setText(new SimpleDateFormat("dd/MM/yyyy").format(p.getNgayTaoPhieuChi()));
-			hienThongTinPhieuChi(p);
+			hienThongTinPhieuChi(phieuThuChi);
 		}
 
 		btnLuu.addActionListener(this);

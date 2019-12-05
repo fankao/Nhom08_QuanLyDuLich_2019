@@ -33,11 +33,6 @@ public class PhieuThuChiControlImpl implements IPhieuThuChiControl {
 		return null;
 	}
 
-	@Override
-	public List<PhieuThuChi> layDSPhieu() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public List<PhieuThuChi> layDSPhieuTheoPhieuDK(String maPDK) {
@@ -73,6 +68,11 @@ public class PhieuThuChiControlImpl implements IPhieuThuChiControl {
 			}
 		}
 		return tongTienPhieuChi;
+	}
+
+	@Override
+	public List<PhieuThuChi> layDSPhieuTheoThang(int thang) {
+		return phieuThuChiDAO.layDSPhieuTheoThang(thang);
 	}
 
 }

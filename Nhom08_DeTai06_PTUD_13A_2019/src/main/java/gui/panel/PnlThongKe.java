@@ -8,12 +8,14 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
@@ -33,6 +35,9 @@ import control.impl.PhieuThuChiControlImpl;
 import entities.KhachHangThamGia;
 import entities.PhieuDangKy;
 import entities.PhieuThuChi;
+import model.DSPhieuThuTableModel;
+
+import javax.swing.JScrollPane;
 
 public class PnlThongKe extends JPanel {
 	private JTabbedPane tabThongTinTK;
@@ -41,8 +46,10 @@ public class PnlThongKe extends JPanel {
 	private IPhieuDangKyControl phieuDangKyControl;
 	private IPhieuThuChiControl phieuThuChiControl;
 	private List<PhieuDangKy> dsPDK;
-	private List<PhieuThuChi> dsPhieuThuChi;
+	private static List<PhieuThuChi> dsPhieuThuChi;
 	private JPanel pnlThongKeDoanhThuTheoThang;
+	private JScrollPane srcDSPhieuTC;
+	private JTable tblDSPHieuTC;
 
 	/**
 	 * Create the panel.
@@ -171,6 +178,11 @@ public class PnlThongKe extends JPanel {
 		pnlThongKeDoanhThuTheoThang.add(pnlSoLieu);
 		pnlSoLieu.setLayout(new BorderLayout(0, 0));
 
+		srcDSPhieuTC = new JScrollPane();
+		pnlSoLieu.add(srcDSPhieuTC, BorderLayout.CENTER);
+
+		tblDSPHieuTC = new JTable();
+
 		phieuDangKyControl = new PhieuDangKyControlImpl();
 		phieuThuChiControl = new PhieuThuChiControlImpl();
 		dsPDK = phieuDangKyControl.layDSPhieuDangKy();
@@ -180,6 +192,8 @@ public class PnlThongKe extends JPanel {
 		pnlDieuDoPDK.setLayout(new BorderLayout(0, 0));
 		ChartPanel CpnlBDPhieuDangKy = new ChartPanel(taoBieuDoPhieuDangKy());
 		pnlDieuDoPDK.add(CpnlBDPhieuDangKy, BorderLayout.CENTER);
+
+		hienDSPhieuThuChi(LocalDate.now().getMonthValue());
 
 	}
 	/*
@@ -193,9 +207,9 @@ public class PnlThongKe extends JPanel {
 		double tongTienPC = 0.0;
 		dsPDK = phieuDangKyControl.layDSPhieuDangKyTheoThang(thang);
 		for (PhieuDangKy pdk : dsPDK) {
-			tongTienPT +=phieuThuChiControl.tinhTongTienPhieuThuTheoPDK(pdk.getMaPhieuDK());
-			tongTienPC +=phieuThuChiControl.tinhTongTienPhieuPhieuChiTheoPDK(pdk.getMaPhieuDK());
-			}
+			tongTienPT += phieuThuChiControl.tinhTongTienPhieuThuTheoPDK(pdk.getMaPhieuDK());
+			tongTienPC += phieuThuChiControl.tinhTongTienPhieuPhieuChiTheoPDK(pdk.getMaPhieuDK());
+		}
 		tongTien = tongTienPT - tongTienPC;
 		return tongTien;
 	}
@@ -217,6 +231,7 @@ public class PnlThongKe extends JPanel {
 		JFreeChart lineChart = ChartFactory.createLineChart(
 				"\nBIỂU ĐỒ DOANH THU THEO TỪNG THÁNG CỦA NĂM " + LocalDate.now().getYear() + "\n", "\tTháng", "\nTiền",
 				taoDuLieuDoanhThu(), PlotOrientation.VERTICAL, false, false, false);
+
 		return lineChart;
 	}
 
@@ -261,5 +276,18 @@ public class PnlThongKe extends JPanel {
 						+ LocalDate.now().getYear(),
 				"Tình trạng", "Tháng", taoDuLieuSoPhieuDangKy(), PlotOrientation.VERTICAL, true, true, false);
 		return barChar;
+	}
+
+	private void hienThiBangTTDSPhieuTC(JTable tbl, List<PhieuThuChi> ds, JScrollPane src) {
+		DSPhieuThuTableModel dsPhieuThuTableModel = new DSPhieuThuTableModel(ds);
+		tbl.setModel(dsPhieuThuTableModel);
+		src.setViewportView(tbl);
+	}
+
+	private void hienDSPhieuThuChi(int thang) {
+
+		dsPhieuThuChi = phieuThuChiControl.layDSPhieuTheoThang(thang);
+		hienThiBangTTDSPhieuTC(tblDSPHieuTC, dsPhieuThuChi, srcDSPhieuTC);
+
 	}
 }

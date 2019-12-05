@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "phieuthuchi")
 @NamedQueries({
-		@NamedQuery(name = "PTC.timDSPhieuThu", query = "SELECT pt FROM PhieuThuChi pt WHERE pt.loaiPhieu=:loaiPhieu ORDER BY pt.id"),
+		@NamedQuery(name = "PTC.timDSPhieuTheoThang", query = "SELECT pt FROM PhieuThuChi pt WHERE MONTH(pt.ngayTaoPhieuChi)=:thang ORDER BY pt.id"),
 		@NamedQuery(name = "PTC.timDSPhieuThuTheoPDK", query = "SELECT pt FROM PhieuThuChi pt WHERE pt.loaiPhieu=:loaiPhieu AND pt.pdk.maPhieuDK=:mapdk ORDER BY pt.id"),
 		@NamedQuery(name = "PTC.timDSPhieuChiTheoPDK", query = "SELECT pt FROM PhieuThuChi pt WHERE pt.loaiPhieu=:loaiPhieu AND pt.pdk.maPhieuDK=:mapdk ORDER BY pt.id") })
 public class PhieuThuChi {
