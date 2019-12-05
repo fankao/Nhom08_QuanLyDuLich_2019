@@ -9,6 +9,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,6 +44,9 @@ import entities.Tour;
 import model.TourTableModel;
 import utils.TableMouseListener;
 import utils.TienIch;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 public class PnlDuyetTour extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -56,6 +61,10 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 	private static List<NgayKhoiHanh> dsNgayKhoiHanh;
 	private static Tour tourChon;
 	private JButton btnHuyDuyet;
+	private JTextField txtTimKiemD;
+	private JTextField txtTimKiemCD;
+	private JButton btnLamMoiCD;
+	private JButton btnLamMoiD;
 
 	/**
 	 * Khơi tạo giao diện duyệt mở bán tour
@@ -133,8 +142,37 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		FlowLayout flowLayout = (FlowLayout) pnlDuyet.getLayout();
 
 		btnDuyetTour = new JButton("Duyệt tour");
-		btnDuyetTour.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnDuyetTour.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		pnlDuyet.add(btnDuyetTour);
+
+		JPanel panel = new JPanel();
+		pnlDSTourCanDuyet.add(panel, BorderLayout.NORTH);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+
+		JPanel panel_2 = new JPanel();
+		FlowLayout flowLayout_3 = (FlowLayout) panel_2.getLayout();
+		flowLayout_3.setAlignment(FlowLayout.LEFT);
+		flowLayout_3.setVgap(10);
+		panel.add(panel_2);
+
+		JLabel lblTuKhoaCD = new JLabel("Nhập tên tour:");
+		lblTuKhoaCD.setFont(new Font("Arial", Font.PLAIN, 20));
+		panel_2.add(lblTuKhoaCD);
+
+		txtTimKiemCD = new JTextField();
+		txtTimKiemCD.setFont(new Font("Arial", Font.PLAIN, 20));
+		panel_2.add(txtTimKiemCD);
+		txtTimKiemCD.setColumns(20);
+
+		JPanel panel_3 = new JPanel();
+		FlowLayout flowLayout_5 = (FlowLayout) panel_3.getLayout();
+		flowLayout_5.setAlignment(FlowLayout.RIGHT);
+		panel.add(panel_3);
+
+		btnLamMoiCD = new JButton("Làm mới");
+		btnLamMoiCD.setIcon(new ImageIcon(PnlDuyetTour.class.getResource("/images/filter_25px.png")));
+		btnLamMoiCD.setFont(new Font("Dialog", Font.PLAIN, 20));
+		panel_3.add(btnLamMoiCD);
 
 		// hiện danh sách tour đã duyệt
 		dsTourDaDuyet = tourControl.layDsTourTheoYeuCau(3);
@@ -146,8 +184,37 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		pnlDSTourDuyet.add(pnlHuyDuyet, BorderLayout.SOUTH);
 
 		btnHuyDuyet = new JButton("Huỷ duyệt");
-		btnHuyDuyet.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnHuyDuyet.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		pnlHuyDuyet.add(btnHuyDuyet);
+
+		JPanel panel_4 = new JPanel();
+		pnlDSTourDuyet.add(panel_4, BorderLayout.NORTH);
+		panel_4.setLayout(new BoxLayout(panel_4, BoxLayout.X_AXIS));
+
+		JPanel panel_6 = new JPanel();
+		FlowLayout flowLayout_2 = (FlowLayout) panel_6.getLayout();
+		flowLayout_2.setVgap(10);
+		flowLayout_2.setAlignment(FlowLayout.LEFT);
+		panel_4.add(panel_6);
+
+		JLabel lblTimKiemD = new JLabel("Nhập tên tour:");
+		lblTimKiemD.setFont(new Font("Arial", Font.PLAIN, 20));
+		panel_6.add(lblTimKiemD);
+
+		txtTimKiemD = new JTextField();
+		txtTimKiemD.setFont(new Font("Arial", Font.PLAIN, 20));
+		txtTimKiemD.setColumns(20);
+		panel_6.add(txtTimKiemD);
+
+		JPanel panel_7 = new JPanel();
+		FlowLayout flowLayout_4 = (FlowLayout) panel_7.getLayout();
+		flowLayout_4.setAlignment(FlowLayout.RIGHT);
+		panel_4.add(panel_7);
+
+		btnLamMoiD = new JButton("Làm mới");
+		btnLamMoiD.setIcon(new ImageIcon(PnlDuyetTour.class.getResource("/images/filter_25px.png")));
+		btnLamMoiD.setFont(new Font("Dialog", Font.PLAIN, 20));
+		panel_7.add(btnLamMoiD);
 
 		// gán sự kiện
 		ganSuKien();
@@ -166,6 +233,28 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 	private void ganSuKien() {
 		btnDuyetTour.addActionListener(this);
 		btnHuyDuyet.addActionListener(this);
+		btnLamMoiCD.addActionListener(this);
+		btnLamMoiD.addActionListener(this);
+
+		txtTimKiemCD.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				String tuKhoa = TienIch.chuyenChuoiTiengVietThanhChuoiKhongDau(txtTimKiemCD.getText().trim())
+						.toLowerCase();
+				hienDanhSachTour(tblDSTourChuaDuyet, timKiemTour(tuKhoa, dsTourChuaDuyet), scrDSTourChuaDuyet);
+			}
+
+		});
+		txtTimKiemD.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				String tuKhoa = TienIch.chuyenChuoiTiengVietThanhChuoiKhongDau(txtTimKiemD.getText().trim())
+						.toLowerCase();
+				hienDanhSachTour(tblDSTourChuaDuyet, timKiemTour(tuKhoa, dsTourDaDuyet), scrDSTourDuyet);
+			}
+
+		});
+
 		tblDSTourChuaDuyet.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -192,6 +281,7 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		});
 		tblDSTourDaDuyet.addMouseListener(new TableMouseListener(tblDSTourDaDuyet));
 		tblDSTourChuaDuyet.addMouseListener(new TableMouseListener(tblDSTourChuaDuyet));
+
 	}
 
 	@Override
@@ -228,6 +318,13 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 					hienDanhSachTour(tblDSTourChuaDuyet, dsTourChuaDuyet, scrDSTourChuaDuyet);
 				}
 			}
+		} else if (o.equals(btnLamMoiD)) {
+			dsTourDaDuyet = tourControl.layDsTourTheoYeuCau(3);
+			hienDanhSachTour(tblDSTourDaDuyet, dsTourDaDuyet, scrDSTourDuyet);
+
+		} else if (o.equals(btnLamMoiCD)) {
+			dsTourChuaDuyet = tourControl.layDsTourTheoYeuCau(1);
+			hienDanhSachTour(tblDSTourChuaDuyet, dsTourChuaDuyet, scrDSTourChuaDuyet);
 		}
 
 	}
@@ -262,6 +359,23 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		TienIch.chinhKichThuocTable(tblTour, tblTour.getColumnModel().getTotalColumnWidth(), 2, 10, 30, 30, 20, 20, 20,
 				15, 15, 15, 15);
 
+	}
+
+	/**
+	 * Tìm kiếm tour theo tên
+	 * 
+	 * @param tuKhoa: từ khoá tên tour
+	 * @param dsTour: danh sách tour cần tìm
+	 */
+	private List<Tour> timKiemTour(String tuKhoa, List<Tour> dsTour) {
+		List<Tour> dsTourCanTim = new ArrayList<Tour>();
+		for (Tour tour : dsTour) {
+			String name = TienIch.chuyenChuoiTiengVietThanhChuoiKhongDau(tour.getTenTour().toLowerCase());
+			if (name.contains(tuKhoa)) {
+				dsTourCanTim.add(tour);
+			}
+		}
+		return dsTourCanTim;
 	}
 
 	/*

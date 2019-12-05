@@ -637,7 +637,7 @@ public class DlgPhieuThu extends JDialog implements ActionListener {
 		thanhTienTremEm = phieuDangKy.tinhThanhTien(khachThamGias)[1];
 
 		congTien = (thanhTienNguoiLon + thanhTienTremEm);
-		tienThue = (thanhTienNguoiLon + thanhTienTremEm) * HangSo.THUE;
+		tienThue = congTien * HangSo.THUE;
 
 		tongThanhTien = congTien + tienThue;
 
@@ -677,7 +677,7 @@ public class DlgPhieuThu extends JDialog implements ActionListener {
 		txtDonGiaTE.setText(format.format(pt.getPdk().getNgayKhoiHanh().getTour().getDonGiaTreEm()));
 
 		txtCongTien.setText(format.format(congTien) + "");
-		txtTienThue.setText(format.format(congTien) + "");
+		txtTienThue.setText(format.format(tienThue));
 		txtTongTienThanhToan.setText(format.format(tongThanhTien));
 
 	}
@@ -733,22 +733,4 @@ public class DlgPhieuThu extends JDialog implements ActionListener {
 		}
 
 	}
-
-	/*
-	 * private boolean kiemTraNhapLieu() { String tenKH =
-	 * txtHoTenKHTG.getText().trim();
-	 * 
-	 * String ngSinh = ((JTextField)
-	 * dtcNgaySinh.getDateEditor().getUiComponent()).getText().trim();
-	 * 
-	 * if (tenKH.length() == 0 || ngSinh.length() == 0) { if (tenKH.length() == 0) {
-	 * JOptionPane.showMessageDialog(this, "Chưa nhập tên Khách hàng");
-	 * txtHoTenKHTG.requestFocus(); return false; }
-	 * 
-	 * if (ngSinh.length() == 0) { JOptionPane.showMessageDialog(this,
-	 * "Chưa nhập ngày sinh"); dtcNgaySinh.requestFocus(); return false; } return
-	 * false; } return true;
-	 * 
-	 * }
-	 */
 }

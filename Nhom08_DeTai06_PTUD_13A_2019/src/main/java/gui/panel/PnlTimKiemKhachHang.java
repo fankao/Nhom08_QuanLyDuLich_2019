@@ -90,6 +90,7 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 		lblNhap.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		txtTuKhoa = new JTextField();
+		txtTuKhoa.setEditable(false);
 		txtTuKhoa.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		txtTuKhoa.setColumns(20);
 
@@ -100,16 +101,16 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 		btnBoChon.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		GroupLayout gl_pnlTimKiemTTKH = new GroupLayout(pnlTimKiemTTKH);
 		gl_pnlTimKiemTTKH.setHorizontalGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_pnlTimKiemTTKH.createSequentialGroup().addContainerGap()
-						.addGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.LEADING)
-								.addComponent(pnlDSKhachHang, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-								.addGroup(gl_pnlTimKiemTTKH.createSequentialGroup().addComponent(lblLoaiTK)
+				.addGroup(gl_pnlTimKiemTTKH.createSequentialGroup().addContainerGap().addGroup(gl_pnlTimKiemTTKH
+						.createParallelGroup(Alignment.TRAILING)
+						.addComponent(pnlDSKhachHang, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+						.addGroup(Alignment.LEADING,
+								gl_pnlTimKiemTTKH.createSequentialGroup().addComponent(lblLoaiTK)
 										.addPreferredGap(ComponentPlacement.UNRELATED)
 										.addComponent(cmbLoaiTK, 0, 0, Short.MAX_VALUE))
-								.addComponent(lblNhap)
-								.addComponent(txtTuKhoa, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-								.addComponent(btnBoChon))
-						.addContainerGap()));
+						.addComponent(lblNhap, Alignment.LEADING)
+						.addComponent(txtTuKhoa, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+						.addComponent(btnBoChon, Alignment.LEADING)).addContainerGap()));
 		gl_pnlTimKiemTTKH.setVerticalGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_pnlTimKiemTTKH.createSequentialGroup().addContainerGap()
 						.addGroup(gl_pnlTimKiemTTKH.createParallelGroup(Alignment.BASELINE).addComponent(lblLoaiTK)
@@ -118,9 +119,9 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(txtTuKhoa, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(pnlDSKhachHang, GroupLayout.PREFERRED_SIZE, 279, GroupLayout.PREFERRED_SIZE)
+						.addComponent(pnlDSKhachHang, GroupLayout.PREFERRED_SIZE, 316, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnBoChon)
-						.addContainerGap(26, Short.MAX_VALUE)));
+						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		gl_pnlTimKiemTTKH.linkSize(SwingConstants.VERTICAL, new Component[] { lblLoaiTK, cmbLoaiTK });
 		pnlDSKhachHang.setLayout(new BorderLayout(0, 0));
 
@@ -139,7 +140,7 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 		pnlThongTinTK.setLayout(new BorderLayout(0, 0));
 
 		JPanel pnlTTCTKhachHang = new JPanel();
-		pnlTTCTKhachHang.setPreferredSize(new Dimension(10, 300));
+		pnlTTCTKhachHang.setPreferredSize(new Dimension(10, 350));
 		pnlTTCTKhachHang.setBorder(new TitledBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null),
 				"Th\u00F4ng tin kh\u00E1ch h\u00E0ng", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pnlThongTinTK.add(pnlTTCTKhachHang, BorderLayout.CENTER);
@@ -246,6 +247,16 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 		dsKhachHang = khachHangControl.layDSKhachHang();
 		hienDanhSachKhachHang(dsKhachHang);
 
+		this.setLblHoVaTendb(lblHoVaTendb);
+		this.setLblCMNDdb(lblCMNDdb);
+		this.setLblNgaySinhdb(lblNgaySinhdb);
+		this.setLblDiaChidb(lblDiaChidb);
+		this.setLblDienThoaidb(lblDienThoaidb);
+		this.setLstDSKH(lstDSKH);
+
+		this.setCmbLoaiTK(cmbLoaiTK);
+		this.setTxtTuKhoa(txtTuKhoa);
+
 		ganSuKien();
 
 	}
@@ -257,7 +268,7 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 		for (KhachHang khachHang : dsKH) {
 			listModel.addElement(khachHang);
 		}
-		lstDSKH.setModel(listModel);
+		this.getLstDSKH().setModel(listModel);
 
 	}
 
@@ -270,15 +281,17 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 			public void valueChanged(ListSelectionEvent e) {
 				PnlDangKyTour.btnXacNhan.setVisible(true);
 				khachHang = lstDSKH.getSelectedValue();
-				lblHoVaTendb.setText(khachHang.getHoVaTen());
-				lblNgaySinhdb.setText(new SimpleDateFormat("dd/MM/yyyy").format(khachHang.getNgaySinh()));
-				lblCMNDdb.setText(khachHang.getSoCMND());
-				lblDienThoaidb.setText(khachHang.getSoDienThoai());
-				lblDiaChidb.setText(khachHang.getDiaChi().toString());
-				if (khachHang.isGioiTinh()) {
-					lblGioiTinhdb.setText("Nam");
-				} else {
-					lblGioiTinhdb.setText("Nữ");
+				if (khachHang != null) {
+					lblHoVaTendb.setText(khachHang.getHoVaTen());
+					lblNgaySinhdb.setText(new SimpleDateFormat("dd/MM/yyyy").format(khachHang.getNgaySinh()));
+					lblCMNDdb.setText(khachHang.getSoCMND());
+					lblDienThoaidb.setText(khachHang.getSoDienThoai());
+					lblDiaChidb.setText(khachHang.getDiaChi().toString());
+					if (khachHang.isGioiTinh()) {
+						lblGioiTinhdb.setText("Nam");
+					} else {
+						lblGioiTinhdb.setText("Nữ");
+					}
 				}
 
 			}
@@ -319,7 +332,6 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 					}
 				}
 				hienDanhSachKhachHang(dsKhachHangTim);
-				//
 			}
 		});
 
@@ -337,27 +349,119 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o.equals(cmbLoaiTK)) {
+			this.getLstDSKH().clearSelection();
 			switch (cmbLoaiTK.getSelectedIndex()) {
 			case 1:
+				txtTuKhoa.setEditable(true);
 				txtTuKhoa.setUI(new HintTextFieldUI("Nhập tên khách hàng", true));
 				break;
 			case 2:
+				txtTuKhoa.setEditable(true);
 				txtTuKhoa.setUI(new HintTextFieldUI("Nhập số điện thoại khách hàng", true));
 				break;
 			case 3:
+				txtTuKhoa.setEditable(true);
 				txtTuKhoa.setUI(new HintTextFieldUI("Nhập số CMND(thẻ căn cước) khách hàng", true));
 				break;
 			default:
+				txtTuKhoa.setEditable(false);
+				txtTuKhoa.setUI(new HintTextFieldUI(""));
 				break;
 			}
 		} else if (o.equals(btnBoChon)) {
-			lblCMNDdb.setText("");
-			lblHoVaTendb.setText("");
-			lblDienThoaidb.setText("");
-			lblGioiTinhdb.setText("");
-			lblNgaySinhdb.setText("");
-			lblDiaChidb.setText("");
+			xoaTrangThongTinKH();
 		}
 
 	}
+
+	/**
+	 * Xoá trăng thông tin khách hàng
+	 */
+	public void xoaTrangThongTinKH() {
+		this.getLstDSKH().clearSelection();
+		hienDanhSachKhachHang(dsKhachHang);
+		this.getLblHoVaTendb().setText("");
+		this.getLblCMNDdb().setText("");
+		this.getLblNgaySinhdb().setText("");
+		this.getLblGioiTinhdb().setText("");
+		this.getLblDiaChidb().setText("");
+		this.getLblDienThoaidb().setText("");
+
+		this.getCmbLoaiTK().setSelectedIndex(0);
+		this.getTxtTuKhoa().setUI(new HintTextFieldUI(""));
+
+	}
+
+	public JList<KhachHang> getLstDSKH() {
+		return lstDSKH;
+	}
+
+	public void setLstDSKH(JList<KhachHang> lstDSKH) {
+		this.lstDSKH = lstDSKH;
+	}
+
+	public JLabel getLblNgaySinhdb() {
+		return lblNgaySinhdb;
+	}
+
+	public void setLblNgaySinhdb(JLabel lblNgaySinhdb) {
+		this.lblNgaySinhdb = lblNgaySinhdb;
+	}
+
+	public JLabel getLblHoVaTendb() {
+		return lblHoVaTendb;
+	}
+
+	public void setLblHoVaTendb(JLabel lblHoVaTendb) {
+		this.lblHoVaTendb = lblHoVaTendb;
+	}
+
+	public JLabel getLblCMNDdb() {
+		return lblCMNDdb;
+	}
+
+	public void setLblCMNDdb(JLabel lblCMNDdb) {
+		this.lblCMNDdb = lblCMNDdb;
+	}
+
+	public JLabel getLblDienThoaidb() {
+		return lblDienThoaidb;
+	}
+
+	public void setLblDienThoaidb(JLabel lblDienThoaidb) {
+		this.lblDienThoaidb = lblDienThoaidb;
+	}
+
+	public JLabel getLblDiaChidb() {
+		return lblDiaChidb;
+	}
+
+	public void setLblDiaChidb(JLabel lblDiaChidb) {
+		this.lblDiaChidb = lblDiaChidb;
+	}
+
+	public JLabel getLblGioiTinhdb() {
+		return lblGioiTinhdb;
+	}
+
+	public void setLblGioiTinhdb(JLabel lblGioiTinhdb) {
+		this.lblGioiTinhdb = lblGioiTinhdb;
+	}
+
+	public JComboBox<String> getCmbLoaiTK() {
+		return cmbLoaiTK;
+	}
+
+	public void setCmbLoaiTK(JComboBox<String> cmbLoaiTK) {
+		this.cmbLoaiTK = cmbLoaiTK;
+	}
+
+	public JTextField getTxtTuKhoa() {
+		return txtTuKhoa;
+	}
+
+	public void setTxtTuKhoa(JTextField txtTuKhoa) {
+		this.txtTuKhoa = txtTuKhoa;
+	}
+
 }
