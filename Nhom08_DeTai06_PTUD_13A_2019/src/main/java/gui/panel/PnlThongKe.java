@@ -8,12 +8,12 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -32,12 +32,9 @@ import control.IPhieuDangKyControl;
 import control.IPhieuThuChiControl;
 import control.impl.PhieuDangKyControlImpl;
 import control.impl.PhieuThuChiControlImpl;
-import entities.KhachHangThamGia;
 import entities.PhieuDangKy;
 import entities.PhieuThuChi;
 import model.DSPhieuThuTableModel;
-
-import javax.swing.JScrollPane;
 
 public class PnlThongKe extends JPanel {
 	private JTabbedPane tabThongTinTK;

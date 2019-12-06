@@ -1,6 +1,7 @@
 package gui.panel;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -20,6 +21,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
@@ -36,10 +39,6 @@ import utils.TienIch;
 import utils.address.District;
 import utils.address.Province;
 import utils.address.Ward;
-
-import javax.swing.ListSelectionModel;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.CardLayout;
 
 public class PnlKhachHang extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
