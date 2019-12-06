@@ -153,6 +153,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 	private JPanel pnlIconDong;
 	private JPanel pnlTinhTrangTour;
 	private JLabel lblTinhTrangTour;
+	private JScrollPane scrDSNgayKH;
 
 	/**
 	 * Giao diện chức năng tạo tour
@@ -315,17 +316,16 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 										.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
 												.addComponent(cmbPhuongTien, GroupLayout.PREFERRED_SIZE, 147,
 														GroupLayout.PREFERRED_SIZE)
-												.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.TRAILING)
-														.addComponent(btnXoaTrang)
-														.addGroup(gl_pnlCTTour.createSequentialGroup()
-																.addComponent(spnNgay, GroupLayout.PREFERRED_SIZE, 47,
-																		GroupLayout.PREFERRED_SIZE)
-																.addPreferredGap(ComponentPlacement.RELATED)
-																.addComponent(lblNgy)
-																.addPreferredGap(ComponentPlacement.UNRELATED)
-																.addComponent(lblNgayDem)
-																.addPreferredGap(ComponentPlacement.UNRELATED)
-																.addComponent(lblm))))
+												.addGroup(gl_pnlCTTour.createSequentialGroup()
+														.addComponent(spnNgay, GroupLayout.PREFERRED_SIZE, 47,
+																GroupLayout.PREFERRED_SIZE)
+														.addPreferredGap(ComponentPlacement.RELATED)
+														.addComponent(lblNgy)
+														.addPreferredGap(ComponentPlacement.UNRELATED)
+														.addComponent(lblNgayDem)
+														.addPreferredGap(ComponentPlacement.UNRELATED)
+														.addComponent(lblm))
+												.addComponent(btnXoaTrang))
 										.addGap(38)))
 						.addContainerGap(20, Short.MAX_VALUE))
 						.addGroup(gl_pnlCTTour.createSequentialGroup().addPreferredGap(ComponentPlacement.RELATED)
@@ -371,19 +371,21 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 												.addComponent(spnNgay, GroupLayout.PREFERRED_SIZE,
 														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 												.addComponent(lblNgy).addComponent(lblNgayDem).addComponent(lblm))))
+								.addGap(18)
 								.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_pnlCTTour.createSequentialGroup().addGap(18).addGroup(gl_pnlCTTour
-												.createParallelGroup(Alignment.TRAILING).addComponent(lblCTTour)
-												.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.BASELINE)
-														.addComponent(btnLuu, GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-														.addComponent(btnXemCTTour, GroupLayout.PREFERRED_SIZE, 30,
-																GroupLayout.PREFERRED_SIZE)
-														.addComponent(btnCTTour))))
-										.addGroup(gl_pnlCTTour.createSequentialGroup().addGap(18)
-												.addComponent(btnXoaTrang)))))
+										.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
+												.addComponent(btnXemCTTour, Alignment.TRAILING,
+														GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+												.addComponent(lblCTTour, Alignment.TRAILING)
+												.addComponent(btnCTTour, Alignment.TRAILING))
+										.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
+												.addComponent(btnXoaTrang, Alignment.TRAILING)
+												.addComponent(btnLuu, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))))
 				.addContainerGap(12, Short.MAX_VALUE)));
 		gl_pnlCTTour.linkSize(SwingConstants.VERTICAL, new Component[] { btnXoaTrang, btnLuu });
+		gl_pnlCTTour.linkSize(SwingConstants.VERTICAL, new Component[] { btnXemCTTour, lblCTTour, btnCTTour });
+		gl_pnlCTTour.linkSize(SwingConstants.HORIZONTAL, new Component[] { btnXoaTrang, btnLuu });
 		panel.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrTenTour = new JScrollPane();
@@ -417,6 +419,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		JPanel pnlLuaChonTK = new JPanel();
 		pnlLuaChonTK.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		FlowLayout fl_pnlLuaChonTK = (FlowLayout) pnlLuaChonTK.getLayout();
+		fl_pnlLuaChonTK.setVgap(10);
 		fl_pnlLuaChonTK.setAlignment(FlowLayout.LEFT);
 		pnlTimKiem.add(pnlLuaChonTK);
 
@@ -429,6 +432,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		JPanel pnlLoaiTK = new JPanel();
 		pnlLoaiTK.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		FlowLayout flowLayout = (FlowLayout) pnlLoaiTK.getLayout();
+		flowLayout.setVgap(10);
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		pnlLoaiTK.setPreferredSize(new Dimension(450, 10));
 		pnlTimKiem.add(pnlLoaiTK);
@@ -589,6 +593,9 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		pnlNgayKH.add(pnlDSNgayKH, BorderLayout.CENTER);
 		pnlDSNgayKH.setLayout(new BorderLayout(0, 0));
 
+		scrDSNgayKH = new JScrollPane();
+		pnlDSNgayKH.add(scrDSNgayKH, BorderLayout.CENTER);
+
 		pnlButtonNorth = new JPanel();
 		pnlButtonNorth.setVisible(false);
 		pnlButtonNorth.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -630,7 +637,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		lstTour = tourControl.layDsTourTheoYeuCau(2, nv.getMaNV());
 		hienDanhSachTour(tblDSTour, lstTour, scrDSTour);
 
-		pnlDSNgayKH.add(new JScrollPane(tblDSNGKH));
 		// Hiện địa điểm xuất phát, điểm đến
 
 		List<Province> lstdiaDiem = TienIch.layDiaLyHanhChinh();
@@ -986,13 +992,11 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				lblTinhTrangTour.setVisible(true);
 				btnSuaNgayKH.setEnabled(false);
 			} else {
+				lblTinhTrangTour.setVisible(false);
 				btnSuaNgayKH.setEnabled(true);
 			}
-
 			lstNgayKH = tourControl.layDSNgayKhoiHanhTheoTour(maTour);
-			ngkhTableModel = new NgayKhoiHanhTableModel(lstNgayKH);
-			tblDSNGKH.setModel(ngkhTableModel);
-			TienIch.chinhKichThuocTable(tblDSNGKH, tblDSNGKH.getColumnModel().getTotalColumnWidth(), 5, 50, 20, 20);
+			hienDanhSachNgayKhoiHanh(tblDSNGKH, lstNgayKH, scrDSNgayKH);
 
 		}
 		/*
@@ -1077,8 +1081,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 					lstNgayKH = tourControl.layDSNgayKhoiHanhTheoTour(tourChon.getMaTour());
 					hienDanhSachTour(tblDSTour, lstTour, scrDSTour);
 					tblDSTour.setRowSelectionInterval(row, row);
-					ngkhTableModel = new NgayKhoiHanhTableModel(lstNgayKH);
-					tblDSNGKH.setModel(ngkhTableModel);
+					hienDanhSachNgayKhoiHanh(tblDSNGKH, lstNgayKH, scrDSNgayKH);
 
 					dtcNgayKhoiHanh.setEnabled(false);
 					spnSoKhachToiDa.setEnabled(false);
@@ -1130,9 +1133,10 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				break;
 
 			default:
+				txtTimKiem.setVisible(true);
 				txtTimKiem.setUI(new HintTextFieldUI(""));
 				txtTimKiem.setEditable(false);
-				cmbTimKiem.setVisible(true);
+				cmbTimKiem.setVisible(false);
 				btnLoc.setVisible(false);
 				break;
 
@@ -1208,6 +1212,27 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			hienDanhSachTour(tblDSTour, dsTourCanTim, scrDSTour);
 
 		}
+	}
+
+	/**
+	 * hiện danh sách ngày khởi hành theo tour
+	 * 
+	 * @param tbl: bảng
+	 * @param ds:  danh sách ngày khởi hành
+	 * @param scr: thanh cuộn
+	 */
+	private void hienDanhSachNgayKhoiHanh(JTable tbl, List<NgayKhoiHanh> ds, JScrollPane scr) {
+		ngkhTableModel = new NgayKhoiHanhTableModel(ds);
+		tbl.setModel(ngkhTableModel);
+		TienIch.chinhKichThuocTable(tbl, tbl.getColumnModel().getTotalColumnWidth(), 5, 50, 20, 20);
+		if (ds.size() != 0) {
+			tbl.getColumnModel().getColumn(0).setCellRenderer(new CenterRenderrer());
+			tbl.getColumnModel().getColumn(1).setCellRenderer(new CenterRenderrer());
+			tbl.getColumnModel().getColumn(2).setCellRenderer(new CenterRenderrer());
+			tbl.getColumnModel().getColumn(3).setCellRenderer(new CenterRenderrer());
+		}
+		scr.setViewportView(tbl);
+
 	}
 
 	/**
@@ -1291,19 +1316,6 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		String tenTour = txaTenTour.getText().trim();
 		double donGiaNL = Double.parseDouble(txtGiaNgLon.getValue().toString());
 		double dongiaTE = Double.parseDouble(txtGiaTrEm.getValue().toString());
-
-		/*
-		 * if (cmbDiaDanh.getSelectedIndex() == -1) {
-		 * 
-		 * JOptionPane.showMessageDialog(this, "Địa danh  không được để trống !");
-		 * cmbDiaDanh.requestFocusInWindow(); return false; } if
-		 * (cmbDiemXP.getSelectedIndex() == -1) { JOptionPane.showMessageDialog(this,
-		 * "Điểm xuất phát không được để trống !"); cmbDiemXP.requestFocusInWindow();
-		 * return false; } if (cmbDiemDen.getSelectedIndex() == -1) {
-		 * JOptionPane.showMessageDialog(this, "Điểm đến không được để trống !");
-		 * cmbDiemDen.requestFocusInWindow(); return false; }
-		 */
-
 		try {
 			DiaDanh diaDanh = (DiaDanh) cmbDiaDanh.getEditor().getItem();
 		} catch (Exception e) {
@@ -1366,6 +1378,11 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		return true;
 	}
 
+	/**
+	 * Kiểm tra thông tin ngày khởi hành
+	 * 
+	 * @return
+	 */
 	private boolean kiemTraNgayKhoiHanh() {
 		String ngayBatDau = ((JTextField) dtcNgayKhoiHanh.getDateEditor().getUiComponent()).getText();
 		int soKhachToiDa = Integer.parseInt(spnSoKhachToiDa.getValue().toString());
@@ -1379,8 +1396,8 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			dtcNgayKhoiHanh.requestFocusInWindow();
 			return false;
 		}
-		if (soKhachToiDa < 10) {
-			JOptionPane.showMessageDialog(this, "Số khách tối đa không được bé hơn mười người !");
+		if (soKhachToiDa < 10 || soKhachToiDa > 50) {
+			JOptionPane.showMessageDialog(this, "Số khách tối đa không được bé hơn 10 người hoặc vượt quá 50 người !");
 			spnSoKhachToiDa.requestFocusInWindow();
 			return false;
 		}

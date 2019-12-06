@@ -631,7 +631,7 @@ public class DlgPhieuThu extends JDialog implements ActionListener {
 		thanhTienTremEm = phieuDangKy.tinhThanhTien(khachThamGias)[1];
 
 		congTien = (thanhTienNguoiLon + thanhTienTremEm);
-		tienThue = (thanhTienNguoiLon + thanhTienTremEm) * HangSo.THUE;
+		tienThue = congTien * HangSo.THUE;
 
 		tongThanhTien = congTien + tienThue;
 
@@ -671,7 +671,7 @@ public class DlgPhieuThu extends JDialog implements ActionListener {
 		txtDonGiaTE.setText(format.format(pt.getPdk().getNgayKhoiHanh().getTour().getDonGiaTreEm()));
 
 		txtCongTien.setText(format.format(congTien) + "");
-		txtTienThue.setText(format.format(congTien) + "");
+		txtTienThue.setText(format.format(tienThue));
 		txtTongTienThanhToan.setText(format.format(tongThanhTien));
 
 	}
