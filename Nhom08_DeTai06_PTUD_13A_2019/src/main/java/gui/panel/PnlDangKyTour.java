@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -809,6 +811,25 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		tblDSNgayDi.getSelectionModel().addListSelectionListener(this);
 		tblDSKhachThamGia.getSelectionModel().addListSelectionListener(this);
 
+		chkThamGiaTourDK.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (chkThamGiaTourDK.isSelected()) {
+					int confirm = JOptionPane.showConfirmDialog(null, "Xác nhận khách hàng đăng ký tham gia tour ?",
+							"Thông báo xác nhận", JOptionPane.YES_OPTION);
+					if (confirm == JOptionPane.YES_OPTION) {
+						KhachHangThamGia khtg = new KhachHangThamGia();
+						khtg.setHoTenKHTG(khachHang.getHoVaTen());
+						khtg.setNgaySinh(khachHang.getNgaySinh());
+						khtg.setDoTuoi(DoTuoi.NGUOILON);
+						dsKhachHangThamGia.add(dsKhachHangThamGia.size() - 1, khtg);
+						chkThamGiaTourDK.setEnabled(false);
+					}
+
+				}
+			}
+		});
+
 		AutoCompleteDecorator.decorate(cmbDiaDanh);
 
 		txtTimKiemTheoTen.addKeyListener(new KeyAdapter() {
@@ -1030,19 +1051,18 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		 */
 		else if (o.equals(btnLuuTTKhachHang)) {
 			if (kiemTraNhapLieu()) {
-				KhachHang khachHang = new KhachHang();
-				khachHang.setHoVaTen(txtHoTenKH.getText());
-				khachHang.setSoCMND(txtSoCMND.getText());
-				khachHang.setNgaySinh(new Date(dtcNgaySinh.getDate().getTime()));
-				khachHang.setSoDienThoai(txtSdtKH.getText());
-				khachHang.setDiaChi(new DiaChi(cmbXa.getSelectedItem().toString(),
-						cmbHuyen.getSelectedItem().toString(), cmbTinh.getSelectedItem().toString()));
-				khachHang.setGioiTinh(rdbNam.isSelected() ? true : false);
-				int confirm = JOptionPane.showConfirmDialog(null,
-						"Lưu thông tin khách hàng " + khachHang.getHoVaTen() + " ?", "Xác nhận lưu khách hàng",
-						JOptionPane.YES_NO_OPTION);
+				KhachHang kh = new KhachHang();
+				kh.setHoVaTen(txtHoTenKH.getText());
+				kh.setSoCMND(txtSoCMND.getText());
+				kh.setNgaySinh(new Date(dtcNgaySinh.getDate().getTime()));
+				kh.setSoDienThoai(txtSdtKH.getText());
+				kh.setDiaChi(new DiaChi(cmbXa.getSelectedItem().toString(), cmbHuyen.getSelectedItem().toString(),
+						cmbTinh.getSelectedItem().toString()));
+				kh.setGioiTinh(rdbNam.isSelected() ? true : false);
+				int confirm = JOptionPane.showConfirmDialog(null, "Lưu thông tin khách hàng " + kh.getHoVaTen() + " ?",
+						"Xác nhận lưu khách hàng", JOptionPane.YES_NO_OPTION);
 				if (confirm == JOptionPane.YES_OPTION) {
-					KhachHang khThem = khachHangControl.themKhachHang(khachHang);
+					KhachHang khThem = khachHangControl.themKhachHang(kh);
 					if (khThem != null) {
 						JOptionPane.showMessageDialog(null, "Thêm khách hàng thành công");
 						khachHang = khThem;
@@ -1050,6 +1070,8 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 						btnLuuDC.setVisible(false);
 						btnThemDC.setVisible(false);
 						tblDSTour.setEnabled(true);
+						btnLuuTTKhachHang.setVisible(false);
+						
 					}
 				}
 			}
@@ -1066,12 +1088,9 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 			pnlDSKhachHangTG.setVisible(true);
 			pnlThemTTKHTG.setVisible(true);
 
-			/*
-			 * if (chkThamGiaTourDK.isSelected()) { KhachHangThamGia khtg = new
-			 * KhachHangThamGia(); khtg.setHoTenKHTG(khachHang.getHoVaTen());
-			 * khtg.setNgaySinh(khachHang.getNgaySinh()); khtg.setDoTuoi(DoTuoi.NGUOILON);
-			 * dsKhachHangThamGia.add(khtg); }
-			 */
+			chkThamGiaTourDK.setEnabled(true);
+
+			chkThamGiaTourDK.setVisible(true);
 
 		}
 
@@ -1114,6 +1133,12 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 			phieuDangKy.setNgayKhoiHanh(ngayKhoiHanh);
 			phieuDangKy.setNv(nhanvien);
 			phieuDangKy.setNgayTaoPhieu(new Date(System.currentTimeMillis()));
+			
+			//nếu khách hàng đăng ký muốn tham fia 
+			if(chkThamGiaTourDK.isSelected()) {
+				dsKhachHangThamGia//
+			}
+			
 			phieuDangKy.setKhachHangThamGias(dsKhachHangThamGia);
 
 			int soLuongKhachToiDa = ngayKhoiHanh.getSoKhachToiDa();
@@ -1144,6 +1169,8 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 						if (phieuDangKyTour != null) {
 							pnlThemTTKHTG.setVisible(false);
 							pnlDSKhachHangTG.setEnabled(false);
+
+							chkThamGiaTourDK.setEnabled(false);
 
 							dsNgayKhoiHanh = tourControl
 									.layDSNgayKhoiHanhTheoTour(phieuDangKy.getNgayKhoiHanh().getTour().getMaTour());
@@ -1600,7 +1627,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		@Override
 		protected void setValue(Object value) {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			value = sdf.format(((Date) value).getTime());
+			value = sdf.format(((java.util.Date) value).getTime());
 			super.setValue(value);
 		}
 

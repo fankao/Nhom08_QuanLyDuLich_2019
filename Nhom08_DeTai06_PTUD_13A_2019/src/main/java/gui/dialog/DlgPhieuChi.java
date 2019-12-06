@@ -366,6 +366,9 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 				}
 
 			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Chưa nhập lý do tạo phiếu chi", "Lỗi", JOptionPane.ERROR_MESSAGE
+					);
 		}
 
 	}
