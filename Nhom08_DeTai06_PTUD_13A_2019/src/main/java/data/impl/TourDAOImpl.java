@@ -90,8 +90,7 @@ public class TourDAOImpl implements ITourDAO {
 	 */
 	@Override
 	public List<NgayKhoiHanh> layDSNgayKhoiHanhTheoTour(String maTour) {
-		TypedQuery<NgayKhoiHanh> query = em.createQuery("SELECT t FROM NgayKhoiHanh t WHERE t.tour.maTour=:maTour",
-				NgayKhoiHanh.class);
+		TypedQuery<NgayKhoiHanh> query = em.createNamedQuery("NgayKH.timDSNgayKHChuaBiHuyTheoTour", NgayKhoiHanh.class);
 		query.setParameter("maTour", maTour);
 		List<NgayKhoiHanh> sets = query.getResultList();
 		return sets.size() != 0 ? sets : new ArrayList<NgayKhoiHanh>();
@@ -152,10 +151,8 @@ public class TourDAOImpl implements ITourDAO {
 
 	@Override
 	public String phatSinhNgayKhoiHanh(String maTour) {
-		List<Integer> lstId = em
-				.createQuery("SELECT ngaykh.id FROM NgayKhoiHanh ngaykh WHERE ngaykh.tour.maTour =:maTour",
-						Integer.class)
-				.setParameter("maTour", maTour).getResultList();
+		List<Integer> lstId = em.createQuery("SELECT ngaykh.id FROM NgayKhoiHanh ngaykh", Integer.class)
+				.getResultList();
 		if (lstId.size() != 0) {
 			int max = lstId.get(0);
 			for (Integer x : lstId) {

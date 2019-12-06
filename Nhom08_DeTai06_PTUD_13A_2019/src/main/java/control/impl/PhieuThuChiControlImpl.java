@@ -59,7 +59,7 @@ public class PhieuThuChiControlImpl implements IPhieuThuChiControl {
 	}
 
 	@Override
-	public double tinhTongTienPhieuPhieuChiTheoPDK(String maPDK) {
+	public double tinhTongTienPhieuChiTheoPDK(String maPDK) {
 		List<PhieuThuChi> list = phieuThuChiDAO.layDSPhieuChiTheoPhieuDK(maPDK);
 		double tongTienPhieuChi = 0;
 		if (list.size() != 0) {

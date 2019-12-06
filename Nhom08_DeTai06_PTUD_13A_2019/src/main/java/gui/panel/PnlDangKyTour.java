@@ -854,6 +854,9 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 	 */
 	public void valueChanged(ListSelectionEvent e) {
 		ListSelectionModel o = (ListSelectionModel) e.getSource();
+		/*
+		 * Chọn một hàng của danh sách tour
+		 */
 		if (o.equals(tblDSTour.getSelectionModel())) {
 			int row = tblDSTour.getSelectedRow();
 			if (row == -1)
@@ -865,7 +868,11 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 
 			tblDSTour.setEnabled(false);
 
-		} else if (o.equals(tblDSNgayDi.getSelectionModel())) {
+		}
+		/*
+		 * Chọn một hàng của ngày khởi hành
+		 */
+		else if (o.equals(tblDSNgayDi.getSelectionModel())) {
 			int row = tblDSNgayDi.getSelectedRow();
 			if (row == -1)
 				return;
@@ -878,6 +885,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 			hienBangDSKhachTG(tblDSKhachThamGia, new ArrayList<KhachHangThamGia>(), scrDSKhachThamGia);
 			pnlDSKhachHangTG.setVisible(false);
 			pnlTinhTrangTour.setVisible(true);
+
 			if (tinhTrang.equalsIgnoreCase(HangSo.DADANGKY)) {
 				btnThemKhachHangTG.setEnabled(false);
 				chkThamGiaTourDK.setSelected(true);
@@ -1071,7 +1079,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 						btnThemDC.setVisible(false);
 						tblDSTour.setEnabled(true);
 						btnLuuTTKhachHang.setVisible(false);
-						
+
 					}
 				}
 			}
@@ -1091,6 +1099,8 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 			chkThamGiaTourDK.setEnabled(true);
 
 			chkThamGiaTourDK.setVisible(true);
+
+			tblDSNgayDi.setEnabled(false);
 
 		}
 
@@ -1133,12 +1143,12 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 			phieuDangKy.setNgayKhoiHanh(ngayKhoiHanh);
 			phieuDangKy.setNv(nhanvien);
 			phieuDangKy.setNgayTaoPhieu(new Date(System.currentTimeMillis()));
-			
-			//nếu khách hàng đăng ký muốn tham fia 
-			if(chkThamGiaTourDK.isSelected()) {
-				dsKhachHangThamGia//
+
+			// nếu khách hàng đăng ký muốn tham gia
+			if (chkThamGiaTourDK.isSelected()) {
+				phieuDangKy.setThamGiaTourDangKy(true);
 			}
-			
+
 			phieuDangKy.setKhachHangThamGias(dsKhachHangThamGia);
 
 			int soLuongKhachToiDa = ngayKhoiHanh.getSoKhachToiDa();
@@ -1162,16 +1172,15 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 					phieuDangKy.getNgayKhoiHanh().setSoKhachDaDangKy(soLuongKhachHangDaThamGia);
 					int confirm = JOptionPane.showConfirmDialog(null,
 							"Xác nhận đăng ký tour " + phieuDangKy.getNgayKhoiHanh().getTour().getTenTour() + " ?",
-							"Xác nhận đăng ký tour", JOptionPane.YES_NO_OPTION);
+							"Thông báo xác nhận", JOptionPane.YES_NO_OPTION);
 					if (confirm == JOptionPane.YES_OPTION) {
 
 						PhieuDangKy phieuDangKyTour = phieuDangKyControl.themPhieuDangKy(phieuDangKy);
 						if (phieuDangKyTour != null) {
+							xoaTrangThongTinKHTG();
 							pnlThemTTKHTG.setVisible(false);
 							pnlDSKhachHangTG.setEnabled(false);
-
 							chkThamGiaTourDK.setEnabled(false);
-
 							dsNgayKhoiHanh = tourControl
 									.layDSNgayKhoiHanhTheoTour(phieuDangKy.getNgayKhoiHanh().getTour().getMaTour());
 							hienDanhSachNgayKhoiHanh(dsNgayKhoiHanh);
@@ -1247,6 +1256,15 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 	}
 
 	/**
+	 * Xoá trắng thông tin khách hàng
+	 */
+	private void xoaTrangThongTinKHTG() {
+		txtHoVaTenKHTG.setText("");
+		dtcNgaySinhKHTG.setDate(null);
+
+	}
+
+	/**
 	 * Hiện thông tin ngày khởi hành
 	 */
 	private void hienThongTinNgayKH(NgayKhoiHanh ngayKhoiHanh) {
@@ -1261,6 +1279,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 	private void huyChonTour() {
 		tblDSTour.setEnabled(true);
 		tblDSTour.clearSelection();
+
 		huyChonNgayKhoiHanh();
 		pnlHuyChonTour.setVisible(false);
 		dsNgayKhoiHanh = new ArrayList<NgayKhoiHanh>();
@@ -1273,10 +1292,16 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 	private void huyChonNgayKhoiHanh() {
 		pnlHuyChonTour.setVisible(true);
 		tblDSNgayDi.clearSelection();
+		tblDSNgayDi.setEnabled(true);
 		chkThamGiaTourDK.setSelected(false);
 		lblNgayKHdb.setText("<...>");
 		lblMaNgayKHdb.setText("<...>");
 		pnlThongTinNgayKH.setVisible(false);
+
+		xoaTrangThongTinKHTG();
+		chkThamGiaTourDK.setSelected(false);
+		chkThamGiaTourDK.setVisible(false);
+		
 
 		TienIch.hienAnCacControl(false, btnHuyChonNgayKH, btnThemKhachHangTG);
 
