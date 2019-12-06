@@ -821,6 +821,22 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 			hienBangDSPDK(tblDSPhieuDangKy, dsPDK, srcDsPDK);
 
 		}
+		else if(o.equals(btnBoChonKhachHang)) {
+			tblDSKhachHang.clearSelection();
+			tblDSPhieuDangKy.clearSelection();
+			dsPDK = phieuDangKyControl.layDSPhieuDangKy();
+			hienBangDSPDK(tblDSPhieuDangKy, dsPDK, srcDsPDK);
+			xoaTrangHienThiTTKH();
+			dsKhachHangTGTrongCSDL.clear();
+			hienBangDSKhachTG(tblDSKhachTG, dsKhachHangTGTrongCSDL, srcDsKhachTG);
+			
+			
+		}else if(o.equals(btnBoChonPDK)) {
+			tblDSPhieuDangKy.clearSelection();
+			xoaTrangHienThiTTKH();
+			dsKhachHangTGTrongCSDL.clear();
+			hienBangDSKhachTG(tblDSKhachTG, dsKhachHangTGTrongCSDL, srcDsKhachTG);
+		}
 	}
 
 	/**
@@ -861,6 +877,24 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		dsKhachHangTGTrongCSDL = pdk.getKhachHangThamGias();
 		hienBangDSKhachTG(tblDSKhachTG, dsKhachHangTGTrongCSDL, srcDsKhachTG);
 
+	}
+	/**
+	 * Xóa trắng hiển thị thông tin khách hàng
+	 */
+	private void xoaTrangHienThiTTKH() {	
+		 lblMaKH.setText("");
+		 lblTenKH.setText("");
+		 lblNgaySinh.setText("");
+		 lblSoCMND.setText("");
+		 lblGioiTinh.setText("");
+		 lblSoDienThoai.setText("");
+		 lblDiaChi.setText("");
+		 lblMaPDK.setText("");
+		 lblNgayTao.setText("");
+		 txaTenTuor.setText("");
+		 lblNgayKhoiHanh.setText("");
+		 lblThoiGian.setText(""); 
+		 lblTongTiendb.setText("");
 	}
 
 	/**
