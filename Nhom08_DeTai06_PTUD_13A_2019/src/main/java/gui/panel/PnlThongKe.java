@@ -208,7 +208,7 @@ public class PnlThongKe extends JPanel {
 		dsPDK = phieuDangKyControl.layDSPhieuDangKyTheoThang(thang);
 		for (PhieuDangKy pdk : dsPDK) {
 			tongTienPT += phieuThuChiControl.tinhTongTienPhieuThuTheoPDK(pdk.getMaPhieuDK());
-			tongTienPC += phieuThuChiControl.tinhTongTienPhieuPhieuChiTheoPDK(pdk.getMaPhieuDK());
+			tongTienPC += phieuThuChiControl.tinhTongTienPhieuChiTheoPDK(pdk.getMaPhieuDK());
 		}
 		tongTien = tongTienPT - tongTienPC;
 		return tongTien;

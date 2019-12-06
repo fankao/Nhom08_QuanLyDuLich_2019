@@ -30,7 +30,8 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "ngaykhoihanh")
 @NamedQueries({
-		@NamedQuery(name = "NgayKH.timNgayKhoiHanhTheoNgay", query = "SELECT ngkh FROM NgayKhoiHanh ngkh WHERE ngkh.tour.maTour=:maTour AND (ngkh.ngayKhoiHanh BETWEEN :startDate AND :toDate) ORDER BY ngkh.id") })
+		@NamedQuery(name = "NgayKH.timNgayKhoiHanhTheoNgay", query = "SELECT ngkh FROM NgayKhoiHanh ngkh WHERE ngkh.tour.maTour=:maTour AND (ngkh.ngayKhoiHanh BETWEEN :startDate AND :toDate) ORDER BY ngkh.id"),
+		@NamedQuery(name = "NgayKH.timDSNgayKHChuaBiHuyTheoTour", query = "SELECT t FROM NgayKhoiHanh t WHERE t.tour.maTour=:maTour AND t.daXoaDoKhongDuSoLuong = False") })
 public class NgayKhoiHanh {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,7 +69,7 @@ public class NgayKhoiHanh {
 		// Nếu ngày hiện tại cách ngày khởi hành còn 5 ngày và số người đã đăng ký tour
 		// không vượt quá 2/3 số khách tối đa
 		if ((period.getDays() <= 5 || period.getMonths() >= 1) && ngayKhoiHanh.getSoKhachDaDangKy() < soNguoiToiThieu) {
-			// thì tiến hành huỷ ngày đi này
+			// thì tiến hành huỷ ngày khởi hành này
 			ngayKhoiHanh.setDaXoaDoKhongDuSoLuong(true);
 			return ngayKhoiHanh;
 		}

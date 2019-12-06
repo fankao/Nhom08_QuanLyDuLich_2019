@@ -46,6 +46,9 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.swing.JRViewer;
+import javax.swing.border.LineBorder;
+import java.awt.Color;
+import javax.swing.border.BevelBorder;
 
 public class DlgPhieuChi extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -99,8 +102,8 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 			label.setFont(new Font("Tahoma", Font.BOLD, 18));
 			panel_3.add(label);
 
-			JLabel label_1 = new JLabel("Địa chỉ :12 Nguyễn Văn Bão,phường 3,quận Gò Vấp,Tp HCM");
-			panel_3.add(label_1);
+			JLabel lblaCh = new JLabel("Địa chỉ :12 Nguyễn Văn Bảo,phường 3,quận Gò Vấp,Tp HCM");
+			panel_3.add(lblaCh);
 
 			JLabel label_2 = new JLabel("SĐT:0123456789");
 			panel_3.add(label_2);
@@ -181,6 +184,7 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 		}
 
 		JPanel pnlTTPhieuChi = new JPanel();
+		pnlTTPhieuChi.setBorder(new LineBorder(new Color(0, 0, 0)));
 		contentPanel.add(pnlTTPhieuChi, BorderLayout.CENTER);
 		pnlTTPhieuChi.setLayout(new BorderLayout(0, 0));
 
@@ -285,6 +289,7 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 		pnlLyDoChi.setLayout(gl_pnlLyDoChi);
 		{
 			JPanel buttonPane = new JPanel();
+			buttonPane.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane);
 			{
@@ -299,7 +304,7 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 		p.setMaPhieuChi(phieuThuChiControl.phatSinhMaPhieu(LoaiPhieu.PHIEUCHI));
 		p.setNgayTaoPhieuChi(new Date(System.currentTimeMillis()));
 		p.setSoTien(tienChiTra);
-
+		p.setLoaiPhieu(LoaiPhieu.PHIEUCHI);
 		PhieuThuChi phieuThuChiThem = phieuThuChiControl.themPhieu(p);
 		if (phieuThuChiThem != null) {
 			txtMaPC.setText(p.getMaPhieuChi() + "");
@@ -367,8 +372,7 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, "Chưa nhập lý do tạo phiếu chi", "Lỗi", JOptionPane.ERROR_MESSAGE
-					);
+			JOptionPane.showMessageDialog(null, "Chưa nhập lý do tạo phiếu chi", "Lỗi", JOptionPane.ERROR_MESSAGE);
 		}
 
 	}

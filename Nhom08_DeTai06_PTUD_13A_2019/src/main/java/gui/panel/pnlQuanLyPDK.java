@@ -12,7 +12,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.Date;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -41,6 +44,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import constant.HangSo;
 import control.IKhachHangControl;
@@ -163,7 +167,7 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		FlowLayout flowLayout_4 = (FlowLayout) pnlThanhTimKiem.getLayout();
 		flowLayout_4.setAlignment(FlowLayout.LEFT);
 		pnlTimKiemKH.add(pnlThanhTimKiem);
-		
+
 		JLabel lblTuKhoa = new JLabel("Từ khoá:");
 		lblTuKhoa.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		pnlThanhTimKiem.add(lblTuKhoa);
@@ -377,32 +381,23 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		label_2.setHorizontalAlignment(SwingConstants.LEFT);
 		label_2.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		GroupLayout gl_panel_5 = new GroupLayout(panel_5);
-		gl_panel_5.setHorizontalGroup(
-			gl_panel_5.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_5.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(lblSinThoi, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(lblSoDienThoai, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE)
-					.addGap(31)
-					.addComponent(label_2, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(lblDiaChi, GroupLayout.PREFERRED_SIZE, 410, GroupLayout.PREFERRED_SIZE)
-					.addGap(16))
-		);
-		gl_panel_5.setVerticalGroup(
-			gl_panel_5.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel_5.createSequentialGroup()
-					.addGap(14)
-					.addGroup(gl_panel_5.createParallelGroup(Alignment.LEADING)
+		gl_panel_5.setHorizontalGroup(gl_panel_5.createParallelGroup(Alignment.LEADING).addGroup(gl_panel_5
+				.createSequentialGroup().addContainerGap()
+				.addComponent(lblSinThoi, GroupLayout.PREFERRED_SIZE, 135, GroupLayout.PREFERRED_SIZE).addGap(18)
+				.addComponent(lblSoDienThoai, GroupLayout.PREFERRED_SIZE, 163, GroupLayout.PREFERRED_SIZE).addGap(31)
+				.addComponent(label_2, GroupLayout.PREFERRED_SIZE, 106, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.UNRELATED)
+				.addComponent(lblDiaChi, GroupLayout.PREFERRED_SIZE, 410, GroupLayout.PREFERRED_SIZE).addGap(16)));
+		gl_panel_5.setVerticalGroup(gl_panel_5.createParallelGroup(Alignment.LEADING).addGroup(gl_panel_5
+				.createSequentialGroup().addGap(14)
+				.addGroup(gl_panel_5.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblSoDienThoai, GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
 						.addGroup(gl_panel_5.createParallelGroup(Alignment.BASELINE)
-							.addComponent(lblSinThoi, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-							.addComponent(label_2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblDiaChi, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
-		);
-		gl_panel_5.linkSize(SwingConstants.VERTICAL, new Component[] {lblDiaChi, label_2});
+								.addComponent(lblSinThoi, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_2, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblDiaChi, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)))
+				.addContainerGap()));
+		gl_panel_5.linkSize(SwingConstants.VERTICAL, new Component[] { lblDiaChi, label_2 });
 		panel_5.setLayout(gl_panel_5);
 
 		pnlTTPDK = new JPanel();
@@ -616,7 +611,7 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * Hiên
+	 * Hiện danh sách khách hàng
 	 * 
 	 * @param tbl
 	 * @param ds
@@ -626,6 +621,13 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		DSKhachHangTableModel dsKhachHangTableModel = new DSKhachHangTableModel(ds);
 		tbl.setModel(dsKhachHangTableModel);
 		src.setViewportView(tbl);
+		if (ds.size() != 0) {
+			tbl.getColumnModel().getColumn(0).setCellRenderer(new CenterRenderrer());
+			tbl.getColumnModel().getColumn(3).setCellRenderer(new MyDateRenderer());
+			tbl.getColumnModel().getColumn(4).setCellRenderer(new CenterRenderrer());
+			tbl.getColumnModel().getColumn(5).setCellRenderer(new CenterRenderrer());
+		}
+		TienIch.chinhKichThuocTable(tbl, tbl.getColumnModel().getTotalColumnWidth(), 5, 15, 30, 15, 15, 20);
 
 	}
 
@@ -639,6 +641,14 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		DSPhieuDangKyModel dsPhieuDangKyModel = new DSPhieuDangKyModel(ds);
 		tbl.setModel(dsPhieuDangKyModel);
 		src.setViewportView(tbl);
+
+		if (ds.size() != 0) {
+			tbl.getColumnModel().getColumn(0).setCellRenderer(new CenterRenderrer());
+			tbl.getColumnModel().getColumn(2).setCellRenderer(new MyDateRenderer());
+			tbl.getColumnModel().getColumn(3).setCellRenderer(new CenterRenderrer());
+			tbl.getColumnModel().getColumn(4).setCellRenderer(new CenterRenderrer());
+		}
+		TienIch.chinhKichThuocTable(tbl, tbl.getColumnModel().getTotalColumnWidth(), 5, 15, 15, 20, 15);
 
 	}
 
@@ -693,7 +703,7 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 				hienThongTinPDK(pdkDuocChon);
 				String tinhTrang = (String) tblDSPhieuDangKy.getValueAt(row, 4);
 				if (!tinhTrang.equalsIgnoreCase(HangSo.DAHOANTHANHTOUR) || pdkDuocChon.isDaHuyPhieu()) {
-					btnHuyDangKyTour.setEnabled(true);
+					btnHuyDangKyTour.setEnabled(false);
 				}
 
 			}
@@ -748,17 +758,8 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		 * Huỷ tour đăng ký
 		 */
 		if (o.equals(btnHuyDangKyTour)) {
-			int confirm = JOptionPane.showConfirmDialog(null,
-					"Xác nhận huỷ đăng ký tour " + pdkDuocChon.getNgayKhoiHanh().getTour() + " ?", "Thông báo xác nhận",
-					JOptionPane.YES_NO_OPTION);
-			if (confirm == JOptionPane.YES_OPTION) {
-				pdkDuocChon.setDaHuyPhieu(true);
-				PhieuDangKy phieuDangKySua = phieuDangKyControl.suaPhieuDangKy(pdkDuocChon);
-				if (phieuDangKySua != null) {
-					taoPhieuChi(pdkDuocChon);
-				}
+			huyDangKyThamGiaTour(pdkDuocChon);
 
-			}
 		} else if (o.equals(btnLamMoiBangDSKH)) {
 			dsKhachHang = khachHangControl.layDSKhachHang();
 			hienBangDSKhachHang(tblDSKhachHang, dsKhachHang, srcDsKhachHang);
@@ -820,23 +821,94 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 			}
 			hienBangDSPDK(tblDSPhieuDangKy, dsPDK, srcDsPDK);
 
-		}
-		else if(o.equals(btnBoChonKhachHang)) {
+		} else if (o.equals(btnBoChonKhachHang)) {
 			tblDSKhachHang.clearSelection();
 			tblDSPhieuDangKy.clearSelection();
 			dsPDK = phieuDangKyControl.layDSPhieuDangKy();
 			hienBangDSPDK(tblDSPhieuDangKy, dsPDK, srcDsPDK);
 			xoaTrangHienThiTTKH();
 			dsKhachHangTGTrongCSDL.clear();
+			xoaTrangHienThiTTKH();
 			hienBangDSKhachTG(tblDSKhachTG, dsKhachHangTGTrongCSDL, srcDsKhachTG);
-			
-			
-		}else if(o.equals(btnBoChonPDK)) {
+
+		} else if (o.equals(btnBoChonPDK)) {
 			tblDSPhieuDangKy.clearSelection();
 			xoaTrangHienThiTTKH();
 			dsKhachHangTGTrongCSDL.clear();
 			hienBangDSKhachTG(tblDSKhachTG, dsKhachHangTGTrongCSDL, srcDsKhachTG);
 		}
+	}
+
+	/**
+	 * Huỷ đăng ký tham gia tour
+	 * 
+	 * @param pdkDuocChon2
+	 */
+	private void huyDangKyThamGiaTour(PhieuDangKy pdk) {
+		LocalDate ngayKhoiHanh = new Date(pdk.getNgayKhoiHanh().getNgayKhoiHanh().getTime()).toLocalDate();
+		double tongTienChiTra = 0.0;
+
+		// nếu huỷ tour theo yêu cầu khách hàng
+		int row = tblDSPhieuDangKy.getSelectedRow();
+		if (row == -1)
+			return;
+		String tinhTrangTour = tblDSPhieuDangKy.getValueAt(row, 4).toString();
+		tongTienChiTra = phieuThuChiControl.tinhTongTienPhieuThuTheoPDK(pdk.getMaPhieuDK());
+
+		// nếu ngày khởi hành được chọn bị huỷ do không đủ số lượng khách đăng ký
+		if (tinhTrangTour.equalsIgnoreCase(HangSo.CHOHUYPHIEUDK)) {
+			pdk.setDaHuyPhieu(true);
+			PhieuDangKy phieuDangKySua = phieuDangKyControl.suaPhieuDangKy(pdkDuocChon);
+			if (phieuDangKySua != null) {
+				taoPhieuChi(pdk, tongTienChiTra);
+			}
+
+		}
+		// ngược lại nếu tour đang được xử lý mà khách hàng muốn huỷ
+		else if (tinhTrangTour.equalsIgnoreCase(HangSo.DANGXULY)) {
+			// nêu ngày huỷ tour cách ngày khởi hành 15 ngày
+			if (LocalDate.now().plusDays(15).isBefore(ngayKhoiHanh)) {
+				pdk.setDaHuyPhieu(true);
+
+				// cập nhật số lượng khách tham gia cho ngày khởi hành
+				int soLuongKhachTruocHuy = pdk.getNgayKhoiHanh().getSoKhachDaDangKy();
+				int soLuongKhachSauKhiHuy = soLuongKhachTruocHuy - pdk.getKhachHangThamGias().size();
+				pdk.getNgayKhoiHanh().setSoKhachDaDangKy(soLuongKhachSauKhiHuy);
+				if (pdk.getNgayKhoiHanh().isDaDuSoLuong()) {
+					pdk.getNgayKhoiHanh().setDaDuSoLuong(false);
+				}
+
+				// nhận được 80% chi phí thanh toán trước đó
+				tongTienChiTra = tongTienChiTra * HangSo.PHAT;
+				PhieuDangKy phieuDangKySua = phieuDangKyControl.suaPhieuDangKy(pdkDuocChon);
+				if (phieuDangKySua != null) {
+					taoPhieuChi(pdk, tongTienChiTra);
+				}
+
+			} else {
+				JOptionPane.showMessageDialog(null, "Không được huỷ đang ký tour, do đã quá thời gian cho phép huỷ",
+						"Thông báo", JOptionPane.INFORMATION_MESSAGE);
+			}
+		}
+
+	}
+
+	/**
+	 * Tạo phiếu chi
+	 * 
+	 * @param pdk
+	 */
+	private void taoPhieuChi(PhieuDangKy pdk, double tongTienChiTra) {
+		PhieuThuChi phieuThuChi = new PhieuThuChi();
+		phieuThuChi.setPdk(pdkDuocChon);
+
+		DlgPhieuChi dlgPhieuChi = null;
+
+		tongTienChiTra = tongTienChiTra * HangSo.PHAT;
+		dlgPhieuChi = new DlgPhieuChi(phieuThuChi, tongTienChiTra);
+
+		dlgPhieuChi.setVisible(true);
+
 	}
 
 	/**
@@ -878,48 +950,56 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		hienBangDSKhachTG(tblDSKhachTG, dsKhachHangTGTrongCSDL, srcDsKhachTG);
 
 	}
+
 	/**
 	 * Xóa trắng hiển thị thông tin khách hàng
 	 */
-	private void xoaTrangHienThiTTKH() {	
-		 lblMaKH.setText("");
-		 lblTenKH.setText("");
-		 lblNgaySinh.setText("");
-		 lblSoCMND.setText("");
-		 lblGioiTinh.setText("");
-		 lblSoDienThoai.setText("");
-		 lblDiaChi.setText("");
-		 lblMaPDK.setText("");
-		 lblNgayTao.setText("");
-		 txaTenTuor.setText("");
-		 lblNgayKhoiHanh.setText("");
-		 lblThoiGian.setText(""); 
-		 lblTongTiendb.setText("");
+	private void xoaTrangHienThiTTKH() {
+		lblMaKH.setText("");
+		lblTenKH.setText("");
+		lblNgaySinh.setText("");
+		lblSoCMND.setText("");
+		lblGioiTinh.setText("");
+		lblSoDienThoai.setText("");
+		lblDiaChi.setText("");
+		lblMaPDK.setText("");
+		lblNgayTao.setText("");
+		txaTenTuor.setText("");
+		lblNgayKhoiHanh.setText("");
+		lblThoiGian.setText("");
+		lblTongTiendb.setText("0.0");
+		lblSoKhachTG.setText("0");
 	}
 
-	/**
-	 * Tạo phiếu chi
-	 * 
-	 * @param pdk
+	/*
+	 * ============================ ============================
+	 *
 	 */
-	private void taoPhieuChi(PhieuDangKy pdk) {
-		PhieuThuChi phieuThuChi = new PhieuThuChi();
-		phieuThuChi.setPdk(pdkDuocChon);
+	@SuppressWarnings("unused")
+	private class CenterRenderrer extends DefaultTableCellRenderer {
 
-		// nếu huỷ tour theo yêu cầu khách hàng
-		int row = tblDSPhieuDangKy.getSelectedRow();
-		String tinhTrangTour = tblDSPhieuDangKy.getValueAt(row, 4).toString();
-		double tongTienChiTra = phieuThuChiControl.tinhTongTienPhieuThuTheoPDK(pdk.getMaPhieuDK());
-		DlgPhieuChi dlgPhieuChi = null;
-		if (tinhTrangTour.equalsIgnoreCase(HangSo.CHOHUYPHIEUDK)) {
-			// chi trả 100% chi phí do
-			dlgPhieuChi = new DlgPhieuChi(phieuThuChi, tongTienChiTra);
-		} else {
-			// chi trả 80% tiền thanh toán do tự ý huỷ tour
-			tongTienChiTra = tongTienChiTra * HangSo.PHAT;
-			dlgPhieuChi = new DlgPhieuChi(phieuThuChi, tongTienChiTra);
+		private static final long serialVersionUID = 1L;
+
+		public CenterRenderrer() {
+			this.setHorizontalAlignment(SwingConstants.CENTER);
+		}
+	}
+
+	@SuppressWarnings("unused")
+	private class MyDateRenderer extends DefaultTableCellRenderer {
+
+		private static final long serialVersionUID = 1L;
+
+		public MyDateRenderer() {
+			setHorizontalAlignment(SwingConstants.CENTER);
 		}
 
-		dlgPhieuChi.setVisible(true);
+		@Override
+		protected void setValue(Object value) {
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			value = sdf.format(((java.util.Date) value).getTime());
+			super.setValue(value);
+		}
+
 	}
 }

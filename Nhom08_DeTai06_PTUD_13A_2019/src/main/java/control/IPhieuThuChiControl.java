@@ -20,5 +20,5 @@ public interface IPhieuThuChiControl {
 	
 	public double tinhTongTienPhieuThuTheoPDK(String maPDK);
 	
-	public double tinhTongTienPhieuPhieuChiTheoPDK(String maPDK);
+	public double tinhTongTienPhieuChiTheoPDK(String maPDK);
 }

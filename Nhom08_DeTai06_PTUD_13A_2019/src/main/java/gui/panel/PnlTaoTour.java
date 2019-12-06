@@ -817,6 +817,8 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			btnSua.setVisible(false);
 			btnThem.setSelected(true);
 			btnXemCTTour.setVisible(true);
+
+			btnLamMoi.setVisible(false);
 			xoaTrang();
 
 		}
@@ -831,6 +833,8 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			tblDSTour.setEnabled(false);
 			btnBoChon.setVisible(false);
 			btnXoaTrang.setVisible(true);
+
+			btnLamMoi.setVisible(false);
 
 		}
 		/*
@@ -872,6 +876,10 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			btnSua.setSelected(false);
 			btnThem.setSelected(false);
 
+			btnLamMoi.setVisible(true);
+
+			pnlButtonNorth.setVisible(false);
+
 		}
 		/*
 		 * Nút đóng giao diện cập nhật ngày khởi hành
@@ -896,6 +904,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		 * 
 		 */
 		else if (o.equals(btnXoaTrang)) {
+
 			xoaTrang();
 
 		} else if (o.equals(btnLuu)) {
@@ -970,6 +979,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			tblDSTour.setEnabled(true);
 			btnThemNgayKH.setVisible(false);
 			pnlNgayKH.setVisible(false);
+			pnlButtonNorth.setVisible(false);
 		}
 		/*
 		 * Chọn nút thêm danh sách ngày khởi hành
@@ -1081,8 +1091,10 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 					lstNgayKH = tourControl.layDSNgayKhoiHanhTheoTour(tourChon.getMaTour());
 					hienDanhSachTour(tblDSTour, lstTour, scrDSTour);
 					tblDSTour.setRowSelectionInterval(row, row);
+
 					hienDanhSachNgayKhoiHanh(tblDSNGKH, lstNgayKH, scrDSNgayKH);
 
+					pnlButtonNorth.setVisible(false);
 					dtcNgayKhoiHanh.setEnabled(false);
 					spnSoKhachToiDa.setEnabled(false);
 
