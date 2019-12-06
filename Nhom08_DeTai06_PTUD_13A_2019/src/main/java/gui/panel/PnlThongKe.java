@@ -238,12 +238,9 @@ public class PnlThongKe extends JPanel {
 	// Lay so tong so phieu dang ky cua cac thang
 	private int laySoPhieuDangKyTheoThang(int thang) {
 		int soPDK = 0;
-		for (PhieuDangKy phieuDangKy : dsPDK) {
-			if (phieuDangKy.getNgayTaoPhieu().toLocalDate().getMonth().getValue() == thang) {
-				soPDK++;
-			}
-		}
-		return soPDK;
+		dsPDK = phieuDangKyControl.layDSPhieuDangKyTheoThang(thang);
+		dsPDK.size();
+		return dsPDK.size();
 	}
 
 	// Lay tong so phieu dang ky da huy theo thang
