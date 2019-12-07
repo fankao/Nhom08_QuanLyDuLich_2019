@@ -621,13 +621,14 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		DSKhachHangTableModel dsKhachHangTableModel = new DSKhachHangTableModel(ds);
 		tbl.setModel(dsKhachHangTableModel);
 		src.setViewportView(tbl);
+		TienIch.chinhKichThuocTable(tbl, tbl.getColumnModel().getTotalColumnWidth(), 5, 15, 30, 15, 15, 20);
 		if (ds.size() != 0) {
 			tbl.getColumnModel().getColumn(0).setCellRenderer(new CenterRenderrer());
 			tbl.getColumnModel().getColumn(3).setCellRenderer(new MyDateRenderer());
 			tbl.getColumnModel().getColumn(4).setCellRenderer(new CenterRenderrer());
 			tbl.getColumnModel().getColumn(5).setCellRenderer(new CenterRenderrer());
 		}
-		TienIch.chinhKichThuocTable(tbl, tbl.getColumnModel().getTotalColumnWidth(), 5, 15, 30, 15, 15, 20);
+		
 
 	}
 
@@ -641,14 +642,14 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		DSPhieuDangKyModel dsPhieuDangKyModel = new DSPhieuDangKyModel(ds);
 		tbl.setModel(dsPhieuDangKyModel);
 		src.setViewportView(tbl);
-
+		TienIch.chinhKichThuocTable(tbl, tbl.getColumnModel().getTotalColumnWidth(), 5, 15, 15, 20, 15);
 		if (ds.size() != 0) {
 			tbl.getColumnModel().getColumn(0).setCellRenderer(new CenterRenderrer());
 			tbl.getColumnModel().getColumn(2).setCellRenderer(new MyDateRenderer());
 			tbl.getColumnModel().getColumn(3).setCellRenderer(new CenterRenderrer());
 			tbl.getColumnModel().getColumn(4).setCellRenderer(new CenterRenderrer());
 		}
-		TienIch.chinhKichThuocTable(tbl, tbl.getColumnModel().getTotalColumnWidth(), 5, 15, 15, 20, 15);
+		
 
 	}
 
@@ -702,6 +703,7 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 				pdkDuocChon = phieuDangKyControl.layTTPhieuDangKyTheoMa(maPDK);
 				hienThongTinPDK(pdkDuocChon);
 				String tinhTrang = (String) tblDSPhieuDangKy.getValueAt(row, 4);
+				btnHuyDangKyTour.setEnabled(true);
 				if (!tinhTrang.equalsIgnoreCase(HangSo.DAHOANTHANHTOUR) || pdkDuocChon.isDaHuyPhieu()) {
 					btnHuyDangKyTour.setEnabled(false);
 				}
@@ -750,7 +752,7 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * 
+	 * Xử lý sự kiện nhấn button
 	 */
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
@@ -969,6 +971,7 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		lblThoiGian.setText("");
 		lblTongTiendb.setText("0.0");
 		lblSoKhachTG.setText("0");
+		btnHuyDangKyTour.setEnabled(false);
 	}
 
 	/*

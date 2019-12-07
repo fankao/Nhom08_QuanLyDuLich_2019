@@ -125,7 +125,7 @@ public class TourDAOImpl implements ITourDAO {
 	 */
 	@Override
 	public String phatSinhMaTour() {
-		String query = "SELECT t.maTour FROM Tour t";
+		String query = "SELECT t.maTour FROM Tour t ORDER BY t.id";
 		List<String> lstId = em.createQuery(query, String.class).getResultList();
 		if (lstId.size() != 0) {
 			int max = Integer.parseInt(lstId.get(0).substring(3));

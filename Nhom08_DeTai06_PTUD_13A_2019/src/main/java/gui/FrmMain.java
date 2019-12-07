@@ -452,9 +452,10 @@ public class FrmMain extends JFrame implements ActionListener {
 					chkQuanLyTour.setBackground(new Color(23, 35, 51));
 					chkKhachHang.setBackground(new Color(41, 57, 80));
 
-					pnlButtonBorderKH.setVisible(true);
 					btnThongKe.setBackground(new Color(23, 35, 51));
 					btnThongKe.setEnabled(true);
+
+					pnlButtonBorderKH.setVisible(true);
 
 					chkQuanLyTour.setSelected(false);
 					pnlButtonBoder.setVisible(false);
@@ -572,6 +573,7 @@ public class FrmMain extends JFrame implements ActionListener {
 		 */
 		else if (o.equals(btnThongKe)) {
 			dongSubButton();
+			dongSubButtonKhachHang();
 			TienIch.xoaDuongDan(pnlButtonBar, 1);
 			TienIch.themDuongDan(pnlButtonBar, "Thống kê");
 			TienIch.doiMauButton(btnThongKe, new JButton[] { btnDangXuat, btnDuyetTour, btnCapNhatTour, btnDangKyTour,
@@ -586,6 +588,7 @@ public class FrmMain extends JFrame implements ActionListener {
 		 */
 		else if (o.equals(btnDangXuat)) {
 			dongSubButton();
+			dongSubButtonKhachHang();
 			TienIch.doiMauButton(btnDangXuat, new JButton[] { btnCapNhatTour, btnDuyetTour, btnThongKe });
 			if (JOptionPane.showConfirmDialog(this, "Bạn muốn đăng xuất khỏi phần mềm?", "Đăng xuất",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
