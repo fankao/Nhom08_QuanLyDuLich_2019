@@ -208,7 +208,7 @@ public class DlgPhieuThu extends JDialog implements ActionListener {
 				pnlTTCongTy.add(lblTenCty);
 			}
 			{
-				lblDiaChiCty = new JLabel("Địa chỉ :12 Nguyễn Văn Bão,phường 3,quận Gò Vấp,Tp HCM");
+				lblDiaChiCty = new JLabel("Địa chỉ :12 Nguyễn Văn Bảo,phường 3,quận Gò Vấp,Tp HCM");
 				lblDiaChiCty.setFont(new Font("Tahoma", Font.PLAIN, 14));
 				pnlTTCongTy.add(lblDiaChiCty);
 			}
@@ -264,7 +264,7 @@ public class DlgPhieuThu extends JDialog implements ActionListener {
 						txtTour.setPreferredSize(new Dimension(6, 35));
 						txtTour.setFont(new Font("Tahoma", Font.PLAIN, 17));
 						txtTour.setEditable(false);
-						txtTour.setColumns(40);
+						txtTour.setColumns(50);
 						pnlTour.add(txtTour);
 					}
 				}
@@ -303,7 +303,7 @@ public class DlgPhieuThu extends JDialog implements ActionListener {
 						txtDC.setEditable(false);
 						txtDC.setFont(new Font("Tahoma", Font.PLAIN, 17));
 						pnlTTDC.add(txtDC);
-						txtDC.setColumns(20);
+						txtDC.setColumns(40);
 					}
 					{
 						lblDienThoai = new JLabel("Số điện thoại:");
@@ -708,9 +708,9 @@ public class DlgPhieuThu extends JDialog implements ActionListener {
 					dataSource.add(m);
 
 					JRDataSource Datasour = new JRBeanCollectionDataSource(dataSource);
-					String file = "src/main/resources/PhieuThu.jrxml";
 					try {
-						JasperReport report = JasperCompileManager.compileReport(file);
+						JasperReport report = JasperCompileManager
+								.compileReport(this.getClass().getResourceAsStream("/PhieuThu.jrxml"));
 						JasperPrint filledRedport = JasperFillManager.fillReport(report, null, Datasour);
 						this.dispose();
 						JRViewer viewer = new JRViewer(filledRedport);
@@ -723,6 +723,9 @@ public class DlgPhieuThu extends JDialog implements ActionListener {
 					}
 				}
 
+			} else {
+				JOptionPane.showConfirmDialog(null, "Chưa nhập nội dung", "Lỗi", JOptionPane.ERROR_MESSAGE);
+				txaNoiDung.requestFocus();
 			}
 		}
 

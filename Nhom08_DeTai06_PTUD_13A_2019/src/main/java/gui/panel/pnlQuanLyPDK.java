@@ -110,7 +110,8 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 	private JPanel pnlKhachHangThamGia;
 	private JPanel pnlTTKhachHang;
 	private JPanel pnlTTPDK;
-	private JPanel pnlKhachHangDK;;
+	private JPanel pnlKhachHangDK;
+	private JLabel lblTinhTrangPDK;;
 
 	/**
 	 * Create the panel.
@@ -265,7 +266,7 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		pnlThongTinCT_PDK.setLayout(new BorderLayout(0, 0));
 
 		JTabbedPane tabThongTinPDK_PT = new JTabbedPane(JTabbedPane.TOP);
-		tabThongTinPDK_PT.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		tabThongTinPDK_PT.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		pnlThongTinCT_PDK.add(tabThongTinPDK_PT, BorderLayout.CENTER);
 
 		JPanel pnlThongTinPhieuDK = new JPanel();
@@ -522,26 +523,6 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		srcDsKhachTG = new JScrollPane();
 		pnlKhachHangThamGia.add(srcDsKhachTG, BorderLayout.CENTER);
 
-		JPanel pnlDsKhachHangDiCung = new JPanel();
-		pnlDsKhachHangDiCung.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		tabThongTinPDK_PT.addTab("Danh sách phiếu chi và thu", null, pnlDsKhachHangDiCung, null);
-		pnlDsKhachHangDiCung.setLayout(new GridLayout(2, 0, 0, 0));
-
-		JPanel panel_1 = new JPanel();
-		panel_1.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Danh s\u00E1ch phi\u1EBFu thu",
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlDsKhachHangDiCung.add(panel_1);
-		panel_1.setLayout(new BorderLayout(0, 0));
-
-		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Danh s\u00E1ch phi\u1EBFu chi",
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pnlDsKhachHangDiCung.add(panel);
-		panel.setLayout(new BorderLayout(0, 0));
-
-		JScrollPane scrollPane_1 = new JScrollPane();
-		panel.add(scrollPane_1, BorderLayout.CENTER);
-
 		JPanel pnlHuyPhieuVaXacNhanPhieu = new JPanel();
 		pnlThongTinCT_PDK.add(pnlHuyPhieuVaXacNhanPhieu, BorderLayout.SOUTH);
 		pnlHuyPhieuVaXacNhanPhieu.setLayout(new GridLayout(0, 2, 0, 0));
@@ -556,6 +537,12 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		btnHuyDangKyTour.setEnabled(false);
 		pnlHuyPhieuDK.add(btnHuyDangKyTour);
 		btnHuyDangKyTour.setFont(new Font("Tahoma", Font.PLAIN, 18));
+
+		lblTinhTrangPDK = new JLabel("Chưa có thông tin về phiếu đăng ký");
+		lblTinhTrangPDK.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTinhTrangPDK.setForeground(Color.RED);
+		lblTinhTrangPDK.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 18));
+		pnlHuyPhieuVaXacNhanPhieu.add(lblTinhTrangPDK);
 		JPanel pnlBoChonKH = new JPanel();
 		pnlBoChonKH.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		FlowLayout fl_pnlBoChonKH = (FlowLayout) pnlBoChonKH.getLayout();
@@ -621,47 +608,59 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		DSKhachHangTableModel dsKhachHangTableModel = new DSKhachHangTableModel(ds);
 		tbl.setModel(dsKhachHangTableModel);
 		src.setViewportView(tbl);
+		TienIch.chinhKichThuocTable(tbl, tbl.getColumnModel().getTotalColumnWidth(), 5, 15, 30, 15, 15, 20);
 		if (ds.size() != 0) {
 			tbl.getColumnModel().getColumn(0).setCellRenderer(new CenterRenderrer());
 			tbl.getColumnModel().getColumn(3).setCellRenderer(new MyDateRenderer());
 			tbl.getColumnModel().getColumn(4).setCellRenderer(new CenterRenderrer());
 			tbl.getColumnModel().getColumn(5).setCellRenderer(new CenterRenderrer());
 		}
-		TienIch.chinhKichThuocTable(tbl, tbl.getColumnModel().getTotalColumnWidth(), 5, 15, 30, 15, 15, 20);
 
 	}
 
 	/**
+	 * Hiện bảng danh sách phiếu đăng ký tour
 	 * 
-	 * @param tbl
-	 * @param ds
-	 * @param src
+	 * @param tbl: bảng
+	 * @param ds:  danh sách phiếu đăng ký
+	 * @param src: thanh cuộn
 	 */
 	private void hienBangDSPDK(JTable tbl, List<PhieuDangKy> ds, JScrollPane src) {
 		DSPhieuDangKyModel dsPhieuDangKyModel = new DSPhieuDangKyModel(ds);
 		tbl.setModel(dsPhieuDangKyModel);
 		src.setViewportView(tbl);
-
+		TienIch.chinhKichThuocTable(tbl, tbl.getColumnModel().getTotalColumnWidth(), 5, 15, 15, 20, 15);
 		if (ds.size() != 0) {
 			tbl.getColumnModel().getColumn(0).setCellRenderer(new CenterRenderrer());
 			tbl.getColumnModel().getColumn(2).setCellRenderer(new MyDateRenderer());
 			tbl.getColumnModel().getColumn(3).setCellRenderer(new CenterRenderrer());
 			tbl.getColumnModel().getColumn(4).setCellRenderer(new CenterRenderrer());
 		}
-		TienIch.chinhKichThuocTable(tbl, tbl.getColumnModel().getTotalColumnWidth(), 5, 15, 15, 20, 15);
 
 	}
 
 	/**
+	 * Hiện bảng danh sách khách hàng tham gia
 	 * 
-	 * @param tbl
-	 * @param ds
-	 * @param src
+	 * @param tbl: bảng
+	 * @param ds:  danh sách khách hàng tham gia
+	 * @param src: thanh cuộn
 	 */
 	private void hienBangDSKhachTG(JTable tbl, List<KhachHangThamGia> ds, JScrollPane src) {
 		DSKhachHangTGTableModel dsKhachHangTGTableModel = new DSKhachHangTGTableModel(ds);
 		tbl.setModel(dsKhachHangTGTableModel);
 		src.setViewportView(tbl);
+
+		tbl.setRowHeight(25);
+		TienIch.chinhKichThuocTable(tbl, tbl.getColumnModel().getTotalColumnWidth(), 2, 20, 15, 10, 20);
+
+		if (ds.size() != 0) {
+			tbl.getColumnModel().getColumn(0).setCellRenderer(new CenterRenderrer());
+			tbl.getColumnModel().getColumn(1).setCellRenderer(new CenterRenderrer());
+			tbl.getColumnModel().getColumn(2).setCellRenderer(new MyDateRenderer());
+			tbl.getColumnModel().getColumn(3).setCellRenderer(new CenterRenderrer());
+			tbl.getColumnModel().getColumn(4).setCellRenderer(new CenterRenderrer());
+		}
 
 	}
 
@@ -702,8 +701,14 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 				pdkDuocChon = phieuDangKyControl.layTTPhieuDangKyTheoMa(maPDK);
 				hienThongTinPDK(pdkDuocChon);
 				String tinhTrang = (String) tblDSPhieuDangKy.getValueAt(row, 4);
-				if (!tinhTrang.equalsIgnoreCase(HangSo.DAHOANTHANHTOUR) || pdkDuocChon.isDaHuyPhieu()) {
+
+				// nếu tour đăng hoàn thành hoăc phiếu đã bị huỷ
+				if (tinhTrang.equalsIgnoreCase(HangSo.DAHOANTHANHTOUR) || pdkDuocChon.isDaHuyPhieu()) {
 					btnHuyDangKyTour.setEnabled(false);
+					lblTinhTrangPDK.setText("Phiếu đăng ký đã bị huỷ");
+				} else {
+					btnHuyDangKyTour.setEnabled(true);
+					lblDiaChi.setText("");
 				}
 
 			}
@@ -750,7 +755,7 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 	}
 
 	/**
-	 * 
+	 * Xử lý sự kiện nhấn button
 	 */
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
@@ -858,7 +863,7 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		// nếu ngày khởi hành được chọn bị huỷ do không đủ số lượng khách đăng ký
 		if (tinhTrangTour.equalsIgnoreCase(HangSo.CHOHUYPHIEUDK)) {
 			pdk.setDaHuyPhieu(true);
-			PhieuDangKy phieuDangKySua = phieuDangKyControl.suaPhieuDangKy(pdkDuocChon);
+			PhieuDangKy phieuDangKySua = phieuDangKyControl.suaPhieuDangKy(pdk);
 			if (phieuDangKySua != null) {
 				taoPhieuChi(pdk, tongTienChiTra);
 			}
@@ -874,20 +879,22 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 				int soLuongKhachTruocHuy = pdk.getNgayKhoiHanh().getSoKhachDaDangKy();
 				int soLuongKhachSauKhiHuy = soLuongKhachTruocHuy - pdk.getKhachHangThamGias().size();
 				pdk.getNgayKhoiHanh().setSoKhachDaDangKy(soLuongKhachSauKhiHuy);
+
 				if (pdk.getNgayKhoiHanh().isDaDuSoLuong()) {
 					pdk.getNgayKhoiHanh().setDaDuSoLuong(false);
 				}
 
 				// nhận được 80% chi phí thanh toán trước đó
 				tongTienChiTra = tongTienChiTra * HangSo.PHAT;
-				PhieuDangKy phieuDangKySua = phieuDangKyControl.suaPhieuDangKy(pdkDuocChon);
+				PhieuDangKy phieuDangKySua = phieuDangKyControl.suaPhieuDangKy(pdk);
 				if (phieuDangKySua != null) {
 					taoPhieuChi(pdk, tongTienChiTra);
 				}
 
 			} else {
-				JOptionPane.showMessageDialog(null, "Không được huỷ đang ký tour, do đã quá thời gian cho phép huỷ",
-						"Thông báo", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null,
+						"Không được huỷ đang ký tour, do đã quá thời gian 15 ngày cho phép huỷ", "Thông báo",
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
 
@@ -969,6 +976,9 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		lblThoiGian.setText("");
 		lblTongTiendb.setText("0.0");
 		lblSoKhachTG.setText("0");
+		btnHuyDangKyTour.setEnabled(false);
+
+		lblTinhTrangPDK.setText("Chưa có thông tin phiếu đăng ký");
 	}
 
 	/*

@@ -139,6 +139,8 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		FlowLayout flowLayout = (FlowLayout) pnlDuyet.getLayout();
 
 		btnDuyetTour = new JButton("Duyệt tour");
+		btnDuyetTour.setIcon(new ImageIcon(PnlDuyetTour.class.getResource("/images/task_completed_32px.png")));
+		btnDuyetTour.setEnabled(false);
 		btnDuyetTour.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		pnlDuyet.add(btnDuyetTour);
 
@@ -146,30 +148,30 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		pnlDSTourCanDuyet.add(panel, BorderLayout.NORTH);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
-		JPanel panel_2 = new JPanel();
-		FlowLayout flowLayout_3 = (FlowLayout) panel_2.getLayout();
-		flowLayout_3.setAlignment(FlowLayout.LEFT);
-		flowLayout_3.setVgap(10);
-		panel.add(panel_2);
+		JPanel pnlTimKiemCD = new JPanel();
+		FlowLayout fl_pnlTimKiemCD = (FlowLayout) pnlTimKiemCD.getLayout();
+		fl_pnlTimKiemCD.setAlignment(FlowLayout.LEFT);
+		fl_pnlTimKiemCD.setVgap(10);
+		panel.add(pnlTimKiemCD);
 
 		JLabel lblTuKhoaCD = new JLabel("Nhập tên tour:");
 		lblTuKhoaCD.setFont(new Font("Arial", Font.PLAIN, 20));
-		panel_2.add(lblTuKhoaCD);
+		pnlTimKiemCD.add(lblTuKhoaCD);
 
 		txtTimKiemCD = new JTextField();
 		txtTimKiemCD.setFont(new Font("Arial", Font.PLAIN, 20));
-		panel_2.add(txtTimKiemCD);
+		pnlTimKiemCD.add(txtTimKiemCD);
 		txtTimKiemCD.setColumns(20);
 
-		JPanel panel_3 = new JPanel();
-		FlowLayout flowLayout_5 = (FlowLayout) panel_3.getLayout();
-		flowLayout_5.setAlignment(FlowLayout.RIGHT);
-		panel.add(panel_3);
+		JPanel pnlLamMoiCD = new JPanel();
+		FlowLayout fl_pnlLamMoiCD = (FlowLayout) pnlLamMoiCD.getLayout();
+		fl_pnlLamMoiCD.setAlignment(FlowLayout.RIGHT);
+		panel.add(pnlLamMoiCD);
 
 		btnLamMoiCD = new JButton("Làm mới");
 		btnLamMoiCD.setIcon(new ImageIcon(PnlDuyetTour.class.getResource("/images/filter_25px.png")));
 		btnLamMoiCD.setFont(new Font("Dialog", Font.PLAIN, 20));
-		panel_3.add(btnLamMoiCD);
+		pnlLamMoiCD.add(btnLamMoiCD);
 
 		// hiện danh sách tour đã duyệt
 		dsTourDaDuyet = tourControl.layDsTourTheoYeuCau(3);
@@ -181,6 +183,8 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		pnlDSTourDuyet.add(pnlHuyDuyet, BorderLayout.SOUTH);
 
 		btnHuyDuyet = new JButton("Huỷ duyệt");
+		btnHuyDuyet.setIcon(new ImageIcon(PnlDuyetTour.class.getResource("/images/cancel_32px.png")));
+		btnHuyDuyet.setEnabled(false);
 		btnHuyDuyet.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		pnlHuyDuyet.add(btnHuyDuyet);
 
@@ -188,30 +192,30 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		pnlDSTourDuyet.add(panel_4, BorderLayout.NORTH);
 		panel_4.setLayout(new BoxLayout(panel_4, BoxLayout.X_AXIS));
 
-		JPanel panel_6 = new JPanel();
-		FlowLayout flowLayout_2 = (FlowLayout) panel_6.getLayout();
-		flowLayout_2.setVgap(10);
-		flowLayout_2.setAlignment(FlowLayout.LEFT);
-		panel_4.add(panel_6);
+		JPanel pnlTimKiemD = new JPanel();
+		FlowLayout fl_pnlTimKiemD = (FlowLayout) pnlTimKiemD.getLayout();
+		fl_pnlTimKiemD.setVgap(10);
+		fl_pnlTimKiemD.setAlignment(FlowLayout.LEFT);
+		panel_4.add(pnlTimKiemD);
 
 		JLabel lblTimKiemD = new JLabel("Nhập tên tour:");
 		lblTimKiemD.setFont(new Font("Arial", Font.PLAIN, 20));
-		panel_6.add(lblTimKiemD);
+		pnlTimKiemD.add(lblTimKiemD);
 
 		txtTimKiemD = new JTextField();
 		txtTimKiemD.setFont(new Font("Arial", Font.PLAIN, 20));
 		txtTimKiemD.setColumns(20);
-		panel_6.add(txtTimKiemD);
+		pnlTimKiemD.add(txtTimKiemD);
 
-		JPanel panel_7 = new JPanel();
-		FlowLayout flowLayout_4 = (FlowLayout) panel_7.getLayout();
-		flowLayout_4.setAlignment(FlowLayout.RIGHT);
-		panel_4.add(panel_7);
+		JPanel pnlLamMoiD = new JPanel();
+		FlowLayout fl_pnlLamMoiD = (FlowLayout) pnlLamMoiD.getLayout();
+		fl_pnlLamMoiD.setAlignment(FlowLayout.RIGHT);
+		panel_4.add(pnlLamMoiD);
 
 		btnLamMoiD = new JButton("Làm mới");
 		btnLamMoiD.setIcon(new ImageIcon(PnlDuyetTour.class.getResource("/images/filter_25px.png")));
 		btnLamMoiD.setFont(new Font("Dialog", Font.PLAIN, 20));
-		panel_7.add(btnLamMoiD);
+		pnlLamMoiD.add(btnLamMoiD);
 
 		// gán sự kiện
 		ganSuKien();
@@ -260,6 +264,7 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 				if (row == -1)
 					return;
 				tourChon = dsTourChuaDuyet.get(row);
+				btnDuyetTour.setEnabled(true);
 
 			}
 		});
@@ -273,6 +278,7 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 					return;
 				System.out.println(row);
 				tourChon = dsTourDaDuyet.get(row);
+				btnHuyDuyet.setEnabled(true);
 
 			}
 		});
@@ -318,10 +324,12 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		} else if (o.equals(btnLamMoiD)) {
 			dsTourDaDuyet = tourControl.layDsTourTheoYeuCau(3);
 			hienDanhSachTour(tblDSTourDaDuyet, dsTourDaDuyet, scrDSTourDuyet);
+			btnHuyDuyet.setEnabled(false);
 
 		} else if (o.equals(btnLamMoiCD)) {
 			dsTourChuaDuyet = tourControl.layDsTourTheoYeuCau(1);
 			hienDanhSachTour(tblDSTourChuaDuyet, dsTourChuaDuyet, scrDSTourChuaDuyet);
+			btnDuyetTour.setEnabled(false);
 		}
 
 	}

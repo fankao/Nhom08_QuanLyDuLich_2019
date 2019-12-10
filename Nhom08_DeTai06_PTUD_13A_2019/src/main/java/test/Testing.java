@@ -5,6 +5,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import gui.frmDangNhap;
+import gui.dialog.DlgSplashScreen;
 
 public class Testing {
 	public static void main(String[] args) {

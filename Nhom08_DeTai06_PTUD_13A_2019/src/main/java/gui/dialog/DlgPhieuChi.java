@@ -355,9 +355,8 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 					dataSource.add(m);
 
 					JRDataSource Datasour = new JRBeanCollectionDataSource(dataSource);
-					String file = "src/main/resources/PhieuChi.jrxml";
 					try {
-						JasperReport report = JasperCompileManager.compileReport(file);
+						JasperReport report = JasperCompileManager.compileReport(this.getClass().getResourceAsStream("/PhieuChi.jrxml"));
 						JasperPrint filledRedport = JasperFillManager.fillReport(report, null, Datasour);
 						this.dispose();
 						JRViewer viewer = new JRViewer(filledRedport);

@@ -31,6 +31,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import entities.NhanVien;
+import gui.dialog.DlgSplashScreen;
 import gui.panel.PnlDangKyTour;
 import gui.panel.PnlDuyetTour;
 import gui.panel.PnlHinhNen;
@@ -217,30 +218,50 @@ public class FrmMain extends JFrame implements ActionListener {
 		pnlButtonBorderKH = new JPanel();
 		pnlButtonBorderKH.setVisible(false);
 		pnlButtonBorderKH.setBorder(new LineBorder(Color.WHITE));
+		
+		JButton btnTroGiup = new JButton("Hướng dẫn");
+		btnTroGiup.setHorizontalTextPosition(SwingConstants.RIGHT);
+		btnTroGiup.setHorizontalAlignment(SwingConstants.LEFT);
+		btnTroGiup.setForeground(Color.WHITE);
+		btnTroGiup.setFont(new Font("Tahoma", Font.BOLD, 28));
+		btnTroGiup.setFocusable(false);
+		btnTroGiup.setBorder(new EmptyBorder(0, 20, 0, 20));
+		btnTroGiup.setBackground(new Color(23, 35, 51));
 
 		GroupLayout gl_pnLeft = new GroupLayout(pnlLeft);
-		gl_pnLeft.setHorizontalGroup(gl_pnLeft.createParallelGroup(Alignment.LEADING)
+		gl_pnLeft.setHorizontalGroup(
+			gl_pnLeft.createParallelGroup(Alignment.LEADING)
 				.addComponent(chkQuanLyTour, GroupLayout.PREFERRED_SIZE, 405, Short.MAX_VALUE)
 				.addComponent(pnlTTNhanVien, GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
 				.addGroup(gl_pnLeft.createSequentialGroup()
-						.addComponent(btnDangXuat, GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE).addContainerGap())
+					.addComponent(btnDangXuat, GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
+					.addContainerGap())
 				.addComponent(btnThongKe, GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
 				.addComponent(pnlButtonBoder, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
 				.addComponent(chkKhachHang, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
-				.addComponent(pnlButtonBorderKH, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE));
-		gl_pnLeft.setVerticalGroup(gl_pnLeft.createParallelGroup(Alignment.LEADING).addGroup(gl_pnLeft
-				.createSequentialGroup()
-				.addComponent(pnlTTNhanVien, GroupLayout.PREFERRED_SIZE, 159, GroupLayout.PREFERRED_SIZE).addGap(20)
-				.addComponent(chkQuanLyTour, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addComponent(pnlButtonBoder, GroupLayout.PREFERRED_SIZE, 199, GroupLayout.PREFERRED_SIZE).addGap(20)
-				.addComponent(chkKhachHang, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addComponent(pnlButtonBorderKH, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE).addGap(20)
-				.addComponent(btnThongKe, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
-				.addComponent(btnDangXuat, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
-				.addContainerGap()));
+				.addComponent(pnlButtonBorderKH, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
+				.addComponent(btnTroGiup, GroupLayout.DEFAULT_SIZE, 405, Short.MAX_VALUE)
+		);
+		gl_pnLeft.setVerticalGroup(
+			gl_pnLeft.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnLeft.createSequentialGroup()
+					.addComponent(pnlTTNhanVien, GroupLayout.PREFERRED_SIZE, 159, GroupLayout.PREFERRED_SIZE)
+					.addGap(20)
+					.addComponent(chkQuanLyTour, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(pnlButtonBoder, GroupLayout.PREFERRED_SIZE, 199, GroupLayout.PREFERRED_SIZE)
+					.addGap(20)
+					.addComponent(chkKhachHang, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(pnlButtonBorderKH, GroupLayout.PREFERRED_SIZE, 113, GroupLayout.PREFERRED_SIZE)
+					.addGap(20)
+					.addComponent(btnThongKe, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+					.addComponent(btnTroGiup, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(btnDangXuat, GroupLayout.PREFERRED_SIZE, 64, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
 		pnlButtonBorderKH.setLayout(new GridLayout(2, 0, 0, 0));
 
 		btnTTKhachHang = new JButton("Thông tin khách hàng");
@@ -452,9 +473,10 @@ public class FrmMain extends JFrame implements ActionListener {
 					chkQuanLyTour.setBackground(new Color(23, 35, 51));
 					chkKhachHang.setBackground(new Color(41, 57, 80));
 
-					pnlButtonBorderKH.setVisible(true);
 					btnThongKe.setBackground(new Color(23, 35, 51));
 					btnThongKe.setEnabled(true);
+
+					pnlButtonBorderKH.setVisible(true);
 
 					chkQuanLyTour.setSelected(false);
 					pnlButtonBoder.setVisible(false);
@@ -572,6 +594,7 @@ public class FrmMain extends JFrame implements ActionListener {
 		 */
 		else if (o.equals(btnThongKe)) {
 			dongSubButton();
+			dongSubButtonKhachHang();
 			TienIch.xoaDuongDan(pnlButtonBar, 1);
 			TienIch.themDuongDan(pnlButtonBar, "Thống kê");
 			TienIch.doiMauButton(btnThongKe, new JButton[] { btnDangXuat, btnDuyetTour, btnCapNhatTour, btnDangKyTour,
@@ -586,6 +609,7 @@ public class FrmMain extends JFrame implements ActionListener {
 		 */
 		else if (o.equals(btnDangXuat)) {
 			dongSubButton();
+			dongSubButtonKhachHang();
 			TienIch.doiMauButton(btnDangXuat, new JButton[] { btnCapNhatTour, btnDuyetTour, btnThongKe });
 			if (JOptionPane.showConfirmDialog(this, "Bạn muốn đăng xuất khỏi phần mềm?", "Đăng xuất",
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {

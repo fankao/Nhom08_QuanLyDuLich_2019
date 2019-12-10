@@ -6,7 +6,10 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -35,8 +38,14 @@ import control.impl.PhieuThuChiControlImpl;
 import entities.PhieuDangKy;
 import entities.PhieuThuChi;
 import model.DSPhieuThuTableModel;
+import utils.TienIch;
 
-public class PnlThongKe extends JPanel {
+import com.toedter.calendar.JMonthChooser;
+import java.util.Locale;
+import javax.swing.ImageIcon;
+import javax.swing.BoxLayout;
+
+public class PnlThongKe extends JPanel implements ActionListener {
 	private JTabbedPane tabThongTinTK;
 	private JTextField txtTongDoanhThu;
 	private JTextField txtTongPDKDaHuy;
@@ -47,6 +56,9 @@ public class PnlThongKe extends JPanel {
 	private JPanel pnlThongKeDoanhThuTheoThang;
 	private JScrollPane srcDSPhieuTC;
 	private JTable tblDSPHieuTC;
+	private JButton btnLamMoi;
+	private JButton btnLoc;
+	private JMonthChooser mthThang;
 
 	/**
 	 * Create the panel.
@@ -75,25 +87,8 @@ public class PnlThongKe extends JPanel {
 		pnlMain.add(pnlThongTinTK, BorderLayout.CENTER);
 		pnlThongTinTK.setLayout(new BorderLayout(0, 0));
 
-		JPanel pnlLuuVaThoat = new JPanel();
-		FlowLayout fl_pnlLuuVaThoat = (FlowLayout) pnlLuuVaThoat.getLayout();
-		fl_pnlLuuVaThoat.setAlignment(FlowLayout.RIGHT);
-		fl_pnlLuuVaThoat.setHgap(20);
-		pnlLuuVaThoat.setPreferredSize(new Dimension(10, 50));
-		pnlMain.add(pnlLuuVaThoat, BorderLayout.SOUTH);
-
-		JButton btnLuu = new JButton("Lưu");
-		btnLuu.setPreferredSize(new Dimension(120, 35));
-		pnlLuuVaThoat.add(btnLuu);
-
-		JButton btnThoat = new JButton("Thoát");
-		btnThoat.setPreferredSize(new Dimension(120, 35));
-		pnlLuuVaThoat.add(btnThoat);
-
-//		quanLyPhieuDKBUS = new QuanLyPhieuDKBUS();
-
 		tabThongTinTK = new JTabbedPane(JTabbedPane.TOP);
-		tabThongTinTK.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		tabThongTinTK.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		pnlThongTinTK.add(tabThongTinTK, BorderLayout.CENTER);
 
 		JPanel pnlTTThongKeDoanhThu = new JPanel();
@@ -180,24 +175,77 @@ public class PnlThongKe extends JPanel {
 
 		tblDSPHieuTC = new JTable();
 
+		JPanel pnlChucNang = new JPanel();
+		pnlSoLieu.add(pnlChucNang, BorderLayout.NORTH);
+		pnlChucNang.setLayout(new BoxLayout(pnlChucNang, BoxLayout.X_AXIS));
+
+		JPanel pnlLoc = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) pnlLoc.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.LEFT);
+		flowLayout_1.setVgap(15);
+		pnlChucNang.add(pnlLoc);
+
+		JLabel lblChonThang = new JLabel("Chọn tháng:");
+		pnlLoc.add(lblChonThang);
+		lblChonThang.setFont(new Font("Tahoma", Font.BOLD, 20));
+
+		mthThang = new JMonthChooser();
+		mthThang.getComboBox().setPreferredSize(new Dimension(200, 20));
+		pnlLoc.add(mthThang);
+		mthThang.setLocale(new Locale("vi", "VN"));
+		mthThang.setPreferredSize(new Dimension(250, 40));
+		mthThang.setFont(new Font("Dialog", Font.PLAIN, 18));
+		mthThang.getComboBox().setFont(new Font("Tahoma", Font.PLAIN, 18));
+		mthThang.getSpinner().setFont(new Font("Tahoma", Font.PLAIN, 18));
+
+		btnLoc = new JButton("");
+		btnLoc.setPreferredSize(new Dimension(50, 40));
+		btnLoc.setIcon(new ImageIcon(PnlThongKe.class.getResource("/images/filter_25px.png")));
+		btnLoc.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		pnlLoc.add(btnLoc);
+
+		JPanel pnlLamMoi = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) pnlLamMoi.getLayout();
+		flowLayout.setVgap(15);
+		flowLayout.setAlignment(FlowLayout.RIGHT);
+		pnlChucNang.add(pnlLamMoi);
+
+		btnLamMoi = new JButton("Làm mới");
+		btnLamMoi.setPreferredSize(new Dimension(150, 40));
+		btnLamMoi.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnLamMoi.setIcon(new ImageIcon(PnlThongKe.class.getResource("/images/lammoi.png")));
+		pnlLamMoi.add(btnLamMoi);
+
 		phieuDangKyControl = new PhieuDangKyControlImpl();
 		phieuThuChiControl = new PhieuThuChiControlImpl();
 		dsPDK = phieuDangKyControl.layDSPhieuDangKy();
+
+		// Tạo biểu đồ doanh thu
 		ChartPanel CpnlBDoanhThu = new ChartPanel((taoBieuDoDoanhThu()));
 		CpnlBDoanhThu.setLayout(new BorderLayout(0, 0));
 		pnlBieuDo.add(CpnlBDoanhThu, BorderLayout.CENTER);
 		pnlDieuDoPDK.setLayout(new BorderLayout(0, 0));
+
 		ChartPanel CpnlBDPhieuDangKy = new ChartPanel(taoBieuDoPhieuDangKy());
 		pnlDieuDoPDK.add(CpnlBDPhieuDangKy, BorderLayout.CENTER);
 
 		hienDSPhieuThuChi(LocalDate.now().getMonthValue());
+		btnLoc.addActionListener(this);
+		btnLamMoi.addActionListener(this);
+
+		TienIch.chinhKichThuocTitleTrenBorder(new JPanel[] { pnlBieuDo, pnlSoLieu }, "Arial", Font.PLAIN, 18);
 
 	}
 	/*
 	 * Vẽ biểu đò thống kê doanh thu.
 	 */
 
-	// Tính tổng doanh thu của một tháng
+	/**
+	 * Lấy tổng doanh thu tháng
+	 * 
+	 * @param thang: tháng cần lấy danh thu
+	 * @return doanh thu theo tháng
+	 */
 	private double layDoanhThuTheoThang(int thang) {
 		double tongTien = 0.0;
 		double tongTienPT = 0.0;
@@ -211,14 +259,18 @@ public class PnlThongKe extends JPanel {
 		return tongTien;
 	}
 
-//	Tao dữ liệu doanh thu của các tháng
+	/**
+	 * Tạo dữ liệu doanh thu cho tháng
+	 * 
+	 * @return: dữ liệu doanh thu
+	 */
 	private DefaultCategoryDataset taoDuLieuDoanhThu() {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		for (int i = 1; i <= 12; i++) {
 			dataset.addValue((Number) layDoanhThuTheoThang(i), "Tiền", i);
 		}
-		DecimalFormat df = new DecimalFormat("0,000 VNĐ");
-		txtTongDoanhThu.setText(df.format(layDoanhThuTheoThang(LocalDate.now().getMonthValue())));
+		NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("vi", "vn"));
+		txtTongDoanhThu.setText(format.format(layDoanhThuTheoThang(LocalDate.now().getMonthValue())));
 		return dataset;
 	}
 
@@ -279,9 +331,28 @@ public class PnlThongKe extends JPanel {
 	}
 
 	private void hienDSPhieuThuChi(int thang) {
-
 		dsPhieuThuChi = phieuThuChiControl.layDSPhieuTheoThang(thang);
 		hienThiBangTTDSPhieuTC(tblDSPHieuTC, dsPhieuThuChi, srcDSPhieuTC);
+	}
+
+	/**
+	 * Xử lý sự kiện
+	 * 
+	 * @param e
+	 */
+	public void actionPerformed(ActionEvent e) {
+		Object o = e.getSource();
+		NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("vi", "vn"));
+		if (o.equals(btnLoc)) {
+			int thang = mthThang.getMonth() + 1;
+			hienDSPhieuThuChi(thang);
+			txtTongDoanhThu.setText(format.format(layDoanhThuTheoThang(thang)) + "");
+		} else if (o.equals(btnLamMoi)) {
+			hienDSPhieuThuChi(LocalDate.now().getMonthValue());
+			mthThang.setMonth(LocalDate.now().getMonthValue());
+			ChartPanel CpnlBDoanhThu = new ChartPanel((taoBieuDoDoanhThu()));
+			txtTongDoanhThu.setText(format.format(layDoanhThuTheoThang(LocalDate.now().getMonthValue())) + "");
+		}
 
 	}
 }

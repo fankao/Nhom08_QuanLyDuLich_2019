@@ -202,7 +202,7 @@ public class frmDangNhap extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o.equals(btnDangNhap)) {
-			if (txtTaiKhoan.getText().trim().length() != 0 && pwdMatKhau.getText().trim().length() != 0) {
+			if (kiemTraDangNhap()) {
 				nhanVienControl = new NhanVienControl();
 				TaiKhoan taiKhoan = new TaiKhoan(txtTaiKhoan.getText(), pwdMatKhau.getText());
 				nv = nhanVienControl.layNhanVienTheoTaiKhoan(taiKhoan);
@@ -214,9 +214,7 @@ public class frmDangNhap extends JDialog implements ActionListener {
 							JOptionPane.ERROR_MESSAGE);
 				}
 
-			} else {
-				JOptionPane.showMessageDialog(this, "Chưa nhập tên tài khoản hoặc mật khẩu");
-			}
+			} 
 		} else if (o.equals(btnThoat)) {
 			int sel = JOptionPane.showConfirmDialog(this, "Thoát chương trình?", "Đăng xuất",
 					JOptionPane.YES_NO_OPTION);
@@ -226,5 +224,25 @@ public class frmDangNhap extends JDialog implements ActionListener {
 		}
 
 	}
-
+	
+	public boolean kiemTraDangNhap() {
+		if(txtTaiKhoan.getText().trim().length()==0 && pwdMatKhau.getText().trim().length()==0) {
+			JOptionPane.showMessageDialog(this, "Tên tài khoản và mật khẩu không được rỗng!");
+			return false;
+			
+		}
+		if(txtTaiKhoan.getText().trim().length()==0) {
+			JOptionPane.showMessageDialog(this, "Tên tài khoản không được rỗng!");
+			return false;
+		}
+		if(pwdMatKhau.getText().trim().length()==0) {
+			JOptionPane.showMessageDialog(this, "Mật khẩu không được rỗng!");
+			return false;
+		}
+		if(pwdMatKhau.getText().trim().length() < 6) {
+			JOptionPane.showMessageDialog(this, "Mật khẩu gồm 6 ký tự trở lên!");
+			return false;
+		}
+		return true;
+	}
 }
