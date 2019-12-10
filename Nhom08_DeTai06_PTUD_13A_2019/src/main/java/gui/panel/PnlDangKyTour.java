@@ -813,6 +813,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 
 		btnTimKiemTheoNgay.addActionListener(this);
 		btnLocDiaDanh.addActionListener(this);
+		btnXoaKHTG.addActionListener(this);
 
 		cmbTinh.addActionListener(this);
 		cmbHuyen.addActionListener(this);
@@ -944,21 +945,9 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 			if (row == -1)
 				return;
 			KhachHangThamGia khtg = dsKhachHangThamGia.get(row);
-			// Xoá khách hàng tham gia vừa thêm
-			btnXoaKHTG.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					int confirm = JOptionPane.showConfirmDialog(null, "Xoá khách hàng tham gia vừa chọn khỏi danh sách",
-							"Xác nhận", JOptionPane.YES_NO_OPTION);
-					if (confirm == JOptionPane.YES_OPTION) {
-						dsKhachHangThamGia.remove(khtg);
-						hienBangDSKhachTG(tblDSKhachThamGia, dsKhachHangThamGia, scrDSKhachThamGia);
-						btnXoaKHTG.setVisible(false);
-						tblDSKhachThamGia.clearSelection();
-					}
-				}
-			});
-
+			txtHoVaTenKHTG.setText(khtg.getHoTenKHTG());
+			dtcNgaySinh.setDate(khtg.getNgaySinh());
+			btnXoaKHTG.setVisible(true);
 		}
 
 	}
@@ -1030,8 +1019,9 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		 * Thêm địa chỉ cho khách hàng
 		 */
 		else if (o.equals(btnThemDC)) {
+			anThanhNhapDiaChi();
 			btnThemDC.setVisible(false);
-			// hiện danh sách tỉnh
+			lblDiaChi.setText("");
 			cmbTinh.setVisible(true);
 			lstProvices = TienIch.layDiaLyHanhChinh();
 			hienDiaDiem(lstProvices, cmbTinh, "Tỉnh/Thành phố");
@@ -1082,7 +1072,10 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		 * Lưu thông tin khách hàng
 		 */
 		else if (o.equals(btnLuuTTKhachHang)) {
+
+			// nếu nhập liệu đúng cú pháp
 			if (kiemTraNhapLieu()) {
+				// khởi tạo đối tượng khách hàng
 				KhachHang kh = new KhachHang();
 				kh.setHoVaTen(txtHoTenKH.getText());
 				kh.setSoCMND(txtSoCMND.getText());
@@ -1091,8 +1084,12 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 				kh.setDiaChi(new DiaChi(cmbXa.getSelectedItem().toString(), cmbHuyen.getSelectedItem().toString(),
 						cmbTinh.getSelectedItem().toString()));
 				kh.setGioiTinh(rdbNam.isSelected() ? true : false);
+
+				// thông báo xác nhận lưu thông tin khách hàng
 				int confirm = JOptionPane.showConfirmDialog(null, "Lưu thông tin khách hàng " + kh.getHoVaTen() + " ?",
 						"Xác nhận lưu khách hàng", JOptionPane.YES_NO_OPTION);
+
+				// chọn yes
 				if (confirm == JOptionPane.YES_OPTION) {
 					KhachHang khThem = khachHangControl.themKhachHang(kh);
 					if (khThem != null) {
@@ -1129,6 +1126,27 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 			tblDSNgayDi.setEnabled(false);
 
 		}
+		/*
+		 * Xoá khách hàng tham gia trong danh sách
+		 */
+		else if (o.equals(btnXoaKHTG)) {
+			int row = tblDSKhachThamGia.getSelectedRow();
+			if (row == -1)
+				return;
+			KhachHangThamGia khtg = dsKhachHangThamGia.get(row);
+
+			// Thông báo xác nhận xoá khách hàng tham gia
+			int confirm = JOptionPane.showConfirmDialog(null, "Xoá khách hàng tham gia vừa chọn khỏi danh sách",
+					"Xác nhận", JOptionPane.YES_NO_OPTION);
+			if (confirm == JOptionPane.YES_OPTION) {
+				dsKhachHangThamGia.remove(khtg);
+				hienBangDSKhachTG(tblDSKhachThamGia, dsKhachHangThamGia, scrDSKhachThamGia);
+				btnXoaKHTG.setVisible(false);
+				tblDSKhachThamGia.clearSelection();
+				xoaTrangThongTinKHTG();
+
+			}
+		}
 
 		/*
 		 * Huỷ chọn ngày khởi hành
@@ -1141,7 +1159,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		}
 
 		/*
-		 * 
+		 * Nút thêm khách hàng tham gia vào danh sách
 		 */
 		else if (o.equals(btnThemKHTG)) {
 			if (ktTTNhapKhachHangTG()) {
@@ -1168,6 +1186,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 			// lấy vị trí hàng được chọn trong bảng danh sách ngày khởi hành
 			int row = tblDSNgayDi.getSelectedRow();
 
+			// Khởi tạo phiếu đăng ký
 			PhieuDangKy phieuDangKy = new PhieuDangKy();
 			phieuDangKy.setKh(khachHang);
 			phieuDangKy.setNgayKhoiHanh(ngayKhoiHanh);
@@ -1179,6 +1198,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 				phieuDangKy.setThamGiaTourDangKy(true);
 			}
 
+			// Thêm khách hàng tham gia vào danh sách
 			phieuDangKy.setKhachHangThamGias(dsKhachHangThamGia);
 
 			int soLuongKhachToiDa = ngayKhoiHanh.getSoKhachToiDa();
@@ -1197,29 +1217,38 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 				} else {
 					// nếu số lượng khách tham gia đã đến tối đa
 					if (soLuongKhachHangDaThamGia == soLuongKhachToiDa) {
+						// cập nhật trạng thái đủ số lượng cho ngày khởi hành
 						phieuDangKy.getNgayKhoiHanh().setDaDuSoLuong(true);
 					}
+
+					// cập nhật số lượng khách tham gia tour cho ngày khởi hành
 					phieuDangKy.getNgayKhoiHanh().setSoKhachDaDangKy(soLuongKhachHangDaThamGia);
+
+					// Thông báo xác nhận đăng ký tour
 					int confirm = JOptionPane.showConfirmDialog(null,
 							"Xác nhận đăng ký tour " + phieuDangKy.getNgayKhoiHanh().getTour().getTenTour() + " ?",
 							"Thông báo xác nhận", JOptionPane.YES_NO_OPTION);
-					if (confirm == JOptionPane.YES_OPTION) {
 
+					// chọn yes
+					if (confirm == JOptionPane.YES_OPTION) {
 						PhieuDangKy phieuDangKyTour = phieuDangKyControl.themPhieuDangKy(phieuDangKy);
 						if (phieuDangKyTour != null) {
 							xoaTrangThongTinKHTG();
-
 							pnlThemTTKHTG.setVisible(false);
 							pnlDSKhachHangTG.setEnabled(false);
 							chkThamGiaTourDK.setEnabled(false);
 							btnThemKHTG.setEnabled(false);
 
+							// hiện lại danh sách ngày khởi hành
 							dsNgayKhoiHanh = tourControl
 									.layDSNgayKhoiHanhTheoTour(phieuDangKy.getNgayKhoiHanh().getTour().getMaTour());
 							hienDanhSachNgayKhoiHanh(dsNgayKhoiHanh);
 
+							// Khởi tạo phiếu thu
 							PhieuThuChi phieuThuChi = new PhieuThuChi();
 							phieuThuChi.setPdk(phieuDangKy);
+
+							// Hiện giao diện phiếu thu
 							DlgPhieuThu dlgPhieuThu = new DlgPhieuThu(phieuThuChi, phieuDangKy.getKhachHangThamGias());
 							dlgPhieuThu.setVisible(true);
 							if (dlgPhieuThu.isDisplayable() == false) {
@@ -1444,6 +1473,18 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		TienIch.hienAnCacControl(true, txtHoTenKH, txtSdtKH, txtSoCMND, dtcNgaySinh);
 		txtHoTenKH.requestFocus();
 
+		anThanhNhapDiaChi();
+
+	}
+
+	/**
+	 * Ẩn thanh nhập địa chỉ
+	 */
+	private void anThanhNhapDiaChi() {
+		cmbTinh.setVisible(false);
+		cmbXa.setVisible(false);
+		cmbHuyen.setVisible(false);
+
 	}
 
 	/**
@@ -1529,27 +1570,25 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 				JOptionPane.showMessageDialog(this, "Chưa nhập địa chỉ", "Lỗi nhập liệu", JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
+			return false;
+		}
+		/*
+		 * Kiểm tra số điện thoại khách hàng
+		 */
+		if (khachHangControl.layTTKhachHangTheoYeuCau(2, sdt) != null) {
+			JOptionPane.showMessageDialog(this, "Số điện thoại vừa nhập đã tồn tại", "Lỗi nhập liệu",
+					JOptionPane.ERROR_MESSAGE);
+			txtSdtKH.requestFocus();
+			return false;
+		}
 
-			/*
-			 * Kiểm tra số điện thoại khách hàng
-			 */
-			if (khachHangControl.layTTKhachHangTheoYeuCau(2, sdt) != null) {
-				JOptionPane.showMessageDialog(this, "Số điện thoại vừa nhập đã tồn tại", "Lỗi nhập liệu",
-						JOptionPane.ERROR_MESSAGE);
-				txtSdtKH.requestFocus();
-				return false;
-			}
-
-			/*
-			 * Kiểm tra số chứng minh nhân dân khách hàng
-			 */
-			if (khachHangControl.layTTKhachHangTheoYeuCau(3, soCM) != null) {
-				JOptionPane.showMessageDialog(this, "Số CMND(căn cước) vừa nhập đã tồn tại", "Lỗi nhập liệu",
-						JOptionPane.ERROR_MESSAGE);
-				txtSoCMND.requestFocus();
-				return false;
-			}
-
+		/*
+		 * Kiểm tra số chứng minh nhân dân khách hàng
+		 */
+		if (khachHangControl.layTTKhachHangTheoYeuCau(3, soCM) != null) {
+			JOptionPane.showMessageDialog(this, "Số CMND(căn cước) vừa nhập đã tồn tại", "Lỗi nhập liệu",
+					JOptionPane.ERROR_MESSAGE);
+			txtSoCMND.requestFocus();
 			return false;
 		}
 

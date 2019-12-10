@@ -87,8 +87,6 @@ public class PnlThongKe extends JPanel implements ActionListener {
 		pnlMain.add(pnlThongTinTK, BorderLayout.CENTER);
 		pnlThongTinTK.setLayout(new BorderLayout(0, 0));
 
-//		quanLyPhieuDKBUS = new QuanLyPhieuDKBUS();
-
 		tabThongTinTK = new JTabbedPane(JTabbedPane.TOP);
 		tabThongTinTK.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		pnlThongTinTK.add(tabThongTinTK, BorderLayout.CENTER);
@@ -221,10 +219,13 @@ public class PnlThongKe extends JPanel implements ActionListener {
 		phieuDangKyControl = new PhieuDangKyControlImpl();
 		phieuThuChiControl = new PhieuThuChiControlImpl();
 		dsPDK = phieuDangKyControl.layDSPhieuDangKy();
+
+		// Tạo biểu đồ doanh thu
 		ChartPanel CpnlBDoanhThu = new ChartPanel((taoBieuDoDoanhThu()));
 		CpnlBDoanhThu.setLayout(new BorderLayout(0, 0));
 		pnlBieuDo.add(CpnlBDoanhThu, BorderLayout.CENTER);
 		pnlDieuDoPDK.setLayout(new BorderLayout(0, 0));
+
 		ChartPanel CpnlBDPhieuDangKy = new ChartPanel(taoBieuDoPhieuDangKy());
 		pnlDieuDoPDK.add(CpnlBDPhieuDangKy, BorderLayout.CENTER);
 
@@ -239,7 +240,12 @@ public class PnlThongKe extends JPanel implements ActionListener {
 	 * Vẽ biểu đò thống kê doanh thu.
 	 */
 
-	// Tính tổng doanh thu của một tháng
+	/**
+	 * Lấy tổng doanh thu tháng
+	 * 
+	 * @param thang: tháng cần lấy danh thu
+	 * @return doanh thu theo tháng
+	 */
 	private double layDoanhThuTheoThang(int thang) {
 		double tongTien = 0.0;
 		double tongTienPT = 0.0;
@@ -253,7 +259,11 @@ public class PnlThongKe extends JPanel implements ActionListener {
 		return tongTien;
 	}
 
-//	Tao dữ liệu doanh thu của các tháng
+	/**
+	 * Tạo dữ liệu doanh thu cho tháng
+	 * 
+	 * @return: dữ liệu doanh thu
+	 */
 	private DefaultCategoryDataset taoDuLieuDoanhThu() {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		for (int i = 1; i <= 12; i++) {
@@ -325,7 +335,11 @@ public class PnlThongKe extends JPanel implements ActionListener {
 		hienThiBangTTDSPhieuTC(tblDSPHieuTC, dsPhieuThuChi, srcDSPhieuTC);
 	}
 
-	@Override
+	/**
+	 * Xử lý sự kiện
+	 * 
+	 * @param e
+	 */
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("vi", "vn"));
@@ -336,6 +350,7 @@ public class PnlThongKe extends JPanel implements ActionListener {
 		} else if (o.equals(btnLamMoi)) {
 			hienDSPhieuThuChi(LocalDate.now().getMonthValue());
 			mthThang.setMonth(LocalDate.now().getMonthValue());
+			ChartPanel CpnlBDoanhThu = new ChartPanel((taoBieuDoDoanhThu()));
 			txtTongDoanhThu.setText(format.format(layDoanhThuTheoThang(LocalDate.now().getMonthValue())) + "");
 		}
 

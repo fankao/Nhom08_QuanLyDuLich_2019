@@ -6,9 +6,12 @@ import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -309,11 +312,10 @@ public class TienIch {
 		Gson gson = new Gson();
 		List<Province> province = null;
 		try {
-
-			province = gson.fromJson(new FileReader(new File(TienIch.class.getResource("/local.json").toURI())),
-					new TypeToken<List<Province>>() {
-					}.getType());
-		} catch (JsonSyntaxException | JsonIOException | FileNotFoundException | URISyntaxException e) {
+			InputStreamReader isr = new InputStreamReader(TienIch.class.getResourceAsStream("/local.json"));
+			province = gson.fromJson(isr, new TypeToken<List<Province>>() {
+			}.getType());
+		} catch (JsonSyntaxException | JsonIOException e) {
 			e.printStackTrace();
 		}
 		return province;
@@ -325,6 +327,7 @@ public class TienIch {
 			Desktop desktop = Desktop.getDesktop();
 			desktop.open(file);
 		} catch (Exception e) {
+			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Không mở được file", "Lỗi", JOptionPane.ERROR_MESSAGE);
 		}
 	}
