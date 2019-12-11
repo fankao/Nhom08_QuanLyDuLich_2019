@@ -21,7 +21,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import control.IPhieuDangKyControl;
-import control.impl.NhanVienControl;
+import control.impl.NhanVienControlImpl;
 import control.impl.PhieuDangKyControlImpl;
 import entities.PhieuDangKy;
 import gui.frmDangNhap;
@@ -77,7 +77,7 @@ public class DlgSplashScreen extends JWindow {
 		startTime = System.currentTimeMillis();
 		loadProgressBar();
 		java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.OFF);
-		NhanVienControl nhanVienControl = new NhanVienControl();
+		NhanVienControlImpl nhanVienControl = new NhanVienControlImpl();
 		java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
 		IPhieuDangKyControl dangKyControl = new PhieuDangKyControlImpl();
 		// Cập nhật phiếu đăng ký chờ huỷ do ngày khởi hành không đủ số lượng khách tham

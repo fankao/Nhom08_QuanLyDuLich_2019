@@ -182,6 +182,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		lblDiaDanh.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		cmbDiaDanh = new JComboBox<DiaDanh>();
+		cmbDiaDanh.setToolTipText("Chọn địa danh cho tour.");
 		cmbDiaDanh.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		JLabel lblTenTour = new JLabel("Tên tour:");
@@ -258,10 +259,12 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 
 		JPanel panel = new JPanel();
 		btnXoaTrang = new JButton("Xoá trắng");
+		btnXoaTrang.setToolTipText("Xóa trắng thông tin tour đang hiển thị.");
 		btnXoaTrang.setIcon(new ImageIcon(PnlTaoTour.class.getResource("/images/broom_25px.png")));
 		btnXoaTrang.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		btnLuu = new JButton("Lưu");
+		btnLuu.setToolTipText("Lưu thông tin tour đang xử lý.");
 		btnLuu.setIcon(new ImageIcon(PnlTaoTour.class.getResource("/images/save_25px.png")));
 		btnLuu.setFont(new Font("Dialog", Font.PLAIN, 18));
 
@@ -269,128 +272,135 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		btnXemCTTour.setEnabled(false);
 		btnXemCTTour.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		GroupLayout gl_pnlCTTour = new GroupLayout(pnlCTTour);
-		gl_pnlCTTour.setHorizontalGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING).addGroup(gl_pnlCTTour
-				.createSequentialGroup()
-				.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_pnlCTTour.createSequentialGroup().addContainerGap()
-								.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING, false)
-										.addGroup(gl_pnlCTTour.createSequentialGroup().addGap(78).addComponent(panel,
-												GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-										.addGroup(gl_pnlCTTour.createSequentialGroup().addComponent(lblDiaDanh)
-												.addPreferredGap(ComponentPlacement.RELATED).addComponent(cmbDiaDanh,
-														GroupLayout.PREFERRED_SIZE, 287, GroupLayout.PREFERRED_SIZE)))
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING).addComponent(lblCTTour)
-										.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.TRAILING, false)
-												.addComponent(lblGiNgiLn, GroupLayout.DEFAULT_SIZE,
-														GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-												.addComponent(lblDiemXP, GroupLayout.DEFAULT_SIZE, 137,
-														Short.MAX_VALUE)))
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.TRAILING)
-										.addGroup(gl_pnlCTTour.createSequentialGroup()
-												.addComponent(btnXemCTTour, GroupLayout.DEFAULT_SIZE, 127,
-														Short.MAX_VALUE)
-												.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnCTTour))
-										.addComponent(cmbDiemXP, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-										.addComponent(txtGiaNgLon)))
-						.addGroup(gl_pnlCTTour.createSequentialGroup().addGap(12).addComponent(lblTenTour)))
-				.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.TRAILING).addGroup(gl_pnlCTTour
-						.createSequentialGroup().addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.TRAILING).addComponent(label)
+		gl_pnlCTTour.setHorizontalGroup(
+			gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlCTTour.createSequentialGroup()
+					.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_pnlCTTour.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING, false)
 								.addGroup(gl_pnlCTTour.createSequentialGroup()
-										.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
-												.addComponent(lblDiemDen).addComponent(lblGiaTrEm,
-														GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
-										.addGap(12)
-										.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING, false)
-												.addComponent(txtGiaTrEm)
-												.addComponent(cmbDiemDen, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
-												.addComponent(lblThoiGian).addComponent(lblPhuongTien)
-												.addComponent(btnLuu, GroupLayout.PREFERRED_SIZE, 88,
-														GroupLayout.PREFERRED_SIZE))
-										.addPreferredGap(ComponentPlacement.UNRELATED)
-										.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
-												.addComponent(cmbPhuongTien, GroupLayout.PREFERRED_SIZE, 147,
-														GroupLayout.PREFERRED_SIZE)
-												.addGroup(gl_pnlCTTour.createSequentialGroup()
-														.addComponent(spnNgay, GroupLayout.PREFERRED_SIZE, 47,
-																GroupLayout.PREFERRED_SIZE)
-														.addPreferredGap(ComponentPlacement.RELATED)
-														.addComponent(lblNgy)
-														.addPreferredGap(ComponentPlacement.UNRELATED)
-														.addComponent(lblNgayDem)
-														.addPreferredGap(ComponentPlacement.UNRELATED)
-														.addComponent(lblm))
-												.addComponent(btnXoaTrang))
-										.addGap(38)))
-						.addContainerGap(20, Short.MAX_VALUE))
-						.addGroup(gl_pnlCTTour.createSequentialGroup().addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(btnDongThemTour, GroupLayout.PREFERRED_SIZE, 33,
-										GroupLayout.PREFERRED_SIZE)
-								.addGap(6)))));
-		gl_pnlCTTour.setVerticalGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING).addGroup(gl_pnlCTTour
-				.createSequentialGroup()
-				.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING).addGroup(gl_pnlCTTour
-						.createSequentialGroup().addContainerGap()
-						.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.BASELINE).addComponent(lblDiaDanh)
+									.addGap(78)
+									.addComponent(panel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+								.addGroup(gl_pnlCTTour.createSequentialGroup()
+									.addComponent(lblDiaDanh)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(cmbDiaDanh, GroupLayout.PREFERRED_SIZE, 287, GroupLayout.PREFERRED_SIZE)))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblCTTour)
+								.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.TRAILING, false)
+									.addComponent(lblGiNgiLn, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+									.addComponent(lblDiemXP, GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)))
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.TRAILING)
+								.addGroup(gl_pnlCTTour.createSequentialGroup()
+									.addComponent(btnXemCTTour, GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(btnCTTour))
+								.addComponent(cmbDiemXP, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(txtGiaNgLon)))
+						.addGroup(gl_pnlCTTour.createSequentialGroup()
+							.addGap(12)
+							.addComponent(lblTenTour)))
+					.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_pnlCTTour.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.TRAILING)
+								.addComponent(label)
+								.addGroup(gl_pnlCTTour.createSequentialGroup()
+									.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblDiemDen)
+										.addComponent(lblGiaTrEm, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE))
+									.addGap(12)
+									.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING, false)
+										.addComponent(txtGiaTrEm)
+										.addComponent(cmbDiemDen, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblThoiGian)
+										.addComponent(lblPhuongTien)
+										.addComponent(btnLuu, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE))
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
+										.addComponent(cmbPhuongTien, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
+										.addGroup(gl_pnlCTTour.createSequentialGroup()
+											.addComponent(spnNgay, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(lblNgy)
+											.addPreferredGap(ComponentPlacement.UNRELATED)
+											.addComponent(lblNgayDem)
+											.addPreferredGap(ComponentPlacement.UNRELATED)
+											.addComponent(lblm))
+										.addComponent(btnXoaTrang))
+									.addGap(38)))
+							.addContainerGap(83, Short.MAX_VALUE))
+						.addGroup(gl_pnlCTTour.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnDongThemTour, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+							.addGap(6))))
+		);
+		gl_pnlCTTour.setVerticalGroup(
+			gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_pnlCTTour.createSequentialGroup()
+					.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_pnlCTTour.createSequentialGroup()
+							.addContainerGap()
+							.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblDiaDanh)
 								.addComponent(cmbDiaDanh, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)))
 						.addComponent(btnDongThemTour, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE))
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING, false)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING, false)
 						.addComponent(panel, GroupLayout.PREFERRED_SIZE, 116, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_pnlCTTour.createSequentialGroup().addGroup(gl_pnlCTTour
-								.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_pnlCTTour.createSequentialGroup()
+							.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_pnlCTTour.createSequentialGroup()
-										.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.BASELINE)
-												.addComponent(lblDiemDen)
-												.addComponent(cmbDiemDen, GroupLayout.PREFERRED_SIZE, 30,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(cmbDiemXP, GroupLayout.PREFERRED_SIZE, 30,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblDiemXP))
-										.addPreferredGap(ComponentPlacement.RELATED).addComponent(label))
+									.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.BASELINE)
+										.addComponent(lblDiemDen)
+										.addComponent(cmbDiemDen, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+										.addComponent(cmbDiemXP, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblDiemXP))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(label))
 								.addGroup(gl_pnlCTTour.createSequentialGroup()
-										.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
-												.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.BASELINE)
-														.addComponent(cmbPhuongTien, GroupLayout.PREFERRED_SIZE,
-																GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-														.addComponent(lblPhuongTien))
-												.addComponent(lblTenTour))
-										.addGap(18)
+									.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
 										.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.BASELINE)
-												.addComponent(txtGiaNgLon, GroupLayout.PREFERRED_SIZE, 30,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblGiaTrEm)
-												.addComponent(txtGiaTrEm, GroupLayout.PREFERRED_SIZE, 30,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblThoiGian).addComponent(lblGiNgiLn)
-												.addComponent(spnNgay, GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblNgy).addComponent(lblNgayDem).addComponent(lblm))))
-								.addGap(18)
+											.addComponent(cmbPhuongTien, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+											.addComponent(lblPhuongTien))
+										.addComponent(lblTenTour))
+									.addGap(18)
+									.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.BASELINE)
+										.addComponent(txtGiaNgLon, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblGiaTrEm)
+										.addComponent(txtGiaTrEm, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblThoiGian)
+										.addComponent(lblGiNgiLn)
+										.addComponent(spnNgay, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblNgy)
+										.addComponent(lblNgayDem)
+										.addComponent(lblm))))
+							.addGap(18)
+							.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
-												.addComponent(btnXemCTTour, Alignment.TRAILING,
-														GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblCTTour, Alignment.TRAILING)
-												.addComponent(btnCTTour, Alignment.TRAILING))
-										.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
-												.addComponent(btnXoaTrang, Alignment.TRAILING)
-												.addComponent(btnLuu, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))))
-				.addContainerGap(12, Short.MAX_VALUE)));
-		gl_pnlCTTour.linkSize(SwingConstants.VERTICAL, new Component[] { btnXoaTrang, btnLuu });
-		gl_pnlCTTour.linkSize(SwingConstants.VERTICAL, new Component[] { btnXemCTTour, lblCTTour, btnCTTour });
-		gl_pnlCTTour.linkSize(SwingConstants.HORIZONTAL, new Component[] { btnXoaTrang, btnLuu });
+									.addComponent(btnXemCTTour, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+									.addComponent(lblCTTour, Alignment.TRAILING)
+									.addComponent(btnCTTour, Alignment.TRAILING))
+								.addGroup(gl_pnlCTTour.createParallelGroup(Alignment.LEADING)
+									.addComponent(btnXoaTrang, Alignment.TRAILING)
+									.addComponent(btnLuu, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))))
+					.addContainerGap(12, Short.MAX_VALUE))
+		);
+		gl_pnlCTTour.linkSize(SwingConstants.VERTICAL, new Component[] {lblCTTour, btnCTTour, btnXemCTTour});
+		gl_pnlCTTour.linkSize(SwingConstants.VERTICAL, new Component[] {btnXoaTrang, btnLuu});
+		gl_pnlCTTour.linkSize(SwingConstants.HORIZONTAL, new Component[] {btnXoaTrang, btnLuu});
 		panel.setLayout(new BorderLayout(0, 0));
 
 		JScrollPane scrTenTour = new JScrollPane();
 		panel.add(scrTenTour, BorderLayout.CENTER);
 
 		txaTenTour = new JTextArea();
+		txaTenTour.setToolTipText("Nhập tên cho tour.");
 		txaTenTour.setLineWrap(true);
 		txaTenTour.setFont(new Font("Dialog", Font.PLAIN, 18));
 		scrTenTour.setViewportView(txaTenTour);
@@ -423,6 +433,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		pnlTimKiem.add(pnlLuaChonTK);
 
 		cmbLuaChon = new JComboBox<String>();
+		cmbLuaChon.setToolTipText("Chọn tiêu chí để tìm kiếm thông tin tour.");
 		pnlLuaChonTK.add(cmbLuaChon);
 		cmbLuaChon.setModel(new DefaultComboBoxModel(new String[] { "-- Lựa chọn tìm kiếm --", "Theo mã tour",
 				"Theo tên tour", "Theo địa danh", "Theo phương tiện", "Theo điểm đến" }));
@@ -441,6 +452,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		pnlLoaiTK.add(lblTimKiem);
 
 		txtTimKiem = new JTextField();
+		txtTimKiem.setToolTipText("Nhập vào thông tin tour cần tìm.");
 		txtTimKiem.setEditable(false);
 		pnlLoaiTK.add(txtTimKiem);
 		txtTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -463,22 +475,26 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		pnlChucNang.add(pnlButton);
 
 		btnLamMoi = new JButton("Làm mới");
+		btnLamMoi.setToolTipText("Làm mới thông tin bảng danh sách tour.");
 		btnLamMoi.setIcon(new ImageIcon(PnlTaoTour.class.getResource("/images/lammoi.png")));
 		btnLamMoi.setFont(new Font("Dialog", Font.PLAIN, 18));
 		pnlButton.add(btnLamMoi);
 
 		btnThem = new JButton("Thêm");
+		btnThem.setToolTipText("Thêm tour.");
 		btnThem.setIcon(new ImageIcon(PnlTaoTour.class.getResource("/images/plus_32px.png")));
 		pnlButton.add(btnThem);
 		btnThem.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		btnSua = new JButton("Sửa");
+		btnSua.setToolTipText("Sửa thông tin tour đang chọn.");
 		btnSua.setVisible(false);
 		btnSua.setIcon(new ImageIcon(PnlTaoTour.class.getResource("/images/edit_property_32px.png")));
 		pnlButton.add(btnSua);
 		btnSua.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		btnBoChon = new JButton("Bỏ chọn");
+		btnBoChon.setToolTipText("Bỏ chọn tour đang chọn.");
 		btnBoChon.setVisible(false);
 		btnBoChon.setIcon(new ImageIcon(PnlTaoTour.class.getResource("/images/exit.png")));
 		btnBoChon.setFont(new Font("Dialog", Font.PLAIN, 18));
@@ -542,6 +558,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		lblSoKhachToiDa.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		spnSoKhachToiDa = new JSpinner();
+		spnSoKhachToiDa.setToolTipText("Số người ít nhất là 10.");
 		spnSoKhachToiDa.setEnabled(false);
 		spnSoKhachToiDa.setModel(new SpinnerNumberModel(10, 10, 40, 0));
 
@@ -551,14 +568,17 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		spnSoKhachToiDa.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		btnThemKH = new JButton("Thêm");
+		btnThemKH.setToolTipText("Thêm ngày khởi hành");
 		btnThemKH.setFont(new Font("Dialog", Font.PLAIN, 18));
 		pnlNhapNgayDi.add(btnThemKH);
 
 		btnSuaNgayKH = new JButton("Sửa");
+		btnSuaNgayKH.setToolTipText("Sửa thông tin ngày khởi hành.");
 		btnSuaNgayKH.setFont(new Font("Dialog", Font.PLAIN, 20));
 		pnlNhapNgayDi.add(btnSuaNgayKH);
 
 		btnLuuNgayKH = new JButton("Lưu");
+		btnLuuNgayKH.setToolTipText("Lưu thông tin ngày khởi hành.");
 		btnLuuNgayKH.setFont(new Font("Dialog", Font.PLAIN, 18));
 		pnlNhapNgayDi.add(btnLuuNgayKH);
 
@@ -583,6 +603,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		pnlDong.add(pnlIconDong);
 
 		btnDong = new JButton("");
+		btnDong.setToolTipText("Hủy thêm ngày khởi hành.");
 		pnlIconDong.add(btnDong);
 		btnDong.setBackground(SystemColor.window);
 		btnDong.setBorder(null);
@@ -594,7 +615,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		pnlDSNgayKH.setLayout(new BorderLayout(0, 0));
 
 		scrDSNgayKH = new JScrollPane();
-		pnlDSNgayKH.add(scrDSNgayKH, BorderLayout.CENTER);
+		pnlDSNgayKH.add(scrDSNgayKH, BorderLayout.NORTH);
 
 		pnlButtonNorth = new JPanel();
 		pnlButtonNorth.setVisible(false);
@@ -604,6 +625,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		pnlDSCTTour.add(pnlButtonNorth, BorderLayout.SOUTH);
 
 		btnThemNgayKH = new JButton("Thêm ngày khởi hành");
+		btnThemNgayKH.setToolTipText("Thêm ngày khởi hàng cho tour đang chon.");
 		btnThemNgayKH.setIcon(new ImageIcon(PnlTaoTour.class.getResource("/images/plus_32px.png")));
 		btnThemNgayKH.setFont(new Font("Dialog", Font.PLAIN, 18));
 		pnlButtonNorth.add(btnThemNgayKH);
@@ -633,6 +655,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 
 		// hiển thị danh sách các tour du lịch
 		tblDSTour = new JTable();
+		tblDSTour.setToolTipText("Bảng hiển thị danh sách tour.");
 		tblDSTour.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		lstTour = tourControl.layDsTourTheoYeuCau(2, nv.getMaNV());
 		hienDanhSachTour(tblDSTour, lstTour, scrDSTour);

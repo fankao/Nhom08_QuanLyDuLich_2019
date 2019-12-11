@@ -23,6 +23,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -143,11 +144,12 @@ public class PnlKhachHang extends JPanel implements ActionListener {
 
 		dtcNgaySinh = new JDateChooser();
 		dtcNgaySinh.getCalendarButton().setFont(new Font("Tahoma", Font.PLAIN, 20));
-
+		dtcNgaySinh.setEnabled(false);
 		JLabel label_3 = new JLabel("Số CMND :");
 		label_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		txtSoCMND = new JTextField();
+		txtSoCMND.setEditable(false);
 		txtSoCMND.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoCMND.setColumns(10);
 
@@ -155,6 +157,7 @@ public class PnlKhachHang extends JPanel implements ActionListener {
 		label_4.setFont(new Font("Tahoma", Font.PLAIN, 20));
 
 		txtSoDienThoai = new JTextField();
+		txtSoDienThoai.setEditable(false);
 		txtSoDienThoai.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		txtSoDienThoai.setColumns(10);
 
@@ -250,6 +253,7 @@ public class PnlKhachHang extends JPanel implements ActionListener {
 		pnlXemDCKH.setLayout(new BorderLayout(0, 0));
 
 		txtDiaChi = new JTextField();
+		txtDiaChi.setEditable(false);
 		txtDiaChi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		pnlXemDCKH.add(txtDiaChi, BorderLayout.CENTER);
 		txtDiaChi.setColumns(10);
@@ -503,6 +507,39 @@ public class PnlKhachHang extends JPanel implements ActionListener {
 			}
 		});
 	}
+	public boolean ktSuaTTKhachHang() {
+		if(txtHoTen.getText().length() < 1) {
+			JOptionPane.showMessageDialog(this,"Tên khách hàng không được để trống !");
+			txtHoTen.requestFocus();
+			return false;
+		}
+		if(txtSoCMND.getText().length() < 1) {
+			JOptionPane.showMessageDialog(this, "Số chứng minh nhân dân không được để trống !");
+			txtSoCMND.requestFocus();
+			return false;
+		}
+		if(txtSoDienThoai.getText().length() < 1) {
+			JOptionPane.showMessageDialog(this, "Số điện thoại không được để trống");
+			txtSoDienThoai.requestFocus();
+			return false;
+		}
+		if (cmbTinh.getSelectedIndex() == 0) {
+			JOptionPane.showMessageDialog(this, "Chưa chọn tỉnh cho địa chỉ");
+			cmbTinh.requestFocusInWindow();
+			return false;
+		}
+		if (cmbHuyen.getSelectedIndex() == 0) {
+			JOptionPane.showMessageDialog(this, "Chưa chọn huyện cho địa chỉ");
+			cmbHuyen.requestFocusInWindow();
+			return false;
+		}
+		if (cmbXa.getSelectedIndex() == 0) {
+			JOptionPane.showMessageDialog(this, "Chưa chọn huyện cho địa chỉ");
+			cmbXa.requestFocusInWindow();
+			return false;
+		}
+		return true;
+	}
 
 	/**
 	 * Xử lý sự kiện cho các component
@@ -511,34 +548,47 @@ public class PnlKhachHang extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if (o.equals(btnLuu)) {
-			int row = tblDSKhachHang.getSelectedRow();
-			if (row == -1)
-				return;
-			dsKH = khachHangControl.layDSKhachHang();
-			KhachHang khSua = dsKH.get(row);
-			khSua.setHoVaTen(txtHoTen.getText().trim());
-			khSua.setSoCMND(txtSoCMND.getText().trim());
-			khSua.setSoDienThoai(txtSoDienThoai.getText().trim());
-			System.out.println(cmbGioiTinh.getSelectedIndex());
-			if (cmbGioiTinh.getSelectedIndex() == 0)
-				khSua.setGioiTinh(true);
-			else if (cmbGioiTinh.getSelectedIndex() == 1)
-				khSua.setGioiTinh(false);
-			khSua.setNgaySinh(new Date(dtcNgaySinh.getDate().getTime()));
-			khSua.setDiaChi(new DiaChi(cmbXa.getSelectedItem().toString(), cmbHuyen.getSelectedItem().toString(),
-					cmbTinh.getSelectedItem().toString()));
-			dsKH = khachHangControl.layDSKhachHang();
-			hienBangDSKhachHang(tblDSKhachHang, dsKH, srcDSKhachHang);
-			KhachHang khTest = khachHangControl.suaKhachHang(khSua);
-			tblDSKhachHang.setEnabled(true);
-			btnSua.setVisible(false);
-			btnLuu.setVisible(false);
-			btnHuy.setVisible(false);
-			pnlSuaDCKH.setVisible(false);
-			pnlXemDCKH.setVisible(true);
+			if(ktSuaTTKhachHang()) {
+				txtHoTen.setEditable(false);
+				cmbGioiTinh.setEnabled(false);
+				dtcNgaySinh.setEnabled(false);
+				txtSoCMND.setEditable(false);
+				txtSoDienThoai.setEditable(false);
+				
+				int row = tblDSKhachHang.getSelectedRow();
+				if (row == -1)
+					return;
+				dsKH = khachHangControl.layDSKhachHang();
+				KhachHang khSua = dsKH.get(row);
+				khSua.setHoVaTen(txtHoTen.getText().trim());
+				khSua.setSoCMND(txtSoCMND.getText().trim());
+				khSua.setSoDienThoai(txtSoDienThoai.getText().trim());
+				System.out.println(cmbGioiTinh.getSelectedIndex());
+				if (cmbGioiTinh.getSelectedIndex() == 0)
+					khSua.setGioiTinh(true);
+				else if (cmbGioiTinh.getSelectedIndex() == 1)
+					khSua.setGioiTinh(false);
+				khSua.setNgaySinh(new Date(dtcNgaySinh.getDate().getTime()));
+				khSua.setDiaChi(new DiaChi(cmbXa.getSelectedItem().toString(), cmbHuyen.getSelectedItem().toString(),
+						cmbTinh.getSelectedItem().toString()));
+				dsKH = khachHangControl.layDSKhachHang();
+				hienBangDSKhachHang(tblDSKhachHang, dsKH, srcDSKhachHang);
+				KhachHang khTest = khachHangControl.suaKhachHang(khSua);
+				tblDSKhachHang.setEnabled(true);
+				btnSua.setVisible(false);
+				btnLuu.setVisible(false);
+				btnHuy.setVisible(false);
+				pnlSuaDCKH.setVisible(false);
+				pnlXemDCKH.setVisible(true);
+			}
 
 		} else if (o.equals(btnSua)) {
+			txtSoDienThoai.setEditable(true);
+			cmbGioiTinh.setEditable(true);
+			txtHoTen.setEditable(true);
 			cmbGioiTinh.setEnabled(true);
+			dtcNgaySinh.setEnabled(true);
+			txtSoCMND.setEditable(true);
 			btnSua.setVisible(false);
 			btnLuu.setVisible(true);
 			btnHuy.setVisible(true);
@@ -551,13 +601,19 @@ public class PnlKhachHang extends JPanel implements ActionListener {
 		} else if (o.equals(btnHuy)) {
 			tblDSKhachHang.clearSelection();
 			xoaTrang();
+			txtHoTen.setEditable(false);
 			cmbGioiTinh.setEnabled(false);
+			dtcNgaySinh.setEnabled(false);
+			txtSoCMND.setEditable(false);
+			txtSoDienThoai.setEditable(false);
+			cmbGioiTinh.setEditable(false);
 			tblDSKhachHang.setEnabled(true);
 			btnSua.setVisible(false);
 			btnLuu.setVisible(false);
 			btnHuy.setVisible(false);
 			pnlSuaDCKH.setVisible(false);
 			pnlXemDCKH.setVisible(true);
+			
 		} else if (o.equals(cmbTinh)) {
 			if (cmbHuyen.getItemCount() > 1 && cmbXa.getItemCount() > 1) {
 				cmbXa.setModel(new DefaultComboBoxModel<Ward>());
@@ -578,6 +634,12 @@ public class PnlKhachHang extends JPanel implements ActionListener {
 				hienDiaDiem(wards, cmbXa, "Xã/Phường");
 			}
 		} else if (o.equals(btnLamMoi)) {
+			txtHoTen.setEditable(false);
+			cmbGioiTinh.setEnabled(false);
+			dtcNgaySinh.setEnabled(false);
+			txtSoCMND.setEditable(false);
+			txtSoDienThoai.setEditable(false);
+			
 			dsKH = khachHangControl.layDSKhachHang();
 			hienBangDSKhachHang(tblDSKhachHang, dsKH, srcDSKhachHang);
 		} else if (o.equals(cmbLoaiTimKiem)) {
