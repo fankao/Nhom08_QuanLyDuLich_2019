@@ -37,6 +37,7 @@ import control.impl.PhieuDangKyControlImpl;
 import control.impl.PhieuThuChiControlImpl;
 import entities.PhieuDangKy;
 import entities.PhieuThuChi;
+import model.DSPhieuDangKyModel;
 import model.DSPhieuThuTableModel;
 import utils.TienIch;
 
@@ -44,11 +45,12 @@ import com.toedter.calendar.JMonthChooser;
 import java.util.Locale;
 import javax.swing.ImageIcon;
 import javax.swing.BoxLayout;
+import javax.swing.ListSelectionModel;
 
 public class PnlThongKe extends JPanel implements ActionListener {
 	private JTabbedPane tabThongTinTK;
 	private JTextField txtTongDoanhThu;
-	private JTextField txtTongPDKDaHuy;
+	private JTextField txtTongPDKDaTao;
 	private IPhieuDangKyControl phieuDangKyControl;
 	private IPhieuThuChiControl phieuThuChiControl;
 	private List<PhieuDangKy> dsPDK;
@@ -56,9 +58,13 @@ public class PnlThongKe extends JPanel implements ActionListener {
 	private JPanel pnlThongKeDoanhThuTheoThang;
 	private JScrollPane srcDSPhieuTC;
 	private JTable tblDSPHieuTC;
+	private JTable tblDSPDK;
 	private JButton btnLamMoi;
 	private JButton btnLoc;
 	private JMonthChooser mthThang;
+	private JScrollPane scrDSPDK;
+	private JLabel lblTongPDKDaHuy;
+	private JTextField txtSoPDKDaHuy;
 
 	/**
 	 * Create the panel.
@@ -120,22 +126,43 @@ public class PnlThongKe extends JPanel implements ActionListener {
 		pnlTTThongKePDK.setLayout(new BorderLayout(0, 0));
 
 		JPanel pnlTongPDKDaHuy = new JPanel();
-		FlowLayout fl_pnlTongPDKDaHuy = (FlowLayout) pnlTongPDKDaHuy.getLayout();
-		fl_pnlTongPDKDaHuy.setAlignment(FlowLayout.LEFT);
 		pnlTongPDKDaHuy.setPreferredSize(new Dimension(10, 50));
 		pnlTTThongKePDK.add(pnlTongPDKDaHuy, BorderLayout.SOUTH);
-
-		JLabel lblTongPDKDaHuy = new JLabel("Tổng số phiểu đăng ký đã hủy :");
-		lblTongPDKDaHuy.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTongPDKDaHuy.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		pnlTongPDKDaHuy.add(lblTongPDKDaHuy);
-
-		txtTongPDKDaHuy = new JTextField();
-		txtTongPDKDaHuy.setHorizontalAlignment(SwingConstants.LEFT);
-		txtTongPDKDaHuy.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		txtTongPDKDaHuy.setEditable(false);
-		txtTongPDKDaHuy.setColumns(10);
-		pnlTongPDKDaHuy.add(txtTongPDKDaHuy);
+		pnlTongPDKDaHuy.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		JPanel panel = new JPanel();
+		FlowLayout flowLayout_3 = (FlowLayout) panel.getLayout();
+		flowLayout_3.setAlignment(FlowLayout.LEFT);
+		pnlTongPDKDaHuy.add(panel);
+		
+				lblTongPDKDaHuy = new JLabel("Tổng số phiểu đăng ký đã tạo hiện tại của tháng "+LocalDate.now().getMonthValue()+":");
+				panel.add(lblTongPDKDaHuy);
+				lblTongPDKDaHuy.setHorizontalAlignment(SwingConstants.LEFT);
+				lblTongPDKDaHuy.setFont(new Font("Tahoma", Font.PLAIN, 20));
+				
+						txtTongPDKDaTao = new JTextField();
+						panel.add(txtTongPDKDaTao);
+						txtTongPDKDaTao.setHorizontalAlignment(SwingConstants.LEFT);
+						txtTongPDKDaTao.setFont(new Font("Tahoma", Font.PLAIN, 20));
+						txtTongPDKDaTao.setEditable(false);
+						txtTongPDKDaTao.setColumns(10);
+						
+						JPanel panel_1 = new JPanel();
+						FlowLayout flowLayout_2 = (FlowLayout) panel_1.getLayout();
+						flowLayout_2.setAlignment(FlowLayout.LEFT);
+						pnlTongPDKDaHuy.add(panel_1);
+						
+						JLabel lblTngSPhiu = new JLabel("Tổng số phiểu đăng ký đã hủy hiện tại của tháng 12:");
+						lblTngSPhiu.setHorizontalAlignment(SwingConstants.LEFT);
+						lblTngSPhiu.setFont(new Font("Tahoma", Font.PLAIN, 20));
+						panel_1.add(lblTngSPhiu);
+						
+						txtSoPDKDaHuy = new JTextField();
+						txtSoPDKDaHuy.setHorizontalAlignment(SwingConstants.LEFT);
+						txtSoPDKDaHuy.setFont(new Font("Tahoma", Font.PLAIN, 20));
+						txtSoPDKDaHuy.setEditable(false);
+						txtSoPDKDaHuy.setColumns(10);
+						panel_1.add(txtSoPDKDaHuy);
 
 //		dsPDK = quanLyPhieuDKBUS.layDSPhieuDK();
 		JPanel pnlChiTietTKPhieuDangKy = new JPanel();
@@ -156,6 +183,10 @@ public class PnlThongKe extends JPanel implements ActionListener {
 								"", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)),
 						"S\u1ED1 li\u00EAu", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		pnlChiTietTKPhieuDangKy.add(pnlSoLieuPDK);
+		pnlSoLieuPDK.setLayout(new BorderLayout(0, 0));
+		
+		scrDSPDK = new JScrollPane();
+		pnlSoLieuPDK.add(scrDSPDK, BorderLayout.CENTER);
 		pnlThongKeDoanhThuTheoThang.setLayout(new GridLayout(0, 2, 0, 0));
 
 		JPanel pnlBieuDo = new JPanel();
@@ -174,6 +205,7 @@ public class PnlThongKe extends JPanel implements ActionListener {
 		pnlSoLieu.add(srcDSPhieuTC, BorderLayout.CENTER);
 
 		tblDSPHieuTC = new JTable();
+		tblDSPHieuTC.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		JPanel pnlChucNang = new JPanel();
 		pnlSoLieu.add(pnlChucNang, BorderLayout.NORTH);
@@ -209,6 +241,8 @@ public class PnlThongKe extends JPanel implements ActionListener {
 		flowLayout.setVgap(15);
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		pnlChucNang.add(pnlLamMoi);
+		tblDSPDK = new JTable();
+		tblDSPDK.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		btnLamMoi = new JButton("Làm mới");
 		btnLamMoi.setPreferredSize(new Dimension(150, 40));
@@ -234,7 +268,9 @@ public class PnlThongKe extends JPanel implements ActionListener {
 		btnLamMoi.addActionListener(this);
 
 		TienIch.chinhKichThuocTitleTrenBorder(new JPanel[] { pnlBieuDo, pnlSoLieu }, "Arial", Font.PLAIN, 18);
-
+		dsPDK = phieuDangKyControl.layDSPhieuDangKyTheoThang(LocalDate.now().getMonthValue());
+		hienBangDSPDK(tblDSPDK, dsPDK, scrDSPDK);
+		hienTTSoLuongPDK(dsPDK);
 	}
 	/*
 	 * Vẽ biểu đò thống kê doanh thu.
@@ -329,7 +365,10 @@ public class PnlThongKe extends JPanel implements ActionListener {
 		tbl.setModel(dsPhieuThuTableModel);
 		src.setViewportView(tbl);
 	}
-
+	/**
+	 * Hiển thị danh sách phiếu thu chi theo tháng
+	 * @param thang : tháng
+	 */
 	private void hienDSPhieuThuChi(int thang) {
 		dsPhieuThuChi = phieuThuChiControl.layDSPhieuTheoThang(thang);
 		hienThiBangTTDSPhieuTC(tblDSPHieuTC, dsPhieuThuChi, srcDSPhieuTC);
@@ -353,6 +392,39 @@ public class PnlThongKe extends JPanel implements ActionListener {
 			ChartPanel CpnlBDoanhThu = new ChartPanel((taoBieuDoDoanhThu()));
 			txtTongDoanhThu.setText(format.format(layDoanhThuTheoThang(LocalDate.now().getMonthValue())) + "");
 		}
+
+	}
+	/**
+	 * Hiển thị thông tin số lượng phiếu đăng ký đã tạo và đã hủy theo tháng
+	 * @param ds : danh sách phiếu đăng ký
+	 */
+	public void hienTTSoLuongPDK(List<PhieuDangKy> ds) {
+		int sopdkDaHuy = 0;
+		for (PhieuDangKy phieuDangKy : ds) {
+			if(phieuDangKy.isDaHuyPhieu())
+				sopdkDaHuy ++;
+		}
+		txtTongPDKDaTao.setText(ds.size()+"");
+		txtSoPDKDaHuy.setText(sopdkDaHuy+"");
+	}
+	/**
+	 * Hiện bảng danh sách phiếu đăng ký tour
+	 * 
+	 * @param tbl: bảng
+	 * @param ds:  danh sách phiếu đăng ký
+	 * @param src: thanh cuộn
+	 */
+	private void hienBangDSPDK(JTable tbl, List<PhieuDangKy> ds, JScrollPane src) {
+		DSPhieuDangKyModel dsPhieuDangKyModel = new DSPhieuDangKyModel(ds);
+		tbl.setModel(dsPhieuDangKyModel);
+		src.setViewportView(tbl);
+		TienIch.chinhKichThuocTable(tbl, tbl.getColumnModel().getTotalColumnWidth(), 5, 15, 15, 20, 15);
+//		if (ds.size() != 0) {
+//			tbl.getColumnModel().getColumn(0).setCellRenderer(new CenterRenderrer());
+//			tbl.getColumnModel().getColumn(2).setCellRenderer(new MyDateRenderer());
+//			tbl.getColumnModel().getColumn(3).setCellRenderer(new CenterRenderrer());
+//			tbl.getColumnModel().getColumn(4).setCellRenderer(new CenterRenderrer());
+//		}
 
 	}
 }

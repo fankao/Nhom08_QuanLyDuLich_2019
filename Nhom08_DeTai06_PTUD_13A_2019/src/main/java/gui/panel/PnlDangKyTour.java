@@ -1110,6 +1110,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		 * Chọn ngày khởi hành để đăng ký
 		 */
 		else if (o.equals(btnThemKhachHangTG)) {
+			btnThemKHTG.setEnabled(true);
 			btnDangKyTour.setEnabled(true);
 			if (dsKhachHangThamGia == null) {
 				dsKhachHangThamGia = new ArrayList<KhachHangThamGia>();
@@ -1124,6 +1125,8 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 			chkThamGiaTourDK.setVisible(true);
 
 			tblDSNgayDi.setEnabled(false);
+			
+			
 
 		}
 		/*
