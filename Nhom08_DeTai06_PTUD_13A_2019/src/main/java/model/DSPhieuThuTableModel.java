@@ -1,8 +1,10 @@
 package model;
 
 import java.sql.Date;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -13,7 +15,7 @@ public class DSPhieuThuTableModel extends AbstractTableModel {
 	private String[] tieuDe = { "STT", "Mã phiếu", "Ngày tạo", "Khách hàng", "Nhân Viên", "Loại phiếu", "Số tiền" };
 	private List<PhieuThuChi> dsPhieuTC = new ArrayList<PhieuThuChi>();
 	private final Class<?>[] columnClass = new Class<?>[] { Integer.class, String.class, Date.class, String.class,
-			String.class, LoaiPhieu.class, Double.class };
+			String.class, LoaiPhieu.class, String.class };
 
 	public DSPhieuThuTableModel(List<PhieuThuChi> dsPhieuTC) {
 		super();
@@ -64,9 +66,9 @@ public class DSPhieuThuTableModel extends AbstractTableModel {
 		case 5:
 			return ptc.getLoaiPhieu();
 		case 6:
-			return ptc.getSoTien();
+			return NumberFormat.getCurrencyInstance(new Locale("vi", "vn")).format(ptc.getSoTien());
 		}
-		
+
 		return null;
 	}
 
