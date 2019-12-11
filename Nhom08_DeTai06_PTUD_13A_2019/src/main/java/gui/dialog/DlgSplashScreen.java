@@ -36,6 +36,7 @@ public class DlgSplashScreen extends JWindow {
 	private int minimumMilliseconds;
 	
 
+	
 	private static JProgressBar progressbar = new JProgressBar();
 	private static int count;
 	private static DlgSplashScreen execute;
