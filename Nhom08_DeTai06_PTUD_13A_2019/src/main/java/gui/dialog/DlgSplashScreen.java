@@ -34,6 +34,7 @@ public class DlgSplashScreen extends JWindow {
 	private final JWindow window;
 	private long startTime;
 	private int minimumMilliseconds;
+	
 
 	private static JProgressBar progressbar = new JProgressBar();
 	private static int count;
@@ -88,6 +89,7 @@ public class DlgSplashScreen extends JWindow {
 				dangKyControl.layDSPhieuDangKy());
 
 	}
+
 
 	/**
 	 * Ẩn giao diện sau thời gian
