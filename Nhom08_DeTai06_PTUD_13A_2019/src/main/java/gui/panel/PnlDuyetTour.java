@@ -45,7 +45,17 @@ import model.TourTableModel;
 import utils.TableMouseListener;
 import utils.TienIch;
 
+/**
+ * PnlDuyetTour.java
+ * 
+ * @author Minh Chiến<br>
+ *         Ngày tạo: 30/11/2019
+ *
+ */
 public class PnlDuyetTour extends JPanel implements ActionListener {
+	/**
+	 * Khởi tạo các thuộc tính
+	 */
 	private static final long serialVersionUID = 1L;
 	private JTable tblDSTourChuaDuyet, tblDSTourDaDuyet;
 	private JScrollPane scrDSTourChuaDuyet;
@@ -286,7 +296,9 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		tblDSTourChuaDuyet.addMouseListener(new TableMouseListener(tblDSTourChuaDuyet));
 
 	}
-
+	/**
+	 * Gán sự kiện
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();

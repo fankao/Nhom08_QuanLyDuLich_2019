@@ -41,6 +41,9 @@ public class DlgSplashScreen extends JWindow {
 	private static DlgSplashScreen execute;
 	private static Timer timer1;
 
+	/**
+	 * Hiện giao diện SplashScreen
+	 */
 	public DlgSplashScreen() {
 		window = new JWindow();
 		JPanel pnl = new JPanel() {
@@ -63,6 +66,11 @@ public class DlgSplashScreen extends JWindow {
 
 	}
 
+	/**
+	 * Thời gian hiển thị giao diện
+	 * 
+	 * @param minimumMilliseconds: thời gian hiển thị
+	 */
 	public void show(int minimumMilliseconds) {
 		this.minimumMilliseconds = minimumMilliseconds;
 		window.setVisible(true);
@@ -82,7 +90,10 @@ public class DlgSplashScreen extends JWindow {
 
 	}
 
-	
+
+	/**
+	 * Ẩn giao diện sau thời gian
+	 */
 	public void hide() {
 		long elapsedTime = System.currentTimeMillis() - startTime;
 		try {
@@ -93,6 +104,9 @@ public class DlgSplashScreen extends JWindow {
 		window.setVisible(false);
 	}
 
+	/**
+	 * Tiến trình thanh Progress bar
+	 */
 	private void loadProgressBar() {
 		ActionListener al = new ActionListener() {
 

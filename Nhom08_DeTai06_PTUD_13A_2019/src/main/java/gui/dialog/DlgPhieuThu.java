@@ -63,6 +63,10 @@ import utils.TienIch;
  */
 public class DlgPhieuThu extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
+	
+	/*
+	 * Khai báo các thuộc tính
+	 */
 	private final JPanel pnlNoiDung = new JPanel();
 	private JTextField txtMaDK;
 	private JTextField txtKH;

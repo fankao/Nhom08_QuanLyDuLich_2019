@@ -48,6 +48,8 @@ import utils.TienIch;
 import utils.address.District;
 import utils.address.Province;
 import utils.address.Ward;
+import javax.swing.border.BevelBorder;
+import java.awt.Dimension;
 
 /**
  * PnlKhachHang.java
@@ -57,6 +59,9 @@ import utils.address.Ward;
  *
  */
 public class PnlKhachHang extends JPanel implements ActionListener {
+	/**
+	 * Khởi tạo các thuộc tính
+	 */
 	private static final long serialVersionUID = 1L;
 	private JTable tblDSKhachHang;
 	private JButton btnSua;
@@ -81,6 +86,9 @@ public class PnlKhachHang extends JPanel implements ActionListener {
 	private JComboBox cmbLoaiTimKiem;
 	private JButton btnLamMoi;
 
+	/**
+	 * Hiển thị giao diện khách hàng
+	 */
 	public PnlKhachHang() {
 		setLayout(new BorderLayout(0, 0));
 
@@ -294,6 +302,7 @@ public class PnlKhachHang extends JPanel implements ActionListener {
 		pnlTimKiemKhachHang.setLayout(new BoxLayout(pnlTimKiemKhachHang, BoxLayout.Y_AXIS));
 
 		JPanel pnlLoaiTimKiem = new JPanel();
+		pnlLoaiTimKiem.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		FlowLayout flowLayout = (FlowLayout) pnlLoaiTimKiem.getLayout();
 		flowLayout.setVgap(10);
 		flowLayout.setAlignment(FlowLayout.LEFT);
@@ -304,6 +313,7 @@ public class PnlKhachHang extends JPanel implements ActionListener {
 		pnlLoaiTimKiem.add(lblLoaiTimKiem);
 
 		cmbLoaiTimKiem = new JComboBox();
+		cmbLoaiTimKiem.setPreferredSize(new Dimension(150, 30));
 		cmbLoaiTimKiem.setModel(new DefaultComboBoxModel(
 				new String[] { "", "Theo tên", "Theo số điện thoại", "Theo số CMND (căn cước)" }));
 		cmbLoaiTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -314,6 +324,7 @@ public class PnlKhachHang extends JPanel implements ActionListener {
 		pnlThanhTiemK.setLayout(new GridLayout(0, 2, 0, 0));
 
 		JPanel pnlTimKiem = new JPanel();
+		pnlTimKiem.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		FlowLayout flowLayout_3 = (FlowLayout) pnlTimKiem.getLayout();
 		flowLayout_3.setAlignment(FlowLayout.LEFT);
 		flowLayout_3.setVgap(10);
@@ -324,13 +335,16 @@ public class PnlKhachHang extends JPanel implements ActionListener {
 		lblTuKhoa.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		txtTimKiem = new JTextField();
+		txtTimKiem.setPreferredSize(new Dimension(6, 30));
 		txtTimKiem.setEditable(false);
 		pnlTimKiem.add(txtTimKiem);
 		txtTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		txtTimKiem.setColumns(25);
 
 		JPanel pnlLamMoi = new JPanel();
+		pnlLamMoi.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		FlowLayout flowLayout_2 = (FlowLayout) pnlLamMoi.getLayout();
+		flowLayout_2.setVgap(10);
 		flowLayout_2.setAlignment(FlowLayout.RIGHT);
 		pnlThanhTiemK.add(pnlLamMoi);
 
@@ -342,22 +356,36 @@ public class PnlKhachHang extends JPanel implements ActionListener {
 		pnlSuaDCKH.setVisible(false);
 		pnlXemDCKH.setVisible(true);
 
+		TienIch.chinhKichThuocTitleTrenBorder(new JPanel[] { pnlDSKhachHang }, "Arial", Font.PLAIN, 20);
+
 		ganSuKien();
 	}
 
+	/**
+	 * Hiện danh sách khách hàng
+	 * 
+	 * @param tbl: bảng
+	 * @param ds:  danh sách khách hàng
+	 * @param src: thanh cuộn
+	 */
 	private void hienBangDSKhachHang(JTable tbl, List<KhachHang> ds, JScrollPane src) {
 		DSKhachHangTableModel dsKhachHangTableModel = new DSKhachHangTableModel(ds);
 		tbl.setModel(dsKhachHangTableModel);
 		src.setViewportView(tbl);
-		TienIch.chinhKichThuocTable(tbl, tbl.getColumnModel().getTotalColumnWidth(), 5, 15, 30, 15, 15, 20);
 		if (ds.size() != 0) {
 			tbl.getColumnModel().getColumn(0).setCellRenderer(new CenterRenderrer());
 			tbl.getColumnModel().getColumn(3).setCellRenderer(new MyDateRenderer());
 			tbl.getColumnModel().getColumn(4).setCellRenderer(new CenterRenderrer());
 			tbl.getColumnModel().getColumn(5).setCellRenderer(new CenterRenderrer());
 		}
+		TienIch.chinhKichThuocTable(tbl, tbl.getColumnModel().getTotalColumnWidth(), 5, 15, 30, 15, 15, 20);
 	}
 
+	/**
+	 * Hiện thị thông tin chi tiết khách hàng
+	 * 
+	 * @param kh: khách hàng
+	 */
 	private void hienThiThongTinKhachHang(KhachHang kh) {
 		txtHoTen.setText(kh.getHoVaTen());
 		txtDiaChi.setText(kh.getDiaChi().toString());
@@ -375,6 +403,9 @@ public class PnlKhachHang extends JPanel implements ActionListener {
 
 	}
 
+	/**
+	 * Xoá trắng thông tin khách hàng
+	 */
 	private void xoaTrang() {
 		txtHoTen.setText("");
 		txtSoCMND.setText("");
@@ -403,6 +434,9 @@ public class PnlKhachHang extends JPanel implements ActionListener {
 
 	}
 
+	/**
+	 * Gắn sự kiện cho các component
+	 */
 	private void ganSuKien() {
 		btnSua.addActionListener(this);
 		btnLuu.addActionListener(this);
@@ -470,6 +504,9 @@ public class PnlKhachHang extends JPanel implements ActionListener {
 		});
 	}
 
+	/**
+	 * Xử lý sự kiện cho các component
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();

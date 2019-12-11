@@ -13,13 +13,29 @@ import data.IPhieuThuChiDAO;
 import entities.LoaiPhieu;
 import entities.PhieuThuChi;
 
+/**
+ * PhieuThuChiDAOimpl.java
+ * 
+ * @author Minh Chiến <br>
+ *         Ngày tạo: 10/11/2019
+ *
+ */
 public class PhieuThuChiDAOimpl implements IPhieuThuChiDAO {
 	private EntityManager em;
 
+	/**
+	 * Khởi tạo đối tượng
+	 */
 	public PhieuThuChiDAOimpl() {
 		em = EntityManagerConnection.getInstance().getEntityManager();
 	}
 
+	/**
+	 * Thêm phiếu thu
+	 * 
+	 * @param p: phiếu thu
+	 * @return PhieuThuChi
+	 */
 	@Override
 	public PhieuThuChi themPhieu(PhieuThuChi p) {
 		EntityTransaction tr = em.getTransaction();
@@ -35,12 +51,12 @@ public class PhieuThuChiDAOimpl implements IPhieuThuChiDAO {
 		return null;
 	}
 
-	@Override
-	public PhieuThuChi layThongTinPhieu(String ma) {
-
-		return null;
-	}
-
+	/**
+	 * Phát sinh mã phiếu thu chi
+	 * 
+	 * @param loaiPhieu: loại phiếu thu chi
+	 * @return String
+	 */
 	@Override
 	public String phatSinhMaPhieu(LoaiPhieu loaiPhieu) {
 		List<Integer> lstId = em.createQuery("SELECT p.id FROM PhieuThuChi p ORDER BY p.id", Integer.class)
@@ -56,6 +72,12 @@ public class PhieuThuChiDAOimpl implements IPhieuThuChiDAO {
 
 	}
 
+	/**
+	 * Sửa thông tin phiếu thu chi
+	 * 
+	 * @param p: phiếu thu chi
+	 * @return PhieuThuChi
+	 */
 	@Override
 	public PhieuThuChi suaPhieu(PhieuThuChi p) {
 		EntityTransaction tr = em.getTransaction();
@@ -71,6 +93,12 @@ public class PhieuThuChiDAOimpl implements IPhieuThuChiDAO {
 		return null;
 	}
 
+	/**
+	 * Lấy danh sách phiếu thu theo tháng
+	 * 
+	 * @param tháng: tháng
+	 * @return List<PhieuThuChi>
+	 */
 	@Override
 	public List<PhieuThuChi> layDSPhieuTheoThang(int thang) {
 		TypedQuery<PhieuThuChi> query = em.createNamedQuery("PTC.timDSPhieuTheoThang", PhieuThuChi.class);
@@ -79,6 +107,12 @@ public class PhieuThuChiDAOimpl implements IPhieuThuChiDAO {
 		return list.size() != 0 ? list : new ArrayList<PhieuThuChi>();
 	}
 
+	/**
+	 * Lấy DS phiếu thu chi theo phiếu đăng ký
+	 * 
+	 * @param maPDK: mã phiếu đăng ký
+	 * @return List<PhieuThuChi>
+	 */
 	@Override
 	public List<PhieuThuChi> layDSPhieuThuTheoPhieuDK(String maPDK) {
 		TypedQuery<PhieuThuChi> query = em.createNamedQuery("PTC.timDSPhieuThuTheoPDK", PhieuThuChi.class);
@@ -87,7 +121,11 @@ public class PhieuThuChiDAOimpl implements IPhieuThuChiDAO {
 		List<PhieuThuChi> list = query.getResultList();
 		return list.size() != 0 ? list : new ArrayList<PhieuThuChi>();
 	}
-
+	/**
+	 * Lấy danh sách phiếu chi theo phiếu đăng ký
+	 * @param maPDK: mã phiếu đăng ký
+	 * @return List<PhieuThuChi>
+	 */
 	@Override
 	public List<PhieuThuChi> layDSPhieuChiTheoPhieuDK(String maPDK) {
 		TypedQuery<PhieuThuChi> query = em.createNamedQuery("PTC.timDSPhieuChiTheoPDK", PhieuThuChi.class);

@@ -44,6 +44,13 @@ import entities.KhachHang;
 import utils.HintTextFieldUI;
 import utils.TienIch;
 
+/**
+ * PnlTimKiemKhachHang.java
+ * 
+ * @author Minh Chiến <br>
+ *         Ngày tạo: 25/11/2019
+ *
+ */
 public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JComboBox<String> cmbLoaiTK;
@@ -261,6 +268,10 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 
 	}
 
+	/**
+	 * Hiện danh sách khách hàng
+	 * @param dsKH: danh sách khách hàng
+	 */
 	private void hienDanhSachKhachHang(List<KhachHang> dsKH) {
 		@SuppressWarnings("unchecked")
 		DefaultListModel<KhachHang> listModel = new DefaultListModel<KhachHang>();
@@ -272,6 +283,9 @@ public class PnlTimKiemKhachHang extends JPanel implements ActionListener {
 
 	}
 
+	/**
+	 * gán sự kiện
+	 */
 	private void ganSuKien() {
 		cmbLoaiTK.addActionListener(this);
 		btnBoChon.addActionListener(this);

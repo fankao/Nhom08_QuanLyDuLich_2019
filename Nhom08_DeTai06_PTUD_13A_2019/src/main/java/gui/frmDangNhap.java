@@ -31,7 +31,8 @@ import entities.TaiKhoan;
 /**
  * frmDangNhap.java
  * 
- * @author Minh Chien =, Ngày tạo: 08/11/2019
+ * @author Minh Chien <br>
+ *         Ngày tạo: 08/11/2019
  *
  */
 public class frmDangNhap extends JDialog implements ActionListener {
@@ -214,7 +215,7 @@ public class frmDangNhap extends JDialog implements ActionListener {
 							JOptionPane.ERROR_MESSAGE);
 				}
 
-			} 
+			}
 		} else if (o.equals(btnThoat)) {
 			int sel = JOptionPane.showConfirmDialog(this, "Thoát chương trình?", "Đăng xuất",
 					JOptionPane.YES_NO_OPTION);
@@ -224,22 +225,27 @@ public class frmDangNhap extends JDialog implements ActionListener {
 		}
 
 	}
-	
+
+	/**
+	 * Kiểm tra đăng nhập liệu
+	 * 
+	 * @return
+	 */
 	public boolean kiemTraDangNhap() {
-		if(txtTaiKhoan.getText().trim().length()==0 && pwdMatKhau.getText().trim().length()==0) {
+		if (txtTaiKhoan.getText().trim().length() == 0 && pwdMatKhau.getText().trim().length() == 0) {
 			JOptionPane.showMessageDialog(this, "Tên tài khoản và mật khẩu không được rỗng!");
 			return false;
-			
+
 		}
-		if(txtTaiKhoan.getText().trim().length()==0) {
+		if (txtTaiKhoan.getText().trim().length() == 0) {
 			JOptionPane.showMessageDialog(this, "Tên tài khoản không được rỗng!");
 			return false;
 		}
-		if(pwdMatKhau.getText().trim().length()==0) {
+		if (pwdMatKhau.getText().trim().length() == 0) {
 			JOptionPane.showMessageDialog(this, "Mật khẩu không được rỗng!");
 			return false;
 		}
-		if(pwdMatKhau.getText().trim().length() < 6) {
+		if (pwdMatKhau.getText().trim().length() < 6) {
 			JOptionPane.showMessageDialog(this, "Mật khẩu gồm 6 ký tự trở lên!");
 			return false;
 		}

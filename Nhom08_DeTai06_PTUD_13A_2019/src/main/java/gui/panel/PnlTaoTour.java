@@ -721,6 +721,9 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 	 * ----------------------------------------------
 	 */
 
+	/**
+	 * Gán sự kiện cho các component
+	 */
 	private void ganSuKien() {
 		btnLuu.addActionListener(this);
 		btnThem.addActionListener(this);
@@ -799,6 +802,9 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		timKiemTheoTuKhoa();
 	}
 
+	/**
+	 * Xử lý sự kiện
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
@@ -1420,20 +1426,28 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		return true;
 	}
 
-	// Kiểm tra ngày khởi hành.Ngày khởi hành phải sau ngày hiện tại 10 ngày.
+	/**
+	 * Kiểm tra ngày khởi hành có hợp lê
+	 * @return true: nếu ngày khởi hành cách ngày hiện tại 10 ngày/ false: ngược lại
+	 */
 	public boolean ktNgayKhoiHanh() {
 		LocalDate ngayKhoiHanh = new Date(dtcNgayKhoiHanh.getDate().getTime()).toLocalDate();
 		Period period = Period.between(LocalDate.now(), ngayKhoiHanh);
 		return period.getDays() >= 10 || period.getMonths() >= 1 ? true : false;
 	}
 
-	// Hien thi thong tin ngay khoi hanh
+	/**
+	 * Hiện thị thông tin ngày khởi hành
+	 * @param nkh: ngày khởi hành
+	 */
 	private void hienTTNgayKhoiHanh(NgayKhoiHanh nkh) {
 		dtcNgayKhoiHanh.setDate(nkh.getNgayKhoiHanh());
 		spnSoKhachToiDa.setValue(nkh.getSoKhachToiDa());
 	}
 
-	// Xoa trang thong tin tour
+	/**
+	 * Xoá trằng thông tin tour
+	 */
 	private void xoaTrang() {
 		cmbDiaDanh.setSelectedItem(null);
 		cmbDiemDen.setSelectedItem(null);
@@ -1444,6 +1458,9 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		txtGiaTrEm.setValue((Double) 0.0);
 	}
 
+	/**
+	 * Xoá trắng thông tin ngày khởi hành
+	 */
 	private void xoaTrangTTKH() {
 		dtcNgayKhoiHanh.setDate(null);
 		spnSoKhachToiDa.setValue(2);

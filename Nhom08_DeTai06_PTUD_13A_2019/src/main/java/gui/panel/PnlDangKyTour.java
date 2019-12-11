@@ -90,6 +90,9 @@ import utils.address.Ward;
  */
 public class PnlDangKyTour extends JPanel implements ActionListener, ListSelectionListener {
 
+	/**
+	 * Khai báo các thuộc tính
+	 */
 	private static final long serialVersionUID = 1L;
 	private JTable tblDSNgayDi;
 	private JTextField txtHoTenKH;
@@ -168,6 +171,9 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 	private JPanel pnlLamMoiNgKH;
 	private JLabel lblTinhTrangKHTG;
 	private JPanel pnlTinhTrangTour;
+	private JPanel pnlButtonTimKiemVaThem;
+	private JPanel pnlDongThemKH;
+	private JButton btnDongThemKH;
 
 	/**
 	 * Khởi tạo giao diện đăng ký tour
@@ -212,19 +218,33 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		pnlKhachHang.setLayout(new BorderLayout(0, 0));
 
 		JPanel pnlTimKiemVaThemMoi = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) pnlTimKiemVaThemMoi.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
 		pnlKhachHang.add(pnlTimKiemVaThemMoi, BorderLayout.NORTH);
+		pnlTimKiemVaThemMoi.setLayout(new GridLayout(0, 2, 0, 0));
+
+		pnlButtonTimKiemVaThem = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) pnlButtonTimKiemVaThem.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
+		pnlTimKiemVaThemMoi.add(pnlButtonTimKiemVaThem);
 
 		btnTimKiem = new JButton("Tìm kiếm");
+		pnlButtonTimKiemVaThem.add(btnTimKiem);
 		btnTimKiem.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/search_32px.png")));
 		btnTimKiem.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		pnlTimKiemVaThemMoi.add(btnTimKiem);
 
 		btnThemMoiKH = new JButton("Thêm khách hàng");
+		pnlButtonTimKiemVaThem.add(btnThemMoiKH);
 		btnThemMoiKH.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/plus_32px.png")));
 		btnThemMoiKH.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		pnlTimKiemVaThemMoi.add(btnThemMoiKH);
+
+		pnlDongThemKH = new JPanel();
+		FlowLayout flowLayout_4 = (FlowLayout) pnlDongThemKH.getLayout();
+		flowLayout_4.setAlignment(FlowLayout.RIGHT);
+		pnlTimKiemVaThemMoi.add(pnlDongThemKH);
+
+		btnDongThemKH = new JButton("");
+		btnDongThemKH.setIcon(new ImageIcon(PnlDangKyTour.class.getResource("/images/cancel_32px.png")));
+		btnDongThemKH.setFont(new Font("Arial", Font.PLAIN, 12));
+		pnlDongThemKH.add(btnDongThemKH);
 
 		pnlThongTinKH = new JPanel();
 		pnlThongTinKH.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -803,6 +823,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 		btnThemKhachHangTG.addActionListener(this);
 		btnHuyChonTour.addActionListener(this);
 		btnLamMoiNgKH.addActionListener(this);
+		btnDongThemKH.addActionListener(this);
 
 		btnLuuTTKhachHang.addActionListener(this);
 		btnXacNhan.addActionListener(this);
@@ -1008,6 +1029,20 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 
 			btnTimKiem.setEnabled(true);
 
+		}
+		/*
+		 * Đóng màn hình thêm khách hàng
+		 */
+		else if (o.equals(btnDongThemKH)) {
+			if (pnlThongTinKH.isVisible() == true) {
+				int confirm = JOptionPane.showConfirmDialog(null,
+						"<html>Đăng tiến hành nhập thông tin khách hàng.<br>Muốn kết thúc thêm ?<html>", "Thông báo",
+						JOptionPane.YES_NO_OPTION);
+				if (confirm == JOptionPane.YES_OPTION) {
+					xoaTrangThongTinKhachHang();
+					pnlThongTinKH.setVisible(false);
+				}
+			}
 		}
 		/*
 		 * Nút thêm mới khách hàng

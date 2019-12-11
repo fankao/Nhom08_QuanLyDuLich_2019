@@ -47,6 +47,13 @@ import javax.swing.ImageIcon;
 import javax.swing.BoxLayout;
 import javax.swing.ListSelectionModel;
 
+/**
+ * PnlThongKe.java
+ * 
+ * @author Thanh Trí<br>
+ *         Ngày tạo: 25/11/2019
+ *
+ */
 public class PnlThongKe extends JPanel implements ActionListener {
 	private JTabbedPane tabThongTinTK;
 	private JTextField txtTongDoanhThu;
@@ -67,7 +74,7 @@ public class PnlThongKe extends JPanel implements ActionListener {
 	private JTextField txtSoPDKDaHuy;
 
 	/**
-	 * Create the panel.
+	 * Giao diện thống kê
 	 */
 	public PnlThongKe() {
 		setSize(1500, 800);
@@ -310,7 +317,11 @@ public class PnlThongKe extends JPanel implements ActionListener {
 		return dataset;
 	}
 
-	// Tao biểu đò thể hiện doanh thu theo tháng
+	/**
+	 * Tao biểu đồ thể hiện doanh thu theo tháng
+	 * 
+	 * @return: biểu đồ doanh thu
+	 */
 	private JFreeChart taoBieuDoDoanhThu() {
 
 		JFreeChart lineChart = ChartFactory.createLineChart(
@@ -320,7 +331,12 @@ public class PnlThongKe extends JPanel implements ActionListener {
 		return lineChart;
 	}
 
-	// Lay so tong so phieu dang ky cua cac thang
+	/**
+	 * Lây tổng số phiếu đăng ký theo tháng
+	 * 
+	 * @param thang: tháng
+	 * @return: số phiếu
+	 */
 	private int laySoPhieuDangKyTheoThang(int thang) {
 		int soPDK = 0;
 		dsPDK = phieuDangKyControl.layDSPhieuDangKyTheoThang(thang);
@@ -340,7 +356,11 @@ public class PnlThongKe extends JPanel implements ActionListener {
 		return soPDK;
 	}
 
-//	Tao dữ liệu số lương phiếu đăng ký của các tháng
+	/**
+	 * Tao dữ liệu số lương phiếu đăng ký của các tháng
+	 * 
+	 * @return dữ liệu đăng ký
+	 */
 	private DefaultCategoryDataset taoDuLieuSoPhieuDangKy() {
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 		for (int i = 1; i <= 12; i++) {
@@ -350,7 +370,11 @@ public class PnlThongKe extends JPanel implements ActionListener {
 		return dataset;
 	}
 
-	// Tao biểu đò thể hiện doanh thu theo tháng
+	/**
+	 * Tao biểu đồ thể hiện doanh thu theo tháng
+	 * 
+	 * @return
+	 */
 	private JFreeChart taoBieuDoPhieuDangKy() {
 
 		JFreeChart barChar = ChartFactory.createBarChart(
@@ -360,14 +384,24 @@ public class PnlThongKe extends JPanel implements ActionListener {
 		return barChar;
 	}
 
+	/**
+	 * Hiển bảng thông tin phiếu thu chi
+	 * 
+	 * @param tbl: bảng
+	 * @param ds:  danh sách
+	 * @param src: thanh cuộn
+	 */
 	private void hienThiBangTTDSPhieuTC(JTable tbl, List<PhieuThuChi> ds, JScrollPane src) {
 		DSPhieuThuTableModel dsPhieuThuTableModel = new DSPhieuThuTableModel(ds);
 		tbl.setModel(dsPhieuThuTableModel);
 		src.setViewportView(tbl);
 	}
+
+
 	/**
-	 * Hiển thị danh sách phiếu thu chi theo tháng
-	 * @param thang : tháng
+	 * Hiện danh sách phiếu thu chi
+	 * 
+	 * @param thang: tháng
 	 */
 	private void hienDSPhieuThuChi(int thang) {
 		dsPhieuThuChi = phieuThuChiControl.layDSPhieuTheoThang(thang);
