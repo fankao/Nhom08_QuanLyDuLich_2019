@@ -50,8 +50,19 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.swing.JRViewer;
 
+/**
+ * DlgPhieuChi.java
+ * 
+ * @author Minh Chiến, Thanh Trí <br>
+ *         Ngày tạo 10/11/2019
+ *
+ */
 public class DlgPhieuChi extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
+
+	/*
+	 * Khai báo các thuộc tính
+	 */
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtMaPC;
 	private JTextField txtNgayTao;
@@ -69,7 +80,7 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 	private JTextArea txaLyDo;
 
 	/**
-	 * Create the dialog.
+	 * Khởi tạo giao diện phiếu chi
 	 */
 	public DlgPhieuChi(PhieuThuChi p, double tienChiTra) {
 		this.phieuDangKy = p.getPdk();
@@ -331,6 +342,9 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Xử lý sự kiện
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
@@ -356,7 +370,8 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 
 					JRDataSource Datasour = new JRBeanCollectionDataSource(dataSource);
 					try {
-						JasperReport report = JasperCompileManager.compileReport(this.getClass().getResourceAsStream("/PhieuChi.jrxml"));
+						JasperReport report = JasperCompileManager
+								.compileReport(this.getClass().getResourceAsStream("/PhieuChi.jrxml"));
 						JasperPrint filledRedport = JasperFillManager.fillReport(report, null, Datasour);
 						this.dispose();
 						JRViewer viewer = new JRViewer(filledRedport);

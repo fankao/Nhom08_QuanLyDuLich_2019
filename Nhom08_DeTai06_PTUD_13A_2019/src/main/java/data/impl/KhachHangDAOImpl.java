@@ -15,13 +15,16 @@ import entities.KhachHang;
  * KhachHangDAOImpl.java <br>
  * 
  * @author Minh Chien<br>
- *         Ngay Tao 08/011/2019
+ *         Ngay Tao 08/11/2019
  * 
  *
  */
 public class KhachHangDAOImpl implements IKhachHangDAO {
 	private EntityManager em;
 
+	/**
+	 * Khởi tạo đối tượng
+	 */
 	public KhachHangDAOImpl() {
 		em = EntityManagerConnection.getInstance().getEntityManager();
 	}
@@ -55,6 +58,12 @@ public class KhachHangDAOImpl implements IKhachHangDAO {
 		return list.size() != 0 ? list.get(0) : null;
 	}
 
+	/**
+	 * Lấy thông tin khách hàng theo CMND
+	 * 
+	 * @param cmnd: chứng minh nhân dân
+	 * @return KhachHang
+	 */
 	@Override
 	public KhachHang layTTKhachHangTheoCMND(String cmnd) {
 		TypedQuery<KhachHang> query = em.createNamedQuery("KH.timTheoCMND", KhachHang.class);
@@ -63,6 +72,11 @@ public class KhachHangDAOImpl implements IKhachHangDAO {
 		return list.size() != 0 ? list.get(0) : null;
 	}
 
+	/**
+	 * Lấy danh sách tất cả khách hàng
+	 * 
+	 * @return List<KhachHang>
+	 */
 	@Override
 	public List<KhachHang> layDSKhachHang() {
 		TypedQuery<KhachHang> query = em.createNamedQuery("KH.timTatCaKH", KhachHang.class);
@@ -70,6 +84,12 @@ public class KhachHangDAOImpl implements IKhachHangDAO {
 		return list.size() != 0 ? list : new ArrayList<KhachHang>();
 	}
 
+	/**
+	 * Thêm khách hàng
+	 * 
+	 * @param kh: khách hàng
+	 * @return KhachHang
+	 */
 	@Override
 	public KhachHang themKhachHang(KhachHang kh) {
 		EntityTransaction tr = em.getTransaction();
@@ -85,7 +105,13 @@ public class KhachHangDAOImpl implements IKhachHangDAO {
 		}
 		return null;
 	}
-	
+
+	/**
+	 * Sửa thông tin khách hàng
+	 * 
+	 * @param kh: khách hàng
+	 * @return KhachHang
+	 */
 	@Override
 	public KhachHang suaKhachHang(KhachHang kh) {
 		EntityTransaction tr = em.getTransaction();
@@ -101,6 +127,11 @@ public class KhachHangDAOImpl implements IKhachHangDAO {
 		return null;
 	}
 
+	/**
+	 * Phát sinh mã khách hàng
+	 * 
+	 * @return String
+	 */
 	@Override
 	public String phatSinhMaKH() {
 		String query = "SELECT t.id FROM KhachHang t";

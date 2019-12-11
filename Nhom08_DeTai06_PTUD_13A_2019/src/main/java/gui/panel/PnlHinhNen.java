@@ -11,11 +11,14 @@ public class PnlHinhNen extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Create the panel.
+	 * Hiện thị giao diện
 	 */
 	public PnlHinhNen() {
 		setLayout(new BorderLayout(0, 0));
 
+		/*
+		 * Tạo nền cho giao diện
+		 */
 		JPanel pnlHinhNen = new JPanel() {
 			private static final long serialVersionUID = 1L;
 			ImageIcon icon = new ImageIcon(this.getClass().getResource("/images/hinhnen.jpg"));

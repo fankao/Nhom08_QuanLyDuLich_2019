@@ -13,6 +13,12 @@ import data.IPhieuDangKyDAO;
 import entities.KhachHangThamGia;
 import entities.PhieuDangKy;
 
+/**
+ * 
+ * @author Thanh Trí, Minh Chiến<br>
+ *         Ngày tạo 25/11/2019
+ *
+ */
 public class PhieuDangKyDAOImpl implements IPhieuDangKyDAO {
 	private EntityManager em;
 
@@ -125,6 +131,11 @@ public class PhieuDangKyDAOImpl implements IPhieuDangKyDAO {
 		return list.size() != 0 ? list : new ArrayList<PhieuDangKy>();
 	}
 
+	/**
+	 * Lấy danh sách khách hàng tham gia tour
+	 * @param maTour: mã tour
+	 * @return List<KhachHangThamGia>
+	 */
 	@Override
 	public List<KhachHangThamGia> layDSKhachThamGiaTour(String maTour) {
 
@@ -136,6 +147,10 @@ public class PhieuDangKyDAOImpl implements IPhieuDangKyDAO {
 		return list.size() != 0 ? list : new ArrayList<KhachHangThamGia>();
 	}
 
+	/**
+	 * Phát sinh mã phiếu đăng ký
+	 * @return String
+	 */
 	@Override
 	public String phatSinhMaPDK() {
 		List<Integer> listID = em.createQuery("SELECT pdk.id FROM PhieuDangKy pdk", Integer.class).getResultList();
@@ -151,6 +166,12 @@ public class PhieuDangKyDAOImpl implements IPhieuDangKyDAO {
 		return "PDK001/" + LocalDate.now().getMonthValue() + "" + LocalDate.now().getYear();
 	}
 
+	/**
+	 * Lấy thông tin phiếu đăng ký theo thông tin khách hàng và ngày khởi hành
+	 * @param maKH: mã khách hàng
+	 * @param maNGKH: mã ngày khởi hành
+	 * @return PhieuDangKy
+	 */
 	@Override
 	public PhieuDangKy layPhieuDangKyTheoKHVaNgayKH(String maKH, String maNGKH) {
 		TypedQuery<PhieuDangKy> query = em.createNamedQuery("PDK.timPDKTheoKHVaNgayKhoiHanh", PhieuDangKy.class);
@@ -159,7 +180,11 @@ public class PhieuDangKyDAOImpl implements IPhieuDangKyDAO {
 		List<PhieuDangKy> list = query.getResultList();
 		return list.size() != 0 ? list.get(0) : null;
 	}
-
+	/**
+	 * Lấy danh sách phiếu đăng ký theo tháng phiếu đăng ký theo theo tháng
+	 * @param tháng : tháng
+	 * @return List<PhieuDangKy>
+	 */
 	@Override
 	public List<PhieuDangKy> layDSPhieuDangKyTheoThang(int thang) {
 		TypedQuery<PhieuDangKy> query = em.createNamedQuery("PDK.timDSPDKTheoThang", PhieuDangKy.class);

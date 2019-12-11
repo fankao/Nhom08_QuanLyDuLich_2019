@@ -22,6 +22,12 @@ import javax.persistence.Table;
 
 import constant.HangSo;
 
+/**
+ * PhieuDangKy.java
+ * @author Minh Chiến<br>
+ *         Ngày tạo 10/11/2019
+ *
+ */
 @Entity
 @Table(name = "phieudangky")
 @NamedQueries({ @NamedQuery(name = "PDK.timDSPDK", query = "SELECT pdk FROM PhieuDangKy pdk ORDER BY pdk.id"),
@@ -62,10 +68,22 @@ public class PhieuDangKy {
 
 	private boolean daHuyPhieu;
 
+	/**
+	 * Constructor khởi tạo không tham số
+	 */
 	public PhieuDangKy() {
 
 	}
-
+	/**
+	 *
+	 * @param maPhieuDK
+	 * @param ngayTaoPhieu
+	 * @param nv
+	 * @param kh
+	 * @param ngayKhoiHanh
+	 * @param daHoanThanhTour
+	 * @param daHuyPhieu
+	 */
 	public PhieuDangKy(String maPhieuDK, Date ngayTaoPhieu, NhanVien nv, KhachHang kh, NgayKhoiHanh ngayKhoiHanh,
 			boolean daHoanThanhTour, boolean daHuyPhieu) {
 		super();

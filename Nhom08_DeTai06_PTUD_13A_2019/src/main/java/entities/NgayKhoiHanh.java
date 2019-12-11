@@ -31,7 +31,7 @@ import javax.persistence.TemporalType;
 @Table(name = "ngaykhoihanh")
 @NamedQueries({
 		@NamedQuery(name = "NgayKH.timNgayKhoiHanhTheoNgay", query = "SELECT ngkh FROM NgayKhoiHanh ngkh WHERE ngkh.tour.maTour=:maTour AND (ngkh.ngayKhoiHanh BETWEEN :startDate AND :toDate) ORDER BY ngkh.id"),
-		@NamedQuery(name = "NgayKH.timDSNgayKHChuaBiHuyTheoTour", query = "SELECT t FROM NgayKhoiHanh t WHERE t.tour.maTour=:maTour AND t.daXoaDoKhongDuSoLuong = False") })
+		@NamedQuery(name = "NgayKH.timDSNgayKHChuaBiHuyTheoTour", query = "SELECT t FROM NgayKhoiHanh t WHERE t.tour.maTour=:maTour AND t.daXoaDoKhongDuSoLuong = False ORDER BY t.id") })
 public class NgayKhoiHanh {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
