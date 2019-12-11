@@ -479,10 +479,10 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		btnSua.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
 		btnBoChon = new JButton("Bỏ chọn");
+		btnBoChon.setVisible(false);
 		btnBoChon.setIcon(new ImageIcon(PnlTaoTour.class.getResource("/images/exit.png")));
 		btnBoChon.setFont(new Font("Dialog", Font.PLAIN, 18));
 		pnlButton.add(btnBoChon);
-		btnBoChon.setVisible(false);
 
 		pnlNgayKH = new JPanel();
 		pnlNgayKH.setVisible(false);
@@ -869,6 +869,11 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 		 * Nút làm mới danh sách tour
 		 */
 		else if (o.equals(btnLamMoi)) {
+			
+			btnBoChon.setVisible(false);
+			tblDSTour.clearSelection();
+			pnlButtonNorth.setVisible(false);
+			btnSua.setVisible(false);
 			hienDanhSachTour(tblDSTour, lstTour, scrDSTour);
 		}
 		/*
@@ -907,15 +912,20 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 			dtcNgayKhoiHanh.setEnabled(false);
 			spnSoKhachToiDa.setEnabled(false);
 
+			btnLamMoi.setVisible(true);
+
 		}
 		/*
 		 * Nút xoá trắng
 		 */
 		else if (o.equals(btnXoaTrang)) {
-
 			xoaTrang();
 
-		} else if (o.equals(btnLuu)) {
+		}
+		/*
+		 * Lưu thông tin tour
+		 */
+		else if (o.equals(btnLuu)) {
 			if (kiemTraThongTin() == true) {
 				btnBoChon.setVisible(false);
 				Tour tour = new Tour();
@@ -1016,6 +1026,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 				lblTinhTrangTour.setVisible(false);
 				btnSuaNgayKH.setEnabled(true);
 			}
+			btnLamMoi.setVisible(false);
 			lstNgayKH = tourControl.layDSNgayKhoiHanhTheoTour(maTour);
 			hienDanhSachNgayKhoiHanh(tblDSNGKH, lstNgayKH, scrDSNgayKH);
 
@@ -1113,7 +1124,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 
 		}
 		/*
-		 * 
+		 * Lựa chọn loại tìm kiếm
 		 */
 		else if (o.equals(cmbLuaChon)) {
 			switch (cmbLuaChon.getSelectedIndex()) {
@@ -1166,7 +1177,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 
 		}
 		/*
-		 * 
+		 * Lọc tour theo combox
 		 */
 		else if (o.equals(btnLoc)) {
 			List<Tour> dsTourCanTim = new ArrayList<Tour>();
@@ -1428,6 +1439,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 
 	/**
 	 * Kiểm tra ngày khởi hành có hợp lê
+	 * 
 	 * @return true: nếu ngày khởi hành cách ngày hiện tại 10 ngày/ false: ngược lại
 	 */
 	public boolean ktNgayKhoiHanh() {
@@ -1438,6 +1450,7 @@ public class PnlTaoTour extends JPanel implements ActionListener, PropertyChange
 
 	/**
 	 * Hiện thị thông tin ngày khởi hành
+	 * 
 	 * @param nkh: ngày khởi hành
 	 */
 	private void hienTTNgayKhoiHanh(NgayKhoiHanh nkh) {

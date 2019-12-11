@@ -571,10 +571,11 @@ public class FrmMain extends JFrame implements ActionListener {
 		 */
 		else if (o.equals(btnPhieuDK)) {
 			TienIch.xoaDuongDan(pnlButtonBar, 1);
-			TienIch.themDuongDan(pnlButtonBar, "Thông tin đăng ký tour");
-			TienIch.doiMauButton(btnPhieuDK, new JButton[] { btnDangXuat, btnDangKyTour, btnCapNhatTour, btnThongKe,
-					btnTTKhachHang, btnDuyetTour, btnHuongDan });
+			TienIch.themDuongDan(pnlButtonBar, "Thông tin đăng ký tour");	
+			TienIch.doiMauButton(btnPhieuDK, new JButton[] { btnDangXuat, btnDuyetTour, btnCapNhatTour,
+					btnDangKyTour, btnTTKhachHang, btnThongKe, btnHuongDan });
 			TienIch.chuyenPanelKhiNhan(pnlCardLayout, pnlQuanLyPDK);
+			chkQuanLyTour.setSelected(false);
 
 		} else if (o.equals(btnTTKhachHang)) {
 			dongSubButton();
@@ -611,7 +612,7 @@ public class FrmMain extends JFrame implements ActionListener {
 			// Mở file hướng dẫn
 
 			try {
-				File file = new File("./huongdan/filehuongdan.chm");
+				File file = new File("./huongdan/filehelp.chm");
 				Desktop desktop = Desktop.getDesktop();
 				desktop.open(file);
 			} catch (IOException e1) {
@@ -621,7 +622,7 @@ public class FrmMain extends JFrame implements ActionListener {
 
 			chkQuanLyTour.setSelected(false);
 			chkKhachHang.setSelected(false);
-			btnDangXuat.setEnabled(true);
+			btnHuongDan.setEnabled(true);
 			btnHuongDan.setBackground(new Color(23, 35, 51));
 		}
 

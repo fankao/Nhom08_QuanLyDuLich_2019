@@ -311,6 +311,9 @@ public class DlgPhieuChi extends JDialog implements ActionListener {
 				getRootPane().setDefaultButton(btnLuu);
 			}
 		}
+		/*
+		 * Tạo phiếu chi
+		 */
 		phieuThuChiControl = new PhieuThuChiControlImpl();
 		p.setMaPhieuChi(phieuThuChiControl.phatSinhMaPhieu(LoaiPhieu.PHIEUCHI));
 		p.setNgayTaoPhieuChi(new Date(System.currentTimeMillis()));

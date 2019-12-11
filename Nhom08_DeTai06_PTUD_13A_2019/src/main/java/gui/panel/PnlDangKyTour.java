@@ -997,7 +997,7 @@ public class PnlDangKyTour extends JPanel implements ActionListener, ListSelecti
 			pnlHuyChonTour.setVisible(false);
 		}
 		/*
-		 * 
+		 * Xác nhận sử dụng thông tin khách hàng
 		 */
 		else if (o.equals(btnXacNhan)) {
 			khachHang = pnlTimKiemKH.getKhachHang();

@@ -708,7 +708,7 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 					lblTinhTrangPDK.setText("Phiếu đăng ký đã bị huỷ");
 				} else {
 					btnHuyDangKyTour.setEnabled(true);
-					lblDiaChi.setText("");
+					lblTinhTrangPDK.setText("");
 				}
 
 			}
@@ -766,9 +766,14 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 			huyDangKyThamGiaTour(pdkDuocChon);
 
 		} else if (o.equals(btnLamMoiBangDSKH)) {
+			tblDSKhachHang.clearSelection();
+			tblDSPhieuDangKy.clearSelection();
+			xoaTrangHienThiTTKH();
 			dsKhachHang = khachHangControl.layDSKhachHang();
 			hienBangDSKhachHang(tblDSKhachHang, dsKhachHang, srcDsKhachHang);
 		} else if (o.equals(btnLamMoiBangDSPDK)) {
+			tblDSPhieuDangKy.clearSelection();
+			xoaTrangHienThiTTKH();
 			dsPDK = phieuDangKyControl.layDSPhieuDangKy();
 			hienBangDSPDK(tblDSPhieuDangKy, dsPDK, srcDsPDK);
 		}
@@ -831,10 +836,9 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 			tblDSPhieuDangKy.clearSelection();
 			dsPDK = phieuDangKyControl.layDSPhieuDangKy();
 			hienBangDSPDK(tblDSPhieuDangKy, dsPDK, srcDsPDK);
-			xoaTrangHienThiTTKH();
 			dsKhachHangTGTrongCSDL.clear();
-			xoaTrangHienThiTTKH();
 			hienBangDSKhachTG(tblDSKhachTG, dsKhachHangTGTrongCSDL, srcDsKhachTG);
+			xoaTrangHienThiTTKH();
 
 		} else if (o.equals(btnBoChonPDK)) {
 			tblDSPhieuDangKy.clearSelection();
@@ -921,20 +925,25 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 	/**
 	 * Hiện thông tin phiếu đăng ký tour
 	 * 
-	 * @param pdk
+	 * @param pdk: phiếu đăng ký
 	 */
 	private void hienThongTinPDK(PhieuDangKy pdk) {
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+
 		lblMaKH.setText(pdk.getKh().getMaKH());
 		lblTenKH.setText(pdk.getKh().getHoVaTen());
 		lblSoDienThoai.setText(pdk.getKh().getSoDienThoai());
-		lblNgaySinh.setText(pdk.getKh().getNgaySinh().toString());
+
+		lblNgaySinh.setText(df.format(pdk.getKh().getNgaySinh()));
+
 		lblSoCMND.setText(pdk.getKh().getSoCMND());
 		lblDiaChi.setText(pdk.getKh().getDiaChi().toString());
+
 		if (pdk.getKh().isGioiTinh())
 			lblGioiTinh.setText("Nam");
 		lblGioiTinh.setText("Nữ");
 		lblMaPDK.setText(pdk.getMaPhieuDK());
-		lblNgayTao.setText(pdk.getNgayTaoPhieu().toString());
+		lblNgayTao.setText(df.format(pdk.getNgayTaoPhieu()));
 
 		lblTrangThai.setText(HangSo.DANGXULY);
 		if (pdk.getNgayKhoiHanh().isDaXoaDoKhongDuSoLuong())
@@ -945,13 +954,16 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 			lblTrangThai.setText(HangSo.DAHUYPHIEUDK);
 
 		txaTenTuor.setText(pdk.getNgayKhoiHanh().getTour().getTenTour());
-		lblNgayKhoiHanh.setText(pdk.getNgayKhoiHanh().getNgayKhoiHanh().toString());
+
+		lblNgayKhoiHanh.setText(df.format(pdk.getNgayKhoiHanh().getNgayKhoiHanh()));
+
 		lblThoiGian.setText(pdk.getNgayKhoiHanh().getTour().getThoiGian()[0] + " Ngày "
 				+ pdk.getNgayKhoiHanh().getTour().getThoiGian()[1] + " Đêm");
 
 		lblSoKhachTG.setText(pdk.getKhachHangThamGias().size() + "");
 		double tongTien = phieuThuChiControl.tinhTongTienPhieuThuTheoPDK(pdk.getMaPhieuDK());
 		NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("vi", "vn"));
+
 		lblTongTiendb.setText(format.format(tongTien));
 		dsKhachHangTGTrongCSDL = pdk.getKhachHangThamGias();
 		hienBangDSKhachTG(tblDSKhachTG, dsKhachHangTGTrongCSDL, srcDsKhachTG);
@@ -977,8 +989,10 @@ public class pnlQuanLyPDK extends JPanel implements ActionListener {
 		lblTongTiendb.setText("0.0");
 		lblSoKhachTG.setText("0");
 		btnHuyDangKyTour.setEnabled(false);
-
 		lblTinhTrangPDK.setText("Chưa có thông tin phiếu đăng ký");
+
+		dsKhachHangTGTrongCSDL = new ArrayList<KhachHangThamGia>();
+		hienBangDSKhachTG(tblDSKhachTG, dsKhachHangTGTrongCSDL, srcDsKhachTG);
 	}
 
 	/*

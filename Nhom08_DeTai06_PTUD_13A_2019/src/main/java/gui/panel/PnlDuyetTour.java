@@ -226,6 +226,8 @@ public class PnlDuyetTour extends JPanel implements ActionListener {
 		btnLamMoiD.setIcon(new ImageIcon(PnlDuyetTour.class.getResource("/images/filter_25px.png")));
 		btnLamMoiD.setFont(new Font("Dialog", Font.PLAIN, 20));
 		pnlLamMoiD.add(btnLamMoiD);
+		
+		TienIch.chinhKichThuocTitleTrenBorder(new JPanel[] {pnlDSTourCanDuyet,pnlDSTourDuyet}, "Arial", Font.PLAIN, 20);
 
 		// gán sự kiện
 		ganSuKien();
